@@ -23,14 +23,20 @@ public class MapPanel extends JPanel {
         addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 Point mouse = e.getPoint();
-
                 System.out.print(" x = " + mouse.x + " y = " + mouse.y);
+
+                for (Country country : countries) {
+                    country.resetView();
+                }
+
                 for (Country country : countries) {
                     if (country.isInBorder(mouse.x, mouse.y)) {
                         countryInfo.setMessage(country.getName());
+                        country.select();
                         System.out.print(" selected " + country.getName());
                     }
                 }
+                e.getComponent().repaint();
                 System.out.println();
             }
 

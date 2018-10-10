@@ -9,6 +9,8 @@ public class Neighbour {
     public Neighbour(Country one, Country two) {
         this.one = one;
         this.two = two;
+        one.getNeighbours().add(two);
+        two.getNeighbours().add(one);
     }
 
     public Country getOne() {

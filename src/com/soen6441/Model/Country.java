@@ -2,6 +2,7 @@ package com.soen6441.Model;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Country {
@@ -9,7 +10,9 @@ public class Country {
     private int x;
     private int y;
     private int radius;
-    private List<Country> neighbours;
+    private List<Country> neighbours = new ArrayList<>();
+    private boolean isSelected = false;
+    private Color color = Color.BLACK;
 
 
     public Country(String name, int x, int y, int radius) {
@@ -55,6 +58,29 @@ public class Country {
         this.neighbours = neighbours;
     }
 
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
+    public void resetView(){
+        color = Color.BLACK;
+    }
+
+    public void select(){
+        color = Color.GREEN;
+        for (Country country: neighbours) {
+            country.highlight();
+        }
+    }
+
+    public void highlight(){
+        color = Color.RED;
+    }
+
     public boolean isInBorder(int x, int y){
         return Math.sqrt( Math.pow( x - this.x, 2) + Math.pow( y - this.y, 2) ) < radius;
     }
@@ -63,8 +89,7 @@ public class Country {
         Graphics2D g2d = (Graphics2D) g;
         Ellipse2D.Double circle = new Ellipse2D.Double(x - radius, y - radius, radius * 2, radius * 2);
 
-
-        g2d.setColor(Color.BLACK);
+        g2d.setColor(color);
         g2d.fill(circle);
         g2d.drawString(name, x - radius, y - radius);
     }
