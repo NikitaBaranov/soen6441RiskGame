@@ -28,10 +28,11 @@ public class MapPanel extends JPanel {
                 for (Country country : countries) {
                     country.resetView();
                 }
+                countryInfo.reset();
 
                 for (Country country : countries) {
                     if (country.isInBorder(mouse.x, mouse.y)) {
-                        countryInfo.setMessage(country.getName());
+                        countryInfo.setCountry(country);
                         country.select();
                         System.out.print(" selected " + country.getName());
                     }
@@ -46,11 +47,12 @@ public class MapPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        for (Country country : countries) {
-            country.draw(g);
-        }
         for (Neighbour neighbour : neighbours) {
             neighbour.draw(g);
+        }
+
+        for (Country country : countries) {
+            country.draw(g);
         }
     }
 }

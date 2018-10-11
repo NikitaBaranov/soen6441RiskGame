@@ -29,12 +29,14 @@ public class Main {
         infoPanel.setPreferredSize(new Dimension(200 - 2, 600 - 2));
 
         // Right Info Panel
-        StatusPanel statusPanel = new StatusPanel(200 - 2, 100 - 2, "Info");
+        StatusPanel statusPanel = new StatusPanel(200 - 2, 100 - 2);
         statusPanel.setBorder(new LineBorder(Color.BLUE, 1));
 
         // Left Panel
         // Game message Panel on top
-        StatusPanel statusMessagePanel = new StatusPanel(600 - 2, 30 - 2, "Status");
+        JPanel statusMessagePanel = new JPanel();
+        statusMessagePanel.setPreferredSize(new Dimension(600 - 2, 30 - 2));
+        statusMessagePanel.add(new Label("Status panel"), Component.CENTER_ALIGNMENT);
 
         // Map Panel Map
         MapPanel mapPanel = new MapPanel(new Dimension(600 - 2, 570 - 2), game.getCountries(), game.neighbours, statusPanel);
