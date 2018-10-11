@@ -53,6 +53,23 @@ public class Main {
         boardPanel.setBorder(new LineBorder(Color.GREEN, 1));
         boardPanel.add(mapPanel);
 
+        //Creating the MenuBar and adding components
+        JMenuBar menuBar = new JMenuBar();
+        JMenu newGame = new JMenu("New Game");
+        JMenu mapEditor = new JMenu("Map Editor");
+        JMenu exit = new JMenu("Exit");
+        menuBar.add(newGame);
+        menuBar.add(mapEditor);
+        menuBar.add(exit);
+
+        JMenuItem player2 = new JMenuItem("2 Players");
+        JMenuItem player3 = new JMenuItem("3 Players");
+        JMenuItem player4 = new JMenuItem("4 Players");
+        newGame.add(player2);
+        newGame.add(player3);
+        newGame.add(player4);
+        frame.add(menuBar, BorderLayout.NORTH);
+
         frame.add(boardPanel, BorderLayout.WEST);
 
         frame.add(infoPanel, BorderLayout.EAST);
