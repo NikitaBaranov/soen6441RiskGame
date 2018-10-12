@@ -1,6 +1,6 @@
-package com.soen6441.View;
+package view;
 
-import com.soen6441.Model.Country;
+import model.Country;
 
 import javax.swing.*;
 import java.awt.*;

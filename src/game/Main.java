@@ -1,7 +1,7 @@
-package com.soen6441;
+package game;
 
-import com.soen6441.View.MapPanel;
-import com.soen6441.View.StatusPanel;
+import view.MapPanel;
+import view.StatusPanel;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -9,19 +9,19 @@ import java.awt.*;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public Main(Game game) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                createAndShowGui();
+                createAndShowGui(game);
             }
         });
     }
 
-    private static void createAndShowGui() {
-        final JFrame frame = new JFrame("Risk Soen6441");
+    private static void createAndShowGui(Game game) {
+        final JFrame frame = new JFrame("Risk");
         frame.setPreferredSize(new Dimension(800, 600));
 
-        Game game = new Game();
+//        Game game = new Game();
 
         // Right Panel
         // Right Controls Panel
@@ -52,23 +52,6 @@ public class Main {
         boardPanel.add(statusMessagePanel, BorderLayout.NORTH);
         boardPanel.setBorder(new LineBorder(Color.GREEN, 1));
         boardPanel.add(mapPanel);
-
-        //Creating the MenuBar and adding components
-        JMenuBar menuBar = new JMenuBar();
-        JMenu newGame = new JMenu("New Game");
-        JMenu mapEditor = new JMenu("Map Editor");
-        JMenu exit = new JMenu("Exit");
-        menuBar.add(newGame);
-        menuBar.add(mapEditor);
-        menuBar.add(exit);
-
-        JMenuItem player2 = new JMenuItem("2 Players");
-        JMenuItem player3 = new JMenuItem("3 Players");
-        JMenuItem player4 = new JMenuItem("4 Players");
-        newGame.add(player2);
-        newGame.add(player3);
-        newGame.add(player4);
-        frame.add(menuBar, BorderLayout.NORTH);
 
         frame.add(boardPanel, BorderLayout.WEST);
 

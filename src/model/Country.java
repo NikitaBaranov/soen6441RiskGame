@@ -1,4 +1,4 @@
-package com.soen6441.Model;
+package model;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;

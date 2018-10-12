@@ -1,7 +1,7 @@
-package com.soen6441.View;
+package view;
 
-import com.soen6441.Model.Country;
-import com.soen6441.Model.Neighbour;
+import model.Country;
+import model.Neighbour;
 
 import javax.swing.*;
 import java.awt.*;

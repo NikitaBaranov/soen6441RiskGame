@@ -1,0 +1,12 @@
+[map]
+author=4ban
+
+[Continents]
+America=2
+Europe=3
+
+[Territories]
+Canada,34,23,America,Usa
+Usa,37,37,America,Canada,England
+England,120,34,Europe,Usa,Germany
+Germany,125,60,Europe,England
