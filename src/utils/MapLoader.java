@@ -41,7 +41,7 @@ public class MapLoader {
             //-------------------------------------------------------------------
             // Temporary map example
             Player player1 = new Player("Player 1 Name", Color.BLUE);
-            Player player2 = new Player("Player 2 Name", Color.RED);
+            Player player2 = new Player("Player 2 Name", Color.PINK);
 
             countries.add(new Country("Canada", 100, 100, RADIUS, player1));
             countries.add(new Country("USA", 100, 300, RADIUS, player1));

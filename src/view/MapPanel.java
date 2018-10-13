@@ -12,9 +12,9 @@ import java.util.List;
 public class MapPanel extends JPanel {
     private List<Neighbour> neighbours;
     private List<Country> countries;
-    private StatusPanel countryInfo;
+    private PlayerStatusPanel countryInfo;
 
-    public MapPanel(Dimension dimension, List<Country> countries, List<Neighbour> neighbours, StatusPanel countryInfo) {
+    public MapPanel(Dimension dimension, List<Country> countries, List<Neighbour> neighbours, PlayerStatusPanel countryInfo) {
         this.countries = countries;
         this.neighbours = neighbours;
         this.countryInfo = countryInfo;

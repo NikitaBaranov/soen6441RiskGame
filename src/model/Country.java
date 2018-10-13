@@ -125,7 +125,7 @@ public class Country {
 
         } else if (isHighlited){
             Ellipse2D.Double highlight = new Ellipse2D.Double(x - radius - HIGHLIGHT_BORDER_WITHT/2, y - radius -HIGHLIGHT_BORDER_WITHT/2 , radius * 2 + HIGHLIGHT_BORDER_WITHT, radius * 2 + HIGHLIGHT_BORDER_WITHT);
-            g2d.setColor(Color.YELLOW);
+            g2d.setColor(Color.RED);
             g2d.fill(highlight);
             g2d.setColor(Color.BLACK);
             g2d.draw(highlight);
@@ -147,6 +147,6 @@ public class Country {
         g2d.drawString(Integer.toString(army), x - 3, y + 5);
 
         g2d.setColor(Color.BLACK);
-        g2d.drawString(name, x - radius, y - radius);
+        g2d.drawString(name, x - radius, y - radius - ARMY_BACKGROUND_WITHT);
     }
 }
