@@ -1,6 +1,6 @@
-package ui.view;
+package game.ui.view;
 
-import model.Player;
+import game.model.Player;
 
 import javax.swing.*;
 import java.awt.*;

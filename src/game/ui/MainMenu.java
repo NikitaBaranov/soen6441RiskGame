@@ -1,7 +1,7 @@
-package ui;
+package game.ui;
 
 import map_editor.StartEditor;
-import utils.MapLoader;
+import game.utils.MapLoader;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;

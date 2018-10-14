@@ -1,12 +1,10 @@
 package game;
 
-import model.Country;
-import model.Neighbour;
-import model.Player;
-import utils.MapLoader;
+import game.model.Country;
+import game.model.Neighbour;
+import game.utils.MapLoader;
 
 import java.util.List;
-import java.awt.*;
 
 public class Game {
     public int RADIUS = MapLoader.RADIUS;

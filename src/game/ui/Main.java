@@ -1,13 +1,12 @@
-package ui;
+package game.ui;
 
 import game.Game;
-import ui.view.DicePanel;
-import ui.view.MapPanel;
-import ui.view.RightStatusPanel;
-import ui.view.TopStatusPanel;
+import game.ui.view.DicePanel;
+import game.ui.view.MapPanel;
+import game.ui.view.RightStatusPanel;
+import game.ui.view.TopStatusPanel;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class Main {
@@ -29,7 +28,9 @@ public class Main {
         frame.setDefaultLookAndFeelDecorated(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
-        frame.getRootPane().setWindowDecorationStyle(JRootPane.NONE);
+
+        // Line below fix window in the middle and forbid to close so I commented out
+        // frame.getRootPane().setWindowDecorationStyle(JRootPane.NONE);
 
         // Top Status Game Info Bar
         TopStatusPanel topStatusPanel = new TopStatusPanel(width, 30);
@@ -72,6 +73,7 @@ public class Main {
         frame.pack();
         frame.setLocationRelativeTo(null);
         // Try this if the above setLocationRelativeTo doesnt'work
+        // I have two screens ... centreWindow opens a windows in the middle of them
         // centreWindow(frame);
         frame.setVisible(true);
     }

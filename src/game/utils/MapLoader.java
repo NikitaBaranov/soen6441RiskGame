@@ -1,4 +1,4 @@
-package utils;
+package game.utils;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -6,11 +6,11 @@ import java.util.List;
 import java.awt.*;
 import java.util.Random;
 
-import ui.Main;
+import game.ui.Main;
 import game.Game;
-import model.Country;
-import model.Neighbour;
-import model.Player;
+import game.model.Country;
+import game.model.Neighbour;
+import game.model.Player;
 
 public class MapLoader {
     public static int RADIUS = 20;

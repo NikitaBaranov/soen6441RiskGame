@@ -1,7 +1,7 @@
-package ui.view;
+package game.ui.view;
 
-import model.Country;
-import model.Neighbour;
+import game.model.Country;
+import game.model.Neighbour;
 
 import javax.swing.*;
 import java.awt.*;

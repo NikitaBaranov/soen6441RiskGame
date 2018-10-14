@@ -1,4 +1,4 @@
-package enums;
+package game.enums;
 
 public enum DiceEnum {
     EMPTY(0, "die0.png"),
@@ -17,7 +17,7 @@ public enum DiceEnum {
         this.fileSuffix = fileSuffix;
     }
 
-    private static final String imageSourceDir = "src/resources/dice/";
+    private static final String imageSourceDir = "src/game/resources/dice/";
     public static final String RED_FILE_PREFIX= imageSourceDir + "red_";
     public static final String WHITE_FILE_PREFIX= imageSourceDir + "white_";
 

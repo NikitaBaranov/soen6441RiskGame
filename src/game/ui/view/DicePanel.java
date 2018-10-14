@@ -1,6 +1,6 @@
-package ui.view;
+package game.ui.view;
 
-import enums.DiceEnum;
+import game.enums.DiceEnum;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -62,10 +62,10 @@ public class DicePanel extends JPanel {
 //        super.paintComponent(g);
 //        for (int i = 0; i < DICE_ROW_TO_SHOW; i++) {
 //            try {
-//                File imageRed = new File("resources/red_" + redDice[0].getFileSuffix());
+//                File imageRed = new File("game.resources/red_" + redDice[0].getFileSuffix());
 //                g.drawImage(ImageIO.read(imageRed).getScaledInstance(width / 2, height / 3, Image.SCALE_SMOOTH), 0, 0 + i * (height - DICE_MARGIN) / 3, this);
 //
-//                File whiteRed = new File("resources/white_" + redDice[0].getFileSuffix());
+//                File whiteRed = new File("game.resources/white_" + redDice[0].getFileSuffix());
 //                g.drawImage(ImageIO.read(whiteRed).getScaledInstance(width / 2, height / 3, Image.SCALE_SMOOTH), 0 + (width - DICE_MARGIN) / 2, 0 + i * (height - DICE_MARGIN) / 3, this);
 //            } catch (IOException e) {
 //                e.printStackTrace();

@@ -1,4 +1,4 @@
-import ui.MainMenu;
+import game.ui.MainMenu;
 
 public class Launcher {
 
