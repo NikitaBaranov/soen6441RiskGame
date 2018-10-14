@@ -24,7 +24,6 @@ public class RightStatusPanel extends JPanel {
     private JPanel cardsPanel = new JPanel();
 
     public RightStatusPanel(int width, int height) {
-
         // setup overall setup
         this.setPreferredSize(new Dimension(width, height));
 //        this.setLayout(new BoxLayout(this, PAGE_AXIS));

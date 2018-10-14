@@ -9,12 +9,13 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 
-public class MainWindow extends JFrame {
+
+public class MainMenu extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private int width, height;
 
-    public MainWindow(String title, int width, int height) {
+    public MainMenu(String title, int width, int height) {
         super(title);
         this.width = width;
         this.height = height;

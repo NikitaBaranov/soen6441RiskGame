@@ -1,10 +1,10 @@
-import ui.MainWindow;
+import ui.MainMenu;
 
 public class Launcher {
 
     public Launcher(String title, int width, int height){
         System.out.println("DEBUG: Launcher is tarted\n-------------------------\n");
-        MainWindow window = new MainWindow(title, width, height);
+        MainMenu window = new MainMenu(title, width, height);
     }
 
     public static void main(String[] args){

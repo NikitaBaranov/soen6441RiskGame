@@ -6,7 +6,7 @@ import java.util.List;
 import java.awt.*;
 import java.util.Random;
 
-import game.Main;
+import ui.Main;
 import game.Game;
 import model.Country;
 import model.Neighbour;
