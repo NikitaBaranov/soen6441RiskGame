@@ -46,7 +46,7 @@ public class Main {
         // Player Panel
         RightStatusPanel rightStatusPanel = new RightStatusPanel(220, 360);
         //rightStatusPanel.setBorder(new LineBorder(Color.BLUE, 1));
-        rightStatusPanel.setBackground(new Color(65,64,115));
+        rightStatusPanel.setBackground(new Color(165,64,115));
 
         // Player Panel
         DicePanel dicePanel = new DicePanel(100, 170);
@@ -70,6 +70,15 @@ public class Main {
         frame.add(infoPanel, BorderLayout.EAST);
 
         frame.pack();
+        frame.setLocationRelativeTo(null);
+        // Try this if the above setLocationRelativeTo doesnt'work
+        // centreWindow(frame);
         frame.setVisible(true);
+    }
+    public static void centreWindow(Window frame) {
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
+        int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
+        frame.setLocation(x, y);
     }
 }
