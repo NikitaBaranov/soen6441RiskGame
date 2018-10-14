@@ -1,4 +1,4 @@
-package view;
+package ui.view;
 
 import model.Country;
 import model.Neighbour;
@@ -12,12 +12,14 @@ import java.util.List;
 public class MapPanel extends JPanel {
     private List<Neighbour> neighbours;
     private List<Country> countries;
-    private PlayerStatusPanel countryInfo;
+    TopStatusPanel topStatusPanel;
+    private RightStatusPanel rightStatusPanel;
 
-    public MapPanel(Dimension dimension, List<Country> countries, List<Neighbour> neighbours, PlayerStatusPanel countryInfo) {
+    public MapPanel(Dimension dimension, List<Country> countries, List<Neighbour> neighbours, TopStatusPanel topStatusPanel, RightStatusPanel rightStatusPanel) {
         this.countries = countries;
         this.neighbours = neighbours;
-        this.countryInfo = countryInfo;
+        this.topStatusPanel = topStatusPanel;
+        this.rightStatusPanel = rightStatusPanel;
         this.setPreferredSize(dimension);
 
         addMouseListener(new MouseAdapter() {
@@ -28,11 +30,18 @@ public class MapPanel extends JPanel {
                 for (Country country : countries) {
                     country.resetView();
                 }
-                countryInfo.reset();
+                topStatusPanel.reset();
+                rightStatusPanel.reset();
 
                 for (Country country : countries) {
                     if (country.isInBorder(mouse.x, mouse.y)) {
-                        countryInfo.setCountry(country);
+                        topStatusPanel.setPlayer(country.getPlayer());
+                        topStatusPanel.setGamePhase("Game Phase");
+                        topStatusPanel.setGameState("Game State");
+                        topStatusPanel.setTurnPhrase("Turn phrase");
+
+                        rightStatusPanel.setCountry(country);
+                        rightStatusPanel.setPlayer(country.getPlayer());
                         country.select();
                         System.out.print(" selected " + country.getName());
                     }

@@ -10,14 +10,20 @@ public class Country {
     private int ARMY_BACKGROUND_WITHT = 6;
 
     private String name;
-    private int x;
-    private int y;
-    private int radius;
-    private int army;
-    private List<Country> neighbours = new ArrayList<>();
-    private boolean isSelected;
-    private boolean isHighlited;
     private Player player;
+
+    private int x = 0;
+    private int y = 0;
+    private int radius = 0;
+    private int army = 0;
+    private List<Country> neighbours = new ArrayList<>();
+    private boolean isSelected = false;
+    private boolean isHighlited = false;
+
+    public Country(String name, Player player) {
+        this.name = name;
+        this.player = player;
+    }
 
     public Country(String name, int x, int y, int radius, Player player) {
         this.name = name;
@@ -25,10 +31,6 @@ public class Country {
         this.y = y;
         this.radius = radius;
         this.player = player;
-
-        this.army = 1;
-        this.isSelected = false;
-        this.isHighlited = false;
     }
 
     public String getName() {
