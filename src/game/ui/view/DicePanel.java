@@ -10,7 +10,6 @@ import java.io.IOException;
 
 public class DicePanel extends JPanel {
     public final int DICE_ROW_TO_SHOW = 3;
-    private final int DICE_MARGIN = 5;
     private DiceEnum[] redDice = new DiceEnum[DICE_ROW_TO_SHOW];
     private DiceEnum[] whiteDice = new DiceEnum[DICE_ROW_TO_SHOW];
     private int width;
@@ -29,6 +28,7 @@ public class DicePanel extends JPanel {
     public void setDices() {
         setDices(redDice, whiteDice);
     }
+
     public void setDices(DiceEnum[] redDice, DiceEnum[] whiteDice) {
         this.redDice = redDice;
         this.whiteDice = whiteDice;

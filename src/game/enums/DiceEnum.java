@@ -1,5 +1,8 @@
 package game.enums;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum DiceEnum {
     EMPTY(0, "die0.png"),
     ONE(1, "die1.png"),

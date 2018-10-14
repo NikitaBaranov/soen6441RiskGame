@@ -16,8 +16,9 @@ public class MapLoader {
     public static int RADIUS = 20;
     public static List<Country> countries = new ArrayList<>();
     public static List<Neighbour> neighbours = new ArrayList<>();
+    public static List<Player> players = new ArrayList<>();
 
-    public MapLoader(int players, String filePath) {
+    public MapLoader(int numberOfPlayers, String filePath) {
         String line;
         // TODO Create players;
         // create additional array of players
@@ -62,6 +63,10 @@ public class MapLoader {
             player3.setArtillery(r.nextInt(100));
             player3.setWildcards(r.nextInt(100));
             player3.setBonus(r.nextInt(100));
+
+            players.add(player1);
+            players.add(player2);
+            players.add(player3);
 
             countries.add(new Country("Canada", 100, 100, RADIUS, player1));
             countries.add(new Country("USA", 100, 300, RADIUS, player1));
