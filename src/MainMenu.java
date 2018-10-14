@@ -1,5 +1,3 @@
-package game.ui;
-
 import map_editor.StartEditor;
 import game.utils.MapLoader;
 

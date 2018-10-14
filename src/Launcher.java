@@ -1,5 +1,3 @@
-import game.ui.MainMenu;
-
 public class Launcher {
 
     public Launcher(String title, int width, int height){
