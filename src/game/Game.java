@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import static game.enums.GamePhase.FORTIFYING;
 import static game.enums.GamePhase.PLACING_ARMIES;
 
 public class Game {
@@ -74,12 +75,15 @@ public class Game {
         return new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 Point mouse = e.getPoint();
-//                System.out.print(" x = " + mouse.x + " y = " + mouse.y);
+                System.out.println(" x = " + mouse.x + " y = " + mouse.y);
+                for (Country c : countries) {
+                    c.resetView();
+                }
 
                 for (Country country : countries) {
                     if (country.isInBorder(mouse.x, mouse.y) && country.getPlayer() == currentPlayer) {
                         makeAction(country);
-//                        System.out.print(" selected " + country.getName());
+                        System.out.println("Selected " + country.getName());
                     }
                 }
                 e.getComponent().repaint();
@@ -91,24 +95,23 @@ public class Game {
     public void makeAction(Country country){
         switch (gamePhase){
             case PLACING_ARMIES:
-
-                for (Country c : countries) {
-                    c.resetView();
-                }
                 topStatusPanel.reset();
                 rightStatusPanel.reset();
 
                 country.setArmy(country.getArmy() + 1);
                 armyToPlace--;
 
+                country.select();
+
                 if(armyToPlace <= 0){
                     int nextPlayerIndex = players.lastIndexOf(currentPlayer) + 1;
                     if(nextPlayerIndex < players.size()) {
                         currentPlayer = players.get(nextPlayerIndex);
+                        armyToPlace = 10;
                     } else {
-                        currentPlayer = players.get(0);
+                        gamePhase = FORTIFYING;
+                        System.out.println("Game state changed to " + gamePhase.getName());
                     }
-                    armyToPlace = 10;
                     for (Country c : countries) {
                         c.resetView();
                     }
@@ -122,7 +125,6 @@ public class Game {
                 rightStatusPanel.setCountry(country);
                 rightStatusPanel.setPlayer(currentPlayer);
 
-                country.select();
 
                 break;
 
@@ -131,7 +133,12 @@ public class Game {
                 break;
 
             case FORTIFYING:
-                System.out.println();
+                currentPlayer = players.get(0);
+                armyToPlace = 10;
+
+                gamePhase = PLACING_ARMIES;
+                System.out.println("Game state changed to " + gamePhase.getName());
+
                 break;
         }
     }
