@@ -26,30 +26,52 @@ public class RightStatusPanel extends JPanel {
     public RightStatusPanel(int width, int height) {
         // setup overall setup
         this.setPreferredSize(new Dimension(width, height));
-//        this.setLayout(new BoxLayout(this, PAGE_AXIS));
-        this.setLayout(new GridLayout(8, 1));
-        nextButton.setMargin(new Insets(5, 10, 5, 10));
-        this.add(nextButton);
-        this.add(new JSeparator(), BorderLayout.CENTER);
-        this.add(new JLabel("Country:", null, SwingConstants.CENTER), BorderLayout.CENTER);
-        this.add(countryPanel);
-        this.add(new JSeparator(), BorderLayout.CENTER);
-        this.add(new JLabel("Cards:", null, SwingConstants.CENTER), BorderLayout.CENTER);
-        this.add(cardsPanel);
-        exchangeButton.setMargin(new Insets(5, 10, 5, 10));
-        this.add(exchangeButton, BorderLayout.CENTER);
+        this.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.insets = new Insets(4,0,4,0);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        nextButton.setMargin(new Insets(10, 0, 10, 0));
+        this.add(nextButton, gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        this.add(new JLabel("Country:", null, SwingConstants.CENTER), gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        this.add(countryPanel, gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.weightx = 0;
+        gbc.weighty = 0;
+        this.add(new JLabel("Cards:", null, SwingConstants.CENTER), gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        this.add(cardsPanel, gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        gbc.weightx = 0;
+        gbc.weighty = 0;
+        exchangeButton.setMargin(new Insets(10, 0, 10, 0));
+        this.add(exchangeButton, gbc);
 
         // setup Country panel
-        countryPanel.setMaximumSize(new Dimension(width, height*1/3));
+        countryPanel.setMaximumSize(new Dimension(width, height));
         countryPanel.setLayout(new GridLayout(2, 2));
-        countryPanel.add(new JLabel("Name", null, SwingConstants.TRAILING));
+        countryPanel.setBackground(new Color(121,180,115));
+        countryPanel.add(new JLabel("Name:", null, SwingConstants.TRAILING));
         countryPanel.add(countryName);
-        countryPanel.add(new JLabel("Army", null, SwingConstants.TRAILING));
+        countryPanel.add(new JLabel("Army:", null, SwingConstants.TRAILING));
         countryPanel.add(countryArmy);
 
         // setup Country panel
-        cardsPanel.setMaximumSize(new Dimension(width, height*2/3));
+        cardsPanel.setMaximumSize(new Dimension(width, height));
         cardsPanel.setLayout(new GridLayout(5, 2));
+        cardsPanel.setBackground(new Color(121,180,115));
         cardsPanel.add(new JLabel("Infantry:",null, SwingConstants.TRAILING));
         cardsPanel.add(playerInfantry);
         cardsPanel.add(new JLabel("Cavalry:",null, SwingConstants.TRAILING));
