@@ -102,7 +102,7 @@ public class Country {
         isSelected = true;
         for (Country country: neighbours) {
             if(country.getPlayer() != this.player){
-                country.highlight();
+                country.setHighlited(true);
             }
         }
     }
@@ -111,17 +111,17 @@ public class Country {
         isSelected = false;
         for (Country country: neighbours) {
             if(country.getPlayer() != this.player){
-                country.unHighlight();
+                country.setHighlited(false);
             }
         }
     }
 
-    public void highlight(){
-        isHighlited = true;
+    public boolean isHighlited() {
+        return isHighlited;
     }
 
-    public void unHighlight(){
-        isHighlited = false;
+    public void setHighlited(boolean highlited) {
+        isHighlited = highlited;
     }
 
     public boolean isInBorder(int x, int y){

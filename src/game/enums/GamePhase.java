@@ -1,9 +1,11 @@
 package game.enums;
 
 public enum  GamePhase {
-    PLACING_ARMIES(1, "Placing New Armies"),
-    ATACKING(2, "Attacking"),
-    FORTIFYING(3, "Fortifying your position");
+    PLACING_ARMIES(0, "Placing New Armies"),
+    ATACKING(1, "Attacking"),
+    FORTIFYING(2, "Fortifying your position"),
+    CHANGE_PLAYER(3, "Change Player");
+
 
     private String name;
     private int number;
