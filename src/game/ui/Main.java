@@ -63,11 +63,14 @@ public class Main {
         MapPanel mapPanel = new MapPanel(new Dimension(950, height), game);
         //mapPanel.setBorder(new LineBorder(Color.BLACK, 4));
         mapPanel.setBackground(new Color(119,178,140));
+        game.mapPanel = mapPanel;
 
         // Adding panels
         infoPanel.add(rightStatusPanel);
         infoPanel.add(dicePanel);
         //infoPanel.setBorder(new LineBorder(Color.RED, 1));
+
+        game.initialise();
 
         frame.add(topStatusPanel, BorderLayout.NORTH);
         frame.add(mapPanel, BorderLayout.WEST);

@@ -6,6 +6,7 @@ import game.model.Country;
 import game.model.Neighbour;
 import game.model.Player;
 import game.ui.view.DicePanel;
+import game.ui.view.MapPanel;
 import game.ui.view.RightStatusPanel;
 import game.ui.view.TopStatusPanel;
 import game.utils.MapLoader;
@@ -29,8 +30,8 @@ public class Game {
     public List<Neighbour> neighbours = MapLoader.neighbours;
     public List<Player> players = MapLoader.players;
 
-    private GamePhase gamePhase = PLACING_ARMIES;
-    private Player currentPlayer = players.get(0);
+    private GamePhase gamePhase;
+    private Player currentPlayer;
     private int armyToPlace = 10;
 
     private Map<Integer, DiceEnum> diceEnumMap = new HashMap<>();
@@ -39,15 +40,27 @@ public class Game {
 
     public TopStatusPanel topStatusPanel;
     public RightStatusPanel rightStatusPanel;
+    public MapPanel mapPanel;
     public DicePanel dicePanel;
 
     public Game() {
+        // Setup dice
         diceEnumMap.put(1, DiceEnum.ONE);
         diceEnumMap.put(2, DiceEnum.TWO);
         diceEnumMap.put(3, DiceEnum.THREE);
         diceEnumMap.put(4, DiceEnum.FOUR);
         diceEnumMap.put(5, DiceEnum.FIVE);
         diceEnumMap.put(6, DiceEnum.SIX);
+    }
+
+    public void initialise(){
+        // initial setup.
+        currentPlayer = players.get(0);
+        gamePhase = PLACING_ARMIES;
+
+        topStatusPanel.setPlayer(currentPlayer);
+        topStatusPanel.setGamePhase(gamePhase.getName());
+        topStatusPanel.setTurnPhrase("Armies to place " + armyToPlace);
     }
 
     public int getRADIUS() {
@@ -86,8 +99,6 @@ public class Game {
                         System.out.println("Selected " + country.getName());
                     }
                 }
-                e.getComponent().repaint();
-//                System.out.println();
             }
         };
     }
@@ -95,8 +106,7 @@ public class Game {
     public void makeAction(Country country){
         switch (gamePhase){
             case PLACING_ARMIES:
-                topStatusPanel.reset();
-                rightStatusPanel.reset();
+                reset();
 
                 country.setArmy(country.getArmy() + 1);
                 armyToPlace--;
@@ -115,15 +125,11 @@ public class Game {
                     country.unSelect();
                 }
 
-                topStatusPanel.setPlayer(currentPlayer);
-//                topStatusPanel.setGameState();
-                topStatusPanel.setGamePhase(gamePhase.getName());
                 topStatusPanel.setTurnPhrase("Armies to place " + armyToPlace);
 
                 rightStatusPanel.setCountry(country);
-                rightStatusPanel.setPlayer(currentPlayer);
 
-
+                refresh();
                 break;
 
             case ATACKING:
@@ -150,5 +156,18 @@ public class Game {
         }
 
         dicePanel.setDices(redDice, whiteDice);
+    }
+
+    private void refresh(){
+        topStatusPanel.setPlayer(currentPlayer);
+        topStatusPanel.setGamePhase(gamePhase.getName());
+        mapPanel.repaint();
+        rightStatusPanel.setPlayer(currentPlayer);
+    }
+
+    private void reset(){
+        topStatusPanel.reset();
+        mapPanel.repaint();
+        rightStatusPanel.reset();
     }
 }
