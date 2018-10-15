@@ -1,5 +1,6 @@
 package game.ui.view;
 
+import game.Game;
 import game.model.Country;
 import game.model.Player;
 
@@ -23,7 +24,7 @@ public class RightStatusPanel extends JPanel {
     private JPanel countryPanel = new JPanel();
     private JPanel cardsPanel = new JPanel();
 
-    public RightStatusPanel(int width, int height) {
+    public RightStatusPanel(int width, int height, Game game) {
         // setup overall setup
         this.setPreferredSize(new Dimension(width, height));
         this.setLayout(new GridBagLayout());
@@ -32,6 +33,7 @@ public class RightStatusPanel extends JPanel {
         gbc.insets = new Insets(4,0,4,0);
         gbc.gridx = 0;
         gbc.gridy = 0;
+        nextButton.addActionListener(game.getNextTurnButton());
         nextButton.setMargin(new Insets(10, 0, 10, 0));
         this.add(nextButton, gbc);
         gbc.gridx = 0;

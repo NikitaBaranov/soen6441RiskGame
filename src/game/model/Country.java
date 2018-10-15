@@ -15,7 +15,7 @@ public class Country {
     private int x = 0;
     private int y = 0;
     private int radius = 0;
-    private int army = 0;
+    private int army = 1;
     private List<Country> neighbours = new ArrayList<>();
     private boolean isSelected = false;
     private boolean isHighlited = false;

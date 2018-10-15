@@ -42,7 +42,7 @@ public class Main {
 
         // Right Info Panel
         // Player Panel
-        RightStatusPanel rightStatusPanel = new RightStatusPanel(220, 250);
+        RightStatusPanel rightStatusPanel = new RightStatusPanel(220, 250, game);
         //rightStatusPanel.setBorder(new LineBorder(Color.BLUE, 1));
         rightStatusPanel.setBackground(new Color(65,102,138));
         game.rightStatusPanel = rightStatusPanel;
