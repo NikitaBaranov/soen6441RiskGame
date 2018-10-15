@@ -112,9 +112,7 @@ public class Game {
                         gamePhase = FORTIFYING;
                         System.out.println("Game state changed to " + gamePhase.getName());
                     }
-                    for (Country c : countries) {
-                        c.resetView();
-                    }
+                    country.unSelect();
                 }
 
                 topStatusPanel.setPlayer(currentPlayer);

@@ -107,8 +107,21 @@ public class Country {
         }
     }
 
+    public void unSelect(){
+        isSelected = false;
+        for (Country country: neighbours) {
+            if(country.getPlayer() != this.player){
+                country.unHighlight();
+            }
+        }
+    }
+
     public void highlight(){
         isHighlited = true;
+    }
+
+    public void unHighlight(){
+        isHighlited = false;
     }
 
     public boolean isInBorder(int x, int y){
