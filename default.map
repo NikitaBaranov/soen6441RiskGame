@@ -4,9 +4,16 @@ author=4ban
 [Continents]
 America=2
 Europe=3
+Africa=1
 
 [Territories]
-Canada,34,23,America,Usa
-Usa,37,37,America,Canada,England
-England,120,34,Europe,Usa,Germany
-Germany,125,60,Europe,England
+Canada,94,93,America,Usa,Mexico
+Usa,237,147,America,Canada,England,Mexico
+Mexico,90,245,America,Usa,Canada
+Brasil,130,345,America,Mexico,Argentina
+Argentina,90,445,America,Brasil
+England,420,134,Europe,Usa,Germany,Russia
+Germany,525,350,Europe,England,Russia
+Russia,700,50,Europe,England,Germany,Japan
+Japan,800,300,Europe,Russia,Nowhere
+Nowhere,500,500,Africa,Japan,Germany
