@@ -34,6 +34,7 @@ public class Game {
     public MapPanel mapPanel;
     public DicePanel dicePanel;
     Map<Integer, GamePhase> gamePhaseMap = new HashMap<>();
+    private Random RANDOM = new Random();
     private GamePhase currentGamePhase;
     private Player currentPlayer;
     private int armyToPlace = 10;
@@ -134,6 +135,20 @@ public class Game {
                             }
                         }
 
+                        // Emulate fights
+                        for (Country c : countries) {
+                            c.setArmy(c.getArmy() - RANDOM.nextInt(c.getArmy()));
+                        }
+
+                        // Init Cards
+                        for(Player player : players){
+                            player.setInfantry(RANDOM.nextInt(10));
+                            player.setCavalry(RANDOM.nextInt(10));
+                            player.setArtillery(RANDOM.nextInt(10));
+                            player.setWildcards(RANDOM.nextInt(10));
+                            player.setBonus(RANDOM.nextInt(10));
+                        }
+
                         break;
 
                     case FORTIFYING:
@@ -192,11 +207,10 @@ public class Game {
     }
 
     private void rollDice() {
-        Random r = new Random();
 
         for (int i = 0; i < DICE_ROW_TO_SHOW; i++) {
-            redDice[i] = diceEnumMap.get(r.nextInt(6) + 1);
-            whiteDice[i] = diceEnumMap.get(r.nextInt(6) + 1);
+            redDice[i] = diceEnumMap.get(RANDOM.nextInt(6) + 1);
+            whiteDice[i] = diceEnumMap.get(RANDOM.nextInt(6) + 1);
         }
 
         dicePanel.setDices(redDice, whiteDice);
