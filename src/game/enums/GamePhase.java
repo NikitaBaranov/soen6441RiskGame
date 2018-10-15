@@ -6,7 +6,6 @@ public enum  GamePhase {
     FORTIFYING(2, "Fortifying your position"),
     CHANGE_PLAYER(3, "Change Player");
 
-
     private String name;
     private int number;
 
