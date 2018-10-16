@@ -56,7 +56,7 @@ public class Main {
         // Left Panel
         // Map Panel Map
         //TODO: Extract Logic and reshuffle top to bottom left to right.
-        MapPanel mapPanel = new MapPanel(new Dimension(950, height), game);
+        MapPanel mapPanel = new MapPanel(new Dimension(width-250, height), game);
         //mapPanel.setBorder(new LineBorder(Color.BLACK, 4));
         mapPanel.setBackground(new Color(119,178,140));
         game.mapPanel = mapPanel;
