@@ -34,6 +34,7 @@ public class RightStatusPanel extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 0;
         nextButton.addActionListener(game.getNextTurnButton());
+        game.nextTurnButton = nextButton;
         nextButton.setMargin(new Insets(10, 0, 10, 0));
         this.add(nextButton, gbc);
         gbc.gridx = 0;

@@ -15,7 +15,7 @@ public class Country {
     private int x = 0;
     private int y = 0;
     private int radius = 0;
-    private int army = 1;
+    private int army = 0;
     private List<Country> neighbours = new ArrayList<>();
     private boolean isSelected = false;
     private boolean isHighlited = false;
@@ -25,12 +25,12 @@ public class Country {
         this.player = player;
     }
 
-    public Country(String name, int x, int y, int radius, Player player) {
+    public Country(String name, int x, int y, int radius) {
         this.name = name;
         this.x = x;
         this.y = y;
         this.radius = radius;
-        this.player = player;
+//        this.player = player;
     }
 
     public String getName() {
@@ -131,37 +131,49 @@ public class Country {
     public void draw (Graphics g){
         Graphics2D g2d = (Graphics2D) g;
 
-        if(isSelected){
-            Ellipse2D.Double selection = new Ellipse2D.Double(x - radius - HIGHLIGHT_BORDER_WITHT/2, y - radius -HIGHLIGHT_BORDER_WITHT/2 , radius * 2 + HIGHLIGHT_BORDER_WITHT, radius * 2 + HIGHLIGHT_BORDER_WITHT);
-            g2d.setColor(Color.GREEN);
-            g2d.fill(selection);
-            g2d.setColor(Color.BLACK);
-            g2d.draw(selection);
+        if (player != null) {
+            if (isSelected) {
+                Ellipse2D.Double selection = new Ellipse2D.Double(x - radius - HIGHLIGHT_BORDER_WITHT / 2, y - radius - HIGHLIGHT_BORDER_WITHT / 2, radius * 2 + HIGHLIGHT_BORDER_WITHT, radius * 2 + HIGHLIGHT_BORDER_WITHT);
+                g2d.setColor(Color.GREEN);
+                g2d.fill(selection);
+                g2d.setColor(Color.BLACK);
+                g2d.draw(selection);
 
-        } else if (isHighlited){
-            Ellipse2D.Double highlight = new Ellipse2D.Double(x - radius - HIGHLIGHT_BORDER_WITHT/2, y - radius -HIGHLIGHT_BORDER_WITHT/2 , radius * 2 + HIGHLIGHT_BORDER_WITHT, radius * 2 + HIGHLIGHT_BORDER_WITHT);
-            g2d.setColor(Color.RED);
-            g2d.fill(highlight);
+            } else if (isHighlited) {
+                Ellipse2D.Double highlight = new Ellipse2D.Double(x - radius - HIGHLIGHT_BORDER_WITHT / 2, y - radius - HIGHLIGHT_BORDER_WITHT / 2, radius * 2 + HIGHLIGHT_BORDER_WITHT, radius * 2 + HIGHLIGHT_BORDER_WITHT);
+                g2d.setColor(Color.RED);
+                g2d.fill(highlight);
+                g2d.setColor(Color.BLACK);
+                g2d.draw(highlight);
+            }
+
+            Ellipse2D.Double playerColor = new Ellipse2D.Double(x - radius, y - radius, radius * 2, radius * 2);
+            g2d.setColor(player.getColor());
+            g2d.fill(playerColor);
             g2d.setColor(Color.BLACK);
-            g2d.draw(highlight);
+            g2d.draw(playerColor);
+
+            Ellipse2D.Double armyBackground = new Ellipse2D.Double(x - (radius - ARMY_BACKGROUND_WITHT), y - (radius - ARMY_BACKGROUND_WITHT), (radius - ARMY_BACKGROUND_WITHT) * 2, (radius - ARMY_BACKGROUND_WITHT) * 2);
+            g2d.setColor(Color.WHITE);
+            g2d.fill(armyBackground);
+            g2d.setColor(Color.BLACK);
+            g2d.draw(armyBackground);
+
+            g2d.setColor(Color.BLACK);
+            g2d.drawString(Integer.toString(army), x - 3, y + 5);
+
+            g2d.setColor(Color.BLACK);
+            g2d.drawString(name, x - radius, y - radius - ARMY_BACKGROUND_WITHT);
+        } else {
+
+            Ellipse2D.Double armyBackground = new Ellipse2D.Double(x - (radius - ARMY_BACKGROUND_WITHT), y - (radius - ARMY_BACKGROUND_WITHT), (radius - ARMY_BACKGROUND_WITHT) * 2, (radius - ARMY_BACKGROUND_WITHT) * 2);
+            g2d.setColor(Color.WHITE);
+            g2d.fill(armyBackground);
+            g2d.setColor(Color.BLACK);
+            g2d.draw(armyBackground);
+
+            g2d.setColor(Color.BLACK);
+            g2d.drawString(name, x - radius, y - radius - ARMY_BACKGROUND_WITHT);
         }
-
-        Ellipse2D.Double playerColor = new Ellipse2D.Double(x - radius, y - radius, radius * 2, radius * 2);
-        g2d.setColor(player.getColor());
-        g2d.fill(playerColor);
-        g2d.setColor(Color.BLACK);
-        g2d.draw(playerColor);
-
-        Ellipse2D.Double armyBackground = new Ellipse2D.Double(x - (radius - ARMY_BACKGROUND_WITHT) , y - (radius - ARMY_BACKGROUND_WITHT) , (radius - ARMY_BACKGROUND_WITHT) * 2, (radius - ARMY_BACKGROUND_WITHT) * 2);
-        g2d.setColor(Color.WHITE);
-        g2d.fill(armyBackground);
-        g2d.setColor(Color.BLACK);
-        g2d.draw(armyBackground);
-
-        g2d.setColor(Color.BLACK);
-        g2d.drawString(Integer.toString(army), x - 3, y + 5);
-
-        g2d.setColor(Color.BLACK);
-        g2d.drawString(name, x - radius, y - radius - ARMY_BACKGROUND_WITHT);
     }
 }
