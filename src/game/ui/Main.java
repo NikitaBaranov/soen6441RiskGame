@@ -5,6 +5,7 @@ import game.ui.view.DicePanel;
 import game.ui.view.MapPanel;
 import game.ui.view.RightStatusPanel;
 import game.ui.view.TopStatusPanel;
+import game.utils.MapLoader;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,15 +15,15 @@ public class Main {
     private int width = 1200;
     private int height = 700;
 
-    public Main(Game game) {
+    public Main(Game game, MapLoader loader) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                createAndShowGui(game);
+                createAndShowGui(game, loader);
             }
         });
     }
 
-    private void createAndShowGui(Game game) {
+    private void createAndShowGui(Game game, MapLoader loader) {
         final JFrame frame = new JFrame("Risk");
         frame.setPreferredSize(new Dimension(width,height));
         //frame.setDefaultLookAndFeelDecorated(true);
@@ -56,7 +57,7 @@ public class Main {
         // Left Panel
         // Map Panel Map
         //TODO: Extract Logic and reshuffle top to bottom left to right.
-        MapPanel mapPanel = new MapPanel(new Dimension(width-250, height), game);
+        MapPanel mapPanel = new MapPanel(new Dimension(width-250, height), game, loader);
         //mapPanel.setBorder(new LineBorder(Color.BLACK, 4));
         mapPanel.setBackground(new Color(119,178,140));
         game.mapPanel = mapPanel;

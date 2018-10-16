@@ -20,8 +20,10 @@ public class MapLoader {
     public static List<Country> countries = new ArrayList<>();
     public static List<Neighbour> neighbours = new ArrayList<>();
     public static List<Player> players = new ArrayList<>();
+    public String mapPath;
 
     public MapLoader(int numberOfPlayers, String filePath) {
+        mapPath = filePath;
         String line;
         Color[] playerColor = new Color[4];
 
@@ -87,7 +89,7 @@ public class MapLoader {
             }
             // Create the instance of the game class and send it to Main
             Game game = new Game();
-            new Main(game);
+            new Main(game, this);
         }
         catch(FileNotFoundException ex) {
             System.out.println("Unable to open file '" + filePath + "'");
@@ -96,5 +98,8 @@ public class MapLoader {
             System.out.println("Error reading file '" + filePath + "'");
             ex.printStackTrace();
         }
+    }
+    public String getFilePath(){
+        return mapPath;
     }
 }

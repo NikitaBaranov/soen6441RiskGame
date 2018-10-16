@@ -8,7 +8,7 @@ import java.awt.*;
 public class TopStatusPanel extends JPanel {
     private JLabel playerColor = new JLabel();
     private JLabel playerName = new JLabel();
-    private JLabel gameState = new JLabel();
+    //    private JLabel gameState = new JLabel();
     private JLabel gamePhase = new JLabel();
     private JLabel turnPhrase = new JLabel();
 
@@ -23,12 +23,12 @@ public class TopStatusPanel extends JPanel {
         separator1.setForeground(new Color(121,180,115)); // make it invisible
         this.add(separator1);
 
-        this.add(new JLabel("State: "));
-        this.add(gameState);
-        JSeparator separator2 = new JSeparator(SwingConstants.HORIZONTAL); // Horizontal separator
-        separator2.setBackground(new Color(121,180,115)); // make it invisible
-        separator2.setForeground(new Color(121,180,115)); // make it invisible
-        this.add(separator2);
+//        this.add(new JLabel("State: "));
+//        this.add(gameState);
+//        JSeparator separator2 = new JSeparator(SwingConstants.HORIZONTAL); // Horizontal separator
+//        separator2.setBackground(new Color(121,180,115)); // make it invisible
+//        separator2.setForeground(new Color(121,180,115)); // make it invisible
+//        this.add(separator2);
 
         this.add(new JLabel("Status: "));
         this.add(turnPhrase);
@@ -47,9 +47,9 @@ public class TopStatusPanel extends JPanel {
         playerName.setForeground(new Color(Integer.parseInt(colorS)));
     }
 
-    public void setGameState(String gameState) {
-        this.gameState.setText(gameState);
-    }
+//    public void setGameState(String gameState) {
+//        this.gameState.setText(gameState);
+//    }
 
     public void setGamePhase(String gamePhase) {
         this.gamePhase.setText(gamePhase);
@@ -61,7 +61,7 @@ public class TopStatusPanel extends JPanel {
 
     public void reset() {
         playerName.setText("");
-        gameState.setText("");
+//        gameState.setText("");
         gamePhase.setText("");
         turnPhrase.setText("");
     }
