@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.Random;
 
 import static game.enums.GamePhase.ATACKING;
+import static game.enums.GamePhase.FORTIFYING;
 import static game.enums.GamePhase.INITIAL_PLACING_ARMIES;
 import static game.enums.GamePhase.PLACING_ARMIES;
 
@@ -41,11 +42,10 @@ public class Game {
     private Random RANDOM = new Random();
     private GamePhase currentGamePhase;
     private Player currentPlayer;
-    private int armyToPlace;
+    private int armyToPlace = 10;
     private Map<Integer, DiceEnum> diceEnumMap = new HashMap<>();
     private DiceEnum[] redDice = new DiceEnum[DICE_ROW_TO_SHOW];
     private DiceEnum[] whiteDice = new DiceEnum[DICE_ROW_TO_SHOW];
-    private int countriesToPlace;
 
     public Game() {
         // Setup Game Phases
@@ -53,7 +53,6 @@ public class Game {
         gamePhaseMap.put(1, GamePhase.PLACING_ARMIES);
         gamePhaseMap.put(2, GamePhase.ATACKING);
         gamePhaseMap.put(3, GamePhase.FORTIFYING);
-        gamePhaseMap.put(4, GamePhase.CHANGE_PLAYER);
 
         // Setup dice
         diceEnumMap.put(1, DiceEnum.ONE);
@@ -69,19 +68,17 @@ public class Game {
         currentPlayer = players.get(0);
         currentGamePhase = INITIAL_PLACING_ARMIES;
 
-//        for (Country c : countries) {
-//            if (c.getPlayer() == currentPlayer) {
-//                c.setHighlited(true);
-//            }
-//        }
+        for (Country c : countries) {
+            if (c.getPlayer() == currentPlayer) {
+                c.setHighlited(true);
+            }
+        }
 
         topStatusPanel.setPlayer(currentPlayer);
         topStatusPanel.setGamePhase(currentGamePhase.getName());
         topStatusPanel.setTurnPhrase("Select a country to place your army.");
 
         nextTurnButton.setEnabled(false);
-        countriesToPlace = countries.size();
-        armyToPlace = countries.size() * 2;
 
         refresh();
     }
@@ -131,16 +128,21 @@ public class Game {
             public void actionPerformed(ActionEvent e) {
                 reset();
 
-                GamePhase nextGamePhase = gamePhaseMap.get((currentGamePhase.getNumber() + 1) % gamePhaseMap.size());
-                System.out.println("Next Turn Button Clicked. Next phase is " + nextGamePhase.getName());
-                currentGamePhase = nextGamePhase;
+//                GamePhase nextGamePhase = gamePhaseMap.get((currentGamePhase.getNumber() + 1) % gamePhaseMap.size());
+//                System.out.println("Next Turn Button Clicked. Next phase is " + nextGamePhase.getName());
+//                currentGamePhase = nextGamePhase;
 
                 switch (currentGamePhase) {
                     case INITIAL_PLACING_ARMIES:
+
+                        currentGamePhase = ATACKING;
+                        System.out.println("Next Turn Button Clicked. Next Player is " + currentGamePhase);
                         break;
 
                     case PLACING_ARMIES:
 
+                        currentGamePhase = ATACKING;
+                        System.out.println("Next Turn Button Clicked. Next Player is " + currentGamePhase);
                         break;
 
                     case ATACKING:
@@ -166,17 +168,19 @@ public class Game {
                             player.setBonus(RANDOM.nextInt(10));
                         }
 
+                        currentGamePhase = FORTIFYING;
+                        System.out.println("Next Turn Button Clicked. Next Player is " + currentGamePhase);
                         break;
 
                     case FORTIFYING:
-                        break;
 
-                    case CHANGE_PLAYER:
+                        currentGamePhase = PLACING_ARMIES;
+                        System.out.println("Next Turn Button Clicked. Next Player is " + currentGamePhase);
+
                         Player nextPlayer = players.get((players.indexOf(currentPlayer) + 1) % players.size());
-                        System.out.println("Next Turn Button Clicked. Next Player is " + nextPlayer.getName());
                         currentPlayer = nextPlayer;
                         armyToPlace = 10;
-                        currentGamePhase = PLACING_ARMIES;
+
                         for (Country country : countries) {
                             if (country.getPlayer() == currentPlayer) {
                                 country.setHighlited(true);
@@ -196,30 +200,32 @@ public class Game {
             case INITIAL_PLACING_ARMIES:
                 reset();
 
-                if (country.getPlayer() == null) {
-                    country.setPlayer(currentPlayer);
+                if (armyToPlace > 0 && country.getPlayer() == currentPlayer) {
                     country.setArmy(country.getArmy() + 1);
 
                     Player nextPlayer = players.get((players.indexOf(currentPlayer) + 1) % players.size());
                     System.out.println("Next Turn Button Clicked. Next Player is " + nextPlayer.getName());
                     currentPlayer = nextPlayer;
-                    countriesToPlace--;
-                    armyToPlace--;
 
-                } else {
-                    if (countriesToPlace <= 0 && country.getPlayer() == currentPlayer) {
-                        country.setArmy(country.getArmy() + 1);
-
-                        Player nextPlayer = players.get((players.indexOf(currentPlayer) + 1) % players.size());
-                        System.out.println("Next Turn Button Clicked. Next Player is " + nextPlayer.getName());
-                        currentPlayer = nextPlayer;
-                        armyToPlace--;
+                    for (Country c : countries) {
+                        if (c.getPlayer() == currentPlayer) {
+                            c.setHighlited(true);
+                        } else {
+                            c.setHighlited(false);
+                        }
                     }
-                }
 
+                    armyToPlace--;
+                    topStatusPanel.setTurnPhrase("Armies to place " + armyToPlace);
+                }
                 if (armyToPlace <= 0) {
-                    currentGamePhase = ATACKING;
                     nextTurnButton.setEnabled(true);
+                    topStatusPanel.setTurnPhrase("The turn is over. Press \"Next turn\" button.");
+                    for (Country c : countries) {
+                        if (c.getPlayer() == currentPlayer) {
+                            c.setHighlited(false);
+                        }
+                    }
                 }
 
                 refresh();
@@ -230,7 +236,6 @@ public class Game {
                     if (armyToPlace > 0) {
                         reset();
 
-//                    country.select();
                         country.setArmy(country.getArmy() + 1);
                         armyToPlace--;
                         topStatusPanel.setTurnPhrase("Armies to place " + armyToPlace);
@@ -249,6 +254,7 @@ public class Game {
 
             case ATACKING:
                 rollDice();
+                refresh();
                 break;
 
             case FORTIFYING:
@@ -278,5 +284,14 @@ public class Game {
         topStatusPanel.reset();
         mapPanel.repaint();
         rightStatusPanel.reset();
+    }
+
+    private void nextPhase() {
+        GamePhase nextGamePhase = gamePhaseMap.get((currentGamePhase.getNumber() + 1) % gamePhaseMap.size());
+        if (nextGamePhase == INITIAL_PLACING_ARMIES) {
+            nextGamePhase = PLACING_ARMIES;
+        }
+        System.out.println("Next Turn Button Clicked. Next phase is " + nextGamePhase.getName());
+        currentGamePhase = nextGamePhase;
     }
 }

@@ -15,22 +15,17 @@ public class Country {
     private int x = 0;
     private int y = 0;
     private int radius = 0;
-    private int army = 0;
+    private int army = 1;
     private List<Country> neighbours = new ArrayList<>();
     private boolean isSelected = false;
     private boolean isHighlited = false;
 
-    public Country(String name, Player player) {
-        this.name = name;
-        this.player = player;
-    }
-
-    public Country(String name, int x, int y, int radius) {
+    public Country(String name, int x, int y, int radius, Player player) {
         this.name = name;
         this.x = x;
         this.y = y;
         this.radius = radius;
-//        this.player = player;
+        this.player = player;
     }
 
     public String getName() {

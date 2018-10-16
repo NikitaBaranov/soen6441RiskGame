@@ -4,8 +4,7 @@ public enum  GamePhase {
     INITIAL_PLACING_ARMIES(0, "Initial Army placing"),
     PLACING_ARMIES(1, "Placing New Armies"),
     ATACKING(2, "Attacking"),
-    FORTIFYING(3, "Fortifying your position"),
-    CHANGE_PLAYER(4, "Change Player");
+    FORTIFYING(3, "Fortifying your position");
 
     private String name;
     private int number;

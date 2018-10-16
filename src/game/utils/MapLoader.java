@@ -13,6 +13,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class MapLoader {
     public static int RADIUS = 20;
@@ -47,8 +48,7 @@ public class MapLoader {
                 System.out.println(line);
                 if (flag) {
                     String[] countryDetails = line.split(",");
-                    countries.add(new Country(countryDetails[0], Integer.parseInt(countryDetails[1]), Integer.parseInt(countryDetails[2]), RADIUS));
-//                    countries.add(new Country(countryDetails[0], Integer.parseInt(countryDetails[1]), Integer.parseInt(countryDetails[2]), RADIUS, players.get(0)));
+                    countries.add(new Country(countryDetails[0], Integer.parseInt(countryDetails[1]), Integer.parseInt(countryDetails[2]), RADIUS, players.get(0)));
                     String neighbour = "";
                     for (int i=4; i<countryDetails.length; i++) {
                         neighbour += countryDetails[i];
@@ -62,19 +62,19 @@ public class MapLoader {
             }
             bufferedReader.close();
 
-//            int playerDistrib = countries.size() / players.size();
-//            int changeDistrib = playerDistrib * numberOfPlayers;
-//            Random rand = new Random();
+            int playerDistrib = countries.size() / players.size();
+            int changeDistrib = playerDistrib * numberOfPlayers;
+            Random rand = new Random();
 
-//            for (int i=0; i<countries.size(); i++) {
-//                int newPlayer = rand.nextInt(numberOfPlayers);
-//                if (i+1 <= changeDistrib) {
-//                    while (countriesPerPlayer[newPlayer] >= playerDistrib)
-//                        newPlayer = rand.nextInt(numberOfPlayers);
-//                }
-//                countries.get(i).setPlayer(players.get(newPlayer));
-//                countriesPerPlayer[newPlayer]++;
-//            }
+            for (int i = 0; i < countries.size(); i++) {
+                int newPlayer = rand.nextInt(numberOfPlayers);
+                if (i + 1 <= changeDistrib) {
+                    while (countriesPerPlayer[newPlayer] >= playerDistrib)
+                        newPlayer = rand.nextInt(numberOfPlayers);
+                }
+                countries.get(i).setPlayer(players.get(newPlayer));
+                countriesPerPlayer[newPlayer]++;
+            }
 
             for (int i=0; i < countries.size(); i++) {
                 String[] str = neighboursList.get(i).split(",");
