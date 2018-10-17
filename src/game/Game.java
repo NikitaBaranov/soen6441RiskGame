@@ -47,6 +47,10 @@ public class Game {
     private DiceEnum[] redDice = new DiceEnum[DICE_ROW_TO_SHOW];
     private DiceEnum[] whiteDice = new DiceEnum[DICE_ROW_TO_SHOW];
 
+    // Fortifying
+    private Country countryFrom;
+    private Country countryTo;
+
     public Game() {
         // Setup Game Phases
         gamePhaseMap.put(0, INITIAL_PLACING_ARMIES);
@@ -76,31 +80,11 @@ public class Game {
 
         topStatusPanel.setPlayer(currentPlayer);
         topStatusPanel.setGamePhase(currentGamePhase.getName());
-        topStatusPanel.setTurnPhrase("Select a country to place your army.");
+        topStatusPanel.setTurnPhrase("Select a country to place your army. Armies to place  " + armyToPlace);
 
         nextTurnButton.setEnabled(false);
 
         refresh();
-    }
-
-    public int getRADIUS() {
-        return RADIUS;
-    }
-
-    public List<Country> getCountries() {
-        return countries;
-    }
-
-    public void setCountries(List<Country> countries) {
-        this.countries = countries;
-    }
-
-    public List<Neighbour> getNeighbours() {
-        return neighbours;
-    }
-
-    public void setNeighbours(List<Neighbour> neighbours) {
-        this.neighbours = neighbours;
     }
 
 
@@ -108,11 +92,7 @@ public class Game {
         return new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 Point mouse = e.getPoint();
-                System.out.println(" x = " + mouse.x + " y = " + mouse.y);
-//                for (Country c : countries) {
-//                    c.resetView();
-//                }
-
+//                System.out.println(" x = " + mouse.x + " y = " + mouse.y);
                 for (Country country : countries) {
                     if (country.isInBorder(mouse.x, mouse.y)) {
                         makeAction(country);
@@ -127,10 +107,6 @@ public class Game {
         return new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 reset();
-
-//                GamePhase nextGamePhase = gamePhaseMap.get((currentGamePhase.getNumber() + 1) % gamePhaseMap.size());
-//                System.out.println("Next Turn Button Clicked. Next phase is " + nextGamePhase.getName());
-//                currentGamePhase = nextGamePhase;
 
                 switch (currentGamePhase) {
                     case INITIAL_PLACING_ARMIES:
@@ -168,8 +144,11 @@ public class Game {
                             player.setBonus(RANDOM.nextInt(10));
                         }
 
+                        // Prepare to next turn
                         currentGamePhase = FORTIFYING;
+                        topStatusPanel.setTurnPhrase("Select a country to move armies from.");
                         System.out.println("Next Turn Button Clicked. Next Player is " + currentGamePhase);
+
                         break;
 
                     case FORTIFYING:
@@ -180,6 +159,15 @@ public class Game {
                         Player nextPlayer = players.get((players.indexOf(currentPlayer) + 1) % players.size());
                         currentPlayer = nextPlayer;
                         armyToPlace = 10;
+
+                        if (countryFrom != null) {
+                            countryFrom.unSelect(false);
+                        }
+                        countryFrom = null;
+                        if (countryTo != null) {
+                            countryTo.unSelect(false);
+                        }
+                        countryTo = null;
 
                         for (Country country : countries) {
                             if (country.getPlayer() == currentPlayer) {
@@ -216,7 +204,7 @@ public class Game {
                     }
 
                     armyToPlace--;
-                    topStatusPanel.setTurnPhrase("Armies to place " + armyToPlace);
+                    topStatusPanel.setTurnPhrase("Select a country to place your army. Armies to place  " + armyToPlace);
                 }
                 if (armyToPlace <= 0) {
                     nextTurnButton.setEnabled(true);
@@ -258,18 +246,33 @@ public class Game {
                 break;
 
             case FORTIFYING:
-
+                if (country.getPlayer() == currentPlayer) {
+                    if (countryFrom == null) {
+                        countryFrom = country;
+                        topStatusPanel.setTurnPhrase("Select a country to move an army.");
+                        country.select(false);
+                    } else if (countryTo == null && country.isHighlited()) {
+                        countryFrom.unSelect(false);
+                        countryFrom.setSelected(true);
+                        countryTo = country;
+                        countryTo.setHighlited(true);
+                        topStatusPanel.setTurnPhrase("Click on country to move one army.");
+                    }
+                    if (countryFrom != null && countryFrom.getArmy() > 1 && countryTo != null) {
+                        countryFrom.setArmy(countryFrom.getArmy() - 1);
+                        countryTo.setArmy(countryTo.getArmy() + 1);
+                    }
+                    refresh();
+                }
                 break;
         }
     }
 
     private void rollDice() {
-
         for (int i = 0; i < DICE_ROW_TO_SHOW; i++) {
             redDice[i] = diceEnumMap.get(RANDOM.nextInt(6) + 1);
             whiteDice[i] = diceEnumMap.get(RANDOM.nextInt(6) + 1);
         }
-
         dicePanel.setDices(redDice, whiteDice);
     }
 
@@ -286,12 +289,23 @@ public class Game {
         rightStatusPanel.reset();
     }
 
-    private void nextPhase() {
-        GamePhase nextGamePhase = gamePhaseMap.get((currentGamePhase.getNumber() + 1) % gamePhaseMap.size());
-        if (nextGamePhase == INITIAL_PLACING_ARMIES) {
-            nextGamePhase = PLACING_ARMIES;
-        }
-        System.out.println("Next Turn Button Clicked. Next phase is " + nextGamePhase.getName());
-        currentGamePhase = nextGamePhase;
+    public int getRADIUS() {
+        return RADIUS;
+    }
+
+    public List<Country> getCountries() {
+        return countries;
+    }
+
+    public void setCountries(List<Country> countries) {
+        this.countries = countries;
+    }
+
+    public List<Neighbour> getNeighbours() {
+        return neighbours;
+    }
+
+    public void setNeighbours(List<Neighbour> neighbours) {
+        this.neighbours = neighbours;
     }
 }

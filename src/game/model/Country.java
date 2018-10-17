@@ -88,25 +88,37 @@ public class Country {
         isSelected = selected;
     }
 
-    public void resetView(){
+    public void resetView() {
         isSelected = false;
         isHighlited = false;
     }
 
-    public void select(){
+    public void select(boolean enemies) {
         isSelected = true;
-        for (Country country: neighbours) {
-            if(country.getPlayer() != this.player){
-                country.setHighlited(true);
+        for (Country country : neighbours) {
+            if (enemies) {
+                if (country.getPlayer() != this.player) {
+                    country.setHighlited(true);
+                }
+            } else {
+                if (country.getPlayer() == this.player) {
+                    country.setHighlited(true);
+                }
             }
         }
     }
 
-    public void unSelect(){
+    public void unSelect(boolean enemies) {
         isSelected = false;
-        for (Country country: neighbours) {
-            if(country.getPlayer() != this.player){
-                country.setHighlited(false);
+        for (Country country : neighbours) {
+            if (enemies) {
+                if (country.getPlayer() != this.player) {
+                    country.setHighlited(false);
+                }
+            } else {
+                if (country.getPlayer() == this.player) {
+                    country.setHighlited(false);
+                }
             }
         }
     }
@@ -119,56 +131,44 @@ public class Country {
         isHighlited = highlited;
     }
 
-    public boolean isInBorder(int x, int y){
-        return Math.sqrt( Math.pow( x - this.x, 2) + Math.pow( y - this.y, 2) ) < radius;
+    public boolean isInBorder(int x, int y) {
+        return Math.sqrt(Math.pow(x - this.x, 2) + Math.pow(y - this.y, 2)) < radius;
     }
 
-    public void draw (Graphics g){
+    public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
 
-        if (player != null) {
-            if (isSelected) {
-                Ellipse2D.Double selection = new Ellipse2D.Double(x - radius - HIGHLIGHT_BORDER_WITHT / 2, y - radius - HIGHLIGHT_BORDER_WITHT / 2, radius * 2 + HIGHLIGHT_BORDER_WITHT, radius * 2 + HIGHLIGHT_BORDER_WITHT);
-                g2d.setColor(Color.GREEN);
-                g2d.fill(selection);
-                g2d.setColor(Color.BLACK);
-                g2d.draw(selection);
-
-            } else if (isHighlited) {
-                Ellipse2D.Double highlight = new Ellipse2D.Double(x - radius - HIGHLIGHT_BORDER_WITHT / 2, y - radius - HIGHLIGHT_BORDER_WITHT / 2, radius * 2 + HIGHLIGHT_BORDER_WITHT, radius * 2 + HIGHLIGHT_BORDER_WITHT);
-                g2d.setColor(Color.RED);
-                g2d.fill(highlight);
-                g2d.setColor(Color.BLACK);
-                g2d.draw(highlight);
-            }
-
-            Ellipse2D.Double playerColor = new Ellipse2D.Double(x - radius, y - radius, radius * 2, radius * 2);
-            g2d.setColor(player.getColor());
-            g2d.fill(playerColor);
+        if (isSelected) {
+            Ellipse2D.Double selection = new Ellipse2D.Double(x - radius - HIGHLIGHT_BORDER_WITHT / 2, y - radius - HIGHLIGHT_BORDER_WITHT / 2, radius * 2 + HIGHLIGHT_BORDER_WITHT, radius * 2 + HIGHLIGHT_BORDER_WITHT);
+            g2d.setColor(Color.GREEN);
+            g2d.fill(selection);
             g2d.setColor(Color.BLACK);
-            g2d.draw(playerColor);
+            g2d.draw(selection);
 
-            Ellipse2D.Double armyBackground = new Ellipse2D.Double(x - (radius - ARMY_BACKGROUND_WITHT), y - (radius - ARMY_BACKGROUND_WITHT), (radius - ARMY_BACKGROUND_WITHT) * 2, (radius - ARMY_BACKGROUND_WITHT) * 2);
-            g2d.setColor(Color.WHITE);
-            g2d.fill(armyBackground);
+        } else if (isHighlited) {
+            Ellipse2D.Double highlight = new Ellipse2D.Double(x - radius - HIGHLIGHT_BORDER_WITHT / 2, y - radius - HIGHLIGHT_BORDER_WITHT / 2, radius * 2 + HIGHLIGHT_BORDER_WITHT, radius * 2 + HIGHLIGHT_BORDER_WITHT);
+            g2d.setColor(Color.RED);
+            g2d.fill(highlight);
             g2d.setColor(Color.BLACK);
-            g2d.draw(armyBackground);
-
-            g2d.setColor(Color.BLACK);
-            g2d.drawString(Integer.toString(army), x - 3, y + 5);
-
-            g2d.setColor(Color.BLACK);
-            g2d.drawString(name, x - radius, y - radius - ARMY_BACKGROUND_WITHT);
-        } else {
-
-            Ellipse2D.Double armyBackground = new Ellipse2D.Double(x - (radius - ARMY_BACKGROUND_WITHT), y - (radius - ARMY_BACKGROUND_WITHT), (radius - ARMY_BACKGROUND_WITHT) * 2, (radius - ARMY_BACKGROUND_WITHT) * 2);
-            g2d.setColor(Color.WHITE);
-            g2d.fill(armyBackground);
-            g2d.setColor(Color.BLACK);
-            g2d.draw(armyBackground);
-
-            g2d.setColor(Color.BLACK);
-            g2d.drawString(name, x - radius, y - radius - ARMY_BACKGROUND_WITHT);
+            g2d.draw(highlight);
         }
+
+        Ellipse2D.Double playerColor = new Ellipse2D.Double(x - radius, y - radius, radius * 2, radius * 2);
+        g2d.setColor(player.getColor());
+        g2d.fill(playerColor);
+        g2d.setColor(Color.BLACK);
+        g2d.draw(playerColor);
+
+        Ellipse2D.Double armyBackground = new Ellipse2D.Double(x - (radius - ARMY_BACKGROUND_WITHT), y - (radius - ARMY_BACKGROUND_WITHT), (radius - ARMY_BACKGROUND_WITHT) * 2, (radius - ARMY_BACKGROUND_WITHT) * 2);
+        g2d.setColor(Color.WHITE);
+        g2d.fill(armyBackground);
+        g2d.setColor(Color.BLACK);
+        g2d.draw(armyBackground);
+
+        g2d.setColor(Color.BLACK);
+        g2d.drawString(Integer.toString(army), x - 3, y + 5);
+
+        g2d.setColor(Color.BLACK);
+        g2d.drawString(name, x - radius, y - radius - ARMY_BACKGROUND_WITHT);
     }
 }
