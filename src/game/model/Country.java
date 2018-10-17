@@ -11,6 +11,7 @@ public class Country {
 
     private String name;
     private Player player;
+    private Continent continent;
 
     private int x = 0;
     private int y = 0;
@@ -26,6 +27,15 @@ public class Country {
         this.y = y;
         this.radius = radius;
         this.player = player;
+    }
+
+    public Country(String name, Player player, Continent continent, int x, int y, int radius) {
+        this.name = name;
+        this.player = player;
+        this.continent = continent;
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
     }
 
     public String getName() {
@@ -133,6 +143,14 @@ public class Country {
 
     public boolean isInBorder(int x, int y) {
         return Math.sqrt(Math.pow(x - this.x, 2) + Math.pow(y - this.y, 2)) < radius;
+    }
+
+    public Continent getContinent() {
+        return continent;
+    }
+
+    public void setContinent(Continent continent) {
+        this.continent = continent;
     }
 
     public void draw(Graphics g) {
