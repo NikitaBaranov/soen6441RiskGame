@@ -118,25 +118,26 @@ public class Game {
                         currentGamePhase = ATACKING;
                         topStatusPanel.setTurnPhrase("Attack phase is simulated. Press \"Next turn\" button.");
                         System.out.println("Next Turn Button Clicked. Next Player is " + currentGamePhase);
+                        unHighlightPlayreCountries();
                         break;
 
                     case ATACKING:
                         unHighlightPlayreCountries();
 
                         // Emulate fights
-                        for (Country c : countries) {
-                            if (RANDOM.nextInt() > 0.8) {
-                                c.setArmy(c.getArmy() - RANDOM.nextInt(c.getArmy()));
-                            }
-                        }
+//                        for (Country c : countries) {
+//                            if (RANDOM.nextInt() > 0.8) {
+//                                c.setArmy(c.getArmy() - RANDOM.nextInt(c.getArmy()));
+//                            }
+//                        }
 
                         // Init Cards
                         for (Player player : players) {
-                            player.setInfantry(RANDOM.nextInt(10));
-                            player.setCavalry(RANDOM.nextInt(10));
-                            player.setArtillery(RANDOM.nextInt(10));
-                            player.setWildcards(RANDOM.nextInt(10));
-                            player.setBonus(RANDOM.nextInt(10));
+                            player.setInfantry(RANDOM.nextInt() > 0.5 ? player.getInfantry() + 1 : player.getInfantry());
+                            player.setCavalry(RANDOM.nextInt() > 0.5 ? player.getCavalry() + 1 : player.getCavalry());
+                            player.setArtillery(RANDOM.nextInt() > 0.5 ? player.getArtillery() + 1 : player.getArtillery());
+                            player.setWildcards(RANDOM.nextInt() > 0.5 ? player.getWildcards() + 1 : player.getWildcards());
+                            player.setBonus(RANDOM.nextInt() > 0.5 ? player.getBonus() + 1 : player.getBonus());
                         }
 
                         // Prepare to next turn
@@ -148,14 +149,10 @@ public class Game {
                         break;
 
                     case FORTIFYING:
-
                         currentGamePhase = PLACING_ARMIES;
                         System.out.println("Next Turn Button Clicked. Next Player is " + currentGamePhase);
 
-                        Player nextPlayer = players.get((players.indexOf(currentPlayer) + 1) % players.size());
-                        currentPlayer = nextPlayer;
-                        armyToPlace = 10;
-
+                        unHighlightPlayreCountries();
                         if (countryFrom != null) {
                             countryFrom.unSelect(false);
                         }
@@ -165,11 +162,10 @@ public class Game {
                         }
                         countryTo = null;
 
-                        for (Country country : countries) {
-                            if (country.getPlayer() == currentPlayer) {
-                                country.setHighlited(true);
-                            }
-                        }
+                        Player nextPlayer = players.get((players.indexOf(currentPlayer) + 1) % players.size());
+                        currentPlayer = nextPlayer;
+                        armyToPlace = 10;
+                        highlightPayerCountries();
                         break;
                 }
 
