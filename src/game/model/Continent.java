@@ -1,11 +1,12 @@
 package game.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Continent {
-    private String name;
-    private List<Country> countryList;
-    private int bonus;
+    private String name = "";
+    private List<Country> countryList = new ArrayList<>();
+    private int bonus = 0;
 
     public String getName() {
         return name;

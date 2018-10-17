@@ -21,6 +21,7 @@ public class Country {
     private boolean isSelected = false;
     private boolean isHighlited = false;
 
+    @Deprecated
     public Country(String name, int x, int y, int radius, Player player) {
         this.name = name;
         this.x = x;
