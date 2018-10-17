@@ -72,11 +72,7 @@ public class Game {
         currentPlayer = players.get(0);
         currentGamePhase = INITIAL_PLACING_ARMIES;
 
-        for (Country c : countries) {
-            if (c.getPlayer() == currentPlayer) {
-                c.setHighlited(true);
-            }
-        }
+        highlightPayerCountries();
 
         topStatusPanel.setPlayer(currentPlayer);
         topStatusPanel.setGamePhase(currentGamePhase.getName());
@@ -112,21 +108,20 @@ public class Game {
                     case INITIAL_PLACING_ARMIES:
 
                         currentGamePhase = ATACKING;
+                        topStatusPanel.setTurnPhrase("Attack phase is simulated. Press \"Next turn\" button.");
                         System.out.println("Next Turn Button Clicked. Next Player is " + currentGamePhase);
                         break;
 
                     case PLACING_ARMIES:
 
+                        // Prepare to next turn
                         currentGamePhase = ATACKING;
+                        topStatusPanel.setTurnPhrase("Attack phase is simulated. Press \"Next turn\" button.");
                         System.out.println("Next Turn Button Clicked. Next Player is " + currentGamePhase);
                         break;
 
                     case ATACKING:
-                        for (Country c : countries) {
-                            if (c.getPlayer() == currentPlayer) {
-                                c.setHighlited(false);
-                            }
-                        }
+                        unHighlightPlayreCountries();
 
                         // Emulate fights
                         for (Country c : countries) {
@@ -146,8 +141,9 @@ public class Game {
 
                         // Prepare to next turn
                         currentGamePhase = FORTIFYING;
-                        topStatusPanel.setTurnPhrase("Select a country to move armies from.");
+                        topStatusPanel.setTurnPhrase("Select a country to move armies from. ");
                         System.out.println("Next Turn Button Clicked. Next Player is " + currentGamePhase);
+                        highlightPayerCountries();
 
                         break;
 
@@ -209,11 +205,7 @@ public class Game {
                 if (armyToPlace <= 0) {
                     nextTurnButton.setEnabled(true);
                     topStatusPanel.setTurnPhrase("The turn is over. Press \"Next turn\" button.");
-                    for (Country c : countries) {
-                        if (c.getPlayer() == currentPlayer) {
-                            c.setHighlited(false);
-                        }
-                    }
+                    unHighlightPlayreCountries();
                 }
 
                 refresh();
@@ -230,11 +222,7 @@ public class Game {
                         rightStatusPanel.setCountry(country);
 
                     } else {
-                        for (Country c : countries) {
-                            if (c.getPlayer() == currentPlayer) {
-                                c.setHighlited(false);
-                            }
-                        }
+                        unHighlightPlayreCountries();
                     }
                     refresh();
                 }
@@ -248,6 +236,7 @@ public class Game {
             case FORTIFYING:
                 if (country.getPlayer() == currentPlayer) {
                     if (countryFrom == null) {
+                        unHighlightPlayreCountries();
                         countryFrom = country;
                         topStatusPanel.setTurnPhrase("Select a country to move an army.");
                         country.select(false);
@@ -287,6 +276,22 @@ public class Game {
         topStatusPanel.reset();
         mapPanel.repaint();
         rightStatusPanel.reset();
+    }
+
+    private void highlightPayerCountries() {
+        for (Country c : countries) {
+            if (c.getPlayer() == currentPlayer) {
+                c.setHighlited(true);
+            }
+        }
+    }
+
+    private void unHighlightPlayreCountries() {
+        for (Country c : countries) {
+            if (c.getPlayer() == currentPlayer) {
+                c.setHighlited(false);
+            }
+        }
     }
 
     public int getRADIUS() {
