@@ -12,6 +12,7 @@ public class Player {
     private int artillery = 0;
     private int wildcards = 0;
     private int bonus = 0;
+    private int armies = 5;
 
     public Player() {
     }
@@ -75,5 +76,13 @@ public class Player {
 
     public void setBonus(int bonus) {
         this.bonus = bonus;
+    }
+
+    public int getArmies() {
+        return armies;
+    }
+
+    public void setArmies(int armies) {
+        this.armies = armies;
     }
 }

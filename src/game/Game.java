@@ -42,7 +42,6 @@ public class Game {
     private Random RANDOM = new Random();
     private GamePhase currentGamePhase;
     private Player currentPlayer;
-    private int armyToPlace = 10;
     private Map<Integer, DiceEnum> diceEnumMap = new HashMap<>();
     private DiceEnum[] redDice = new DiceEnum[DICE_ROW_TO_SHOW];
     private DiceEnum[] whiteDice = new DiceEnum[DICE_ROW_TO_SHOW];
@@ -76,7 +75,7 @@ public class Game {
 
         topStatusPanel.setPlayer(currentPlayer);
         topStatusPanel.setGamePhase(currentGamePhase.getName());
-        topStatusPanel.setTurnPhrase("Select a country to place your army. Armies to place  " + armyToPlace);
+        topStatusPanel.setTurnPhrase("Select a country to place your army. Armies to place  " + currentPlayer.getArmies());
 
         nextTurnButton.setEnabled(false);
 
@@ -164,7 +163,8 @@ public class Game {
 
                         Player nextPlayer = players.get((players.indexOf(currentPlayer) + 1) % players.size());
                         currentPlayer = nextPlayer;
-                        armyToPlace = 10;
+                        currentPlayer.setArmies(currentPlayer.getArmies() + 10);
+                        topStatusPanel.setTurnPhrase("Select a country to place your army. Armies to place  " + currentPlayer.getArmies());
                         highlightPayerCountries();
                         break;
                 }
@@ -180,8 +180,9 @@ public class Game {
             case INITIAL_PLACING_ARMIES:
                 reset();
 
-                if (armyToPlace > 0 && country.getPlayer() == currentPlayer) {
+                if (currentPlayer.getArmies() > 0 && country.getPlayer() == currentPlayer) {
                     country.setArmy(country.getArmy() + 1);
+                    currentPlayer.setArmies(currentPlayer.getArmies() - 1);
 
                     Player nextPlayer = players.get((players.indexOf(currentPlayer) + 1) % players.size());
                     System.out.println("Next Turn Button Clicked. Next Player is " + nextPlayer.getName());
@@ -195,10 +196,9 @@ public class Game {
                         }
                     }
 
-                    armyToPlace--;
-                    topStatusPanel.setTurnPhrase("Select a country to place your army. Armies to place  " + armyToPlace);
+                    topStatusPanel.setTurnPhrase("Select a country to place your army. Armies to place  " + currentPlayer.getArmies());
                 }
-                if (armyToPlace <= 0) {
+                if (currentPlayer.getArmies() <= 0) {
                     nextTurnButton.setEnabled(true);
                     topStatusPanel.setTurnPhrase("The turn is over. Press \"Next turn\" button.");
                     unHighlightPlayreCountries();
@@ -209,12 +209,12 @@ public class Game {
 
             case PLACING_ARMIES:
                 if (country.getPlayer() == currentPlayer) {
-                    if (armyToPlace > 0) {
+                    if (currentPlayer.getArmies() > 0) {
                         reset();
 
                         country.setArmy(country.getArmy() + 1);
-                        armyToPlace--;
-                        topStatusPanel.setTurnPhrase("Armies to place " + armyToPlace);
+                        currentPlayer.setArmies(currentPlayer.getArmies() - 1);
+                        topStatusPanel.setTurnPhrase("Armies to place " + currentPlayer.getArmies());
                         rightStatusPanel.setCountry(country);
 
                     } else {
