@@ -2,6 +2,7 @@ package game;
 
 import game.enums.DiceEnum;
 import game.enums.GamePhase;
+import game.model.Continent;
 import game.model.Country;
 import game.model.Neighbour;
 import game.model.Player;
@@ -30,9 +31,12 @@ import static game.enums.GamePhase.PLACING_ARMIES;
 public class Game {
     public final int DICE_ROW_TO_SHOW = 3;
     public int RADIUS = MapLoader.RADIUS;
+
     public List<Country> countries = MapLoader.countries;
     public List<Neighbour> neighbours = MapLoader.neighbours;
     public List<Player> players = MapLoader.players;
+    public List<Continent> continents = MapLoader.continents;
+
     public TopStatusPanel topStatusPanel;
     public MapPanel mapPanel;
     public RightStatusPanel rightStatusPanel;
@@ -112,7 +116,6 @@ public class Game {
                         break;
 
                     case PLACING_ARMIES:
-
                         // Prepare to next turn
                         currentGamePhase = ATACKING;
                         topStatusPanel.setTurnPhrase("Attack phase is simulated. Press \"Next turn\" button.");
@@ -161,9 +164,31 @@ public class Game {
                         }
                         countryTo = null;
 
+                        // Change current player
                         Player nextPlayer = players.get((players.indexOf(currentPlayer) + 1) % players.size());
                         currentPlayer = nextPlayer;
-                        currentPlayer.setArmies(currentPlayer.getArmies() + 10);
+
+                        // Add base armies
+                        int countriesOwnedByPlayer = 0;
+                        for (Country country : countries) {
+                            if (country.getPlayer() == currentPlayer) {
+                                countriesOwnedByPlayer++;
+                            }
+                        }
+                        // Integer always rounded down
+                        System.out.println("Player " + currentPlayer.getName() + " owns " + countriesOwnedByPlayer + " countries and  gets " + countriesOwnedByPlayer / 3 + " armies.");
+                        currentPlayer.setArmies(currentPlayer.getArmies() + countriesOwnedByPlayer / 3);
+
+                        // Add continent Bonus
+                        for (Continent continent : continents) {
+                            if (continent.isOwnByOnePlayer()) {
+                                if (continent.getCountryList().get(0).getPlayer() == currentPlayer) {
+                                    currentPlayer.setArmies(currentPlayer.getArmies() + continent.getBonus());
+                                    System.out.println("Player " + currentPlayer.getName() + " owns " + continent.getName() + " continent and  gets " + continent.getBonus() + " armies.");
+                                }
+                            }
+                        }
+
                         topStatusPanel.setTurnPhrase("Select a country to place your army. Armies to place  " + currentPlayer.getArmies());
                         highlightPayerCountries();
                         break;

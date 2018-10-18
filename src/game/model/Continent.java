@@ -1,5 +1,6 @@
 package game.model;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +8,16 @@ public class Continent {
     private String name = "";
     private List<Country> countryList = new ArrayList<>();
     private int bonus = 0;
+    private Color color;
+
+    public Continent() {
+    }
+
+    public Continent(String name, int bonus, Color color) {
+        this.name = name;
+        this.bonus = bonus;
+        this.color = color;
+    }
 
     public String getName() {
         return name;
@@ -30,5 +41,22 @@ public class Continent {
 
     public void setBonus(int bonus) {
         this.bonus = bonus;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public boolean isOwnByOnePlayer() {
+        for (Country country : countryList) {
+            if (country.getPlayer() != countryList.get(0).getPlayer()) {
+                return false;
+            }
+        }
+        return true;
     }
 }

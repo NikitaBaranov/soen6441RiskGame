@@ -1,6 +1,7 @@
 package game.utils;
 
 import game.Game;
+import game.model.Continent;
 import game.model.Country;
 import game.model.Neighbour;
 import game.model.Player;
@@ -12,7 +13,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class MapLoader {
@@ -20,6 +23,7 @@ public class MapLoader {
     public static List<Country> countries = new ArrayList<>();
     public static List<Neighbour> neighbours = new ArrayList<>();
     public static List<Player> players = new ArrayList<>();
+    public static List<Continent> continents = new ArrayList<>();
     public String mapPath;
 
     public MapLoader(int numberOfPlayers, String filePath) {
@@ -35,26 +39,42 @@ public class MapLoader {
         //Player[] playerList = new Player[numberOfPlayers];
 
         int[] countriesPerPlayer = new int[numberOfPlayers];
-        for (int i=0; i<numberOfPlayers; i++) {
+        for (int i = 0; i < numberOfPlayers; i++) {
             players.add(new Player("Player " + (i + 1), playerColor[i]));
             countriesPerPlayer[i] = 0;
         }
 
         List<String> neighboursList = new ArrayList<String>();
 
+        // Stub continents
+        Map<String, Continent> continentsMap = new HashMap<>();
+        continentsMap.put("Eriador", new Continent("Eriador", 4, Color.GREEN));
+        continentsMap.put("Gondor", new Continent("Gondor", 3, Color.WHITE));
+        continentsMap.put("Mordor", new Continent("Mordor", 2, Color.BLACK));
+        continentsMap.put("Rhavanion", new Continent("Rhavanion", 3, Color.YELLOW));
+        continents.addAll(continentsMap.values());
+
         try {
             FileReader fileReader = new FileReader(filePath);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             boolean flag = false;
-            while((line = bufferedReader.readLine()) != null) {
+            while ((line = bufferedReader.readLine()) != null) {
                 System.out.println(line);
                 if (flag) {
                     String[] countryDetails = line.split(",");
-                    countries.add(new Country(countryDetails[0], Integer.parseInt(countryDetails[1]), Integer.parseInt(countryDetails[2]), RADIUS, players.get(0)));
+                    Country countryToAdd = new Country(countryDetails[0],
+                            Integer.parseInt(countryDetails[1]),
+                            Integer.parseInt(countryDetails[2]),
+                            RADIUS,
+                            continentsMap.get(countryDetails[3]),
+                            players.get(0));
+                    continentsMap.get(countryDetails[3]).getCountryList().add(countryToAdd);
+                    countries.add(countryToAdd);
+
                     String neighbour = "";
-                    for (int i=4; i<countryDetails.length; i++) {
+                    for (int i = 4; i < countryDetails.length; i++) {
                         neighbour += countryDetails[i];
-                        if (i!=countryDetails.length-1)
+                        if (i != countryDetails.length - 1)
                             neighbour += ",";
                     }
                     neighboursList.add(neighbour);
@@ -70,18 +90,33 @@ public class MapLoader {
 
             for (int i = 0; i < countries.size(); i++) {
                 int newPlayer = rand.nextInt(numberOfPlayers);
-                if (i + 1 <= changeDistrib) {
-                    while (countriesPerPlayer[newPlayer] >= playerDistrib)
-                        newPlayer = rand.nextInt(numberOfPlayers);
+                // stub to test continents
+                if (countries.get(i).getContinent().getName().equals("Eriador")) {
+                    newPlayer = 0;
+                } else if (countries.get(i).getContinent().getName().equals("Mordor")) {
+                    newPlayer = 1;
+                } else {
+                    if (i + 1 <= changeDistrib) {
+                        while (countriesPerPlayer[newPlayer] >= playerDistrib)
+                            newPlayer = rand.nextInt(numberOfPlayers);
+                    }
                 }
+                // end of stub
+
+                // Original Solution
+//                if (i + 1 <= changeDistrib) {
+//                    while (countriesPerPlayer[newPlayer] >= playerDistrib)
+//                        newPlayer = rand.nextInt(numberOfPlayers);
+//                }
+
                 countries.get(i).setPlayer(players.get(newPlayer));
                 countriesPerPlayer[newPlayer]++;
             }
 
-            for (int i=0; i < countries.size(); i++) {
+            for (int i = 0; i < countries.size(); i++) {
                 String[] str = neighboursList.get(i).split(",");
-                for (int j=0; j<str.length; j++) {
-                    for (int k=0; k<countries.size(); k++)
+                for (int j = 0; j < str.length; j++) {
+                    for (int k = 0; k < countries.size(); k++)
                         if (str[j].equals(countries.get(k).getName()))
                             neighbours.add(new Neighbour(countries.get(i), countries.get(k)));
                 }
@@ -90,16 +125,15 @@ public class MapLoader {
             // Create the instance of the game class and send it to Main
             Game game = new Game();
             new Main(game, this);
-        }
-        catch(FileNotFoundException ex) {
+        } catch (FileNotFoundException ex) {
             System.out.println("Unable to open file '" + filePath + "'");
-        }
-        catch(IOException ex) {
+        } catch (IOException ex) {
             System.out.println("Error reading file '" + filePath + "'");
             ex.printStackTrace();
         }
     }
-    public String getFilePath(){
+
+    public String getFilePath() {
         return mapPath;
     }
 }

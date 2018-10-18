@@ -30,7 +30,7 @@ public class Country {
         this.player = player;
     }
 
-    public Country(String name, Player player, Continent continent, int x, int y, int radius) {
+    public Country(String name, int x, int y, int radius, Continent continent, Player player) {
         this.name = name;
         this.player = player;
         this.continent = continent;
@@ -158,26 +158,35 @@ public class Country {
         Graphics2D g2d = (Graphics2D) g;
 
         if (isSelected) {
-            Ellipse2D.Double selection = new Ellipse2D.Double(x - radius - HIGHLIGHT_BORDER_WITHT / 2, y - radius - HIGHLIGHT_BORDER_WITHT / 2, radius * 2 + HIGHLIGHT_BORDER_WITHT, radius * 2 + HIGHLIGHT_BORDER_WITHT);
+            Ellipse2D.Double selection = new Ellipse2D.Double(x - radius - HIGHLIGHT_BORDER_WITHT, y - radius - HIGHLIGHT_BORDER_WITHT, radius * 2 + HIGHLIGHT_BORDER_WITHT * 2, radius * 2 + HIGHLIGHT_BORDER_WITHT * 2);
             g2d.setColor(Color.GREEN);
             g2d.fill(selection);
             g2d.setColor(Color.BLACK);
             g2d.draw(selection);
 
         } else if (isHighlited) {
-            Ellipse2D.Double highlight = new Ellipse2D.Double(x - radius - HIGHLIGHT_BORDER_WITHT / 2, y - radius - HIGHLIGHT_BORDER_WITHT / 2, radius * 2 + HIGHLIGHT_BORDER_WITHT, radius * 2 + HIGHLIGHT_BORDER_WITHT);
+            Ellipse2D.Double highlight = new Ellipse2D.Double(x - radius - HIGHLIGHT_BORDER_WITHT, y - radius - HIGHLIGHT_BORDER_WITHT, radius * 2 + HIGHLIGHT_BORDER_WITHT * 2, radius * 2 + HIGHLIGHT_BORDER_WITHT * 2);
             g2d.setColor(Color.RED);
             g2d.fill(highlight);
             g2d.setColor(Color.BLACK);
             g2d.draw(highlight);
         }
 
+        // Continent Color
+        Ellipse2D.Double continentColor = new Ellipse2D.Double(x - radius - HIGHLIGHT_BORDER_WITHT / 2, y - radius - HIGHLIGHT_BORDER_WITHT / 2, radius * 2 + HIGHLIGHT_BORDER_WITHT, radius * 2 + HIGHLIGHT_BORDER_WITHT);
+        g2d.setColor(continent.getColor());
+        g2d.fill(continentColor);
+        g2d.setColor(Color.BLACK);
+        g2d.draw(continentColor);
+
+        // Player Color
         Ellipse2D.Double playerColor = new Ellipse2D.Double(x - radius, y - radius, radius * 2, radius * 2);
         g2d.setColor(player.getColor());
         g2d.fill(playerColor);
         g2d.setColor(Color.BLACK);
         g2d.draw(playerColor);
 
+        // Army background
         Ellipse2D.Double armyBackground = new Ellipse2D.Double(x - (radius - ARMY_BACKGROUND_WITHT), y - (radius - ARMY_BACKGROUND_WITHT), (radius - ARMY_BACKGROUND_WITHT) * 2, (radius - ARMY_BACKGROUND_WITHT) * 2);
         g2d.setColor(Color.WHITE);
         g2d.fill(armyBackground);
