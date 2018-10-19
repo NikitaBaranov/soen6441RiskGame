@@ -1,4 +1,4 @@
-import map_editor.StartEditor;
+import mapeditor.StartEditor;
 import game.utils.MapLoader;
 
 import javax.swing.*;
