@@ -13,10 +13,9 @@ public class Continent {
     public Continent() {
     }
 
-    public Continent(String name, int bonus, Color color) {
+    public Continent(String name, int bonus) {
         this.name = name;
         this.bonus = bonus;
-        this.color = color;
     }
 
     public String getName() {
@@ -45,10 +44,6 @@ public class Continent {
 
     public Color getColor() {
         return color;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
     }
 
     public boolean isOwnByOnePlayer() {

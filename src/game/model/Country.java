@@ -165,19 +165,12 @@ public class Country {
             g2d.draw(selection);
 
         } else if (isHighlited) {
-            Ellipse2D.Double highlight = new Ellipse2D.Double(x - radius - HIGHLIGHT_BORDER_WITHT, y - radius - HIGHLIGHT_BORDER_WITHT, radius * 2 + HIGHLIGHT_BORDER_WITHT * 2, radius * 2 + HIGHLIGHT_BORDER_WITHT * 2);
+            Ellipse2D.Double highlight = new Ellipse2D.Double(x - radius - HIGHLIGHT_BORDER_WITHT / 2, y - radius - HIGHLIGHT_BORDER_WITHT / 2, radius * 2 + HIGHLIGHT_BORDER_WITHT, radius * 2 + HIGHLIGHT_BORDER_WITHT);
             g2d.setColor(Color.RED);
             g2d.fill(highlight);
             g2d.setColor(Color.BLACK);
             g2d.draw(highlight);
         }
-
-        // Continent Color
-        Ellipse2D.Double continentColor = new Ellipse2D.Double(x - radius - HIGHLIGHT_BORDER_WITHT / 2, y - radius - HIGHLIGHT_BORDER_WITHT / 2, radius * 2 + HIGHLIGHT_BORDER_WITHT, radius * 2 + HIGHLIGHT_BORDER_WITHT);
-        g2d.setColor(continent.getColor());
-        g2d.fill(continentColor);
-        g2d.setColor(Color.BLACK);
-        g2d.draw(continentColor);
 
         // Player Color
         Ellipse2D.Double playerColor = new Ellipse2D.Double(x - radius, y - radius, radius * 2, radius * 2);

@@ -26,9 +26,13 @@ public class MapLoader {
     public static List<Continent> continents = new ArrayList<>();
     public String mapPath;
 
-    public MapLoader(int numberOfPlayers, String filePath) {
+    public MapLoader(int numberOfPlayers, String filePath, boolean mode) {
+        // If true - the program in test mode.
+        boolean testMode = mode;
         mapPath = filePath;
         String line;
+        // FIXME oh my god.
+        String line2;
         Color[] playerColor = new Color[4];
 
         playerColor[0] = Color.BLUE;
@@ -48,10 +52,36 @@ public class MapLoader {
 
         // Stub continents
         Map<String, Continent> continentsMap = new HashMap<>();
-        continentsMap.put("Eriador", new Continent("Eriador", 4, Color.GREEN));
-        continentsMap.put("Gondor", new Continent("Gondor", 3, Color.WHITE));
-        continentsMap.put("Mordor", new Continent("Mordor", 2, Color.BLACK));
-        continentsMap.put("Rhavanion", new Continent("Rhavanion", 3, Color.YELLOW));
+//        continentsMap.put("Eriador", new Continent("Eriador", 4, Color.GREEN));
+//        continentsMap.put("Gondor", new Continent("Gondor", 3, Color.WHITE));
+//        continentsMap.put("Mordor", new Continent("Mordor", 2, Color.BLACK));
+//        continentsMap.put("Rhavanion", new Continent("Rhavanion", 3, Color.YELLOW));
+        // FIXME Additional reading of file for continents
+        try {
+            FileReader fileReader = new FileReader(filePath);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            boolean flag = false;
+            while ((line2 = bufferedReader.readLine()) != null) {
+                if (flag) {
+                    if (line2.isEmpty()){
+                        break;
+                    }
+//                    System.out.println(line2);
+                    String[] continentDetails = line2.split("=");
+                    continentsMap.put(continentDetails[0], new Continent(continentDetails[0], Integer.parseInt(continentDetails[1])));
+                }
+                if (line2.equals("[Continents]") || line2.equals("[continents]"))
+                    flag = true;
+            }
+            bufferedReader.close();
+
+        } catch (FileNotFoundException ex) {
+            System.out.println("Unable to open file '" + filePath + "'");
+        } catch (IOException ex) {
+            System.out.println("Error reading file '" + filePath + "'");
+            ex.printStackTrace();
+        }
+
         continents.addAll(continentsMap.values());
 
         try {
@@ -59,7 +89,7 @@ public class MapLoader {
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             boolean flag = false;
             while ((line = bufferedReader.readLine()) != null) {
-                System.out.println(line);
+//                System.out.println(line);
                 if (flag) {
                     String[] countryDetails = line.split(",");
                     Country countryToAdd = new Country(countryDetails[0],
@@ -79,7 +109,7 @@ public class MapLoader {
                     }
                     neighboursList.add(neighbour);
                 }
-                if (line.equals("[Territories]"))
+                if (line.equals("[Territories]") || line.equals("[territories]"))
                     flag = true;
             }
             bufferedReader.close();
@@ -88,26 +118,30 @@ public class MapLoader {
             int changeDistrib = playerDistrib * numberOfPlayers;
             Random rand = new Random();
 
+
             for (int i = 0; i < countries.size(); i++) {
                 int newPlayer = rand.nextInt(numberOfPlayers);
-                // stub to test continents
-                if (countries.get(i).getContinent().getName().equals("Eriador")) {
-                    newPlayer = 0;
-                } else if (countries.get(i).getContinent().getName().equals("Mordor")) {
-                    newPlayer = 1;
+
+                // Check test mode
+                if (testMode){
+                    // Test continent bonus
+                    if (countries.get(i).getContinent().getName().equals("Eriador")) {
+                        newPlayer = 0;
+                    } else if (countries.get(i).getContinent().getName().equals("Mordor")) {
+                        newPlayer = 1;
+                    } else {
+                        if (i + 1 <= changeDistrib) {
+                            while (countriesPerPlayer[newPlayer] >= playerDistrib)
+                                newPlayer = rand.nextInt(numberOfPlayers);
+                        }
+                    }
                 } else {
+                    // Original Solution
                     if (i + 1 <= changeDistrib) {
                         while (countriesPerPlayer[newPlayer] >= playerDistrib)
                             newPlayer = rand.nextInt(numberOfPlayers);
                     }
                 }
-                // end of stub
-
-                // Original Solution
-//                if (i + 1 <= changeDistrib) {
-//                    while (countriesPerPlayer[newPlayer] >= playerDistrib)
-//                        newPlayer = rand.nextInt(numberOfPlayers);
-//                }
 
                 countries.get(i).setPlayer(players.get(newPlayer));
                 countriesPerPlayer[newPlayer]++;

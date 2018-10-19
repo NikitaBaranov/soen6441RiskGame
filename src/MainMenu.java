@@ -23,7 +23,7 @@ public class MainMenu extends JFrame {
         setResizable(false);
 
         JMenuBar menuBar = new JMenuBar();
-        //menuBar.add(newGame());
+        menuBar.add(file());
         menuBar.add(mapEditor());
         menuBar.add(exit());
         setJMenuBar(menuBar);
@@ -35,44 +35,22 @@ public class MainMenu extends JFrame {
         setVisible(true);
     }
 
-//    private JMenu newGame() {
-//        JMenu newGame = new JMenu("New Game");
-//        JMenuItem player2 = new JMenuItem("2 Players");
-//        JMenuItem player3 = new JMenuItem("3 Players");
-//        JMenuItem player4 = new JMenuItem("4 Players");
-//        newGame.add(player2);
-//        newGame.add(player3);
-//        newGame.add(player4);
-//
-//        player2.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent arg0) {
-//                System.out.println ("DEBUG: Chosen 2 players\n ------------------------ \n");
-//                int players = 2;
-//                String filePath = filePath();
-//                MapLoader loader = new MapLoader(players, filePath);
-//            }
-//        });
-//        player3.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent arg0) {
-//                System.out.println ("DEBUG: Chosen 3 players\n ------------------------ \n");
-//                int players = 3;
-//                String filePath = filePath();
-//                MapLoader loader = new MapLoader(players, filePath);
-//            }
-//        });
-//        player4.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent arg0) {
-//                System.out.println ("DEBUG: Chosen 4 players\n ------------------------ \n");
-//                int players = 4;
-//                String filePath = filePath();
-//                MapLoader loader = new MapLoader(players, filePath);
-//            }
-//        });
-//        return newGame;
-//    }
+    private JMenu file() {
+        JMenu file = new JMenu("File");
+        JMenuItem continentBonus = new JMenuItem("test: Continent bonus with 4 players");
+        file.add(continentBonus);
+
+        continentBonus.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                System.out.println ("DEBUG: Testing continent bonus with 4 players\n ------------------------ \n");
+                int players = 4;
+                String filePath = filePath();
+                new MapLoader(players, filePath, true);
+            }
+        });
+        return file;
+    }
     private JMenu mapEditor() {
         JMenu mapEditor = new JMenu("Map Editor");
         JMenuItem editorCLI = new JMenuItem("Open map editor with CLI");
@@ -125,7 +103,7 @@ public class MainMenu extends JFrame {
                 System.out.println ("DEBUG: Chosen 2 players\n ------------------------ \n");
                 int players = 2;
                 String filePath = filePath();
-                MapLoader loader = new MapLoader(players, filePath);
+                MapLoader loader = new MapLoader(players, filePath, false);
             }
         });
         player3.addActionListener(new ActionListener() {
@@ -134,7 +112,7 @@ public class MainMenu extends JFrame {
                 System.out.println ("DEBUG: Chosen 3 players\n ------------------------ \n");
                 int players = 3;
                 String filePath = filePath();
-                MapLoader loader = new MapLoader(players, filePath);
+                MapLoader loader = new MapLoader(players, filePath, false);
             }
         });
         player4.addActionListener(new ActionListener() {
@@ -143,7 +121,7 @@ public class MainMenu extends JFrame {
                 System.out.println ("DEBUG: Chosen 4 players\n ------------------------ \n");
                 int players = 4;
                 String filePath = filePath();
-                MapLoader loader = new MapLoader(players, filePath);
+                MapLoader loader = new MapLoader(players, filePath,false);
             }
         });
         return startButtons;
