@@ -1,4 +1,4 @@
-package soen6441;
+package mapeditor;
 
 import static org.junit.Assert.*;
 
@@ -33,10 +33,10 @@ public class TestMapEditor {
 	
 	@BeforeClass
 	public static void startup() {
-		path = "D:\\app_test\\";
-		mapName = "abbbb.map";
+		path = "test/resources/";
+		mapName = "testEditor.map";
 	}
-	
+	@Before
 	public void initDummyMap() {
 		String authorName = "test";
 		
@@ -98,13 +98,9 @@ public class TestMapEditor {
 		}
 	}
 	
-	@Before
-	public void setup() {
-		initDummyMap();
-	}
-	
 	@Test
 	public void testCreateMap() {
+		System.out.println("Test 1: create map");
 		String authorName = "test";
 		
 		String continentName = "usa";
@@ -155,7 +151,7 @@ public class TestMapEditor {
 	
 	@Test
 	public void testReadMap() {
-		
+		System.out.println("Test 2: Read map");
 		this.mapLoaderObj = new MapLoader(path + mapName, 1);
 		this.loadedMapObj = mapLoaderObj.getLoadedMap();
 		
@@ -172,6 +168,7 @@ public class TestMapEditor {
 	
 	@Test
 	public void testChangeAuthor() {
+		System.out.println("Test 3: Change author");
 		mapLoaderObj = new MapLoader(path + mapName, 0);
 		loadedMapObj = mapLoaderObj.getLoadedMap();
 		String authorName = "testAuthor";
@@ -181,6 +178,7 @@ public class TestMapEditor {
 	
 	@Test
 	public void testAddContinent() {
+		System.out.println("Test 4: Add continent");
 		mapLoaderObj = new MapLoader(path + mapName, 0);
 		loadedMapObj = mapLoaderObj.getLoadedMap();
 		String continentName = "canada";
@@ -195,6 +193,7 @@ public class TestMapEditor {
 	
 	@Test
 	public void testAddTerritory() {
+		System.out.println("Test 5: Add territory");
 		mapLoaderObj = new MapLoader(path + mapName, 1);
 		loadedMapObj = mapLoaderObj.getLoadedMap();
 		String territoryName = "terr1";
@@ -223,6 +222,7 @@ public class TestMapEditor {
 	
 	@Test
 	public void testSaveMapToFile() {
+		System.out.println("Test 6: Save map");
 		String authorForTestSave = "TestSaveMap";
 		mapLoaderObj = new MapLoader(path + mapName, 1);
 		loadedMapObj = mapLoaderObj.getLoadedMap();
@@ -246,6 +246,7 @@ public class TestMapEditor {
 
 	@Test
 	public void testRemoveContinent() {
+		System.out.println("Test 7: Remove continent");
 		IContinent continent = loadedMapObj.getContinent("canada");
 		loadedMapObj.deleteContinent(continent);
 		assertTrue(loadedMapObj.getListOfContinents().contains("canada") == false);
@@ -253,6 +254,7 @@ public class TestMapEditor {
 	
 	@Test
 	public void testRemoveTerritory() {
+		System.out.println("Test 8: Remove territory");
 		ITerritory territory = loadedMapObj.getTerritory("usa3");
 		loadedMapObj.deleteTerritory(territory);
 		assertTrue(loadedMapObj.getListOfTerritories().contains("usa3") == false);
@@ -260,6 +262,7 @@ public class TestMapEditor {
 	
 	@Test
 	public void testFalseMapNoContinent() {
+		System.out.println("Test 9: False map no continent");
 		IContinent continent = loadedMapObj.getContinent("canada");
 		loadedMapObj.deleteContinent(continent);
 		Verification verificationObj = new Verification();
@@ -269,6 +272,7 @@ public class TestMapEditor {
 	
 	@Test
 	public void testFalseMapEmptyContinent() {
+		System.out.println("Test 10: False map empty continent");
 		ITerritory territory = loadedMapObj.getTerritory("usa3");
 		loadedMapObj.deleteTerritory(territory);
 		Verification verificationObj = new Verification();
@@ -278,6 +282,7 @@ public class TestMapEditor {
 	
 	@Test
 	public void testFalseMapAdjacency() {
+		System.out.println("Test 11: False map adjacency");
 		ITerritory territory = loadedMapObj.getTerritory("usa2");
 		territory.removeAdjacent("usa1");
 		Verification verificationObj = new Verification();
@@ -287,6 +292,7 @@ public class TestMapEditor {
 	
 	@Test
 	public void testFalseMapConnectivity() {
+		System.out.println("Test 12: False map connectivity");
 		ITerritory territory = loadedMapObj.getTerritory("usa2");
 		loadedMapObj.deleteTerritory(territory);
 		Verification verificationObj = new Verification();

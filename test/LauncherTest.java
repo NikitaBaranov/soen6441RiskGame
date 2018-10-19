@@ -1,6 +1,5 @@
 import org.junit.Assert;
 import org.junit.Test;
-import game.ui.MainWindow;
 
 public class LauncherTest {
     @Test
