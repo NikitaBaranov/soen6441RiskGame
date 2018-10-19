@@ -92,6 +92,9 @@ public class MapLoader {
             while ((line = bufferedReader.readLine()) != null) {
 //                System.out.println(line);
                 if (flag) {
+                    if (line.isEmpty()){
+                        continue;
+                    }
                     String[] countryDetails = line.split(",");
                     Country countryToAdd = new Country(countryDetails[0],
                             Integer.parseInt(countryDetails[1]),
