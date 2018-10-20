@@ -1,25 +1,34 @@
 package game.model;
 
 
+import game.enums.CardsEnum;
+
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
+
+import static game.enums.CardsEnum.ARTILLERY;
+import static game.enums.CardsEnum.BONUS;
+import static game.enums.CardsEnum.CAVALRY;
+import static game.enums.CardsEnum.INFANTRY;
+import static game.enums.CardsEnum.WILDCARDS;
 
 public class Player {
-    private String name = "";
+    private String name;
 
-    private Color color = Color.BLACK;
-    private int infantry = 0;
-    private int cavalry = 0;
-    private int artillery = 0;
-    private int wildcards = 0;
-    private int bonus = 0;
+    private Color color;
+    private Map<CardsEnum, Integer> cardsEnumIntegerMap = new HashMap<>();
     private int armies = 5;
-
-    public Player() {
-    }
 
     public Player(String name, Color color) {
         this.name = name;
         this.color = color;
+
+        cardsEnumIntegerMap.put(INFANTRY, 0);
+        cardsEnumIntegerMap.put(CAVALRY, 0);
+        cardsEnumIntegerMap.put(ARTILLERY, 0);
+        cardsEnumIntegerMap.put(WILDCARDS, 0);
+        cardsEnumIntegerMap.put(BONUS, 0);
     }
 
     public String getName() {
@@ -30,52 +39,20 @@ public class Player {
         this.name = name;
     }
 
+    public Map<CardsEnum, Integer> getCardsEnumIntegerMap() {
+        return cardsEnumIntegerMap;
+    }
+
+    public void setCardsEnumIntegerMap(Map<CardsEnum, Integer> cardsEnumIntegerMap) {
+        this.cardsEnumIntegerMap = cardsEnumIntegerMap;
+    }
+
     public Color getColor() {
         return color;
     }
 
     public void setColor(Color color) {
         this.color = color;
-    }
-
-    public int getInfantry() {
-        return infantry;
-    }
-
-    public void setInfantry(int infantry) {
-        this.infantry = infantry;
-    }
-
-    public int getCavalry() {
-        return cavalry;
-    }
-
-    public void setCavalry(int cavalry) {
-        this.cavalry = cavalry;
-    }
-
-    public int getArtillery() {
-        return artillery;
-    }
-
-    public void setArtillery(int artillery) {
-        this.artillery = artillery;
-    }
-
-    public int getWildcards() {
-        return wildcards;
-    }
-
-    public void setWildcards(int wildcards) {
-        this.wildcards = wildcards;
-    }
-
-    public int getBonus() {
-        return bonus;
-    }
-
-    public void setBonus(int bonus) {
-        this.bonus = bonus;
     }
 
     public int getArmies() {

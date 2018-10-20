@@ -7,6 +7,12 @@ import game.model.Player;
 import javax.swing.*;
 import java.awt.*;
 
+import static game.enums.CardsEnum.ARTILLERY;
+import static game.enums.CardsEnum.BONUS;
+import static game.enums.CardsEnum.CAVALRY;
+import static game.enums.CardsEnum.INFANTRY;
+import static game.enums.CardsEnum.WILDCARDS;
+
 public class RightStatusPanel extends JPanel {
     private JButton nextButton = new JButton("Next Turn");
 
@@ -30,10 +36,10 @@ public class RightStatusPanel extends JPanel {
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.BOTH;
-        gbc.insets = new Insets(4,0,4,0);
+        gbc.insets = new Insets(4, 0, 4, 0);
         gbc.gridx = 0;
         gbc.gridy = 0;
-        nextButton.addActionListener(game.getNextTurnButton());
+        nextButton.addActionListener(game.getNextTurnButtonListner());
         game.nextTurnButton = nextButton;
         nextButton.setMargin(new Insets(10, 0, 10, 0));
         this.add(nextButton, gbc);
@@ -59,13 +65,15 @@ public class RightStatusPanel extends JPanel {
         gbc.gridy = 5;
         gbc.weightx = 0;
         gbc.weighty = 0;
+        exchangeButton.addActionListener(game.getExchangeListner());
+        game.exchangeButton = exchangeButton;
         exchangeButton.setMargin(new Insets(10, 0, 10, 0));
         this.add(exchangeButton, gbc);
 
         // setup Country panel
         countryPanel.setMaximumSize(new Dimension(width, height));
         countryPanel.setLayout(new GridLayout(2, 2));
-        countryPanel.setBackground(new Color(121,180,115));
+        countryPanel.setBackground(new Color(121, 180, 115));
         countryPanel.add(new JLabel("Name:", null, SwingConstants.TRAILING));
         countryPanel.add(countryName);
         countryPanel.add(new JLabel("Army:", null, SwingConstants.TRAILING));
@@ -74,30 +82,25 @@ public class RightStatusPanel extends JPanel {
         // setup Country panel
         cardsPanel.setMaximumSize(new Dimension(width, height));
         cardsPanel.setLayout(new GridLayout(5, 2));
-        cardsPanel.setBackground(new Color(121,180,115));
-        cardsPanel.add(new JLabel("Infantry:",null, SwingConstants.TRAILING));
+        cardsPanel.setBackground(new Color(121, 180, 115));
+        cardsPanel.add(new JLabel(INFANTRY.getName() + ":", null, SwingConstants.TRAILING));
         cardsPanel.add(playerInfantry);
-        cardsPanel.add(new JLabel("Cavalry:",null, SwingConstants.TRAILING));
+        cardsPanel.add(new JLabel(CAVALRY.getName() + ":", null, SwingConstants.TRAILING));
         cardsPanel.add(playerCavalry);
-        cardsPanel.add(new JLabel("Artillery:",null, SwingConstants.TRAILING));
+        cardsPanel.add(new JLabel(ARTILLERY.getName() + ":", null, SwingConstants.TRAILING));
         cardsPanel.add(playerArtillery);
-        cardsPanel.add(new JLabel("Wildcards:",null, SwingConstants.TRAILING));
+        cardsPanel.add(new JLabel(WILDCARDS.getName() + ":", null, SwingConstants.TRAILING));
         cardsPanel.add(playerWildcards);
-        cardsPanel.add(new JLabel("Bonus:",null, SwingConstants.TRAILING));
+        cardsPanel.add(new JLabel(BONUS.getName() + ":", null, SwingConstants.TRAILING));
         cardsPanel.add(playerBonus);
-
-//        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-//        this.setAlignmentX(Component.CENTER_ALIGNMENT);
-//        this.add(name);
-//        this.add(army);
     }
 
-    public void setPlayer(Player player){
-        playerInfantry.setText(Integer.toString(player.getInfantry()));
-        playerCavalry.setText(Integer.toString(player.getCavalry()));
-        playerArtillery.setText(Integer.toString(player.getArtillery()));
-        playerWildcards.setText(Integer.toString(player.getWildcards()));
-        playerBonus.setText(Integer.toString(player.getBonus()));
+    public void setPlayer(Player player) {
+        playerInfantry.setText(Integer.toString(player.getCardsEnumIntegerMap().get(INFANTRY)));
+        playerCavalry.setText(Integer.toString(player.getCardsEnumIntegerMap().get(CAVALRY)));
+        playerArtillery.setText(Integer.toString(player.getCardsEnumIntegerMap().get(ARTILLERY)));
+        playerWildcards.setText(Integer.toString(player.getCardsEnumIntegerMap().get(WILDCARDS)));
+        playerBonus.setText(Integer.toString(player.getCardsEnumIntegerMap().get(BONUS)));
     }
 
     public void setCountry(Country country) {

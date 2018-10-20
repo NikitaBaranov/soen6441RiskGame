@@ -6,7 +6,6 @@ import game.model.Country;
 import game.model.Neighbour;
 import game.model.Player;
 import game.ui.Main;
-import game.utils.WarningWindow;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -163,7 +162,7 @@ public class MapLoader {
 
             // TODO Add here the validation checking
             // Comment the line below to stop exiting every time
-            new WarningWindow("Map is not valid. Please, use another one.");
+//            new WarningWindow("Map is not valid. Please, use another one.");
 
 
             // Create the instance of the game class and send it to Main

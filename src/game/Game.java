@@ -1,5 +1,6 @@
 package game;
 
+import game.enums.CardsEnum;
 import game.enums.DiceEnum;
 import game.enums.GamePhase;
 import game.model.Continent;
@@ -31,24 +32,27 @@ import static game.enums.GamePhase.PLACING_ARMIES;
 public class Game {
     public final int DICE_ROW_TO_SHOW = 3;
     public int RADIUS = MapLoader.RADIUS;
-
     public List<Country> countries = MapLoader.countries;
     public List<Neighbour> neighbours = MapLoader.neighbours;
     public List<Player> players = MapLoader.players;
     public List<Continent> continents = MapLoader.continents;
-
     public TopStatusPanel topStatusPanel;
     public MapPanel mapPanel;
     public RightStatusPanel rightStatusPanel;
     public JButton nextTurnButton;
+    public JButton exchangeButton;
     public DicePanel dicePanel;
     Map<Integer, GamePhase> gamePhaseMap = new HashMap<>();
+    private int ARMIES_TO_EXCHANGE_INCREASE = 5;
     private Random RANDOM = new Random();
     private GamePhase currentGamePhase;
     private Player currentPlayer;
     private Map<Integer, DiceEnum> diceEnumMap = new HashMap<>();
     private DiceEnum[] redDice = new DiceEnum[DICE_ROW_TO_SHOW];
     private DiceEnum[] whiteDice = new DiceEnum[DICE_ROW_TO_SHOW];
+
+    // Placing Armies
+    private int armiesToCardExchange = 5;
 
     // Fortifying
     private Country countryFrom;
@@ -82,6 +86,7 @@ public class Game {
         topStatusPanel.setTurnPhrase("Select a country to place your army. Armies to place  " + currentPlayer.getArmies());
 
         nextTurnButton.setEnabled(false);
+        exchangeButton.setEnabled(false);
 
         refresh();
     }
@@ -102,7 +107,7 @@ public class Game {
         };
     }
 
-    public ActionListener getNextTurnButton() {
+    public ActionListener getNextTurnButtonListner() {
         return new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 reset();
@@ -121,6 +126,7 @@ public class Game {
                         topStatusPanel.setTurnPhrase("Attack phase is simulated. Press \"Next turn\" button.");
                         System.out.println("Next Turn Button Clicked. Next Player is " + currentGamePhase);
                         unHighlightPlayreCountries();
+                        exchangeButton.setEnabled(false);
                         break;
 
                     case ATACKING:
@@ -134,12 +140,11 @@ public class Game {
 //                        }
 
                         // Init Cards
-                        for (Player player : players) {
-                            player.setInfantry(RANDOM.nextInt() > 0.5 ? player.getInfantry() + 1 : player.getInfantry());
-                            player.setCavalry(RANDOM.nextInt() > 0.5 ? player.getCavalry() + 1 : player.getCavalry());
-                            player.setArtillery(RANDOM.nextInt() > 0.5 ? player.getArtillery() + 1 : player.getArtillery());
-                            player.setWildcards(RANDOM.nextInt() > 0.5 ? player.getWildcards() + 1 : player.getWildcards());
-                            player.setBonus(RANDOM.nextInt() > 0.5 ? player.getBonus() + 1 : player.getBonus());
+                        for (CardsEnum cardsEnum : CardsEnum.values()) {
+                            currentPlayer.getCardsEnumIntegerMap()
+                                    .put(cardsEnum, RANDOM.nextInt() > 0.5 ?
+                                            currentPlayer.getCardsEnumIntegerMap().get(cardsEnum) + 1 :
+                                            currentPlayer.getCardsEnumIntegerMap().get(cardsEnum));
                         }
 
                         // Prepare to next turn
@@ -188,6 +193,7 @@ public class Game {
                                 }
                             }
                         }
+                        exchangeButton.setEnabled(true);
 
                         topStatusPanel.setTurnPhrase("Select a country to place your army. Armies to place  " + currentPlayer.getArmies());
                         highlightPayerCountries();
@@ -278,6 +284,53 @@ public class Game {
         }
     }
 
+    public ActionListener getExchangeListner() {
+        return new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                switch (currentGamePhase) {
+                    case PLACING_ARMIES:
+                        // Change 3*1 cards
+                        for (CardsEnum cardsEnum : CardsEnum.values()) {
+                            if (currentPlayer.getCardsEnumIntegerMap().get(cardsEnum) >= 3) {
+                                currentPlayer.getCardsEnumIntegerMap().put(cardsEnum, currentPlayer.getCardsEnumIntegerMap().get(cardsEnum) - 3);
+                                currentPlayer.setArmies(currentPlayer.getArmies() + armiesToCardExchange);
+                                armiesToCardExchange += ARMIES_TO_EXCHANGE_INCREASE;
+                                topStatusPanel.setTurnPhrase("Armies to place " + currentPlayer.getArmies());
+                                refresh();
+                                break;
+                            }
+                        }
+
+                        // Change 1*3 cards
+                        int count = 0;
+                        for (CardsEnum cardsEnum : CardsEnum.values()) {
+                            if (currentPlayer.getCardsEnumIntegerMap().get(cardsEnum) >= 1) {
+                                count++;
+                            }
+                        }
+                        if (count >= 3) {
+                            count = 3;
+                            for (CardsEnum cardsEnum : CardsEnum.values()) {
+                                if (count > 0 && currentPlayer.getCardsEnumIntegerMap().get(cardsEnum) > 0) {
+                                    currentPlayer.getCardsEnumIntegerMap().put(cardsEnum, currentPlayer.getCardsEnumIntegerMap().get(cardsEnum) - 1);
+                                    count--;
+                                } else if (count == 0) {
+                                    currentPlayer.setArmies(currentPlayer.getArmies() + armiesToCardExchange);
+                                    armiesToCardExchange += ARMIES_TO_EXCHANGE_INCREASE;
+                                    topStatusPanel.setTurnPhrase("Armies to place " + currentPlayer.getArmies());
+                                    refresh();
+                                    break;
+                                }
+                            }
+                        }
+                        refresh();
+                        break;
+                }
+                refresh();
+            }
+        };
+    }
+
     private void rollDice() {
         for (int i = 0; i < DICE_ROW_TO_SHOW; i++) {
             redDice[i] = diceEnumMap.get(RANDOM.nextInt(6) + 1);
@@ -289,8 +342,11 @@ public class Game {
     private void refresh() {
         topStatusPanel.setPlayer(currentPlayer);
         topStatusPanel.setGamePhase(currentGamePhase.getName());
-        mapPanel.repaint();
         rightStatusPanel.setPlayer(currentPlayer);
+        topStatusPanel.repaint();
+        rightStatusPanel.repaint();
+        dicePanel.repaint();
+        mapPanel.repaint();
     }
 
     private void reset() {
