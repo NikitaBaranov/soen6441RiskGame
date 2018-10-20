@@ -196,7 +196,7 @@ public class MapLoader {
         }
 
         // Create the instance of the game class and send it to Main
-        Game game = new Game();
+        Game game = new Game(RADIUS, countries, neighbours, players, continents);
         new Main(game, this);
     }
 

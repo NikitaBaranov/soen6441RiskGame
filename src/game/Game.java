@@ -11,7 +11,6 @@ import game.ui.view.DicePanel;
 import game.ui.view.MapPanel;
 import game.ui.view.RightStatusPanel;
 import game.ui.view.TopStatusPanel;
-import game.utils.MapLoader;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,11 +30,11 @@ import static game.enums.GamePhase.PLACING_ARMIES;
 
 public class Game {
     public final int DICE_ROW_TO_SHOW = 3;
-    public int RADIUS = MapLoader.RADIUS;
-    public List<Country> countries = MapLoader.countries;
-    public List<Neighbour> neighbours = MapLoader.neighbours;
-    public List<Player> players = MapLoader.players;
-    public List<Continent> continents = MapLoader.continents;
+    public int RADIUS;
+    public List<Country> countries;
+    public List<Neighbour> neighbours;
+    public List<Player> players;
+    public List<Continent> continents;
     public TopStatusPanel topStatusPanel;
     public MapPanel mapPanel;
     public RightStatusPanel rightStatusPanel;
@@ -58,7 +57,13 @@ public class Game {
     private Country countryFrom;
     private Country countryTo;
 
-    public Game() {
+    public Game(int RADIUS, List<Country> countries, List<Neighbour> neighbours, List<Player> players, List<Continent> continents) {
+        this.RADIUS = RADIUS;
+        this.countries = countries;
+        this.neighbours = neighbours;
+        this.players = players;
+        this.continents = continents;
+
         // Setup Game Phases
         gamePhaseMap.put(0, INITIAL_PLACING_ARMIES);
         gamePhaseMap.put(1, GamePhase.PLACING_ARMIES);
@@ -105,6 +110,18 @@ public class Game {
                 }
             }
         };
+    }
+
+    public static int getReinforcementArmies(Player player, List<Country> countries) {
+        int countriesOwnedByPlayer = 0;
+        for (Country country : countries) {
+            if (country.getPlayer() == player) {
+                countriesOwnedByPlayer++;
+            }
+        }
+        System.out.println("Player " + player.getName() + " owns " + countriesOwnedByPlayer + " countries and  gets " + countriesOwnedByPlayer / 3 + " armies.");
+
+        return player.getArmies() + countriesOwnedByPlayer / 3;
     }
 
     public ActionListener getNextTurnButtonListner() {
@@ -174,15 +191,7 @@ public class Game {
                         currentPlayer = nextPlayer;
 
                         // Add base armies
-                        int countriesOwnedByPlayer = 0;
-                        for (Country country : countries) {
-                            if (country.getPlayer() == currentPlayer) {
-                                countriesOwnedByPlayer++;
-                            }
-                        }
-                        // Integer always rounded down
-                        System.out.println("Player " + currentPlayer.getName() + " owns " + countriesOwnedByPlayer + " countries and  gets " + countriesOwnedByPlayer / 3 + " armies.");
-                        currentPlayer.setArmies(currentPlayer.getArmies() + countriesOwnedByPlayer / 3);
+                        currentPlayer.setArmies(getReinforcementArmies(currentPlayer, countries));
 
                         // Add continent Bonus
                         for (Continent continent : continents) {
