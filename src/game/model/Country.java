@@ -106,29 +106,65 @@ public class Country {
 
     public void select(boolean enemies) {
         isSelected = true;
-        for (Country country : neighbours) {
-            if (enemies) {
-                if (country.getPlayer() != this.player) {
-                    country.setHighlited(true);
-                }
-            } else {
-                if (country.getPlayer() == this.player) {
-                    country.setHighlited(true);
+        highlite(enemies);
+//        for (Country country : neighbours) {
+//            if (enemies) {
+//                if (country.getPlayer() != this.player) {
+//                    country.setHighlited(true);
+//                }
+//            } else {
+//                if (country.getPlayer() == this.player) {
+//                    country.setHighlited(true);
+//                }
+//            }
+//        }
+    }
+
+    public void unSelect(boolean enemies) {
+        isSelected = false;
+        unHighlite(enemies);
+//        for (Country country : neighbours) {
+//            if (enemies) {
+//                if (country.getPlayer() != this.player) {
+//                    country.setHighlited(false);
+//                }
+//            } else {
+//                if (country.getPlayer() == this.player) {
+//                    country.setHighlited(false);
+//                }
+//            }
+//        }
+    }
+
+    public void highlite(boolean enemies) {
+        if (!isHighlited) {
+            isHighlited = true;
+            for (Country country : neighbours) {
+                if (enemies) {
+                    if (country.getPlayer() != this.player) {
+                        country.highlite(enemies);
+                    }
+                } else {
+                    if (country.getPlayer() == this.player) {
+                        country.highlite(enemies);
+                    }
                 }
             }
         }
     }
 
-    public void unSelect(boolean enemies) {
-        isSelected = false;
-        for (Country country : neighbours) {
-            if (enemies) {
-                if (country.getPlayer() != this.player) {
-                    country.setHighlited(false);
-                }
-            } else {
-                if (country.getPlayer() == this.player) {
-                    country.setHighlited(false);
+    public void unHighlite(boolean enemies) {
+        if (isHighlited) {
+            isHighlited = false;
+            for (Country country : neighbours) {
+                if (enemies) {
+                    if (country.getPlayer() != this.player) {
+                        country.unHighlite(enemies);
+                    }
+                } else {
+                    if (country.getPlayer() == this.player) {
+                        country.unHighlite(enemies);
+                    }
                 }
             }
         }
