@@ -2,7 +2,7 @@ package game.utils;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
 
 public class WarningWindow extends JFrame {
 
@@ -13,8 +13,8 @@ public class WarningWindow extends JFrame {
     public WarningWindow(String message) {
         super("Warning!");
         this.message = message;
-        this.width = 500;
-        this.height = 400;
+        this.width = 800;
+        this.height = 100;
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(this.width, this.height);
