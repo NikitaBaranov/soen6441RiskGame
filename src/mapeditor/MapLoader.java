@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * This class loads the map into data structures. This loaded information
  * is passed to the editor, and is used to accept user modifications
  * And later save the data from data structures to file as map.
- * @author Nikitha Papani &  Dinesh Pattapu
+ * @author Nikitha Papani, Dinesh Pattapu
  *
  */
 public class MapLoader implements IMapLoader {
@@ -15,6 +15,7 @@ public class MapLoader implements IMapLoader {
 	/**
 	 * Constructor accepts filepath and laods it into memory.
 	 * @param filePath The path of map file.
+	 * @param createEditFlag The flag to check whether to create map or edit it.
 	 */
 	public MapLoader(String filePath, Integer createEditFlag) {
 		if(createEditFlag == 1)
@@ -27,6 +28,10 @@ public class MapLoader implements IMapLoader {
 		}
 	}
 	
+	/**
+	 * This function initializes the data structures for the new map.
+	 * @param filePath The path of the new file.
+	 */
 	public void createMap(String filePath) {
 		init_data_structures();
 	}

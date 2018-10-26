@@ -11,8 +11,15 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Tests for game class i.e. controller of the game.
+ * @author Ksenia Popova
+ * @see Game
+ */
 public class GameTest {
-
+    /**
+     * Test for calculation of number of reinforcment armies
+     */
     @Test
     public void reinforcementCount() {
         Player player1 = new Player("test Player 1", Color.BLACK);
@@ -27,6 +34,6 @@ public class GameTest {
         countryList.add(new Country("Country 4", 40, 40, 2, continent, player2));
 
 //        assertTrue(Game.getReinforcementArmies(player1, countryList) == 1);
-        assertEquals(1, Game.getReinforcementArmies(player1, countryList));
+        assertEquals(3, Game.getReinforcementArmies(player1, countryList));
     }
 }

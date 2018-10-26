@@ -1,13 +1,25 @@
+import mapeditor.StartEditor;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.BeforeClass;
 
 import static org.junit.Assert.*;
 
+/**
+ * The main menu test.
+ * @author Dmitry Kryukov
+ * @see MainMenu
+ */
 public class MainMenuTest {
+    private MainMenu window;
 
-    @BeforeClass
+    /**
+     * Test if the window object exists.
+     * @throws Exception
+     */
+    @Before
     public void setUp() throws Exception {
-        new MainMenu("RiskGame by Team 3", 450, 250);
+        MainMenu window = new MainMenu("RiskGame by Team 3", 450, 250);
     }
 }

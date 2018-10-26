@@ -10,7 +10,7 @@ import java.util.Map;
 
 /**
  * This class contains data structures into which the map is loaded.
- * @author Nikitha Papani & Dinesh Pattapu
+ * @author Nikitha Papani & Dinesh Pattapu & Rodolfo Miranda
  *
  */
 public class LoadedMap implements ILoadedMap {
@@ -24,7 +24,7 @@ public class LoadedMap implements ILoadedMap {
 	public LoadedMap() {
 		resetLoadedMap();
 	}
-	
+		
 	/**
 	 * The function to reset data structures.
 	 */
@@ -192,6 +192,14 @@ public class LoadedMap implements ILoadedMap {
 	public ArrayList<String> getListOfContinents() {
 		return new ArrayList<String>(listOfContinents.keySet());
 	}
+        
+        /**
+	 * The function to get list of continents.
+	 * @return The arraylist of continents to the interface.
+	 */        
+        public ArrayList<IContinent> getContinents() {
+		return new ArrayList<IContinent>(listOfContinents.values());
+	}
 	
 	/**
 	 * The function to get list of territories.
@@ -199,6 +207,14 @@ public class LoadedMap implements ILoadedMap {
 	 */
 	public ArrayList<String> getListOfTerritories() {
 		return new ArrayList<String>(listOfTerritories.keySet());
+	}
+        
+        /**
+	 * The function to get list of territories.
+	 * @return The arraylist of territories to the interface.
+	 */
+        public ArrayList<ITerritory> getTerritories() {
+		return new ArrayList<ITerritory>(listOfTerritories.values());
 	}
 	
 	/**

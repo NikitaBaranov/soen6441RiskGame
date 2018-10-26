@@ -4,12 +4,20 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+/**
+ * The window that appears to print the error message dirung the map loading.
+ * @author Dmitry Kryukov
+ */
 public class WarningWindow extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private int width, height;
     private String message;
 
+    /**
+     * The constructor of the class.
+     * @param message that should be printed
+     */
     public WarningWindow(String message) {
         super("Warning!");
         this.message = message;
@@ -27,6 +35,11 @@ public class WarningWindow extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
     }
+
+    /**
+     * Method creates an panel on the window woth message and close button
+     * @return messagePanel object to attach to the window
+     */
     private JPanel printMessage() {
         JPanel messagePanel = new JPanel();
 
@@ -45,6 +58,10 @@ public class WarningWindow extends JFrame {
 
         return messagePanel;
     }
+
+    /**
+     * The exit functionality, triggered when the user press the close button
+     */
     class ExitAction extends AbstractAction {
         private static final long serialVersionUID = 1L;
         ExitAction() {

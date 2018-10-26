@@ -23,6 +23,16 @@ import java.util.Queue;
 import java.util.Random;
 import java.util.Set;
 
+/**
+ * The map loader class. Responsible for loading and validation of the map.
+ * @author Ksenia Popova, Dmitry Kryukov
+ * @see Main
+ * @see Continent
+ * @see Country
+ * @see Neighbour
+ * @see Player
+ * @see Game
+ */
 public class MapLoader {
     public static int RADIUS = 20;
     public static List<Country> countries = new ArrayList<>();
@@ -30,13 +40,22 @@ public class MapLoader {
     public static List<Player> players = new ArrayList<>();
     public static List<Continent> continents = new ArrayList<>();
     public String mapPath;
+    public boolean invalidMap;
 
+    /**
+     * Constructor of the class.
+     * Loading and validation of the map.
+     * @param numberOfPlayers number of players
+     * @param filePath path to the map
+     * @param mode boolean mode that can be used to start the program in special mode to test features
+     */
     public MapLoader(int numberOfPlayers, String filePath, boolean mode) {
         // If true - the program in test mode.
         boolean testMode = mode;
         mapPath = filePath;
         String line;
         // FIXME oh my god.
+        invalidMap = false;
         String line2;
         Color[] playerColor = new Color[4];
 
@@ -191,6 +210,7 @@ public class MapLoader {
             }
 
         } catch (Exception e) {
+            invalidMap = true;
             new WarningWindow("Map is not valid. \n " + e.getMessage() + "\n Please, use another one.");
 //            System.exit(1);
         }
@@ -200,6 +220,10 @@ public class MapLoader {
         new Main(game, this);
     }
 
+    /**
+     * File path getter.
+     * @return filePath to the map
+     */
     public String getFilePath() {
         return mapPath;
     }

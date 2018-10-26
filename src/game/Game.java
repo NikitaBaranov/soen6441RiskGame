@@ -28,6 +28,23 @@ import static game.enums.GamePhase.FORTIFYING;
 import static game.enums.GamePhase.INITIAL_PLACING_ARMIES;
 import static game.enums.GamePhase.PLACING_ARMIES;
 
+/**
+ * The game file which control all the game flow.
+ * i.e. Controller in the MVC arcthitecture model
+ * @author Dmitry kryukov, Ksenia Popova
+ * @see DiceEnum
+ * @see CardsEnum
+ * @see GamePhase
+ * @see Continent
+ * @see Country
+ * @see Player
+ * @see Neighbour
+ * @see DicePanel
+ * @see MapPanel
+ * @see RightStatusPanel
+ * @see TopStatusPanel
+ *
+ */
 public class Game {
     public final int DICE_ROW_TO_SHOW = 3;
     public int RADIUS;
@@ -57,6 +74,15 @@ public class Game {
     private Country countryFrom;
     private Country countryTo;
 
+    /**
+     * The constructor of the class.
+     * Genrates the instance of the main object (game) with the game flow.
+     * @param RADIUS radius of the default nodes
+     * @param countries List of countries
+     * @param neighbours List of connections
+     * @param players List of players
+     * @param continents List of continents
+     */
     public Game(int RADIUS, List<Country> countries, List<Neighbour> neighbours, List<Player> players, List<Continent> continents) {
         this.RADIUS = RADIUS;
         this.countries = countries;
@@ -79,6 +105,9 @@ public class Game {
         diceEnumMap.put(6, DiceEnum.SIX);
     }
 
+    /**
+     * Initialize the game
+     */
     public void initialise() {
         // initial setup.
         currentPlayer = players.get(0);
@@ -97,6 +126,9 @@ public class Game {
     }
 
 
+    /**
+     * Mouse adapter to handle the mouse events
+     */
     public MouseAdapter getMouseAdapter() {
         return new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
@@ -112,6 +144,12 @@ public class Game {
         };
     }
 
+    /**
+     * Get the number of reinforcements armies
+     * @param player current player
+     * @param countries countries of player
+     * @return int number of reinforcement armies
+     */
     public static int getReinforcementArmies(Player player, List<Country> countries) {
         int countriesOwnedByPlayer = 0;
         for (Country country : countries) {
@@ -120,10 +158,13 @@ public class Game {
             }
         }
         System.out.println("Player " + player.getName() + " owns " + countriesOwnedByPlayer + " countries and  gets " + countriesOwnedByPlayer / 3 + " armies.");
-
-        return player.getArmies() + countriesOwnedByPlayer / 3;
+        if ((player.getArmies() + countriesOwnedByPlayer /3 ) < 3 ) return 3;
+        else return player.getArmies() + countriesOwnedByPlayer / 3;
     }
 
+    /**
+     * Next button listener
+     */
     public ActionListener getNextTurnButtonListner() {
         return new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -215,6 +256,10 @@ public class Game {
     }
 
 
+    /**
+     * Method describes the main flow. I.E. actions with the game.
+     * @param country object
+     */
     public void makeAction(Country country) {
         switch (currentGamePhase) {
             case INITIAL_PLACING_ARMIES:
@@ -293,6 +338,9 @@ public class Game {
         }
     }
 
+    /**
+     * Action handler for exchange button.
+     */
     public ActionListener getExchangeListner() {
         return new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -340,6 +388,9 @@ public class Game {
         };
     }
 
+    /**
+     * Stub for the dice feature
+     */
     private void rollDice() {
         for (int i = 0; i < DICE_ROW_TO_SHOW; i++) {
             redDice[i] = diceEnumMap.get(RANDOM.nextInt(6) + 1);
@@ -348,6 +399,9 @@ public class Game {
         dicePanel.setDices(redDice, whiteDice);
     }
 
+    /**
+     * Method for refresh the graphics
+     */
     private void refresh() {
         topStatusPanel.setPlayer(currentPlayer);
         topStatusPanel.setGamePhase(currentGamePhase.getName());
@@ -358,12 +412,18 @@ public class Game {
         mapPanel.repaint();
     }
 
+    /**
+     * Method for resetting the panels
+     */
     private void reset() {
         topStatusPanel.reset();
         mapPanel.repaint();
         rightStatusPanel.reset();
     }
 
+    /**
+     * Method to highlight the player countries
+     */
     private void highlightPayerCountries() {
         for (Country c : countries) {
             if (c.getPlayer() == currentPlayer) {
@@ -372,6 +432,9 @@ public class Game {
         }
     }
 
+    /**
+     * Method that unhighlight the players countries
+     */
     private void unHighlightPlayreCountries() {
         for (Country c : countries) {
             if (c.getPlayer() == currentPlayer) {
@@ -380,22 +443,42 @@ public class Game {
         }
     }
 
+    /**
+     * Method get the radius for nodes on graph
+     * @return RADIUS of the nodes
+     */
     public int getRADIUS() {
         return RADIUS;
     }
 
+    /**
+     * Methods return the list of countries
+     * @return countries List of countries
+     */
     public List<Country> getCountries() {
         return countries;
     }
 
+    /**
+     * Setter for countries.
+     * @param countries List of countries
+     */
     public void setCountries(List<Country> countries) {
         this.countries = countries;
     }
 
+    /**
+     * Method return the list of connections for country
+     * @return neighbours List of connections
+     */
     public List<Neighbour> getNeighbours() {
         return neighbours;
     }
 
+    /**
+     * Setter for connections
+     * @param neighbours List of neighbours
+     */
     public void setNeighbours(List<Neighbour> neighbours) {
         this.neighbours = neighbours;
     }

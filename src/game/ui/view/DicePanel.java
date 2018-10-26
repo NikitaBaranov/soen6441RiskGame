@@ -8,6 +8,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Dice panel.
+ * Stub for future development.
+ */
 public class DicePanel extends JPanel {
     public final int DICE_ROW_TO_SHOW = 3;
     private final int DICE_MARGIN = 5;
@@ -15,6 +19,12 @@ public class DicePanel extends JPanel {
     private DiceEnum[] whiteDice = new DiceEnum[DICE_ROW_TO_SHOW];
     private int width;
     private int height;
+
+    /**
+     * Constructor of the class
+     * @param width of the panel
+     * @param height of the panel
+     */
     public DicePanel(int width, int height) {
         this.width = width;
         this.height = height;
@@ -26,9 +36,19 @@ public class DicePanel extends JPanel {
         }
         setDices();
     }
+
+    /**
+     * Set the dices
+     */
     public void setDices() {
         setDices(redDice, whiteDice);
     }
+
+    /**
+     * Set the dices with parameters
+     * @param redDice Dices of player
+     * @param whiteDice Dices of enemie
+     */
     public void setDices(DiceEnum[] redDice, DiceEnum[] whiteDice) {
         this.redDice = redDice;
         this.whiteDice = whiteDice;

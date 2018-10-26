@@ -13,6 +13,15 @@ import static game.enums.CardsEnum.CAVALRY;
 import static game.enums.CardsEnum.INFANTRY;
 import static game.enums.CardsEnum.WILDCARDS;
 
+/**
+ * The status panel class. Descrive the properties of the right panel.
+ * Displaying the player needed information. Such as bonus cards
+ * Displaying the buttons to echange cards or go to next turn
+ * @author Dmitry Kryukov
+ * @see Country
+ * @see Player
+ * @see Game
+ */
 public class RightStatusPanel extends JPanel {
     private JButton nextButton = new JButton("Next Turn");
 
@@ -30,6 +39,13 @@ public class RightStatusPanel extends JPanel {
     private JPanel countryPanel = new JPanel();
     private JPanel cardsPanel = new JPanel();
 
+    /**
+     * Constructor of the class.
+     * Create the panel and draw it in game main window
+     * @param width of the panel
+     * @param height of the panel
+     * @param game instance of game controller
+     */
     public RightStatusPanel(int width, int height, Game game) {
         // setup overall setup
         this.setPreferredSize(new Dimension(width, height));
@@ -95,6 +111,10 @@ public class RightStatusPanel extends JPanel {
         cardsPanel.add(playerBonus);
     }
 
+    /**
+     * Setter for cards for player displaying
+     * @param player Player
+     */
     public void setPlayer(Player player) {
         playerInfantry.setText(Integer.toString(player.getCardsEnumIntegerMap().get(INFANTRY)));
         playerCavalry.setText(Integer.toString(player.getCardsEnumIntegerMap().get(CAVALRY)));
@@ -103,11 +123,18 @@ public class RightStatusPanel extends JPanel {
         playerBonus.setText(Integer.toString(player.getCardsEnumIntegerMap().get(BONUS)));
     }
 
+    /**
+     * Setter for country and army number displaying
+     * @param country Country
+     */
     public void setCountry(Country country) {
         countryName.setText(country.getName());
         countryArmy.setText(Integer.toString(country.getArmy()));
     }
 
+    /**
+     * Reset the variables for other players
+     */
     public void reset() {
         playerInfantry.setText("");
         playerCavalry.setText("");

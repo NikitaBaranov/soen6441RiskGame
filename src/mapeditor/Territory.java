@@ -1,10 +1,11 @@
 package mapeditor;
 
 import java.util.ArrayList;
+import static mapeditor.Continent.continents;
 
 /**
  * The class to load territory in data structures.
- * @author Nikitha Papani & Dinesh Pattapu
+ * @author Nikitha Papani, Dinesh Pattapu
  *
  */
 public class Territory implements ITerritory {
@@ -13,6 +14,14 @@ public class Territory implements ITerritory {
 	private Integer Y;
 	private String continent;
 	private ArrayList<String> adjacents;
+        
+        static ArrayList<ITerritory> territories = new ArrayList<ITerritory>();
+        public static ArrayList<ITerritory> getTerritories(){
+            return territories;
+        }
+	public static void setTerritories(ArrayList<ITerritory> inputTerritories){
+            territories = inputTerritories;
+        }
 	
 	/**
 	 * The constructor to initialize the class variables.
@@ -89,7 +98,7 @@ public class Territory implements ITerritory {
 	
 	/**
 	 * The function to set the name of continent name.
-	 * @param The new name of continent.
+	 * @param continent The new name of continent.
 	 */
 	public void setContinent(String continent) {
 		this.continent = continent;

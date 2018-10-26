@@ -1,9 +1,28 @@
-import org.junit.Assert;
+import static org.junit.Assert.*;
+import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * The Launcher test.
+ * @author Dmitry Kryukov
+ * @see Launcher
+ */
 public class LauncherTest {
+    private Launcher launcher;
+
+    /**
+     * Create object launcher
+     */
+    @Before
+    public void setUp(){
+        launcher = new Launcher("Test", 100,100);
+    }
+
+    /**
+     * True if object is exist
+     */
     @Test
-    public void unit_test1(){
-        System.out.println("Empty test");
+    public void launcherExistence(){
+        assertTrue(launcher != null);
     }
 }

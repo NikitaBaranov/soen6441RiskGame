@@ -2,7 +2,7 @@ package mapeditor;
 
 /**
  * This class verifies map data in data structures.
- * @author Nikitha Papani & Dinesh Pattapu
+ * @author Nikitha Papani, Dinesh Pattapu
  *
  */
 public interface IVerification {

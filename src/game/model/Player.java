@@ -13,6 +13,11 @@ import static game.enums.CardsEnum.CAVALRY;
 import static game.enums.CardsEnum.INFANTRY;
 import static game.enums.CardsEnum.WILDCARDS;
 
+/**
+ * The Player model. Describes the Players parameters.
+ * @author Dmitry Kryukov, Ksenia Popova
+ * @see CardsEnum
+ */
 public class Player {
     private String name;
 
@@ -20,6 +25,11 @@ public class Player {
     private Map<CardsEnum, Integer> cardsEnumIntegerMap = new HashMap<>();
     private int armies = 5;
 
+    /**
+     * Constructor of the class
+     * @param name name of player
+     * @param color color of player
+     */
     public Player(String name, Color color) {
         this.name = name;
         this.color = color;
@@ -31,34 +41,66 @@ public class Player {
         cardsEnumIntegerMap.put(BONUS, 0);
     }
 
+    /**
+     * Get the name of player
+     * @return name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Set the player's name
+     * @param name name of the player
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Getter for bonus cards for player
+     * @return cardsEnumIntegerMap
+     */
     public Map<CardsEnum, Integer> getCardsEnumIntegerMap() {
         return cardsEnumIntegerMap;
     }
 
+    /**
+     * Set the bonus cards for player
+     * @param cardsEnumIntegerMap Bonus cards for the player
+     */
     public void setCardsEnumIntegerMap(Map<CardsEnum, Integer> cardsEnumIntegerMap) {
         this.cardsEnumIntegerMap = cardsEnumIntegerMap;
     }
 
+    /**
+     * Get the player color
+     * @return color
+     */
     public Color getColor() {
         return color;
     }
 
+    /**
+     * Set the player color
+     * @param color Color of the player
+     */
     public void setColor(Color color) {
         this.color = color;
     }
 
+    /**
+     * Get the armies of player
+     * @return armies
+     */
     public int getArmies() {
         return armies;
     }
 
+    /**
+     * Set the armies for player
+     * @param armies Armies of the player
+     */
     public void setArmies(int armies) {
         this.armies = armies;
     }
