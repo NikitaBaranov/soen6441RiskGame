@@ -1,5 +1,7 @@
 package game.ui.view;
 
+import game.Game;
+import game.model.IModelObservable;
 import game.model.Player;
 
 import javax.swing.*;
@@ -10,10 +12,14 @@ import java.awt.*;
  * @author Dmitry Kryukov
  * @see Player
  */
-public class TopStatusPanel extends JPanel {
-    private JLabel playerColor = new JLabel();
+public class TopStatusPanel extends JPanel implements IPanelObserver {
+
+    private Player player;
+    private String turnPhraseText;
+    private String gamePhaseText;
+
+
     private JLabel playerName = new JLabel();
-//    private JLabel gameState = new JLabel();
     private JLabel gamePhase = new JLabel();
     private JLabel turnPhrase = new JLabel();
 
@@ -34,13 +40,6 @@ public class TopStatusPanel extends JPanel {
         separator1.setForeground(new Color(121,180,115)); // make it invisible
         this.add(separator1);
 
-//        this.add(new JLabel("State: "));
-//        this.add(gameState);
-//        JSeparator separator2 = new JSeparator(SwingConstants.HORIZONTAL); // Horizontal separator
-//        separator2.setBackground(new Color(121,180,115)); // make it invisible
-//        separator2.setForeground(new Color(121,180,115)); // make it invisible
-//        this.add(separator2);
-
         this.add(new JLabel("Status: "));
         this.add(turnPhrase);
         JSeparator separator3 = new JSeparator(SwingConstants.HORIZONTAL); // Horizontal separator
@@ -52,6 +51,18 @@ public class TopStatusPanel extends JPanel {
         this.add(gamePhase);
     }
 
+    @Override
+    public void updateObserver(IModelObservable iModelObservable) {
+        switch (iModelObservable.getClass().getName()) {
+            case "Player":
+                player = (Player) iModelObservable;
+                break;
+            case "Game":
+                gamePhaseText = ((Game) iModelObservable).getCurrentGamePhase().getName();
+                break;
+        }
+    }
+
     /**
      * Set the player info on the pstatus panel
      * @param player Player
@@ -61,10 +72,6 @@ public class TopStatusPanel extends JPanel {
         String colorS = Integer.toString(player.getColor().getRGB());
         playerName.setForeground(new Color(Integer.parseInt(colorS)));
     }
-
-//    public void setGameState(String gameState) {
-//        this.gameState.setText(gameState);
-//    }
 
     /**
      * Set the current game phase to displaying on the panel
@@ -87,7 +94,6 @@ public class TopStatusPanel extends JPanel {
      */
     public void reset() {
         playerName.setText("");
-//        gameState.setText("");
         gamePhase.setText("");
         turnPhrase.setText("");
     }

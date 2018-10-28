@@ -5,9 +5,11 @@ import game.enums.DiceEnum;
 import game.enums.GamePhase;
 import game.model.Continent;
 import game.model.Country;
+import game.model.IModelObservable;
 import game.model.Neighbour;
 import game.model.Player;
 import game.ui.view.DicePanel;
+import game.ui.view.IPanelObserver;
 import game.ui.view.MapPanel;
 import game.ui.view.RightStatusPanel;
 import game.ui.view.TopStatusPanel;
@@ -133,6 +135,20 @@ public class Game implements IModelObservable {
         refresh();
     }
 
+    @Override
+    public void attachObserver(IPanelObserver iPanelObserver) {
+        iPanelObservers.add(iPanelObserver);
+    }
+
+    @Override
+    public void detachObserver(IPanelObserver iPanelObserver) {
+        iPanelObservers.remove(iPanelObserver);
+    }
+
+    @Override
+    public void notifyObserver() {
+        iPanelObservers.stream().forEach(iPanelObserver -> iPanelObserver.updateObserver(this));
+    }
 
     /**
      * Mouse adapter to handle the mouse events

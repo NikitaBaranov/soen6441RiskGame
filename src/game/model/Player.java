@@ -2,6 +2,7 @@ package game.model;
 
 
 import game.enums.CardsEnum;
+import game.ui.view.IPanelObserver;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -18,7 +19,7 @@ import static game.enums.CardsEnum.WILDCARDS;
  * @author Dmitry Kryukov, Ksenia Popova
  * @see CardsEnum
  */
-public class Player {
+public class Player implements IModelObservable {
     private String name;
 
     private Color color;
@@ -39,6 +40,21 @@ public class Player {
         cardsEnumIntegerMap.put(ARTILLERY, 0);
         cardsEnumIntegerMap.put(WILDCARDS, 0);
         cardsEnumIntegerMap.put(BONUS, 0);
+    }
+
+    @Override
+    public void attachObserver(IPanelObserver iPanelObserver) {
+
+    }
+
+    @Override
+    public void detachObserver(IPanelObserver iPanelObserver) {
+
+    }
+
+    @Override
+    public void notifyObserver() {
+
     }
 
     /**

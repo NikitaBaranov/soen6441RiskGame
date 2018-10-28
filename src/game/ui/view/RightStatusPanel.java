@@ -44,7 +44,6 @@ public class RightStatusPanel extends JPanel {
      * Create the panel and draw it in game main window
      * @param width of the panel
      * @param height of the panel
-     * @param game instance of game controller
      */
     public RightStatusPanel(int width, int height) {
         Game game = Game.getInstance();
