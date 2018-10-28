@@ -53,7 +53,7 @@ public class Player implements IModelObservable {
     }
 
     @Override
-    public void notifyObserver() {
+    public void notifyObservers() {
 
     }
 

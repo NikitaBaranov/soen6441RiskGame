@@ -53,7 +53,7 @@ public class Main {
         TopStatusPanel topStatusPanel = new TopStatusPanel(width, 30);
         //topStatusPanel.setBorder(new LineBorder(Color.BLUE, 1));
         topStatusPanel.setBackground(new Color(121,180,115));
-        game.topStatusPanel = topStatusPanel;
+//        game.topStatusPanel = topStatusPanel;
 
         // Right Panel
         // Right Controls Panel
@@ -66,7 +66,7 @@ public class Main {
         RightStatusPanel rightStatusPanel = new RightStatusPanel(220, 270);
         //rightStatusPanel.setBorder(new LineBorder(Color.BLUE, 1));
         rightStatusPanel.setBackground(new Color(65,102,138));
-        game.rightStatusPanel = rightStatusPanel;
+//        game.rightStatusPanel = rightStatusPanel;
 
         // Player Panel
         DicePanel dicePanel = new DicePanel(100, 170);

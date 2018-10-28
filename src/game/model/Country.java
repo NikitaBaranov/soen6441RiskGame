@@ -25,22 +25,22 @@ public class Country {
     private boolean isSelected = false;
     private boolean isHighlited = false;
 
-    /**
-     * Country constructor.
-     * @param name of country
-     * @param x coordinate
-     * @param y coordinate
-     * @param radius radius of the node
-     * @param player assigned player
-     */
-    @Deprecated
-    public Country(String name, int x, int y, int radius, Player player) {
-        this.name = name;
-        this.x = x;
-        this.y = y;
-        this.radius = radius;
-        this.player = player;
-    }
+//    /**
+//     * Country constructor.
+//     * @param name of country
+//     * @param x coordinate
+//     * @param y coordinate
+//     * @param radius radius of the node
+//     * @param player assigned player
+//     */
+//    @Deprecated
+//    public Country(String name, int x, int y, int radius, Player player) {
+//        this.name = name;
+//        this.x = x;
+//        this.y = y;
+//        this.radius = radius;
+//        this.player = player;
+//    }
 
     /**
      * Constructor of country class.

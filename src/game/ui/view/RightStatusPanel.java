@@ -2,6 +2,7 @@ package game.ui.view;
 
 import game.Game;
 import game.model.Country;
+import game.model.IModelObservable;
 import game.model.Player;
 
 import javax.swing.*;
@@ -22,7 +23,7 @@ import static game.enums.CardsEnum.WILDCARDS;
  * @see Player
  * @see Game
  */
-public class RightStatusPanel extends JPanel {
+public class RightStatusPanel extends JPanel implements IPanelObserver {
     private JButton nextButton = new JButton("Next Turn");
 
     private JLabel countryName = new JLabel("", null, SwingConstants.TRAILING);
@@ -109,39 +110,55 @@ public class RightStatusPanel extends JPanel {
         cardsPanel.add(playerWildcards);
         cardsPanel.add(new JLabel(BONUS.getName() + ":", null, SwingConstants.TRAILING));
         cardsPanel.add(playerBonus);
+
+        Game.getInstance().attachObserver(this);
+    }
+
+    @Override
+    public void updateObserver(IModelObservable iModelObservable) {
+        Game game = Game.getInstance();
+
+        playerInfantry.setText(Integer.toString(game.getCurrentPlayer().getCardsEnumIntegerMap().get(INFANTRY)));
+        playerCavalry.setText(Integer.toString(game.getCurrentPlayer().getCardsEnumIntegerMap().get(CAVALRY)));
+        playerArtillery.setText(Integer.toString(game.getCurrentPlayer().getCardsEnumIntegerMap().get(ARTILLERY)));
+        playerWildcards.setText(Integer.toString(game.getCurrentPlayer().getCardsEnumIntegerMap().get(WILDCARDS)));
+        playerBonus.setText(Integer.toString(game.getCurrentPlayer().getCardsEnumIntegerMap().get(BONUS)));
+
+        countryName.setText(game.getCurrentCountry() != null ? game.getCurrentCountry().getName() : "");
+        countryArmy.setText(game.getCurrentCountry() != null ? Integer.toString(game.getCurrentCountry().getArmy()) : "");
     }
 
     /**
      * Setter for cards for player displaying
      * @param player Player
      */
-    public void setPlayer(Player player) {
-        playerInfantry.setText(Integer.toString(player.getCardsEnumIntegerMap().get(INFANTRY)));
-        playerCavalry.setText(Integer.toString(player.getCardsEnumIntegerMap().get(CAVALRY)));
-        playerArtillery.setText(Integer.toString(player.getCardsEnumIntegerMap().get(ARTILLERY)));
-        playerWildcards.setText(Integer.toString(player.getCardsEnumIntegerMap().get(WILDCARDS)));
-        playerBonus.setText(Integer.toString(player.getCardsEnumIntegerMap().get(BONUS)));
-    }
+//    public void setPlayer(Player player) {
+//        playerInfantry.setText(Integer.toString(player.getCardsEnumIntegerMap().get(INFANTRY)));
+//        playerCavalry.setText(Integer.toString(player.getCardsEnumIntegerMap().get(CAVALRY)));
+//        playerArtillery.setText(Integer.toString(player.getCardsEnumIntegerMap().get(ARTILLERY)));
+//        playerWildcards.setText(Integer.toString(player.getCardsEnumIntegerMap().get(WILDCARDS)));
+//        playerBonus.setText(Integer.toString(player.getCardsEnumIntegerMap().get(BONUS)));
+//    }
 
     /**
      * Setter for country and army number displaying
      * @param country Country
      */
-    public void setCountry(Country country) {
-        countryName.setText(country.getName());
-        countryArmy.setText(Integer.toString(country.getArmy()));
-    }
+//    public void setCountry(Country country) {
+//        countryName.setText(country.getName());
+//        countryArmy.setText(Integer.toString(country.getArmy()));
+//    }
 
     /**
      * Reset the variables for other players
      */
-    public void reset() {
-        playerInfantry.setText("");
-        playerCavalry.setText("");
-        playerArtillery.setText("");
-        playerWildcards.setText("");
-        playerBonus.setText("");
-        countryName.setText("");
-        countryArmy.setText("");
-    }
+//    public void reset() {
+//        playerInfantry.setText("");
+//        playerCavalry.setText("");
+//        playerArtillery.setText("");
+//        playerWildcards.setText("");
+//        playerBonus.setText("");
+//        countryName.setText("");
+//        countryArmy.setText("");
+//    }
 }
