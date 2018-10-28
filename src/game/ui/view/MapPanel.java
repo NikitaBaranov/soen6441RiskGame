@@ -8,12 +8,9 @@ import game.utils.MapLoader;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * The map panel class. Draw the map panel on the main window.
@@ -31,17 +28,16 @@ public class MapPanel extends JPanel {
     /**
      * Constructor of the class
      * @param dimension size
-     * @param game instance of the game controller
      * @param loader map loader
      */
-    public MapPanel(Dimension dimension, Game game, MapLoader loader) {
+    public MapPanel(Dimension dimension, MapLoader loader) {
         try {
             image = ImageIO.read(new File(loader.getFilePath().split(".map")[0] + ".bmp"));
         }
         catch (IOException e) {
         }
         this.setPreferredSize(dimension);
-        this.game = game;
+        this.game = Game.getInstance();
         addMouseListener(game.getMouseAdapter());
     }
 
@@ -53,11 +49,11 @@ public class MapPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(image, 0, 0, null);
-        for (Neighbour neighbour : game.neighbours) {
+        for (Neighbour neighbour : game.getNeighbours()) {
             neighbour.draw(g);
         }
 
-        for (Country country : game.countries) {
+        for (Country country : game.getCountries()) {
             country.draw(g);
         }
     }

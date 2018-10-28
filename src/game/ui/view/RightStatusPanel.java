@@ -46,7 +46,8 @@ public class RightStatusPanel extends JPanel {
      * @param height of the panel
      * @param game instance of game controller
      */
-    public RightStatusPanel(int width, int height, Game game) {
+    public RightStatusPanel(int width, int height) {
+        Game game = Game.getInstance();
         // setup overall setup
         this.setPreferredSize(new Dimension(width, height));
         this.setLayout(new GridBagLayout());

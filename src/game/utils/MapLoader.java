@@ -216,7 +216,13 @@ public class MapLoader {
         }
 
         // Create the instance of the game class and send it to Main
-        Game game = new Game(RADIUS, countries, neighbours, players, continents);
+//        Game game = new Game(RADIUS, countries, neighbours, players, continents);
+        Game game = Game.getInstance();
+        game.setRADIUS(RADIUS);
+        game.setCountries(countries);
+        game.setNeighbours(neighbours);
+        game.setPlayers(players);
+        game.setContinents(continents);
         new Main(game, this);
     }
 

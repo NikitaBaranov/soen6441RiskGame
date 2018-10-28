@@ -63,7 +63,7 @@ public class Main {
 
         // Right Info Panel
         // Player Panel
-        RightStatusPanel rightStatusPanel = new RightStatusPanel(220, 270, game);
+        RightStatusPanel rightStatusPanel = new RightStatusPanel(220, 270);
         //rightStatusPanel.setBorder(new LineBorder(Color.BLUE, 1));
         rightStatusPanel.setBackground(new Color(65,102,138));
         game.rightStatusPanel = rightStatusPanel;
@@ -77,7 +77,7 @@ public class Main {
         // Left Panel
         // Map Panel Map
         //TODO: Extract Logic and reshuffle top to bottom left to right.
-        MapPanel mapPanel = new MapPanel(new Dimension(width-250, height), game, loader);
+        MapPanel mapPanel = new MapPanel(new Dimension(width - 250, height), loader);
         //mapPanel.setBorder(new LineBorder(Color.BLACK, 4));
         mapPanel.setBackground(new Color(119,178,140));
         game.mapPanel = mapPanel;

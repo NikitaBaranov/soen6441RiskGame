@@ -18,6 +18,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,20 +46,21 @@ import static game.enums.GamePhase.PLACING_ARMIES;
  * @see TopStatusPanel
  *
  */
-public class Game {
-    public final int DICE_ROW_TO_SHOW = 3;
-    public int RADIUS;
-    public List<Country> countries;
-    public List<Neighbour> neighbours;
-    public List<Player> players;
-    public List<Continent> continents;
+public class Game implements IModelObservable {
+    private static Game gameInstance;
+    private final int DICE_ROW_TO_SHOW = 3;
+    private int RADIUS;
+    private List<Country> countries;
+    private List<Neighbour> neighbours;
+    private List<Player> players;
+
     public TopStatusPanel topStatusPanel;
     public MapPanel mapPanel;
     public RightStatusPanel rightStatusPanel;
     public JButton nextTurnButton;
     public JButton exchangeButton;
     public DicePanel dicePanel;
-    Map<Integer, GamePhase> gamePhaseMap = new HashMap<>();
+
     private int ARMIES_TO_EXCHANGE_INCREASE = 5;
     private Random RANDOM = new Random();
     private GamePhase currentGamePhase;
@@ -73,6 +75,26 @@ public class Game {
     // Fortifying
     private Country countryFrom;
     private Country countryTo;
+    private List<Continent> continents;
+    private List<IPanelObserver> iPanelObservers = new ArrayList<>();
+
+    private Game() {
+        // Setup dice
+        diceEnumMap.put(1, DiceEnum.ONE);
+        diceEnumMap.put(2, DiceEnum.TWO);
+        diceEnumMap.put(3, DiceEnum.THREE);
+        diceEnumMap.put(4, DiceEnum.FOUR);
+        diceEnumMap.put(5, DiceEnum.FIVE);
+        diceEnumMap.put(6, DiceEnum.SIX);
+    }
+
+    public static Game getInstance() {
+        if (gameInstance == null) {
+            gameInstance = new Game();
+        }
+        return gameInstance;
+    }
+
 
     /**
      * The constructor of the class.
@@ -83,27 +105,13 @@ public class Game {
      * @param players List of players
      * @param continents List of continents
      */
-    public Game(int RADIUS, List<Country> countries, List<Neighbour> neighbours, List<Player> players, List<Continent> continents) {
-        this.RADIUS = RADIUS;
-        this.countries = countries;
-        this.neighbours = neighbours;
-        this.players = players;
-        this.continents = continents;
-
-        // Setup Game Phases
-        gamePhaseMap.put(0, INITIAL_PLACING_ARMIES);
-        gamePhaseMap.put(1, GamePhase.PLACING_ARMIES);
-        gamePhaseMap.put(2, GamePhase.ATACKING);
-        gamePhaseMap.put(3, GamePhase.FORTIFYING);
-
-        // Setup dice
-        diceEnumMap.put(1, DiceEnum.ONE);
-        diceEnumMap.put(2, DiceEnum.TWO);
-        diceEnumMap.put(3, DiceEnum.THREE);
-        diceEnumMap.put(4, DiceEnum.FOUR);
-        diceEnumMap.put(5, DiceEnum.FIVE);
-        diceEnumMap.put(6, DiceEnum.SIX);
-    }
+//    public Game(int RADIUS, List<Country> countries, List<Neighbour> neighbours, List<Player> players, List<Continent> continents) {
+//        this.RADIUS = RADIUS;
+//        this.countries = countries;
+//        this.neighbours = neighbours;
+//        this.players = players;
+//        this.continents = continents;
+//    }
 
     /**
      * Initialize the game
@@ -481,5 +489,33 @@ public class Game {
      */
     public void setNeighbours(List<Neighbour> neighbours) {
         this.neighbours = neighbours;
+    }
+
+    public void setRADIUS(int RADIUS) {
+        this.RADIUS = RADIUS;
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
+    }
+
+    public void setContinents(List<Continent> continents) {
+        this.continents = continents;
+    }
+
+    public GamePhase getCurrentGamePhase() {
+        return currentGamePhase;
+    }
+
+    public void setCurrentGamePhase(GamePhase currentGamePhase) {
+        this.currentGamePhase = currentGamePhase;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
     }
 }
