@@ -2,6 +2,7 @@ package game.ui.view;
 
 import game.Game;
 import game.enums.DiceEnum;
+import game.model.Dice;
 import game.model.IModelObservable;
 
 import javax.imageio.ImageIO;
@@ -87,8 +88,8 @@ public class DicePanel extends JPanel implements IPanelObserver {
         this.removeAll();
         for (int i = 0; i < DICE_ROW_TO_SHOW; i++) {
             try {
-                BufferedImage imageRed = ImageIO.read(new File(DiceEnum.RED_FILE_PREFIX + redDice[i].getFileSuffix()));
-                BufferedImage imageWhite = ImageIO.read(new File(DiceEnum.WHITE_FILE_PREFIX + whiteDice[i].getFileSuffix()));
+                BufferedImage imageRed = ImageIO.read(new File(Dice.RED_FILE_PREFIX + redDice[i].getFileSuffix()));
+                BufferedImage imageWhite = ImageIO.read(new File(Dice.WHITE_FILE_PREFIX + whiteDice[i].getFileSuffix()));
                 JLabel redLabel = new JLabel();
                 redLabel.setIcon(new ImageIcon(imageRed));
                 redLabel.setHorizontalAlignment(JLabel.CENTER);

@@ -5,6 +5,7 @@ import game.enums.DiceEnum;
 import game.enums.GamePhase;
 import game.model.Continent;
 import game.model.Country;
+import game.model.Dice;
 import game.model.IModelObservable;
 import game.model.Neighbour;
 import game.model.Player;
@@ -15,9 +16,7 @@ import game.ui.view.RightStatusPanel;
 import game.ui.view.TopStatusPanel;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import static game.enums.GamePhase.ATACKING;
@@ -48,10 +47,10 @@ public class Game implements IModelObservable {
     //    public TopStatusPanel topStatusPanel;
     //    public MapPanel mapPanel;
     //    public RightStatusPanel rightStatusPanel;
-//    public JButton nextTurnButton;
-    public boolean nextTurnButton;
+    //    public JButton nextTurnButton;
+    private boolean nextTurnButton;
     //    public JButton exchangeButton;
-    public boolean exchangeButton;
+    private boolean exchangeButton;
     //    public DicePanel dicePanel;
     private int RADIUS;
     private List<Country> countries;
@@ -65,7 +64,7 @@ public class Game implements IModelObservable {
     private String currentTurnPhraseText;
     private Country currentCountry;
 
-    private Map<Integer, DiceEnum> diceEnumMap = new HashMap<>();
+    //    private Map<Integer, DiceEnum> diceEnumMap = new HashMap<>();
     private DiceEnum[] redDice = new DiceEnum[DICE_ROW_TO_SHOW];
     private DiceEnum[] whiteDice = new DiceEnum[DICE_ROW_TO_SHOW];
 
@@ -141,12 +140,14 @@ public class Game implements IModelObservable {
         nextTurnButton = false;
         exchangeButton = false;
 
-        diceEnumMap = DiceEnum.diceEnumMap();
+//        diceEnumMap = Dice.diceEnumMap();
 
-        for (int i = 0; i < DICE_ROW_TO_SHOW; i++) {
-            redDice[i] = DiceEnum.EMPTY;
-            whiteDice[i] = DiceEnum.EMPTY;
-        }
+        Dice.resetDice(redDice, whiteDice);
+//        for (int i = 0; i < DICE_ROW_TO_SHOW; i++) {
+//            redDice[i] = DiceEnum.EMPTY;
+//            whiteDice[i] = DiceEnum.EMPTY;
+//        }
+
 
 //        refresh();
         notifyObservers();
@@ -214,6 +215,7 @@ public class Game implements IModelObservable {
 //                        topStatusPanel.setTurnPhrase("Select a country to move armies from. ");
                 System.out.println("Next Turn Button Clicked. Next Player is " + currentGamePhase);
                 highlightPayerCountries();
+                Dice.resetDice(redDice, whiteDice);
 
                 break;
 
@@ -323,7 +325,8 @@ public class Game implements IModelObservable {
                         break;
 
                     case ATACKING:
-                        rollDice();
+                        Dice.rollDice(1, 2, redDice, whiteDice);
+//                        rollDice();
 //                refresh();
                         break;
 
@@ -398,17 +401,6 @@ public class Game implements IModelObservable {
         notifyObservers();
     }
 
-    /**
-     * Stub for the dice feature
-     */
-    private void rollDice() {
-        for (int i = 0; i < DICE_ROW_TO_SHOW; i++) {
-            redDice[i] = diceEnumMap.get(RANDOM.nextInt(6) + 1);
-            whiteDice[i] = diceEnumMap.get(RANDOM.nextInt(6) + 1);
-        }
-        notifyObservers();
-//        dicePanel.setDices(redDice, whiteDice);
-    }
 
     /**
      * Method for refresh the graphics
