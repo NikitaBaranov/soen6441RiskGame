@@ -9,6 +9,8 @@ import game.utils.MapLoader;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -24,7 +26,6 @@ import java.util.List;
  * @see MapLoader
  */
 public class MapPanel extends JPanel implements IPanelObserver {
-    //    Game game;
     private BufferedImage image = null;
     private java.util.List<Country> countries;
     private List<Neighbour> neighbours;
@@ -42,10 +43,21 @@ public class MapPanel extends JPanel implements IPanelObserver {
         catch (IOException e) {
         }
         this.setPreferredSize(dimension);
+        addMouseListener(getMouseAdapter());
 
-        Game game = Game.getInstance();
-        addMouseListener(game.getMouseAdapter());
-        game.attachObserver(this);
+        Game.getInstance().attachObserver(this);
+    }
+
+    /**
+     * Mouse adapter to handle the mouse events
+     */
+    public MouseAdapter getMouseAdapter() {
+        return new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                Point mouse = e.getPoint();
+                Game.getInstance().makeAction(mouse.x, mouse.y);
+            }
+        };
     }
 
     @Override

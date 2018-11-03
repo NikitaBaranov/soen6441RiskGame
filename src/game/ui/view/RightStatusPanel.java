@@ -7,6 +7,8 @@ import game.model.Player;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import static game.enums.CardsEnum.ARTILLERY;
 import static game.enums.CardsEnum.BONUS;
@@ -56,7 +58,7 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
         gbc.insets = new Insets(4, 0, 4, 0);
         gbc.gridx = 0;
         gbc.gridy = 0;
-        nextTurnButton.addActionListener(game.getNextTurnButtonListner());
+        nextTurnButton.addActionListener(nextTurnButtonListner());
 //        game.nextTurnButton = nextTurnButton;
         nextTurnButton.setMargin(new Insets(10, 0, 10, 0));
         this.add(nextTurnButton, gbc);
@@ -82,7 +84,7 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
         gbc.gridy = 5;
         gbc.weightx = 0;
         gbc.weighty = 0;
-        exchangeButton.addActionListener(game.getExchangeListner());
+        exchangeButton.addActionListener(exchangeButtonListner());
 //        game.exchangeButton = exchangeButton;
         exchangeButton.setMargin(new Insets(10, 0, 10, 0));
         this.add(exchangeButton, gbc);
@@ -130,6 +132,30 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
         nextTurnButton.setEnabled(game.isNextTurnButton());
         exchangeButton.setEnabled(game.isExchangeButton());
     }
+
+    /**
+     * Next button listener
+     */
+    public ActionListener nextTurnButtonListner() {
+        return new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Game.getInstance().nextTurn();
+            }
+        };
+    }
+
+
+    /**
+     * Action handler for exchange button.
+     */
+    public ActionListener exchangeButtonListner() {
+        return new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Game.getInstance().exchange();
+            }
+        };
+    }
+
 
     /**
      * Setter for cards for player displaying
