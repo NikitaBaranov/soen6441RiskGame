@@ -52,10 +52,12 @@ public class Game implements IModelObservable {
     private static Game gameInstance;
     private final int DICE_ROW_TO_SHOW = 3;
     //    public TopStatusPanel topStatusPanel;
-    public MapPanel mapPanel;
+    //    public MapPanel mapPanel;
     //    public RightStatusPanel rightStatusPanel;
     public JButton nextTurnButton;
+    //    public boolean nextTurnButton;
     public JButton exchangeButton;
+    //    public boolean exchangeButton;
     //    public DicePanel dicePanel;
     private int RADIUS;
     private List<Country> countries;
@@ -81,16 +83,6 @@ public class Game implements IModelObservable {
     private Country countryTo;
     private List<Continent> continents;
     private List<IPanelObserver> iPanelObservers = new ArrayList<>();
-
-    private Game() {
-        // Setup dice
-        diceEnumMap.put(1, DiceEnum.ONE);
-        diceEnumMap.put(2, DiceEnum.TWO);
-        diceEnumMap.put(3, DiceEnum.THREE);
-        diceEnumMap.put(4, DiceEnum.FOUR);
-        diceEnumMap.put(5, DiceEnum.FIVE);
-        diceEnumMap.put(6, DiceEnum.SIX);
-    }
 
     public static Game getInstance() {
         if (gameInstance == null) {
@@ -153,6 +145,8 @@ public class Game implements IModelObservable {
         nextTurnButton.setEnabled(false);
         exchangeButton.setEnabled(false);
 
+        diceEnumMap = DiceEnum.diceEnumMap();
+
         for (int i = 0; i < DICE_ROW_TO_SHOW; i++) {
             redDice[i] = DiceEnum.EMPTY;
             whiteDice[i] = DiceEnum.EMPTY;
@@ -203,7 +197,7 @@ public class Game implements IModelObservable {
     public ActionListener getNextTurnButtonListner() {
         return new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                reset();
+//                reset();
 
                 switch (currentGamePhase) {
                     case INITIAL_PLACING_ARMIES:
@@ -303,7 +297,7 @@ public class Game implements IModelObservable {
     public void makeAction(Country country) {
         switch (currentGamePhase) {
             case INITIAL_PLACING_ARMIES:
-                reset();
+//                reset();
 
                 if (currentPlayer.getArmies() > 0 && country.getPlayer() == currentPlayer) {
                     country.setArmy(country.getArmy() + 1);
@@ -337,7 +331,7 @@ public class Game implements IModelObservable {
             case PLACING_ARMIES:
                 if (country.getPlayer() == currentPlayer) {
                     if (currentPlayer.getArmies() > 0) {
-                        reset();
+//                        reset();
 
                         country.setArmy(country.getArmy() + 1);
                         currentPlayer.setArmies(currentPlayer.getArmies() - 1);
@@ -458,18 +452,18 @@ public class Game implements IModelObservable {
 //        rightStatusPanel.setPlayer(currentPlayer);
 //        rightStatusPanel.repaint();
 //        dicePanel.repaint();
-        mapPanel.repaint();
+//        mapPanel.repaint();
         notifyObservers();
     }
 
-    /**
-     * Method for resetting the panels
-     */
-    private void reset() {
-//        topStatusPanel.reset();
-        mapPanel.repaint();
-//        rightStatusPanel.reset();
-    }
+//    /**
+//     * Method for resetting the panels
+//     */
+//    private void reset() {
+////        topStatusPanel.reset();
+////        mapPanel.repaint();
+////        rightStatusPanel.reset();
+//    }
 
     /**
      * Method to highlight the player countries

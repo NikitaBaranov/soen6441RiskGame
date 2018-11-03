@@ -80,7 +80,7 @@ public class Main {
         MapPanel mapPanel = new MapPanel(new Dimension(width - 250, height), loader);
         //mapPanel.setBorder(new LineBorder(Color.BLACK, 4));
         mapPanel.setBackground(new Color(119,178,140));
-        game.mapPanel = mapPanel;
+//        game.mapPanel = mapPanel;
 
         // Adding panels
         infoPanel.add(rightStatusPanel);
