@@ -1,8 +1,8 @@
 package game.model;
 
 
+import game.Game;
 import game.enums.CardsEnum;
-import game.ui.view.IPanelObserver;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -16,10 +16,11 @@ import static game.enums.CardsEnum.WILDCARDS;
 
 /**
  * The Player model. Describes the Players parameters.
+ *
  * @author Dmitry Kryukov, Ksenia Popova
  * @see CardsEnum
  */
-public class Player implements IModelObservable {
+public class Player {
     private String name;
 
     private Color color;
@@ -28,7 +29,8 @@ public class Player implements IModelObservable {
 
     /**
      * Constructor of the class
-     * @param name name of player
+     *
+     * @param name  name of player
      * @param color color of player
      */
     public Player(String name, Color color) {
@@ -42,23 +44,45 @@ public class Player implements IModelObservable {
         cardsEnumIntegerMap.put(BONUS, 0);
     }
 
-    @Override
-    public void attachObserver(IPanelObserver iPanelObserver) {
-
+    public void reinforcement() {
+        Game game = Game.getInstance();
+        if (armies > 0) {
+            game.getCurrentCountry().setArmy(game.getCurrentCountry().getArmy() + 1);
+            armies--;
+            game.setCurrentTurnPhraseText("Armies to place " + armies);
+        } else {
+            game.unHighlightCountries();
+        }
     }
 
-    @Override
-    public void detachObserver(IPanelObserver iPanelObserver) {
-
+    public void attack() {
+        Game game = Game.getInstance();
+        Dice.rollDice(1, 2, game.getRedDice(), game.getWhiteDice());
     }
 
-    @Override
-    public void notifyObservers() {
-
+    public void fortification() {
+        Game game = Game.getInstance();
+        if (game.getCountryFrom() == null) {
+            game.unHighlightCountries();
+            game.setCountryFrom(game.getCurrentCountry());
+            game.setCurrentTurnPhraseText("Select a country to move an army.");
+            game.getCurrentCountry().select(false);
+        } else if (game.getCountryTo() == null && game.getCurrentCountry().isHighlited()) {
+            game.getCountryFrom().unSelect(false);
+            game.getCountryFrom().setSelected(true);
+            game.setCountryTo(game.getCurrentCountry());
+            game.getCountryTo().setHighlited(true);
+            game.setCurrentTurnPhraseText("Click on country to move one army.");
+        }
+        if (game.getCountryFrom() != null && game.getCountryFrom().getArmy() > 1 && game.getCountryTo() != null) {
+            game.getCountryFrom().setArmy(game.getCountryFrom().getArmy() - 1);
+            game.getCountryTo().setArmy(game.getCountryTo().getArmy() + 1);
+        }
     }
 
     /**
      * Get the name of player
+     *
      * @return name
      */
     public String getName() {
@@ -67,6 +91,7 @@ public class Player implements IModelObservable {
 
     /**
      * Set the player's name
+     *
      * @param name name of the player
      */
     public void setName(String name) {
@@ -75,6 +100,7 @@ public class Player implements IModelObservable {
 
     /**
      * Getter for bonus cards for player
+     *
      * @return cardsEnumIntegerMap
      */
     public Map<CardsEnum, Integer> getCardsEnumIntegerMap() {
@@ -83,6 +109,7 @@ public class Player implements IModelObservable {
 
     /**
      * Set the bonus cards for player
+     *
      * @param cardsEnumIntegerMap Bonus cards for the player
      */
     public void setCardsEnumIntegerMap(Map<CardsEnum, Integer> cardsEnumIntegerMap) {
@@ -91,6 +118,7 @@ public class Player implements IModelObservable {
 
     /**
      * Get the player color
+     *
      * @return color
      */
     public Color getColor() {
@@ -99,6 +127,7 @@ public class Player implements IModelObservable {
 
     /**
      * Set the player color
+     *
      * @param color Color of the player
      */
     public void setColor(Color color) {
@@ -107,6 +136,7 @@ public class Player implements IModelObservable {
 
     /**
      * Get the armies of player
+     *
      * @return armies
      */
     public int getArmies() {
@@ -115,6 +145,7 @@ public class Player implements IModelObservable {
 
     /**
      * Set the armies for player
+     *
      * @param armies Armies of the player
      */
     public void setArmies(int armies) {
