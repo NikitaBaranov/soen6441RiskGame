@@ -44,27 +44,20 @@ import static game.enums.GamePhase.PLACING_ARMIES;
 public class Game implements IModelObservable {
     private static Game gameInstance;
     private final int DICE_ROW_TO_SHOW = 3;
-    //    public TopStatusPanel topStatusPanel;
-    //    public MapPanel mapPanel;
-    //    public RightStatusPanel rightStatusPanel;
-    //    public JButton nextTurnButton;
     private boolean nextTurnButton;
-    //    public JButton exchangeButton;
     private boolean exchangeButton;
-    //    public DicePanel dicePanel;
+
     private int RADIUS;
     private List<Country> countries;
     private List<Neighbour> neighbours;
     private List<Player> players;
     private int ARMIES_TO_EXCHANGE_INCREASE = 5;
 
-    private Random RANDOM = new Random();
     private GamePhase currentGamePhase;
     private Player currentPlayer;
     private String currentTurnPhraseText;
     private Country currentCountry;
 
-    //    private Map<Integer, DiceEnum> diceEnumMap = new HashMap<>();
     private DiceEnum[] redDice = new DiceEnum[DICE_ROW_TO_SHOW];
     private DiceEnum[] whiteDice = new DiceEnum[DICE_ROW_TO_SHOW];
 
@@ -83,24 +76,6 @@ public class Game implements IModelObservable {
         }
         return gameInstance;
     }
-
-
-    /**
-     * The constructor of the class.
-     * Genrates the instance of the main object (game) with the game flow.
-     * @param RADIUS radius of the default nodes
-     * @param countries List of countries
-     * @param neighbours List of connections
-     * @param players List of players
-     * @param continents List of continents
-     */
-//    public Game(int RADIUS, List<Country> countries, List<Neighbour> neighbours, List<Player> players, List<Continent> continents) {
-//        this.RADIUS = RADIUS;
-//        this.countries = countries;
-//        this.neighbours = neighbours;
-//        this.players = players;
-//        this.continents = continents;
-//    }
 
     /**
      * Get the number of reinforcements armies
@@ -126,30 +101,13 @@ public class Game implements IModelObservable {
      */
     public void initialise() {
         // initial setup.
-        currentPlayer = players.get(0);
         currentGamePhase = INITIAL_PLACING_ARMIES;
-
-        highlightPayerCountries();
-
-//        topStatusPanel.setPlayer(currentPlayer);
-//        topStatusPanel.setGamePhase(currentGamePhase.getName());
-//        topStatusPanel.setTurnPhrase("Select a country to place your army. Armies to place  " + currentPlayer.getArmies());
-
-//        nextTurnButton.setEnabled(false);
-//        exchangeButton.setEnabled(false);
+        currentPlayer = players.get(0);
         nextTurnButton = false;
         exchangeButton = false;
-
-//        diceEnumMap = Dice.diceEnumMap();
-
         Dice.resetDice(redDice, whiteDice);
-//        for (int i = 0; i < DICE_ROW_TO_SHOW; i++) {
-//            redDice[i] = DiceEnum.EMPTY;
-//            whiteDice[i] = DiceEnum.EMPTY;
-//        }
+        highlightPayerCountries();
 
-
-//        refresh();
         notifyObservers();
     }
 
@@ -169,14 +127,11 @@ public class Game implements IModelObservable {
     }
 
     public void nextTurn() {
-        //                reset();
-
         switch (currentGamePhase) {
             case INITIAL_PLACING_ARMIES:
 
                 currentGamePhase = ATACKING;
                 currentTurnPhraseText = "Attack phase is simulated. Press \"Next turn\" button.";
-//                        topStatusPanel.setTurnPhrase("Attack phase is simulated. Press \"Next turn\" button.");
                 System.out.println("Next Turn Button Clicked. Next Player is " + currentGamePhase);
                 break;
 
@@ -184,27 +139,19 @@ public class Game implements IModelObservable {
                 // Prepare to next turn
                 currentGamePhase = ATACKING;
                 currentTurnPhraseText = "Attack phase is simulated. Press \"Next turn\" button.";
-//                        topStatusPanel.setTurnPhrase("Attack phase is simulated. Press \"Next turn\" button.");
                 System.out.println("Next Turn Button Clicked. Next Player is " + currentGamePhase);
                 unHighlightPlayreCountries();
-//                        exchangeButton.setEnabled(false);
                 exchangeButton = false;
                 break;
 
             case ATACKING:
                 unHighlightPlayreCountries();
 
-                // Emulate fights
-//                        for (Country c : countries) {
-//                            if (RANDOM.nextInt() > 0.8) {
-//                                c.setArmy(c.getArmy() - RANDOM.nextInt(c.getArmy()));
-//                            }
-//                        }
-
                 // Init Cards
                 for (CardsEnum cardsEnum : CardsEnum.values()) {
+                    Random r = new Random();
                     currentPlayer.getCardsEnumIntegerMap()
-                            .put(cardsEnum, RANDOM.nextInt() > 0.5 ?
+                            .put(cardsEnum, r.nextInt() > 0.5 ?
                                     currentPlayer.getCardsEnumIntegerMap().get(cardsEnum) + 1 :
                                     currentPlayer.getCardsEnumIntegerMap().get(cardsEnum));
                 }
@@ -212,7 +159,6 @@ public class Game implements IModelObservable {
                 // Prepare to next turn
                 currentGamePhase = FORTIFYING;
                 currentTurnPhraseText = "Select a country to move armies from. ";
-//                        topStatusPanel.setTurnPhrase("Select a country to move armies from. ");
                 System.out.println("Next Turn Button Clicked. Next Player is " + currentGamePhase);
                 highlightPayerCountries();
                 Dice.resetDice(redDice, whiteDice);
@@ -249,11 +195,8 @@ public class Game implements IModelObservable {
                         }
                     }
                 }
-//                        exchangeButton.setEnabled(true);
                 exchangeButton = true;
-
                 currentTurnPhraseText = "Select a country to place your army. Armies to place  " + currentPlayer.getArmies();
-//                        topStatusPanel.setTurnPhrase("Select a country to place your army. Armies to place  " + currentPlayer.getArmies());
                 highlightPayerCountries();
                 break;
         }
@@ -273,8 +216,6 @@ public class Game implements IModelObservable {
                 setCurrentCountry(country);
                 switch (currentGamePhase) {
                     case INITIAL_PLACING_ARMIES:
-//                reset();
-
                         if (currentPlayer.getArmies() > 0 && currentCountry.getPlayer() == currentPlayer) {
                             currentCountry.setArmy(currentCountry.getArmy() + 1);
                             currentPlayer.setArmies(currentPlayer.getArmies() - 1);
@@ -290,44 +231,29 @@ public class Game implements IModelObservable {
                                     c.setHighlited(false);
                                 }
                             }
-
                             currentTurnPhraseText = "Select a country to place your army. Armies to place  " + currentPlayer.getArmies();
-//                    topStatusPanel.setTurnPhrase("Select a country to place your army. Armies to place  " + currentPlayer.getArmies());
                         }
                         if (currentPlayer.getArmies() <= 0) {
-//                    nextTurnButton.setEnabled(true);
                             nextTurnButton = true;
                             currentTurnPhraseText = "The turn is over. Press \"Next turn\" button.";
-//                    topStatusPanel.setTurnPhrase("The turn is over. Press \"Next turn\" button.");
                             unHighlightPlayreCountries();
                         }
-
-//                refresh();
                         break;
 
                     case PLACING_ARMIES:
                         if (currentCountry.getPlayer() == currentPlayer) {
                             if (currentPlayer.getArmies() > 0) {
-//                        reset();
-
                                 currentCountry.setArmy(currentCountry.getArmy() + 1);
                                 currentPlayer.setArmies(currentPlayer.getArmies() - 1);
-
                                 currentTurnPhraseText = "Armies to place " + currentPlayer.getArmies();
-//                        topStatusPanel.setTurnPhrase("Armies to place " + currentPlayer.getArmies());
-//                        rightStatusPanel.setCountry(country);
-
                             } else {
                                 unHighlightPlayreCountries();
                             }
-//                    refresh();
                         }
                         break;
 
                     case ATACKING:
                         Dice.rollDice(1, 2, redDice, whiteDice);
-//                        rollDice();
-//                refresh();
                         break;
 
                     case FORTIFYING:
@@ -336,7 +262,6 @@ public class Game implements IModelObservable {
                                 unHighlightPlayreCountries();
                                 countryFrom = currentCountry;
                                 currentTurnPhraseText = "Select a country to move an army.";
-//                        topStatusPanel.setTurnPhrase("Select a country to move an army.");
                                 currentCountry.select(false);
                             } else if (countryTo == null && currentCountry.isHighlited()) {
                                 countryFrom.unSelect(false);
@@ -344,7 +269,6 @@ public class Game implements IModelObservable {
                                 countryTo = currentCountry;
                                 countryTo.setHighlited(true);
                                 currentTurnPhraseText = "Click on country to move one army.";
-//                        topStatusPanel.setTurnPhrase("Click on country to move one army.");
                             }
                             if (countryFrom != null && countryFrom.getArmy() > 1 && countryTo != null) {
                                 countryFrom.setArmy(countryFrom.getArmy() - 1);
@@ -369,7 +293,6 @@ public class Game implements IModelObservable {
                         currentPlayer.setArmies(currentPlayer.getArmies() + armiesToCardExchange);
                         armiesToCardExchange += ARMIES_TO_EXCHANGE_INCREASE;
                         currentTurnPhraseText = "Armies to place " + currentPlayer.getArmies();
-//                                topStatusPanel.setTurnPhrase("Armies to place " + currentPlayer.getArmies());
                         break;
                     }
                 }
@@ -391,7 +314,6 @@ public class Game implements IModelObservable {
                             currentPlayer.setArmies(currentPlayer.getArmies() + armiesToCardExchange);
                             armiesToCardExchange += ARMIES_TO_EXCHANGE_INCREASE;
                             currentTurnPhraseText = "Armies to place " + currentPlayer.getArmies();
-//                                    topStatusPanel.setTurnPhrase("Armies to place " + currentPlayer.getArmies());
                             break;
                         }
                     }
@@ -401,29 +323,6 @@ public class Game implements IModelObservable {
         notifyObservers();
     }
 
-
-    /**
-     * Method for refresh the graphics
-     */
-//    private void refresh() {
-//        topStatusPanel.setPlayer(currentPlayer);
-//        topStatusPanel.setGamePhase(currentGamePhase.getName());
-//        topStatusPanel.repaint();
-//        rightStatusPanel.setPlayer(currentPlayer);
-//        rightStatusPanel.repaint();
-//        dicePanel.repaint();
-//        mapPanel.repaint();
-//        notifyObservers();
-//    }
-
-//    /**
-//     * Method for resetting the panels
-//     */
-//    private void reset() {
-////        topStatusPanel.reset();
-////        mapPanel.repaint();
-////        rightStatusPanel.reset();
-//    }
 
     /**
      * Method to highlight the player countries
