@@ -67,11 +67,11 @@ public class Player {
             game.setCountryFrom(game.getCurrentCountry());
             game.setCurrentTurnPhraseText("Select a country to move an army.");
             game.getCurrentCountry().select(false);
-        } else if (game.getCountryTo() == null && game.getCurrentCountry().isHighlited()) {
+        } else if (game.getCountryTo() == null && game.getCurrentCountry().isHighlighted()) {
             game.getCountryFrom().unSelect(false);
             game.getCountryFrom().setSelected(true);
             game.setCountryTo(game.getCurrentCountry());
-            game.getCountryTo().setHighlited(true);
+            game.getCountryTo().setHighlighted(true);
             game.setCurrentTurnPhraseText("Click on country to move one army.");
         }
         if (game.getCountryFrom() != null && game.getCountryFrom().getArmy() > 1 && game.getCountryTo() != null) {

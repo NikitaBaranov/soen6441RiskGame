@@ -223,9 +223,9 @@ public class Game implements IModelObservable {
 
                             for (Country c : countries) {
                                 if (c.getPlayer() == currentPlayer) {
-                                    c.setHighlited(true);
+                                    c.setHighlighted(true);
                                 } else {
-                                    c.setHighlited(false);
+                                    c.setHighlighted(false);
                                 }
                             }
                             currentTurnPhraseText = "Select a country to place your army. Armies to place  " + currentPlayer.getArmies();
@@ -306,7 +306,7 @@ public class Game implements IModelObservable {
     private void highlightPayerCountries() {
         for (Country c : countries) {
             if (c.getPlayer() == currentPlayer) {
-                c.setHighlited(true);
+                c.setHighlighted(true);
             }
         }
     }
@@ -316,7 +316,7 @@ public class Game implements IModelObservable {
      */
     public void unHighlightCountries() {
         for (Country c : countries) {
-            c.setHighlited(false);
+            c.setHighlighted(false);
         }
     }
 
