@@ -14,7 +14,6 @@ import game.ui.view.MapPanel;
 import game.ui.view.RightStatusPanel;
 import game.ui.view.TopStatusPanel;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -54,10 +53,10 @@ public class Game implements IModelObservable {
     //    public TopStatusPanel topStatusPanel;
     //    public MapPanel mapPanel;
     //    public RightStatusPanel rightStatusPanel;
-    public JButton nextTurnButton;
-    //    public boolean nextTurnButton;
-    public JButton exchangeButton;
-    //    public boolean exchangeButton;
+//    public JButton nextTurnButton;
+    public boolean nextTurnButton;
+    //    public JButton exchangeButton;
+    public boolean exchangeButton;
     //    public DicePanel dicePanel;
     private int RADIUS;
     private List<Country> countries;
@@ -142,8 +141,10 @@ public class Game implements IModelObservable {
 //        topStatusPanel.setGamePhase(currentGamePhase.getName());
 //        topStatusPanel.setTurnPhrase("Select a country to place your army. Armies to place  " + currentPlayer.getArmies());
 
-        nextTurnButton.setEnabled(false);
-        exchangeButton.setEnabled(false);
+//        nextTurnButton.setEnabled(false);
+//        exchangeButton.setEnabled(false);
+        nextTurnButton = false;
+        exchangeButton = false;
 
         diceEnumMap = DiceEnum.diceEnumMap();
 
@@ -215,7 +216,8 @@ public class Game implements IModelObservable {
 //                        topStatusPanel.setTurnPhrase("Attack phase is simulated. Press \"Next turn\" button.");
                         System.out.println("Next Turn Button Clicked. Next Player is " + currentGamePhase);
                         unHighlightPlayreCountries();
-                        exchangeButton.setEnabled(false);
+//                        exchangeButton.setEnabled(false);
+                        exchangeButton = false;
                         break;
 
                     case ATACKING:
@@ -275,7 +277,8 @@ public class Game implements IModelObservable {
                                 }
                             }
                         }
-                        exchangeButton.setEnabled(true);
+//                        exchangeButton.setEnabled(true);
+                        exchangeButton = true;
 
                         currentTurnPhraseText = "Select a country to place your army. Armies to place  " + currentPlayer.getArmies();
 //                        topStatusPanel.setTurnPhrase("Select a country to place your army. Armies to place  " + currentPlayer.getArmies());
@@ -319,7 +322,8 @@ public class Game implements IModelObservable {
 //                    topStatusPanel.setTurnPhrase("Select a country to place your army. Armies to place  " + currentPlayer.getArmies());
                 }
                 if (currentPlayer.getArmies() <= 0) {
-                    nextTurnButton.setEnabled(true);
+//                    nextTurnButton.setEnabled(true);
+                    nextTurnButton = true;
                     currentTurnPhraseText = "The turn is over. Press \"Next turn\" button.";
 //                    topStatusPanel.setTurnPhrase("The turn is over. Press \"Next turn\" button.");
                     unHighlightPlayreCountries();
@@ -578,5 +582,13 @@ public class Game implements IModelObservable {
 
     public DiceEnum[] getWhiteDice() {
         return whiteDice;
+    }
+
+    public boolean isNextTurnButton() {
+        return nextTurnButton;
+    }
+
+    public boolean isExchangeButton() {
+        return exchangeButton;
     }
 }
