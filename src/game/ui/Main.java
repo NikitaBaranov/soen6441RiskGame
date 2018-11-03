@@ -72,7 +72,7 @@ public class Main {
         DicePanel dicePanel = new DicePanel(100, 170);
         //dicePanel.setBorder(new LineBorder(Color.BLACK, 1));
         dicePanel.setBackground(new Color(255,255,255));
-        game.dicePanel = dicePanel;
+//        game.dicePanel = dicePanel;
 
         // Left Panel
         // Map Panel Map

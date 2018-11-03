@@ -34,6 +34,7 @@ import static game.enums.GamePhase.PLACING_ARMIES;
 /**
  * The game file which control all the game flow.
  * i.e. Controller in the MVC arcthitecture model
+ *
  * @author Dmitry kryukov, Ksenia Popova
  * @see DiceEnum
  * @see CardsEnum
@@ -46,23 +47,20 @@ import static game.enums.GamePhase.PLACING_ARMIES;
  * @see MapPanel
  * @see RightStatusPanel
  * @see TopStatusPanel
- *
  */
 public class Game implements IModelObservable {
     private static Game gameInstance;
     private final int DICE_ROW_TO_SHOW = 3;
-    private int RADIUS;
-    private List<Country> countries;
-    private List<Neighbour> neighbours;
-    private List<Player> players;
-
     //    public TopStatusPanel topStatusPanel;
     public MapPanel mapPanel;
     //    public RightStatusPanel rightStatusPanel;
     public JButton nextTurnButton;
     public JButton exchangeButton;
-    public DicePanel dicePanel;
-
+    //    public DicePanel dicePanel;
+    private int RADIUS;
+    private List<Country> countries;
+    private List<Neighbour> neighbours;
+    private List<Player> players;
     private int ARMIES_TO_EXCHANGE_INCREASE = 5;
 
     private Random RANDOM = new Random();
@@ -120,6 +118,25 @@ public class Game implements IModelObservable {
 //    }
 
     /**
+     * Get the number of reinforcements armies
+     *
+     * @param player    current player
+     * @param countries countries of player
+     * @return int number of reinforcement armies
+     */
+    public static int getReinforcementArmies(Player player, List<Country> countries) {
+        int countriesOwnedByPlayer = 0;
+        for (Country country : countries) {
+            if (country.getPlayer() == player) {
+                countriesOwnedByPlayer++;
+            }
+        }
+        System.out.println("Player " + player.getName() + " owns " + countriesOwnedByPlayer + " countries and  gets " + countriesOwnedByPlayer / 3 + " armies.");
+        if ((player.getArmies() + countriesOwnedByPlayer / 3) < 3) return 3;
+        else return player.getArmies() + countriesOwnedByPlayer / 3;
+    }
+
+    /**
      * Initialize the game
      */
     public void initialise() {
@@ -135,6 +152,11 @@ public class Game implements IModelObservable {
 
         nextTurnButton.setEnabled(false);
         exchangeButton.setEnabled(false);
+
+        for (int i = 0; i < DICE_ROW_TO_SHOW; i++) {
+            redDice[i] = DiceEnum.EMPTY;
+            whiteDice[i] = DiceEnum.EMPTY;
+        }
 
         refresh();
     }
@@ -173,24 +195,6 @@ public class Game implements IModelObservable {
                 notifyObservers();
             }
         };
-    }
-
-    /**
-     * Get the number of reinforcements armies
-     * @param player current player
-     * @param countries countries of player
-     * @return int number of reinforcement armies
-     */
-    public static int getReinforcementArmies(Player player, List<Country> countries) {
-        int countriesOwnedByPlayer = 0;
-        for (Country country : countries) {
-            if (country.getPlayer() == player) {
-                countriesOwnedByPlayer++;
-            }
-        }
-        System.out.println("Player " + player.getName() + " owns " + countriesOwnedByPlayer + " countries and  gets " + countriesOwnedByPlayer / 3 + " armies.");
-        if ((player.getArmies() + countriesOwnedByPlayer /3 ) < 3 ) return 3;
-        else return player.getArmies() + countriesOwnedByPlayer / 3;
     }
 
     /**
@@ -293,6 +297,7 @@ public class Game implements IModelObservable {
 
     /**
      * Method describes the main flow. I.E. actions with the game.
+     *
      * @param country object
      */
     public void makeAction(Country country) {
@@ -439,7 +444,8 @@ public class Game implements IModelObservable {
             redDice[i] = diceEnumMap.get(RANDOM.nextInt(6) + 1);
             whiteDice[i] = diceEnumMap.get(RANDOM.nextInt(6) + 1);
         }
-        dicePanel.setDices(redDice, whiteDice);
+        notifyObservers();
+//        dicePanel.setDices(redDice, whiteDice);
     }
 
     /**
@@ -451,7 +457,7 @@ public class Game implements IModelObservable {
 //        topStatusPanel.repaint();
 //        rightStatusPanel.setPlayer(currentPlayer);
 //        rightStatusPanel.repaint();
-        dicePanel.repaint();
+//        dicePanel.repaint();
         mapPanel.repaint();
         notifyObservers();
     }
@@ -489,14 +495,20 @@ public class Game implements IModelObservable {
 
     /**
      * Method get the radius for nodes on graph
+     *
      * @return RADIUS of the nodes
      */
     public int getRADIUS() {
         return RADIUS;
     }
 
+    public void setRADIUS(int RADIUS) {
+        this.RADIUS = RADIUS;
+    }
+
     /**
      * Methods return the list of countries
+     *
      * @return countries List of countries
      */
     public List<Country> getCountries() {
@@ -505,6 +517,7 @@ public class Game implements IModelObservable {
 
     /**
      * Setter for countries.
+     *
      * @param countries List of countries
      */
     public void setCountries(List<Country> countries) {
@@ -513,6 +526,7 @@ public class Game implements IModelObservable {
 
     /**
      * Method return the list of connections for country
+     *
      * @return neighbours List of connections
      */
     public List<Neighbour> getNeighbours() {
@@ -521,14 +535,11 @@ public class Game implements IModelObservable {
 
     /**
      * Setter for connections
+     *
      * @param neighbours List of neighbours
      */
     public void setNeighbours(List<Neighbour> neighbours) {
         this.neighbours = neighbours;
-    }
-
-    public void setRADIUS(int RADIUS) {
-        this.RADIUS = RADIUS;
     }
 
     public void setPlayers(List<Player> players) {
@@ -565,5 +576,13 @@ public class Game implements IModelObservable {
 
     public Country getCurrentCountry() {
         return currentCountry;
+    }
+
+    public DiceEnum[] getRedDice() {
+        return redDice;
+    }
+
+    public DiceEnum[] getWhiteDice() {
+        return whiteDice;
     }
 }
