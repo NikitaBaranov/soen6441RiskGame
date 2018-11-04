@@ -55,9 +55,50 @@ public class Player {
         }
     }
 
+    public void prepareForAttack() {
+        Game game = Game.getInstance();
+
+        if (game.getCurrentCountry() != null) {
+            if (game.getCurrentCountry().getPlayer() == this) {
+                if (game.getCountryFrom() == null) {
+                    game.unHighlightCountries();
+                    game.setCountryFrom(game.getCurrentCountry());
+                    game.setCurrentTurnPhraseText("Select a country to prepareForAttack.");
+                    game.getCurrentCountry().select(true);
+                }
+            } else if (game.getCountryTo() == null && game.getCurrentCountry().isHighlighted()) {
+                game.getCountryFrom().unSelect(true);
+                game.getCountryFrom().setSelected(true);
+                game.setCountryTo(game.getCurrentCountry());
+                game.getCountryTo().setHighlighted(true);
+                game.setCurrentTurnPhraseText("Click on country to prepareForAttack.");
+            }
+        } else {
+            game.resetToFrom();
+            Dice.resetDice(game.getRedDice(), game.getWhiteDice());
+        }
+    }
+
     public void attack() {
         Game game = Game.getInstance();
-        Dice.rollDice(1, 2, game.getRedDice(), game.getWhiteDice());
+        if (game.getCountryFrom() != null && game.getCountryFrom().getArmy() >= 2 && game.getCountryTo() != null) {
+            Dice.resetDice(game.getRedDice(), game.getWhiteDice());
+
+            int redDicesToRoll = game.getCountryFrom().getArmy() >= 4 ? 3 : game.getCountryFrom().getArmy() - 1;
+            int whiteDicesToRoll = game.getCountryTo().getArmy() >= 3 ? 3 : game.getCountryTo().getArmy();
+
+            Dice.rollDice(game.getNumberOfRedDicesSelected(), game.getNumberOfWhiteDicesSelected(), game.getRedDice(), game.getWhiteDice());
+
+            for (int i = 0; i < Math.min(redDicesToRoll, whiteDicesToRoll); i++) {
+                if (game.getRedDice()[i].getNumber() > game.getWhiteDice()[i].getNumber()) {
+                    game.getCountryTo().setArmy(game.getCountryTo().getArmy() - 1);
+                } else {
+                    game.getCountryFrom().setArmy(game.getCountryFrom().getArmy() - 1);
+
+                }
+            }
+
+        }
     }
 
     public void fortification() {

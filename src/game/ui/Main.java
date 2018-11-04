@@ -1,6 +1,7 @@
 package game.ui;
 
 import game.Game;
+import game.ui.view.AttackPanel;
 import game.ui.view.DicePanel;
 import game.ui.view.MapPanel;
 import game.ui.view.RightStatusPanel;
@@ -8,6 +9,7 @@ import game.ui.view.TopStatusPanel;
 import game.utils.MapLoader;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 
 /**
@@ -51,9 +53,7 @@ public class Main {
         frame.setResizable(false);
         // Top Status Game Info Bar
         TopStatusPanel topStatusPanel = new TopStatusPanel(width, 30);
-        //topStatusPanel.setBorder(new LineBorder(Color.BLUE, 1));
         topStatusPanel.setBackground(new Color(121,180,115));
-//        game.topStatusPanel = topStatusPanel;
 
         // Right Panel
         // Right Controls Panel
@@ -62,17 +62,18 @@ public class Main {
         infoPanel.setBackground(new Color(65,102,138));
 
         // Right Info Panel
+//        JLabel attackLable = new JLabel("Attack:");
         // Player Panel
         RightStatusPanel rightStatusPanel = new RightStatusPanel(220, 270);
-        //rightStatusPanel.setBorder(new LineBorder(Color.BLUE, 1));
         rightStatusPanel.setBackground(new Color(65,102,138));
-//        game.rightStatusPanel = rightStatusPanel;
 
-        // Player Panel
-        DicePanel dicePanel = new DicePanel(100, 170);
-        //dicePanel.setBorder(new LineBorder(Color.BLACK, 1));
-        dicePanel.setBackground(new Color(255,255,255));
-//        game.dicePanel = dicePanel;
+        // Attack Panel
+        AttackPanel attackPanel = new AttackPanel(200, 300);
+        attackPanel.setBackground(new Color(255, 255, 255));
+
+        // Dice Panel
+//        DicePanel dicePanel = new DicePanel(100, 170);
+//        dicePanel.setBackground(new Color(255,255,255));
 
         // Left Panel
         // Map Panel Map
@@ -84,8 +85,11 @@ public class Main {
 
         // Adding panels
         infoPanel.add(rightStatusPanel);
-        infoPanel.add(dicePanel);
-        //infoPanel.setBorder(new LineBorder(Color.RED, 1));
+
+//        infoPanel.add(attackLable);
+        infoPanel.add(attackPanel);
+//        infoPanel.add(dicePanel);
+        infoPanel.setBorder(new LineBorder(Color.BLACK, 1));
 
         game.initialise();
 

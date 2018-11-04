@@ -59,7 +59,6 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
         gbc.gridx = 0;
         gbc.gridy = 0;
         nextTurnButton.addActionListener(nextTurnButtonListner());
-//        game.nextTurnButton = nextTurnButton;
         nextTurnButton.setMargin(new Insets(10, 0, 10, 0));
         this.add(nextTurnButton, gbc);
         gbc.gridx = 0;

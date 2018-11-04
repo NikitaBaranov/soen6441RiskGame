@@ -1,5 +1,7 @@
 package game.model;
 
+import game.Game;
+
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
@@ -205,14 +207,15 @@ public class Country {
      */
     private void highlight(boolean enemies) {
         if (!isHighlighted) {
+            Game game = Game.getInstance();
             isHighlighted = true;
             for (Country country : neighbours) {
                 if (enemies) {
-                    if (country.getPlayer() != this.player) {
+                    if (country.getPlayer() != game.getCurrentPlayer()) {
                         country.highlight(enemies);
                     }
                 } else {
-                    if (country.getPlayer() == this.player) {
+                    if (country.getPlayer() == game.getCurrentPlayer()) {
                         country.highlight(enemies);
                     }
                 }

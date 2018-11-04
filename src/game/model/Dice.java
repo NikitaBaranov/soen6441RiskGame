@@ -2,6 +2,8 @@ package game.model;
 
 import game.enums.DiceEnum;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -35,6 +37,7 @@ public class Dice {
                 redDice[i] = DiceEnum.EMPTY;
             }
         }
+        Arrays.sort(redDice, Collections.reverseOrder());
 
         for (int i = 0; i < whiteDice.length; i++) {
             if (i < whiteDiceNumber) {
@@ -43,6 +46,7 @@ public class Dice {
                 whiteDice[i] = DiceEnum.EMPTY;
             }
         }
+        Arrays.sort(whiteDice, Collections.reverseOrder());
     }
 
     public static void resetDice(DiceEnum[] redDice, DiceEnum[] whiteDice) {

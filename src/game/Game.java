@@ -61,10 +61,14 @@ public class Game implements IModelObservable {
     private DiceEnum[] redDice = new DiceEnum[DICE_ROW_TO_SHOW];
     private DiceEnum[] whiteDice = new DiceEnum[DICE_ROW_TO_SHOW];
 
-    // Placing Armies
+    // Reinforcement
     private int armiesToCardExchange = 5;
 
-    // Fortifying
+    // Attack
+    private int numberOfRedDicesSelected;
+    private int numberOfWhiteDicesSelected;
+
+    // Fortification
     private Country countryFrom;
     private Country countryTo;
     private List<Continent> continents;
@@ -160,24 +164,19 @@ public class Game implements IModelObservable {
                 currentGamePhase = FORTIFICATION;
                 currentTurnPhraseText = "Select a country to move armies from. ";
                 System.out.println("Next Turn Button Clicked. Next Player is " + currentGamePhase);
-                highlightPayerCountries();
+
                 Dice.resetDice(redDice, whiteDice);
 
+                resetToFrom();
+
+                highlightPayerCountries();
                 break;
 
             case FORTIFICATION:
                 currentGamePhase = REINFORCEMENT;
                 System.out.println("Next Turn Button Clicked. Next Player is " + currentGamePhase);
 
-                unHighlightCountries();
-                if (countryFrom != null) {
-                    countryFrom.unSelect(false);
-                }
-                countryFrom = null;
-                if (countryTo != null) {
-                    countryTo.unSelect(false);
-                }
-                countryTo = null;
+                resetToFrom();
 
                 // Change current player
                 currentPlayer = players.get((players.indexOf(currentPlayer) + 1) % players.size());
@@ -202,6 +201,19 @@ public class Game implements IModelObservable {
         notifyObservers();
     }
 
+    public void resetToFrom() {
+        unHighlightCountries();
+        if (countryFrom != null) {
+            countryFrom.unSelect(false);
+        }
+        countryFrom = null;
+
+        if (countryTo != null) {
+            countryTo.unSelect(false);
+        }
+        countryTo = null;
+    }
+
     /**
      * Method describes the main flow. I.E. actions with the game.
      */
@@ -211,50 +223,59 @@ public class Game implements IModelObservable {
         for (Country country : countries) {
             if (country.isInBorder(x, y)) {
                 setCurrentCountry(country);
-                switch (currentGamePhase) {
-                    case PLACING_ARMIES:
-                        if (currentPlayer.getArmies() > 0 && currentCountry.getPlayer() == currentPlayer) {
-                            currentCountry.setArmy(currentCountry.getArmy() + 1);
-                            currentPlayer.setArmies(currentPlayer.getArmies() - 1);
-
-                            Player nextPlayer = players.get((players.indexOf(currentPlayer) + 1) % players.size());
-                            System.out.println("Next Turn Button Clicked. Next Player is " + nextPlayer.getName());
-                            currentPlayer = nextPlayer;
-
-                            for (Country c : countries) {
-                                if (c.getPlayer() == currentPlayer) {
-                                    c.setHighlighted(true);
-                                } else {
-                                    c.setHighlighted(false);
-                                }
-                            }
-                            currentTurnPhraseText = "Select a country to place your army. Armies to place  " + currentPlayer.getArmies();
-                        }
-                        if (currentPlayer.getArmies() <= 0) {
-                            nextTurnButton = true;
-                            currentTurnPhraseText = "The turn is over. Press \"Next turn\" button.";
-                            unHighlightCountries();
-                        }
-                        break;
-
-                    case REINFORCEMENT:
-                        if (currentCountry.getPlayer() == currentPlayer) {
-                            currentPlayer.reinforcement();
-                        }
-                        break;
-
-                    case ATTACK:
-                        currentPlayer.attack();
-                        break;
-
-                    case FORTIFICATION:
-                        if (currentCountry.getPlayer() == currentPlayer) {
-                            currentPlayer.fortification();
-                        }
-                        break;
-                }
                 System.out.println("Selected " + country.getName());
+                break;
             }
+        }
+
+        switch (currentGamePhase) {
+            case PLACING_ARMIES:
+                if (currentCountry != null) {
+                    if (currentPlayer.getArmies() > 0 && currentCountry.getPlayer() == currentPlayer) {
+                        currentCountry.setArmy(currentCountry.getArmy() + 1);
+                        currentPlayer.setArmies(currentPlayer.getArmies() - 1);
+
+                        Player nextPlayer = players.get((players.indexOf(currentPlayer) + 1) % players.size());
+                        System.out.println("Next Turn Button Clicked. Next Player is " + nextPlayer.getName());
+                        currentPlayer = nextPlayer;
+
+                        for (Country c : countries) {
+                            if (c.getPlayer() == currentPlayer) {
+                                c.setHighlighted(true);
+                            } else {
+                                c.setHighlighted(false);
+                            }
+                        }
+                        currentTurnPhraseText = "Select a country to place your army. Armies to place  " + currentPlayer.getArmies();
+                    }
+                    if (currentPlayer.getArmies() <= 0) {
+                        nextTurnButton = true;
+                        currentTurnPhraseText = "The turn is over. Press \"Next turn\" button.";
+                        unHighlightCountries();
+                    }
+                }
+                break;
+
+            case REINFORCEMENT:
+                if (currentCountry != null) {
+                    if (currentCountry.getPlayer() == currentPlayer) {
+                        currentPlayer.reinforcement();
+                    }
+                }
+                break;
+
+            case ATTACK:
+                currentPlayer.prepareForAttack();
+                break;
+
+            case FORTIFICATION:
+                if (currentCountry != null) {
+
+                    if (currentCountry.getPlayer() == currentPlayer) {
+                        currentPlayer.fortification();
+                    }
+                }
+                break;
         }
         notifyObservers();
     }
@@ -299,6 +320,10 @@ public class Game implements IModelObservable {
         notifyObservers();
     }
 
+    public void attack() {
+        currentPlayer.attack();
+        notifyObservers();
+    }
 
     /**
      * Method to highlight the player countries
@@ -439,5 +464,21 @@ public class Game implements IModelObservable {
 
     public void setCountryTo(Country countryTo) {
         this.countryTo = countryTo;
+    }
+
+    public int getNumberOfRedDicesSelected() {
+        return numberOfRedDicesSelected;
+    }
+
+    public void setNumberOfRedDicesSelected(int numberOfRedDicesSelected) {
+        this.numberOfRedDicesSelected = numberOfRedDicesSelected;
+    }
+
+    public int getNumberOfWhiteDicesSelected() {
+        return numberOfWhiteDicesSelected;
+    }
+
+    public void setNumberOfWhiteDicesSelected(int numberOfWhiteDicesSelected) {
+        this.numberOfWhiteDicesSelected = numberOfWhiteDicesSelected;
     }
 }
