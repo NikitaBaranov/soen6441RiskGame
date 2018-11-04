@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * The country model. Describes the country parameters.
+ *
  * @author Dmitry Kryukov, Ksenia Popova
  */
 public class Country {
@@ -46,12 +47,13 @@ public class Country {
 
     /**
      * Constructor of country class.
-     * @param name of the country
-     * @param x coordinate
-     * @param y coordinate
-     * @param radius radius of the node
+     *
+     * @param name      of the country
+     * @param x         coordinate
+     * @param y         coordinate
+     * @param radius    radius of the node
      * @param continent assigned continent
-     * @param player assigned player
+     * @param player    assigned player
      */
     public Country(String name, int x, int y, int radius, Continent continent, Player player) {
         this.name = name;
@@ -64,6 +66,7 @@ public class Country {
 
     /**
      * Get name of country
+     *
      * @return name
      */
     public String getName() {
@@ -72,6 +75,7 @@ public class Country {
 
     /**
      * Get army number for country
+     *
      * @return army
      */
     public int getArmy() {
@@ -80,6 +84,7 @@ public class Country {
 
     /**
      * Set the number of armies to country
+     *
      * @param army Armies to country
      */
     public void setArmy(int army) {
@@ -88,6 +93,7 @@ public class Country {
 
     /**
      * Get the x coodrinate
+     *
      * @return x
      */
     public int getX() {
@@ -96,6 +102,7 @@ public class Country {
 
     /**
      * Set the x coordinate
+     *
      * @param x horizontal coordinate
      */
     public void setX(int x) {
@@ -104,6 +111,7 @@ public class Country {
 
     /**
      * Get the y coordinate
+     *
      * @return y
      */
     public int getY() {
@@ -112,6 +120,7 @@ public class Country {
 
     /**
      * Set the y coordinate
+     *
      * @param y vertical coordinate
      */
     public void setY(int y) {
@@ -120,6 +129,7 @@ public class Country {
 
     /**
      * Get the radius of the country
+     *
      * @return radius
      */
     public int getRadius() {
@@ -128,6 +138,7 @@ public class Country {
 
     /**
      * Set the radius for the country
+     *
      * @param radius radius of the node
      */
     public void setRadius(int radius) {
@@ -136,6 +147,7 @@ public class Country {
 
     /**
      * Get the connections for country
+     *
      * @return neighbours
      */
     public List<Country> getNeighbours() {
@@ -144,6 +156,7 @@ public class Country {
 
     /**
      * Set the connections for country
+     *
      * @param neighbours connections for country
      */
     public void setNeighbours(List<Country> neighbours) {
@@ -152,6 +165,7 @@ public class Country {
 
     /**
      * Get the assigned player for country
+     *
      * @return player
      */
     public Player getPlayer() {
@@ -160,6 +174,7 @@ public class Country {
 
     /**
      * Set the player for country
+     *
      * @param player Player object
      */
     public void setPlayer(Player player) {
@@ -168,6 +183,7 @@ public class Country {
 
     /**
      * Is the country selected in the window
+     *
      * @return boolean
      */
     public boolean isSelected() {
@@ -176,6 +192,7 @@ public class Country {
 
     /**
      * Set the country selected state
+     *
      * @param selected Is country selected
      */
     public void setSelected(boolean selected) {
@@ -185,15 +202,17 @@ public class Country {
 
     /**
      * Selection of enemies
+     *
      * @param enemies Players enemies
      */
-    public void select(boolean enemies) {
+    public void select(boolean enemies, int depth) {
         isSelected = true;
-        highlight(enemies);
+        highlight(enemies, depth);
     }
 
     /**
      * Unselection of enemies
+     *
      * @param enemies Players enemies
      */
     public void unSelect(boolean enemies) {
@@ -203,20 +222,21 @@ public class Country {
 
     /**
      * Highlight the country enemies
+     *
      * @param enemies Players enemies
      */
-    private void highlight(boolean enemies) {
-        if (!isHighlighted) {
+    private void highlight(boolean enemies, int depth) {
+        if (depth != 0 && !isHighlighted) {
             Game game = Game.getInstance();
             isHighlighted = true;
             for (Country country : neighbours) {
                 if (enemies) {
                     if (country.getPlayer() != game.getCurrentPlayer()) {
-                        country.highlight(enemies);
+                        country.highlight(enemies, depth == -1 ? -1 : depth - 1);
                     }
                 } else {
                     if (country.getPlayer() == game.getCurrentPlayer()) {
-                        country.highlight(enemies);
+                        country.highlight(enemies, depth == -1 ? -1 : depth - 1);
                     }
                 }
             }
@@ -225,6 +245,7 @@ public class Country {
 
     /**
      * Unhighlight the enemies fir country
+     *
      * @param enemies Player enemies
      */
     private void unHighlight(boolean enemies) {
@@ -246,6 +267,7 @@ public class Country {
 
     /**
      * Check if country is highlighted
+     *
      * @return boolean
      */
     public boolean isHighlighted() {
@@ -254,6 +276,7 @@ public class Country {
 
     /**
      * Set highlight
+     *
      * @param highlighted Is highlighted
      */
     public void setHighlighted(boolean highlighted) {
@@ -262,6 +285,7 @@ public class Country {
 
     /**
      * Check if the country in border
+     *
      * @param x coordinate
      * @param y coordinate
      * @return boolean
@@ -272,6 +296,7 @@ public class Country {
 
     /**
      * Get the continent for country
+     *
      * @return continent
      */
     public Continent getContinent() {
@@ -280,6 +305,7 @@ public class Country {
 
     /**
      * Set the continent for country
+     *
      * @param continent Continent to country
      */
     public void setContinent(Continent continent) {
@@ -288,6 +314,7 @@ public class Country {
 
     /**
      * Drawer. Display the game in window. GUI
+     *
      * @param g instance og graphics object
      */
     public void draw(Graphics g) {
