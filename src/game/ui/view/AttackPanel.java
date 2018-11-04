@@ -12,9 +12,6 @@ import java.util.Enumeration;
 
 public class AttackPanel extends JPanel implements IPanelObserver {
 
-    private int redDices = 0;
-    private int whiteDices = 0;
-
     private JPanel numbersPanel;
 
     private ButtonGroup redDiceGroup;
@@ -39,7 +36,7 @@ public class AttackPanel extends JPanel implements IPanelObserver {
         JLabel attackLable = new JLabel("Attack:");
 
         numbersPanel = new JPanel();
-        numbersPanel.setLayout(new GridLayout(3, 2));
+        numbersPanel.setLayout(new GridLayout(4, 2));
         numbersPanel.setPreferredSize(new Dimension(100, 100));
         numbersPanel.setBackground(new Color(255, 255, 255));
 
@@ -59,6 +56,9 @@ public class AttackPanel extends JPanel implements IPanelObserver {
         whiteDiceGroup.add(white1);
         whiteDiceGroup.add(white2);
 
+
+        numbersPanel.add(new JLabel("Red Dices"));
+        numbersPanel.add(new JLabel("White Dices"));
         numbersPanel.add(red1);
         numbersPanel.add(white1);
         numbersPanel.add(red2);
@@ -74,38 +74,28 @@ public class AttackPanel extends JPanel implements IPanelObserver {
 
         this.add(attackLable);
         this.add(numbersPanel);
-        this.add(dicePanel);
         this.add(attackButton);
+        this.add(dicePanel);
 
         attackButton.setEnabled(false);
-//        this.setVisible(false);
-//        numbersPanel.setEnabled(false);
-//        dicePanel.setEnabled(false);
-//        this.setEnabled(false);
+        this.setVisible(false);
     }
 
     @Override
     public void updateObserver(IModelObservable iModelObservable) {
         Game game = Game.getInstance();
         if (game.getCurrentGamePhase() == GamePhase.ATTACK) {
-//            red1.setSelected(true);
-//            white1.setSelected(true);
             this.setVisible(true);
-//            this.setEnabled(true);
-//            numbersPanel.setEnabled(true);
-//            dicePanel.setEnabled(true);
             if (game.getCountryTo() != null && game.getCountryFrom() != null) {
-                attackButton.setEnabled(true);
+                red1.setSelected(true);
+                white1.setSelected(true);
+                setAllEnabled(true);
             } else {
-                attackButton.setEnabled(false);
-
+                setAllEnabled(false);
             }
         } else {
             this.setVisible(false);
-            attackButton.setEnabled(false);
-//            this.setEnabled(false);
-//            numbersPanel.setEnabled(false);
-//            dicePanel.setEnabled(false);
+            setAllEnabled(false);
         }
     }
 
@@ -135,5 +125,20 @@ public class AttackPanel extends JPanel implements IPanelObserver {
                 game.attack();
             }
         };
+    }
+
+    private void setAllEnabled(boolean isEnabled) {
+        Enumeration<AbstractButton> redEnumeration = redDiceGroup.getElements();
+        while (redEnumeration.hasMoreElements()) {
+            JRadioButton jRadioButton = (JRadioButton) redEnumeration.nextElement();
+            jRadioButton.setEnabled(isEnabled);
+        }
+
+        Enumeration<AbstractButton> whiteEnumeration = whiteDiceGroup.getElements();
+        while (whiteEnumeration.hasMoreElements()) {
+            JRadioButton jRadioButton = (JRadioButton) whiteEnumeration.nextElement();
+            jRadioButton.setEnabled(isEnabled);
+        }
+        attackButton.setEnabled(isEnabled);
     }
 }
