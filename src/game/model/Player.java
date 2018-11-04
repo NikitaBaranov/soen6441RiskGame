@@ -84,12 +84,9 @@ public class Player {
         if (game.getCountryFrom() != null && game.getCountryFrom().getArmy() >= 2 && game.getCountryTo() != null) {
             Dice.resetDice(game.getRedDice(), game.getWhiteDice());
 
-            int redDicesToRoll = game.getCountryFrom().getArmy() >= 4 ? 3 : game.getCountryFrom().getArmy() - 1;
-            int whiteDicesToRoll = game.getCountryTo().getArmy() >= 3 ? 3 : game.getCountryTo().getArmy();
-
             Dice.rollDice(game.getNumberOfRedDicesSelected(), game.getNumberOfWhiteDicesSelected(), game.getRedDice(), game.getWhiteDice());
 
-            for (int i = 0; i < Math.min(redDicesToRoll, whiteDicesToRoll); i++) {
+            for (int i = 0; i < Math.min(game.getNumberOfRedDicesSelected(), game.getNumberOfWhiteDicesSelected()); i++) {
                 if (game.getRedDice()[i].getNumber() > game.getWhiteDice()[i].getNumber()) {
                     game.getCountryTo().setArmy(game.getCountryTo().getArmy() - 1);
                 } else {
