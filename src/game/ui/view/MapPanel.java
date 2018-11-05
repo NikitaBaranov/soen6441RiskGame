@@ -60,6 +60,10 @@ public class MapPanel extends JPanel implements IPanelObserver {
         };
     }
 
+    /**
+     * Updater for observer
+     * @param iModelObservable
+     */
     @Override
     public void updateObserver(IModelObservable iModelObservable) {
         Game game = Game.getInstance();

@@ -74,6 +74,10 @@ public class Game implements IModelObservable {
     private List<Continent> continents;
     private List<IPanelObserver> iPanelObservers = new ArrayList<>();
 
+    /**
+     * get instance method for Controller
+     * @return gameInstance
+     */
     public static Game getInstance() {
         if (gameInstance == null) {
             gameInstance = new Game();
@@ -115,21 +119,35 @@ public class Game implements IModelObservable {
         notifyObservers();
     }
 
+    /**
+     * attach observer
+     * @param iPanelObserver
+     */
     @Override
     public void attachObserver(IPanelObserver iPanelObserver) {
         iPanelObservers.add(iPanelObserver);
     }
 
+    /**
+     * Detach observer
+     * @param iPanelObserver
+     */
     @Override
     public void detachObserver(IPanelObserver iPanelObserver) {
         iPanelObservers.remove(iPanelObserver);
     }
 
+    /**
+     * Notify observers
+     */
     @Override
     public void notifyObservers() {
         iPanelObservers.stream().forEach(iPanelObserver -> iPanelObserver.updateObserver(this));
     }
 
+    /**
+     * Next turn
+     */
     public void nextTurn() {
         switch (currentGamePhase) {
             case PLACING_ARMIES:
@@ -201,6 +219,9 @@ public class Game implements IModelObservable {
         notifyObservers();
     }
 
+    /**
+     * Reset highlights
+     */
     public void resetToFrom() {
         unHighlightCountries();
         if (countryFrom != null) {
@@ -280,6 +301,9 @@ public class Game implements IModelObservable {
         notifyObservers();
     }
 
+    /**
+     * Exchange
+     */
     public void exchange() {
         switch (currentGamePhase) {
             case REINFORCEMENT:
@@ -320,6 +344,9 @@ public class Game implements IModelObservable {
         notifyObservers();
     }
 
+    /**
+     * Attack
+     */
     public void attack() {
         currentPlayer.attack();
         notifyObservers();
@@ -394,90 +421,178 @@ public class Game implements IModelObservable {
         this.neighbours = neighbours;
     }
 
+    /**
+     * Set players
+     * @param players
+     */
     public void setPlayers(List<Player> players) {
         this.players = players;
     }
 
+    /**
+     * Set continents
+     * @param continents
+     */
     public void setContinents(List<Continent> continents) {
         this.continents = continents;
     }
 
+    /**
+     * get current phase of the game
+     * @return currentGamePhase
+     */
     public GamePhase getCurrentGamePhase() {
         return currentGamePhase;
     }
 
+    /**
+     * Set current game phase
+     * @param currentGamePhase
+     */
     public void setCurrentGamePhase(GamePhase currentGamePhase) {
         this.currentGamePhase = currentGamePhase;
     }
 
+    /**
+     * Get current player
+     * @return currentPlayer
+     */
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
 
+    /**
+     * Set current Player
+     * @param currentPlayer
+     */
     public void setCurrentPlayer(Player currentPlayer) {
         this.currentPlayer = currentPlayer;
     }
 
+    /**
+     * Get current status phrase
+     * @return currentTurnPhraseText
+     */
     public String getCurrentTurnPhraseText() {
         return currentTurnPhraseText;
     }
 
+    /**
+     * Set current status phrase text
+     * @param currentTurnPhraseText
+     */
     public void setCurrentTurnPhraseText(String currentTurnPhraseText) {
         this.currentTurnPhraseText = currentTurnPhraseText;
     }
 
+    /**
+     * Get current country
+     * @return currentCountry
+     */
     public Country getCurrentCountry() {
         return currentCountry;
     }
 
+    /**
+     * set current country
+     * @param currentCountry
+     */
     public void setCurrentCountry(Country currentCountry) {
         this.currentCountry = currentCountry;
     }
 
+    /**
+     * get red dice
+     * @return redDice
+     */
     public DiceEnum[] getRedDice() {
         return redDice;
     }
 
+    /**
+     * get white dice
+     * @return whiteDice
+     */
     public DiceEnum[] getWhiteDice() {
         return whiteDice;
     }
 
+    /**
+     * Next turn button
+     * @return nextTurnButton
+     */
     public boolean isNextTurnButton() {
         return nextTurnButton;
     }
 
+    /**
+     * Exchange button
+     * @return exchangeButton
+     */
     public boolean isExchangeButton() {
         return exchangeButton;
     }
 
+    /**
+     * get country from
+     * @return countryFrom
+     */
     public Country getCountryFrom() {
         return countryFrom;
     }
 
+    /**
+     * Set country from
+     * @param countryFrom
+     */
     public void setCountryFrom(Country countryFrom) {
         this.countryFrom = countryFrom;
     }
 
+    /**
+     * Get country to
+     * @return countryTo
+     */
     public Country getCountryTo() {
         return countryTo;
     }
 
+    /**
+     * set country to
+     * @param countryTo
+     */
     public void setCountryTo(Country countryTo) {
         this.countryTo = countryTo;
     }
 
+    /**
+     * Get number of red dices that were selected
+     * @return numberOfRedDicesSelected
+     */
     public int getNumberOfRedDicesSelected() {
         return numberOfRedDicesSelected;
     }
 
+    /**
+     * Set number of red dices that were selected
+     * @param numberOfRedDicesSelected
+     */
     public void setNumberOfRedDicesSelected(int numberOfRedDicesSelected) {
         this.numberOfRedDicesSelected = numberOfRedDicesSelected;
     }
 
+    /**
+     * Get number of white dices that were selected
+     * @return numberOfWhiteDicesSelected
+     */
     public int getNumberOfWhiteDicesSelected() {
         return numberOfWhiteDicesSelected;
     }
 
+    /**
+     * Set number of white dices that were selected
+     * @param numberOfWhiteDicesSelected
+     */
     public void setNumberOfWhiteDicesSelected(int numberOfWhiteDicesSelected) {
         this.numberOfWhiteDicesSelected = numberOfWhiteDicesSelected;
     }

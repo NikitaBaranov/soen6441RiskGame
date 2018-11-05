@@ -53,6 +53,10 @@ public class TopStatusPanel extends JPanel implements IPanelObserver {
         Game.getInstance().attachObserver(this);
     }
 
+    /**
+     * Updater for observer
+     * @param iModelObservable
+     */
     @Override
     public void updateObserver(IModelObservable iModelObservable) {
         Game game = Game.getInstance();

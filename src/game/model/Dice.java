@@ -8,12 +8,20 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+/**
+ * The dice model. Describes the dice parameters
+ * @author Dmitry Kryukov, Ksenia Popova
+ */
 public class Dice {
 
     private static final String imageSourceDir = "src/game/resources/dice/";
     public static final String RED_FILE_PREFIX = imageSourceDir + "red_";
     public static final String WHITE_FILE_PREFIX = imageSourceDir + "white_";
 
+    /**
+     * Map for dices
+     * @return diceEnumMap map
+     */
     public static Map<Integer, DiceEnum> diceEnumMap() {
         Map<Integer, DiceEnum> diceEnumMap = new HashMap<>();
         diceEnumMap.put(1, DiceEnum.ONE);
@@ -49,6 +57,11 @@ public class Dice {
         Arrays.sort(whiteDice, Collections.reverseOrder());
     }
 
+    /**
+     * Reset dice
+     * @param redDice
+     * @param whiteDice
+     */
     public static void resetDice(DiceEnum[] redDice, DiceEnum[] whiteDice) {
         for (int i = 0; i < redDice.length; i++) {
             redDice[i] = DiceEnum.EMPTY;

@@ -44,6 +44,9 @@ public class Player {
         cardsEnumIntegerMap.put(BONUS, 0);
     }
 
+    /**
+     * Reinforcement for player
+     */
     public void reinforcement() {
         Game game = Game.getInstance();
         if (armies > 0) {
@@ -55,6 +58,9 @@ public class Player {
         }
     }
 
+    /**
+     * Preparing for attach phase
+     */
     public void prepareForAttack() {
         Game game = Game.getInstance();
 
@@ -79,6 +85,9 @@ public class Player {
         }
     }
 
+    /**
+     * Attack phase
+     */
     public void attack() {
         Game game = Game.getInstance();
         if (game.getCountryFrom() != null && game.getCountryFrom().getArmy() >= 2 && game.getCountryTo() != null) {
@@ -98,6 +107,9 @@ public class Player {
         }
     }
 
+    /**
+     * Fortification for Player
+     */
     public void fortification() {
         Game game = Game.getInstance();
         if (game.getCountryFrom() == null) {
