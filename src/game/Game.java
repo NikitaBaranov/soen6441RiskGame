@@ -67,6 +67,8 @@ public class Game implements IModelObservable {
     // Attack
     private int numberOfRedDicesSelected;
     private int numberOfWhiteDicesSelected;
+    private boolean winBattle;
+    private int minArmiesToMoveAfterWin;
 
     // Fortification
     private Country countryFrom;
@@ -185,7 +187,7 @@ public class Game implements IModelObservable {
 
                 Dice.resetDice(redDice, whiteDice);
 
-                resetToFrom();
+                resetToAndFrom();
 
                 highlightPayerCountries();
                 break;
@@ -194,7 +196,7 @@ public class Game implements IModelObservable {
                 currentGamePhase = REINFORCEMENT;
                 System.out.println("Next Turn Button Clicked. Next Player is " + currentGamePhase);
 
-                resetToFrom();
+                resetToAndFrom();
 
                 // Change current player
                 currentPlayer = players.get((players.indexOf(currentPlayer) + 1) % players.size());
@@ -222,7 +224,7 @@ public class Game implements IModelObservable {
     /**
      * Reset highlights
      */
-    public void resetToFrom() {
+    public void resetToAndFrom() {
         unHighlightCountries();
         if (countryFrom != null) {
             countryFrom.unSelect(false);
@@ -286,7 +288,7 @@ public class Game implements IModelObservable {
                 break;
 
             case ATTACK:
-                currentPlayer.prepareForAttack();
+                currentPlayer.beforeAndAfterAttack();
                 break;
 
             case FORTIFICATION:
@@ -595,5 +597,21 @@ public class Game implements IModelObservable {
      */
     public void setNumberOfWhiteDicesSelected(int numberOfWhiteDicesSelected) {
         this.numberOfWhiteDicesSelected = numberOfWhiteDicesSelected;
+    }
+
+    public boolean isWinBattle() {
+        return winBattle;
+    }
+
+    public void setWinBattle(boolean winBattle) {
+        this.winBattle = winBattle;
+    }
+
+    public int getMinArmiesToMoveAfterWin() {
+        return minArmiesToMoveAfterWin;
+    }
+
+    public void setMinArmiesToMoveAfterWin(int minArmiesToMoveAfterWin) {
+        this.minArmiesToMoveAfterWin = minArmiesToMoveAfterWin;
     }
 }

@@ -98,25 +98,29 @@ public class AttackPanel extends JPanel implements IPanelObserver {
     public void updateObserver(IModelObservable iModelObservable) {
         Game game = Game.getInstance();
         if (game.getCurrentGamePhase() == GamePhase.ATTACK) {
-            this.setVisible(true);
-            if (game.getCountryTo() != null && game.getCountryFrom() != null) {
-                red1.setSelected(true);
-                white1.setSelected(true);
+            if (!game.isWinBattle()) {
+                this.setVisible(true);
+                if (game.getCountryFrom() != null && game.getCountryFrom().getArmy() > 1 && game.getCountryTo() != null) {
+                    red1.setSelected(true);
+                    white1.setSelected(true);
 
-                red1.setEnabled(game.getCountryFrom().getArmy() >= 2);
-                red2.setEnabled(game.getCountryFrom().getArmy() >= 3);
-                red3.setEnabled(game.getCountryFrom().getArmy() >= 4);
+                    red1.setEnabled(game.getCountryFrom().getArmy() >= 2);
+                    red2.setEnabled(game.getCountryFrom().getArmy() >= 3);
+                    red3.setEnabled(game.getCountryFrom().getArmy() >= 4);
 
-                white1.setEnabled(game.getCountryTo().getArmy() >= 1);
-                white2.setEnabled(game.getCountryTo().getArmy() >= 2);
+                    white1.setEnabled(game.getCountryTo().getArmy() >= 1);
+                    white2.setEnabled(game.getCountryTo().getArmy() >= 2);
 
-                attackButton.setEnabled(true);
+                    attackButton.setEnabled(true);
+                } else {
+                    setAllDisabled();
+                }
             } else {
-                setAllUnEnabled();
+                setAllDisabled();
             }
         } else {
             this.setVisible(false);
-            setAllUnEnabled();
+            setAllDisabled();
         }
     }
 
@@ -151,7 +155,7 @@ public class AttackPanel extends JPanel implements IPanelObserver {
     /**
      * Set all checkbuttons enabled
      */
-    private void setAllUnEnabled() {
+    private void setAllDisabled() {
         Enumeration<AbstractButton> redEnumeration = redDiceGroup.getElements();
         while (redEnumeration.hasMoreElements()) {
             JRadioButton jRadioButton = (JRadioButton) redEnumeration.nextElement();

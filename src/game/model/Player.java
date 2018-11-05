@@ -61,27 +61,47 @@ public class Player {
     /**
      * Preparing for attach phase
      */
-    public void prepareForAttack() {
+    public void beforeAndAfterAttack() {
         Game game = Game.getInstance();
 
-        if (game.getCurrentCountry() != null) {
-            if (game.getCurrentCountry().getPlayer() == this) {
-                if (game.getCountryFrom() == null && game.getCurrentCountry().getArmy() > 1) {
-                    game.unHighlightCountries();
-                    game.setCountryFrom(game.getCurrentCountry());
-                    game.setCurrentTurnPhraseText("Select a country to prepareForAttack.");
-                    game.getCurrentCountry().select(true, 2);
+        if (game.isWinBattle()) {
+            if (game.getMinArmiesToMoveAfterWin() > 0) {
+                if (game.getCurrentCountry() == game.getCountryTo()) {
+                    game.getCountryTo().setArmy(game.getCountryTo().getArmy() + 1);
+                    game.getCountryFrom().setArmy(game.getCountryFrom().getArmy() - 1);
+                    game.setMinArmiesToMoveAfterWin(game.getMinArmiesToMoveAfterWin() - 1);
                 }
-            } else if (game.getCountryTo() == null && game.getCurrentCountry().isHighlighted()) {
-                game.getCountryFrom().unSelect(true);
-                game.getCountryFrom().setSelected(true);
-                game.setCountryTo(game.getCurrentCountry());
-                game.getCountryTo().setHighlighted(true);
-                game.setCurrentTurnPhraseText("Click on country to prepareForAttack.");
+            } else {
+                if (game.getCurrentCountry() == game.getCountryTo() && game.getCountryFrom().getArmy() > 1) {
+                    game.getCountryTo().setArmy(game.getCountryTo().getArmy() + 1);
+                    game.getCountryFrom().setArmy(game.getCountryFrom().getArmy() - 1);
+                    game.setMinArmiesToMoveAfterWin(game.getMinArmiesToMoveAfterWin() - 1);
+                } else {
+                    game.resetToAndFrom();
+                    Dice.resetDice(game.getRedDice(), game.getWhiteDice());
+                    game.setWinBattle(false);
+                }
             }
         } else {
-            game.resetToFrom();
-            Dice.resetDice(game.getRedDice(), game.getWhiteDice());
+            if (game.getCurrentCountry() != null) {
+                if (game.getCurrentCountry().getPlayer() == this) {
+                    if (game.getCountryFrom() == null && game.getCurrentCountry().getArmy() > 1) {
+                        game.unHighlightCountries();
+                        game.setCountryFrom(game.getCurrentCountry());
+                        game.setCurrentTurnPhraseText("Select a country to Attack.");
+                        game.getCurrentCountry().select(true, 2);
+                    }
+                } else if (game.getCountryTo() == null && game.getCurrentCountry().isHighlighted()) {
+                    game.getCountryFrom().unSelect(true);
+                    game.getCountryFrom().setSelected(true);
+                    game.setCountryTo(game.getCurrentCountry());
+                    game.getCountryTo().setHighlighted(true);
+                    game.setCurrentTurnPhraseText("Use Attack window to Attack.");
+                }
+            } else {
+                game.resetToAndFrom();
+                Dice.resetDice(game.getRedDice(), game.getWhiteDice());
+            }
         }
     }
 
@@ -104,6 +124,12 @@ public class Player {
                 }
             }
 
+            if (game.getCountryTo().getArmy() == 0) {
+                game.setWinBattle(true);
+                game.getCountryTo().setPlayer(this);
+                game.setMinArmiesToMoveAfterWin(game.getNumberOfRedDicesSelected());
+                //TODO: Add card to a player.
+            }
         }
     }
 

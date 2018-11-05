@@ -43,6 +43,7 @@ public class DicePanel extends JPanel implements IPanelObserver {
         whiteDice = game.getWhiteDice();
         redDice = game.getRedDice();
         createPanel();
+//        repaint();
     }
 
     /**
