@@ -10,12 +10,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static game.enums.CardsEnum.ARTILLERY;
-import static game.enums.CardsEnum.BONUS;
-import static game.enums.CardsEnum.CAVALRY;
-import static game.enums.CardsEnum.INFANTRY;
-import static game.enums.CardsEnum.WILDCARDS;
-
 /**
  * The status panel class. Descrive the properties of the right panel.
  * Displaying the player needed information. Such as bonus cards
@@ -40,7 +34,7 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
     private JButton exchangeButton = new JButton("Exchange");
 
     private JPanel countryPanel = new JPanel();
-    private JPanel cardsPanel = new JPanel();
+//    private JPanel cardsPanel = new JPanel();
 
     /**
      * Constructor of the class.
@@ -78,15 +72,14 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
         gbc.gridy = 4;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
-        this.add(cardsPanel, gbc);
+        this.add(new CardPanel(width, height), gbc);
         gbc.gridx = 0;
         gbc.gridy = 5;
         gbc.weightx = 0;
         gbc.weighty = 0;
-        exchangeButton.addActionListener(exchangeButtonListner());
-//        game.exchangeButton = exchangeButton;
-        exchangeButton.setMargin(new Insets(10, 0, 10, 0));
-        this.add(exchangeButton, gbc);
+//        exchangeButton.addActionListener(exchangeButtonListner());
+//        exchangeButton.setMargin(new Insets(10, 0, 10, 0));
+//        this.add(exchangeButton, gbc);
 
         // setup Country panel
         countryPanel.setMaximumSize(new Dimension(width, height));
@@ -98,19 +91,19 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
         countryPanel.add(countryArmy);
 
         // setup Country panel
-        cardsPanel.setMaximumSize(new Dimension(width, height));
-        cardsPanel.setLayout(new GridLayout(5, 2));
-        cardsPanel.setBackground(new Color(121, 180, 115));
-        cardsPanel.add(new JLabel(INFANTRY.getName() + ":", null, SwingConstants.TRAILING));
-        cardsPanel.add(playerInfantry);
-        cardsPanel.add(new JLabel(CAVALRY.getName() + ":", null, SwingConstants.TRAILING));
-        cardsPanel.add(playerCavalry);
-        cardsPanel.add(new JLabel(ARTILLERY.getName() + ":", null, SwingConstants.TRAILING));
-        cardsPanel.add(playerArtillery);
-        cardsPanel.add(new JLabel(WILDCARDS.getName() + ":", null, SwingConstants.TRAILING));
-        cardsPanel.add(playerWildcards);
-        cardsPanel.add(new JLabel(BONUS.getName() + ":", null, SwingConstants.TRAILING));
-        cardsPanel.add(playerBonus);
+//        cardsPanel.setMaximumSize(new Dimension(width, height));
+//        cardsPanel.setLayout(new GridLayout(5, 2));
+//        cardsPanel.setBackground(new Color(121, 180, 115));
+//        cardsPanel.add(new JLabel(INFANTRY.getName() + ":", null, SwingConstants.TRAILING));
+//        cardsPanel.add(playerInfantry);
+//        cardsPanel.add(new JLabel(CAVALRY.getName() + ":", null, SwingConstants.TRAILING));
+//        cardsPanel.add(playerCavalry);
+//        cardsPanel.add(new JLabel(ARTILLERY.getName() + ":", null, SwingConstants.TRAILING));
+//        cardsPanel.add(playerArtillery);
+//        cardsPanel.add(new JLabel(WILDCARDS.getName() + ":", null, SwingConstants.TRAILING));
+//        cardsPanel.add(playerWildcards);
+//        cardsPanel.add(new JLabel(BONUS.getName() + ":", null, SwingConstants.TRAILING));
+//        cardsPanel.add(playerBonus);
 
         Game.getInstance().attachObserver(this);
     }
@@ -123,11 +116,11 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
     public void updateObserver(IModelObservable iModelObservable) {
         Game game = Game.getInstance();
 
-        playerInfantry.setText(Integer.toString(game.getCurrentPlayer().getCardsEnumIntegerMap().get(INFANTRY)));
-        playerCavalry.setText(Integer.toString(game.getCurrentPlayer().getCardsEnumIntegerMap().get(CAVALRY)));
-        playerArtillery.setText(Integer.toString(game.getCurrentPlayer().getCardsEnumIntegerMap().get(ARTILLERY)));
-        playerWildcards.setText(Integer.toString(game.getCurrentPlayer().getCardsEnumIntegerMap().get(WILDCARDS)));
-        playerBonus.setText(Integer.toString(game.getCurrentPlayer().getCardsEnumIntegerMap().get(BONUS)));
+//        playerInfantry.setText(Integer.toString(game.getCurrentPlayer().getCardsEnumIntegerMap().get(INFANTRY)));
+//        playerCavalry.setText(Integer.toString(game.getCurrentPlayer().getCardsEnumIntegerMap().get(CAVALRY)));
+//        playerArtillery.setText(Integer.toString(game.getCurrentPlayer().getCardsEnumIntegerMap().get(ARTILLERY)));
+//        playerWildcards.setText(Integer.toString(game.getCurrentPlayer().getCardsEnumIntegerMap().get(WILDCARDS)));
+//        playerBonus.setText(Integer.toString(game.getCurrentPlayer().getCardsEnumIntegerMap().get(BONUS)));
 
         countryName.setText(game.getCurrentCountry() != null ? game.getCurrentCountry().getName() : "");
         countryArmy.setText(game.getCurrentCountry() != null ? Integer.toString(game.getCurrentCountry().getArmy()) : "");
@@ -148,16 +141,16 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
     }
 
 
-    /**
-     * Action handler for exchange button.
-     */
-    public ActionListener exchangeButtonListner() {
-        return new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Game.getInstance().exchange();
-            }
-        };
-    }
+//    /**
+//     * Action handler for exchange button.
+//     */
+//    public ActionListener exchangeButtonListner() {
+//        return new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                Game.getInstance().exchange();
+//            }
+//        };
+//    }
 
 
     /**

@@ -17,8 +17,14 @@ import game.ui.view.TopStatusPanel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
+import static game.enums.CardsEnum.ARTILLERY;
+import static game.enums.CardsEnum.BONUS;
+import static game.enums.CardsEnum.CAVALRY;
+import static game.enums.CardsEnum.INFANTRY;
+import static game.enums.CardsEnum.WILDCARDS;
 import static game.enums.GamePhase.ATTACK;
 import static game.enums.GamePhase.FORTIFICATION;
 import static game.enums.GamePhase.PLACING_ARMIES;
@@ -42,17 +48,16 @@ import static game.enums.GamePhase.REINFORCEMENT;
  * @see TopStatusPanel
  */
 public class Game implements IModelObservable {
+    public static final int ARMIES_TO_EXCHANGE_INCREASE = 5;
+
     private static Game gameInstance;
     private final int DICE_ROW_TO_SHOW = 3;
     private boolean nextTurnButton;
     private boolean exchangeButton;
-
     private int RADIUS;
     private List<Country> countries;
     private List<Neighbour> neighbours;
     private List<Player> players;
-    private int ARMIES_TO_EXCHANGE_INCREASE = 5;
-
     private GamePhase currentGamePhase;
     private Player currentPlayer;
     private String currentTurnPhraseText;
@@ -69,6 +74,7 @@ public class Game implements IModelObservable {
     private int numberOfWhiteDicesSelected;
     private boolean winBattle;
     private int minArmiesToMoveAfterWin;
+    private boolean giveACard;
 
     // Fortification
     private Country countryFrom;
@@ -78,6 +84,7 @@ public class Game implements IModelObservable {
 
     /**
      * get instance method for Controller
+     *
      * @return gameInstance
      */
     public static Game getInstance() {
@@ -123,6 +130,7 @@ public class Game implements IModelObservable {
 
     /**
      * attach observer
+     *
      * @param iPanelObserver
      */
     @Override
@@ -132,6 +140,7 @@ public class Game implements IModelObservable {
 
     /**
      * Detach observer
+     *
      * @param iPanelObserver
      */
     @Override
@@ -169,18 +178,18 @@ public class Game implements IModelObservable {
                 break;
 
             case ATTACK:
+
                 unHighlightCountries();
 
-                // Init Cards
-                for (CardsEnum cardsEnum : CardsEnum.values()) {
+                if (giveACard) {
+                    CardsEnum[] cardsEnums = new CardsEnum[]{INFANTRY, CAVALRY, ARTILLERY, WILDCARDS, BONUS};
                     Random r = new Random();
-                    currentPlayer.getCardsEnumIntegerMap()
-                            .put(cardsEnum, r.nextInt() > 0.5 ?
-                                    currentPlayer.getCardsEnumIntegerMap().get(cardsEnum) + 1 :
-                                    currentPlayer.getCardsEnumIntegerMap().get(cardsEnum));
-                }
+                    Map<CardsEnum, Integer> cardsEnumIntegerMap = currentPlayer.getCardsEnumIntegerMap();
+                    CardsEnum randomCard = cardsEnums[r.nextInt(cardsEnums.length)];
 
-                // Prepare to next turn
+                    cardsEnumIntegerMap.put(randomCard, cardsEnumIntegerMap.get(randomCard) + 1);
+                    giveACard = false;
+                }
                 currentGamePhase = FORTIFICATION;
                 currentTurnPhraseText = "Select a country to move armies from. ";
                 System.out.println("Next Turn Button Clicked. Next Player is " + currentGamePhase);
@@ -303,48 +312,53 @@ public class Game implements IModelObservable {
         notifyObservers();
     }
 
-    /**
-     * Exchange
-     */
-    public void exchange() {
-        switch (currentGamePhase) {
-            case REINFORCEMENT:
-                // Change 3*1 cards
-                for (CardsEnum cardsEnum : CardsEnum.values()) {
-                    if (currentPlayer.getCardsEnumIntegerMap().get(cardsEnum) >= 3) {
-                        currentPlayer.getCardsEnumIntegerMap().put(cardsEnum, currentPlayer.getCardsEnumIntegerMap().get(cardsEnum) - 3);
-                        currentPlayer.setArmies(currentPlayer.getArmies() + armiesToCardExchange);
-                        armiesToCardExchange += ARMIES_TO_EXCHANGE_INCREASE;
-                        currentTurnPhraseText = "Armies to place " + currentPlayer.getArmies();
-                        break;
-                    }
-                }
-
-                // Change 1*3 cards
-                int count = 0;
-                for (CardsEnum cardsEnum : CardsEnum.values()) {
-                    if (currentPlayer.getCardsEnumIntegerMap().get(cardsEnum) >= 1) {
-                        count++;
-                    }
-                }
-                if (count >= 3) {
-                    count = 3;
-                    for (CardsEnum cardsEnum : CardsEnum.values()) {
-                        if (count > 0 && currentPlayer.getCardsEnumIntegerMap().get(cardsEnum) > 0) {
-                            currentPlayer.getCardsEnumIntegerMap().put(cardsEnum, currentPlayer.getCardsEnumIntegerMap().get(cardsEnum) - 1);
-                            count--;
-                        } else if (count == 0) {
-                            currentPlayer.setArmies(currentPlayer.getArmies() + armiesToCardExchange);
-                            armiesToCardExchange += ARMIES_TO_EXCHANGE_INCREASE;
-                            currentTurnPhraseText = "Armies to place " + currentPlayer.getArmies();
-                            break;
-                        }
-                    }
-                }
-                break;
-        }
+    public void exchange(List<CardsEnum> cardsEnumList) {
+        currentPlayer.exchange(cardsEnumList);
         notifyObservers();
     }
+
+//    /**
+//     * Exchange
+//     */
+//    public void exchange() {
+//        switch (currentGamePhase) {
+//            case REINFORCEMENT:
+//                // Change 3*1 cards
+//                for (CardsEnum cardsEnum : CardsEnum.values()) {
+//                    if (currentPlayer.getCardsEnumIntegerMap().get(cardsEnum) >= 3) {
+//                        currentPlayer.getCardsEnumIntegerMap().put(cardsEnum, currentPlayer.getCardsEnumIntegerMap().get(cardsEnum) - 3);
+//                        currentPlayer.setArmies(currentPlayer.getArmies() + armiesToCardExchange);
+//                        armiesToCardExchange += ARMIES_TO_EXCHANGE_INCREASE;
+//                        currentTurnPhraseText = "Armies to place " + currentPlayer.getArmies();
+//                        break;
+//                    }
+//                }
+//
+//                // Change 1*3 cards
+//                int count = 0;
+//                for (CardsEnum cardsEnum : CardsEnum.values()) {
+//                    if (currentPlayer.getCardsEnumIntegerMap().get(cardsEnum) >= 1) {
+//                        count++;
+//                    }
+//                }
+//                if (count >= 3) {
+//                    count = 3;
+//                    for (CardsEnum cardsEnum : CardsEnum.values()) {
+//                        if (count > 0 && currentPlayer.getCardsEnumIntegerMap().get(cardsEnum) > 0) {
+//                            currentPlayer.getCardsEnumIntegerMap().put(cardsEnum, currentPlayer.getCardsEnumIntegerMap().get(cardsEnum) - 1);
+//                            count--;
+//                        } else if (count == 0) {
+//                            currentPlayer.setArmies(currentPlayer.getArmies() + armiesToCardExchange);
+//                            armiesToCardExchange += ARMIES_TO_EXCHANGE_INCREASE;
+//                            currentTurnPhraseText = "Armies to place " + currentPlayer.getArmies();
+//                            break;
+//                        }
+//                    }
+//                }
+//                break;
+//        }
+//        notifyObservers();
+//    }
 
     /**
      * Attack
@@ -425,6 +439,7 @@ public class Game implements IModelObservable {
 
     /**
      * Set players
+     *
      * @param players
      */
     public void setPlayers(List<Player> players) {
@@ -433,6 +448,7 @@ public class Game implements IModelObservable {
 
     /**
      * Set continents
+     *
      * @param continents
      */
     public void setContinents(List<Continent> continents) {
@@ -441,6 +457,7 @@ public class Game implements IModelObservable {
 
     /**
      * get current phase of the game
+     *
      * @return currentGamePhase
      */
     public GamePhase getCurrentGamePhase() {
@@ -449,6 +466,7 @@ public class Game implements IModelObservable {
 
     /**
      * Set current game phase
+     *
      * @param currentGamePhase
      */
     public void setCurrentGamePhase(GamePhase currentGamePhase) {
@@ -457,6 +475,7 @@ public class Game implements IModelObservable {
 
     /**
      * Get current player
+     *
      * @return currentPlayer
      */
     public Player getCurrentPlayer() {
@@ -465,6 +484,7 @@ public class Game implements IModelObservable {
 
     /**
      * Set current Player
+     *
      * @param currentPlayer
      */
     public void setCurrentPlayer(Player currentPlayer) {
@@ -473,6 +493,7 @@ public class Game implements IModelObservable {
 
     /**
      * Get current status phrase
+     *
      * @return currentTurnPhraseText
      */
     public String getCurrentTurnPhraseText() {
@@ -481,6 +502,7 @@ public class Game implements IModelObservable {
 
     /**
      * Set current status phrase text
+     *
      * @param currentTurnPhraseText
      */
     public void setCurrentTurnPhraseText(String currentTurnPhraseText) {
@@ -489,6 +511,7 @@ public class Game implements IModelObservable {
 
     /**
      * Get current country
+     *
      * @return currentCountry
      */
     public Country getCurrentCountry() {
@@ -497,6 +520,7 @@ public class Game implements IModelObservable {
 
     /**
      * set current country
+     *
      * @param currentCountry
      */
     public void setCurrentCountry(Country currentCountry) {
@@ -505,6 +529,7 @@ public class Game implements IModelObservable {
 
     /**
      * get red dice
+     *
      * @return redDice
      */
     public DiceEnum[] getRedDice() {
@@ -513,6 +538,7 @@ public class Game implements IModelObservable {
 
     /**
      * get white dice
+     *
      * @return whiteDice
      */
     public DiceEnum[] getWhiteDice() {
@@ -521,6 +547,7 @@ public class Game implements IModelObservable {
 
     /**
      * Next turn button
+     *
      * @return nextTurnButton
      */
     public boolean isNextTurnButton() {
@@ -529,6 +556,7 @@ public class Game implements IModelObservable {
 
     /**
      * Exchange button
+     *
      * @return exchangeButton
      */
     public boolean isExchangeButton() {
@@ -537,6 +565,7 @@ public class Game implements IModelObservable {
 
     /**
      * get country from
+     *
      * @return countryFrom
      */
     public Country getCountryFrom() {
@@ -545,6 +574,7 @@ public class Game implements IModelObservable {
 
     /**
      * Set country from
+     *
      * @param countryFrom
      */
     public void setCountryFrom(Country countryFrom) {
@@ -553,6 +583,7 @@ public class Game implements IModelObservable {
 
     /**
      * Get country to
+     *
      * @return countryTo
      */
     public Country getCountryTo() {
@@ -561,6 +592,7 @@ public class Game implements IModelObservable {
 
     /**
      * set country to
+     *
      * @param countryTo
      */
     public void setCountryTo(Country countryTo) {
@@ -569,6 +601,7 @@ public class Game implements IModelObservable {
 
     /**
      * Get number of red dices that were selected
+     *
      * @return numberOfRedDicesSelected
      */
     public int getNumberOfRedDicesSelected() {
@@ -577,6 +610,7 @@ public class Game implements IModelObservable {
 
     /**
      * Set number of red dices that were selected
+     *
      * @param numberOfRedDicesSelected
      */
     public void setNumberOfRedDicesSelected(int numberOfRedDicesSelected) {
@@ -585,6 +619,7 @@ public class Game implements IModelObservable {
 
     /**
      * Get number of white dices that were selected
+     *
      * @return numberOfWhiteDicesSelected
      */
     public int getNumberOfWhiteDicesSelected() {
@@ -593,6 +628,7 @@ public class Game implements IModelObservable {
 
     /**
      * Set number of white dices that were selected
+     *
      * @param numberOfWhiteDicesSelected
      */
     public void setNumberOfWhiteDicesSelected(int numberOfWhiteDicesSelected) {
@@ -613,5 +649,21 @@ public class Game implements IModelObservable {
 
     public void setMinArmiesToMoveAfterWin(int minArmiesToMoveAfterWin) {
         this.minArmiesToMoveAfterWin = minArmiesToMoveAfterWin;
+    }
+
+    public int getArmiesToCardExchange() {
+        return armiesToCardExchange;
+    }
+
+    public void setArmiesToCardExchange(int armiesToCardExchange) {
+        this.armiesToCardExchange = armiesToCardExchange;
+    }
+
+    public boolean isGiveACard() {
+        return giveACard;
+    }
+
+    public void setGiveACard(boolean giveACard) {
+        this.giveACard = giveACard;
     }
 }

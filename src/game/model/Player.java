@@ -6,6 +6,7 @@ import game.enums.CardsEnum;
 
 import java.awt.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static game.enums.CardsEnum.ARTILLERY;
@@ -65,6 +66,9 @@ public class Player {
         Game game = Game.getInstance();
 
         if (game.isWinBattle()) {
+            //TODO: If at the end of your attacking turn you've conquered at least one territory, then you have earned a Risk card. You cannot earn more than one Risk card for this.
+            //TODO: If you manage to wipe out an opponent by destroying his or her last army, you gain possession of all the Risk cards he or she may have had in their hands.
+
             if (game.getMinArmiesToMoveAfterWin() > 0) {
                 if (game.getCurrentCountry() == game.getCountryTo()) {
                     game.getCountryTo().setArmy(game.getCountryTo().getArmy() + 1);
@@ -128,7 +132,7 @@ public class Player {
                 game.setWinBattle(true);
                 game.getCountryTo().setPlayer(this);
                 game.setMinArmiesToMoveAfterWin(game.getNumberOfRedDicesSelected());
-                //TODO: Add card to a player.
+                game.setGiveACard(true);
             }
         }
     }
@@ -154,6 +158,19 @@ public class Player {
             game.getCountryFrom().setArmy(game.getCountryFrom().getArmy() - 1);
             game.getCountryTo().setArmy(game.getCountryTo().getArmy() + 1);
         }
+    }
+
+    public void exchange(List<CardsEnum> cardsEnumList) {
+        if (cardsEnumList.size() == 3) {
+            for (CardsEnum cardsEnum : cardsEnumList) {
+                cardsEnumIntegerMap.put(cardsEnum, cardsEnumIntegerMap.get(cardsEnum) - 1);
+            }
+        } else if (cardsEnumList.size() == 1) {
+            cardsEnumIntegerMap.put(cardsEnumList.get(0), cardsEnumIntegerMap.get(cardsEnumList.get(0)) - 3);
+        }
+        Game game = Game.getInstance();
+        armies = armies + game.getArmiesToCardExchange();
+        game.setArmiesToCardExchange(game.getArmiesToCardExchange() + Game.ARMIES_TO_EXCHANGE_INCREASE);
     }
 
     /**
