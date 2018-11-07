@@ -68,8 +68,8 @@ public class Main {
         rightStatusPanel.setBackground(new Color(65,102,138));
 
         // Attack Panel
-        AttackPanel attackPanel = new AttackPanel(200, 350);
-        attackPanel.setBackground(new Color(255, 255, 255));
+        AttackPanel attackPanel = new AttackPanel(220, 350);
+        attackPanel.setBackground(new Color(65,102,138));
 
         // Dice Panel
 //        DicePanel dicePanel = new DicePanel(100, 170);

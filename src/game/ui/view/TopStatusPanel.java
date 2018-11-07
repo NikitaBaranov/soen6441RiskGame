@@ -63,50 +63,5 @@ public class TopStatusPanel extends JPanel implements IPanelObserver {
         playerName.setText(game.getCurrentPlayer() != null ? game.getCurrentPlayer().getName() : "");
         gamePhase.setText(game.getCurrentGamePhase() != null ? game.getCurrentGamePhase().getName() : "");
         turnPhrase.setText(game.getCurrentTurnPhraseText() != null ? game.getCurrentTurnPhraseText() : "");
-//        this.repaint();
-
-//        switch (iModelObservable.getClass().getName()) {
-//            case "Player":
-//                player = (Player) iModelObservable;
-//                break;
-//            case "Game":
-//                gamePhaseText = ((Game) iModelObservable).getCurrentGamePhase().getName();
-//                break;
-//        }
     }
-
-//    /**
-//     * Set the player info on the pstatus panel
-//     * @param player Player
-//     */
-//    public void setPlayer(Player player) {
-//        playerName.setText(player.getName());
-//        String colorS = Integer.toString(player.getColor().getRGB());
-//        playerName.setForeground(new Color(Integer.parseInt(colorS)));
-//    }
-//
-//    /**
-//     * Set the current game phase to displaying on the panel
-//     * @param gamePhase phase
-//     */
-//    public void setGamePhase(String gamePhase) {
-//        this.gamePhase.setText(gamePhase);
-//    }
-//
-//    /**
-//     * Set the status for the phase to displaying on the panel
-//     * @param turnPhrase Phrase
-//     */
-//    public void setTurnPhrase(String turnPhrase) {
-//        this.turnPhrase.setText(turnPhrase);
-//    }
-//
-//    /**
-//     * Reset the variables for other players
-//     */
-//    public void reset() {
-//        playerName.setText("");
-//        gamePhase.setText("");
-//        turnPhrase.setText("");
-//    }
 }

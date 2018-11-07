@@ -55,27 +55,11 @@ public class Continent {
     }
 
     /**
-     * Setter of country list for the continent
-     * @param countryList list of countries on continent
-     */
-    public void setCountryList(List<Country> countryList) {
-        this.countryList = countryList;
-    }
-
-    /**
      * Method return the bonus for continent
      * @return bonus
      */
     public int getBonus() {
         return bonus;
-    }
-
-    /**
-     * Method for setting the bonus for the continent
-     * @param bonus continent bonus
-     */
-    public void setBonus(int bonus) {
-        this.bonus = bonus;
     }
 
     /**

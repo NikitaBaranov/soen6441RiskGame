@@ -160,6 +160,10 @@ public class Player {
         }
     }
 
+    /**
+     * Exchange cards for armies
+     * @param cardsEnumList
+     */
     public void exchange(List<CardsEnum> cardsEnumList) {
         if (cardsEnumList.size() == 3) {
             for (CardsEnum cardsEnum : cardsEnumList) {
@@ -198,15 +202,6 @@ public class Player {
      */
     public Map<CardsEnum, Integer> getCardsEnumIntegerMap() {
         return cardsEnumIntegerMap;
-    }
-
-    /**
-     * Set the bonus cards for player
-     *
-     * @param cardsEnumIntegerMap Bonus cards for the player
-     */
-    public void setCardsEnumIntegerMap(Map<CardsEnum, Integer> cardsEnumIntegerMap) {
-        this.cardsEnumIntegerMap = cardsEnumIntegerMap;
     }
 
     /**

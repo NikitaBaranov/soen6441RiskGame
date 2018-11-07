@@ -28,23 +28,6 @@ public class Country {
     private boolean isSelected = false;
     private boolean isHighlighted = false;
 
-//    /**
-//     * Country constructor.
-//     * @param name of country
-//     * @param x coordinate
-//     * @param y coordinate
-//     * @param radius radius of the node
-//     * @param player assigned player
-//     */
-//    @Deprecated
-//    public Country(String name, int x, int y, int radius, Player player) {
-//        this.name = name;
-//        this.x = x;
-//        this.y = y;
-//        this.radius = radius;
-//        this.player = player;
-//    }
-
     /**
      * Constructor of country class.
      *
@@ -128,39 +111,12 @@ public class Country {
     }
 
     /**
-     * Get the radius of the country
-     *
-     * @return radius
-     */
-    public int getRadius() {
-        return radius;
-    }
-
-    /**
-     * Set the radius for the country
-     *
-     * @param radius radius of the node
-     */
-    public void setRadius(int radius) {
-        this.radius = radius;
-    }
-
-    /**
      * Get the connections for country
      *
      * @return neighbours
      */
     public List<Country> getNeighbours() {
         return neighbours;
-    }
-
-    /**
-     * Set the connections for country
-     *
-     * @param neighbours connections for country
-     */
-    public void setNeighbours(List<Country> neighbours) {
-        this.neighbours = neighbours;
     }
 
     /**
@@ -179,15 +135,6 @@ public class Country {
      */
     public void setPlayer(Player player) {
         this.player = player;
-    }
-
-    /**
-     * Is the country selected in the window
-     *
-     * @return boolean
-     */
-    public boolean isSelected() {
-        return isSelected;
     }
 
     /**

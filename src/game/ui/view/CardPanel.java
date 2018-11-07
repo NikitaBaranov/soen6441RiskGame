@@ -20,6 +20,10 @@ import static game.enums.CardsEnum.CAVALRY;
 import static game.enums.CardsEnum.INFANTRY;
 import static game.enums.CardsEnum.WILDCARDS;
 
+/**
+ * The cards panel. Display the cards functionality
+ * @author Dmitry Kryukov, Ksenia Popova
+ */
 public class CardPanel extends JPanel implements IPanelObserver {
 
     Map<String, CardsEnum> stringCardsEnumMap = new HashMap<>();
@@ -40,6 +44,11 @@ public class CardPanel extends JPanel implements IPanelObserver {
 
     private JButton exchangeButton = new JButton("Exchange");
 
+    /**
+     * The constructor of the card panel
+     * @param width
+     * @param height
+     */
     public CardPanel(int width, int height) {
         stringCardsEnumMap.put(INFANTRY.getName(), INFANTRY);
         stringCardsEnumMap.put(CAVALRY.getName(), CAVALRY);
@@ -57,7 +66,6 @@ public class CardPanel extends JPanel implements IPanelObserver {
         jCheckBoxList.add(playerBonusCheckBox);
 
         JPanel list = new JPanel(new GridLayout(5, 2));
-        list.setBackground(new Color(121, 180, 115));
         list.add(playerInfantryCheckBox);
 //        list.add(new JLabel(INFANTRY.getName() + ":", null, SwingConstants.TRAILING));
         list.add(playerInfantry);
@@ -83,7 +91,7 @@ public class CardPanel extends JPanel implements IPanelObserver {
         gbc.gridx = 0;
         gbc.gridy = 1;
         exchangeButton.addActionListener(exchangeButtonListner());
-        exchangeButton.setMargin(new Insets(10, 0, 10, 0));
+        exchangeButton.setMargin(new Insets(1, 0, 1, 0));
         this.add(exchangeButton, gbc);
 
 //        exchangeButton.setEnabled(false);
@@ -91,6 +99,10 @@ public class CardPanel extends JPanel implements IPanelObserver {
         Game.getInstance().attachObserver(this);
     }
 
+    /**
+     * Updater for the observer
+     * @param iModelObservable
+     */
     @Override
     public void updateObserver(IModelObservable iModelObservable) {
         Game game = Game.getInstance();
@@ -133,6 +145,10 @@ public class CardPanel extends JPanel implements IPanelObserver {
         };
     }
 
+    /**
+     * Enable all cards for selecting
+     * @param value
+     */
     private void setAllEnabled(boolean value) {
         enabled = value;
         for (JCheckBox jCheckBox : jCheckBoxList) {
@@ -141,14 +157,4 @@ public class CardPanel extends JPanel implements IPanelObserver {
         }
         exchangeButton.setEnabled(value);
     }
-
-//    private void setDisabled() {
-//        Enumeration<AbstractButton> checkBoxEnumeration = checkBoxGroup.getElements();
-//        while (checkBoxEnumeration.hasMoreElements()) {
-//            JCheckBox jCheckBox = (JCheckBox) checkBoxEnumeration.nextElement();
-//            jCheckBox.setEnabled(false);
-//            jCheckBox.setSelected(false);
-//        }
-//        exchangeButton.setEnabled(false);
-//    }
 }

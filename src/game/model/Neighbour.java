@@ -23,22 +23,6 @@ public class Neighbour {
     }
 
     /**
-     * Getter for start point of the connection
-     * @return one
-     */
-    public Country getOne() {
-        return one;
-    }
-
-    /**
-     * Getter for end point of the connection
-     * @return two
-     */
-    public Country getTwo() {
-        return two;
-    }
-
-    /**
      * Drawer. Displays the connection as a line
      * @param g Graphics object instance
      */

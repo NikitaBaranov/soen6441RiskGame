@@ -49,11 +49,11 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.BOTH;
-        gbc.insets = new Insets(4, 0, 4, 0);
+        gbc.insets = new Insets(1, 0, 1, 0);
         gbc.gridx = 0;
         gbc.gridy = 0;
         nextTurnButton.addActionListener(nextTurnButtonListner());
-        nextTurnButton.setMargin(new Insets(10, 0, 10, 0));
+        nextTurnButton.setMargin(new Insets(5, 0, 5, 0));
         this.add(nextTurnButton, gbc);
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -77,6 +77,7 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
         gbc.gridy = 5;
         gbc.weightx = 0;
         gbc.weighty = 0;
+        this.add(new JLabel("Attack:", null, SwingConstants.CENTER), gbc);
 //        exchangeButton.addActionListener(exchangeButtonListner());
 //        exchangeButton.setMargin(new Insets(10, 0, 10, 0));
 //        this.add(exchangeButton, gbc);
@@ -90,20 +91,6 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
         countryPanel.add(new JLabel("Army:", null, SwingConstants.TRAILING));
         countryPanel.add(countryArmy);
 
-        // setup Country panel
-//        cardsPanel.setMaximumSize(new Dimension(width, height));
-//        cardsPanel.setLayout(new GridLayout(5, 2));
-//        cardsPanel.setBackground(new Color(121, 180, 115));
-//        cardsPanel.add(new JLabel(INFANTRY.getName() + ":", null, SwingConstants.TRAILING));
-//        cardsPanel.add(playerInfantry);
-//        cardsPanel.add(new JLabel(CAVALRY.getName() + ":", null, SwingConstants.TRAILING));
-//        cardsPanel.add(playerCavalry);
-//        cardsPanel.add(new JLabel(ARTILLERY.getName() + ":", null, SwingConstants.TRAILING));
-//        cardsPanel.add(playerArtillery);
-//        cardsPanel.add(new JLabel(WILDCARDS.getName() + ":", null, SwingConstants.TRAILING));
-//        cardsPanel.add(playerWildcards);
-//        cardsPanel.add(new JLabel(BONUS.getName() + ":", null, SwingConstants.TRAILING));
-//        cardsPanel.add(playerBonus);
 
         Game.getInstance().attachObserver(this);
     }
@@ -115,12 +102,6 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
     @Override
     public void updateObserver(IModelObservable iModelObservable) {
         Game game = Game.getInstance();
-
-//        playerInfantry.setText(Integer.toString(game.getCurrentPlayer().getCardsEnumIntegerMap().get(INFANTRY)));
-//        playerCavalry.setText(Integer.toString(game.getCurrentPlayer().getCardsEnumIntegerMap().get(CAVALRY)));
-//        playerArtillery.setText(Integer.toString(game.getCurrentPlayer().getCardsEnumIntegerMap().get(ARTILLERY)));
-//        playerWildcards.setText(Integer.toString(game.getCurrentPlayer().getCardsEnumIntegerMap().get(WILDCARDS)));
-//        playerBonus.setText(Integer.toString(game.getCurrentPlayer().getCardsEnumIntegerMap().get(BONUS)));
 
         countryName.setText(game.getCurrentCountry() != null ? game.getCurrentCountry().getName() : "");
         countryArmy.setText(game.getCurrentCountry() != null ? Integer.toString(game.getCurrentCountry().getArmy()) : "");
@@ -139,51 +120,4 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
             }
         };
     }
-
-
-//    /**
-//     * Action handler for exchange button.
-//     */
-//    public ActionListener exchangeButtonListner() {
-//        return new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                Game.getInstance().exchange();
-//            }
-//        };
-//    }
-
-
-    /**
-     * Setter for cards for player displaying
-     * @param player Player
-     */
-//    public void setPlayer(Player player) {
-//        playerInfantry.setText(Integer.toString(player.getCardsEnumIntegerMap().get(INFANTRY)));
-//        playerCavalry.setText(Integer.toString(player.getCardsEnumIntegerMap().get(CAVALRY)));
-//        playerArtillery.setText(Integer.toString(player.getCardsEnumIntegerMap().get(ARTILLERY)));
-//        playerWildcards.setText(Integer.toString(player.getCardsEnumIntegerMap().get(WILDCARDS)));
-//        playerBonus.setText(Integer.toString(player.getCardsEnumIntegerMap().get(BONUS)));
-//    }
-
-    /**
-     * Setter for country and army number displaying
-     * @param country Country
-     */
-//    public void setCountry(Country country) {
-//        countryName.setText(country.getName());
-//        countryArmy.setText(Integer.toString(country.getArmy()));
-//    }
-
-    /**
-     * Reset the variables for other players
-     */
-//    public void reset() {
-//        playerInfantry.setText("");
-//        playerCavalry.setText("");
-//        playerArtillery.setText("");
-//        playerWildcards.setText("");
-//        playerBonus.setText("");
-//        countryName.setText("");
-//        countryArmy.setText("");
-//    }
 }

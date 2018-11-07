@@ -157,7 +157,7 @@ public class Game implements IModelObservable {
     }
 
     /**
-     * Next turn
+     * Next turn functionality
      */
     public void nextTurn() {
         switch (currentGamePhase) {
@@ -312,53 +312,14 @@ public class Game implements IModelObservable {
         notifyObservers();
     }
 
+    /**
+     * Exchange methods for exchanging cards for player.
+     * @param cardsEnumList
+     */
     public void exchange(List<CardsEnum> cardsEnumList) {
         currentPlayer.exchange(cardsEnumList);
         notifyObservers();
     }
-
-//    /**
-//     * Exchange
-//     */
-//    public void exchange() {
-//        switch (currentGamePhase) {
-//            case REINFORCEMENT:
-//                // Change 3*1 cards
-//                for (CardsEnum cardsEnum : CardsEnum.values()) {
-//                    if (currentPlayer.getCardsEnumIntegerMap().get(cardsEnum) >= 3) {
-//                        currentPlayer.getCardsEnumIntegerMap().put(cardsEnum, currentPlayer.getCardsEnumIntegerMap().get(cardsEnum) - 3);
-//                        currentPlayer.setArmies(currentPlayer.getArmies() + armiesToCardExchange);
-//                        armiesToCardExchange += ARMIES_TO_EXCHANGE_INCREASE;
-//                        currentTurnPhraseText = "Armies to place " + currentPlayer.getArmies();
-//                        break;
-//                    }
-//                }
-//
-//                // Change 1*3 cards
-//                int count = 0;
-//                for (CardsEnum cardsEnum : CardsEnum.values()) {
-//                    if (currentPlayer.getCardsEnumIntegerMap().get(cardsEnum) >= 1) {
-//                        count++;
-//                    }
-//                }
-//                if (count >= 3) {
-//                    count = 3;
-//                    for (CardsEnum cardsEnum : CardsEnum.values()) {
-//                        if (count > 0 && currentPlayer.getCardsEnumIntegerMap().get(cardsEnum) > 0) {
-//                            currentPlayer.getCardsEnumIntegerMap().put(cardsEnum, currentPlayer.getCardsEnumIntegerMap().get(cardsEnum) - 1);
-//                            count--;
-//                        } else if (count == 0) {
-//                            currentPlayer.setArmies(currentPlayer.getArmies() + armiesToCardExchange);
-//                            armiesToCardExchange += ARMIES_TO_EXCHANGE_INCREASE;
-//                            currentTurnPhraseText = "Armies to place " + currentPlayer.getArmies();
-//                            break;
-//                        }
-//                    }
-//                }
-//                break;
-//        }
-//        notifyObservers();
-//    }
 
     /**
      * Attack
@@ -386,15 +347,6 @@ public class Game implements IModelObservable {
         for (Country c : countries) {
             c.setHighlighted(false);
         }
-    }
-
-    /**
-     * Method get the radius for nodes on graph
-     *
-     * @return RADIUS of the nodes
-     */
-    public int getRADIUS() {
-        return RADIUS;
     }
 
     public void setRADIUS(int RADIUS) {
@@ -465,15 +417,6 @@ public class Game implements IModelObservable {
     }
 
     /**
-     * Set current game phase
-     *
-     * @param currentGamePhase
-     */
-    public void setCurrentGamePhase(GamePhase currentGamePhase) {
-        this.currentGamePhase = currentGamePhase;
-    }
-
-    /**
      * Get current player
      *
      * @return currentPlayer
@@ -482,14 +425,6 @@ public class Game implements IModelObservable {
         return currentPlayer;
     }
 
-    /**
-     * Set current Player
-     *
-     * @param currentPlayer
-     */
-    public void setCurrentPlayer(Player currentPlayer) {
-        this.currentPlayer = currentPlayer;
-    }
 
     /**
      * Get current status phrase
@@ -635,34 +570,58 @@ public class Game implements IModelObservable {
         this.numberOfWhiteDicesSelected = numberOfWhiteDicesSelected;
     }
 
+    /**
+     * Winner of the battle
+     * @return winBattle
+     */
     public boolean isWinBattle() {
         return winBattle;
     }
 
+    /**
+     * Set the winner of the battle
+     * @param winBattle
+     */
     public void setWinBattle(boolean winBattle) {
         this.winBattle = winBattle;
     }
 
+    /**
+     * Get the minimum armies that player can move to the country after winning
+     * @return minArmiesToMoveAfterWin
+     */
     public int getMinArmiesToMoveAfterWin() {
         return minArmiesToMoveAfterWin;
     }
 
+    /**
+     * Set the minimum number of armies that player can move to the country after winning
+     * @param minArmiesToMoveAfterWin
+     */
     public void setMinArmiesToMoveAfterWin(int minArmiesToMoveAfterWin) {
         this.minArmiesToMoveAfterWin = minArmiesToMoveAfterWin;
     }
 
+    /**
+     * Get armies to card exchange
+     * @return armiesToCardExchange
+     */
     public int getArmiesToCardExchange() {
         return armiesToCardExchange;
     }
 
+    /**
+     * Set armies to card exchange
+     * @param armiesToCardExchange
+     */
     public void setArmiesToCardExchange(int armiesToCardExchange) {
         this.armiesToCardExchange = armiesToCardExchange;
     }
 
-    public boolean isGiveACard() {
-        return giveACard;
-    }
-
+    /**
+     * Set give card
+     * @param giveACard
+     */
     public void setGiveACard(boolean giveACard) {
         this.giveACard = giveACard;
     }

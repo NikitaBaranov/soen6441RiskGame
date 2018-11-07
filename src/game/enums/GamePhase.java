@@ -38,20 +38,4 @@ public enum  GamePhase {
     public void setName(String name) {
         this.name = name;
     }
-
-    /**
-     * Getter for the number
-     * @return number
-     */
-    public int getNumber() {
-        return number;
-    }
-
-    /**
-     * setter for the number
-     * @param number number of phase
-     */
-    public void setNumber(int number) {
-        this.number = number;
-    }
 }
