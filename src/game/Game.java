@@ -195,7 +195,7 @@ public class Game implements IObservable {
                 currentTurnPhraseText = "Select a country to move armies from. ";
                 System.out.println("Next Turn Button Clicked. Next Player is " + currentGamePhase);
 
-                Dice.resetDice(redDice, whiteDice);
+//                Dice.resetDice(redDice, whiteDice);
 
                 resetToAndFrom();
 

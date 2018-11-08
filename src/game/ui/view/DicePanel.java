@@ -1,9 +1,9 @@
 package game.ui.view;
 
 import game.Game;
+import game.IObservable;
 import game.enums.DiceEnum;
 import game.model.Dice;
-import game.IObservable;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -43,7 +43,6 @@ public class DicePanel extends JPanel implements IPanelObserver {
         whiteDice = game.getWhiteDice();
         redDice = game.getRedDice();
         createPanel();
-//        repaint();
     }
 
     /**

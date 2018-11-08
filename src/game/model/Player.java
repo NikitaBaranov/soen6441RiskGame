@@ -116,7 +116,7 @@ public class Player {
     public void attack() {
         Game game = Game.getInstance();
         if (game.getCountryFrom() != null && game.getCountryFrom().getArmy() >= 2 && game.getCountryTo() != null) {
-            Dice.resetDice(game.getRedDice(), game.getWhiteDice());
+//            Dice.resetDice(game.getRedDice(), game.getWhiteDice());
 
             Dice.rollDice(game.getNumberOfRedDicesSelected(), game.getNumberOfWhiteDicesSelected(), game.getRedDice(), game.getWhiteDice());
 
