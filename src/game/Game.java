@@ -6,7 +6,6 @@ import game.enums.GamePhase;
 import game.model.Continent;
 import game.model.Country;
 import game.model.Dice;
-import game.model.IModelObservable;
 import game.model.Neighbour;
 import game.model.Player;
 import game.ui.view.DicePanel;
@@ -47,7 +46,7 @@ import static game.enums.GamePhase.REINFORCEMENT;
  * @see RightStatusPanel
  * @see TopStatusPanel
  */
-public class Game implements IModelObservable {
+public class Game implements IObservable {
     public static final int ARMIES_TO_EXCHANGE_INCREASE = 5;
 
     private static Game gameInstance;
@@ -80,6 +79,8 @@ public class Game implements IModelObservable {
     private Country countryFrom;
     private Country countryTo;
     private List<Continent> continents;
+
+    // Observers
     private List<IPanelObserver> iPanelObservers = new ArrayList<>();
 
     /**
@@ -164,14 +165,14 @@ public class Game implements IModelObservable {
             case PLACING_ARMIES:
 
                 currentGamePhase = ATTACK;
-                currentTurnPhraseText = "Attack phase is simulated. Press \"Next turn\" button.";
+                currentTurnPhraseText = "Select a Country to attack from.";
                 System.out.println("Next Turn Button Clicked. Next Player is " + currentGamePhase);
                 break;
 
             case REINFORCEMENT:
                 // Prepare to next turn
                 currentGamePhase = ATTACK;
-                currentTurnPhraseText = "Attack phase is simulated. Press \"Next turn\" button.";
+                currentTurnPhraseText = "Select a Country to attack from.";
                 System.out.println("Next Turn Button Clicked. Next Player is " + currentGamePhase);
                 unHighlightCountries();
                 exchangeButton = false;

@@ -1,6 +1,6 @@
 package game.ui.view;
 
-import game.model.IModelObservable;
+import game.IObservable;
 
 /**
  * Interface for Observer
@@ -11,7 +11,7 @@ public interface IPanelObserver {
 
     /**
      * Update method
-     * @param iModelObservable
+     * @param iObservable
      */
-    public void updateObserver(IModelObservable iModelObservable);
+    public void updateObserver(IObservable iObservable);
 }

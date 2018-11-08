@@ -3,7 +3,7 @@ package game.ui.view;
 import game.Game;
 import game.enums.CardsEnum;
 import game.enums.GamePhase;
-import game.model.IModelObservable;
+import game.IObservable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -67,19 +67,14 @@ public class CardPanel extends JPanel implements IPanelObserver {
 
         JPanel list = new JPanel(new GridLayout(5, 2));
         list.add(playerInfantryCheckBox);
-//        list.add(new JLabel(INFANTRY.getName() + ":", null, SwingConstants.TRAILING));
         list.add(playerInfantry);
         list.add(playerCavalryCheckBox);
-//        list.add(new JLabel(CAVALRY.getName() + ":", null, SwingConstants.TRAILING));
         list.add(playerCavalry);
         list.add(playerArtilleryCheckBox);
-//        list.add(new JLabel(ARTILLERY.getName() + ":", null, SwingConstants.TRAILING));
         list.add(playerArtillery);
         list.add(playerWildcardsCheckBox);
-//        list.add(new JLabel(WILDCARDS.getName() + ":", null, SwingConstants.TRAILING));
         list.add(playerWildcards);
         list.add(playerBonusCheckBox);
-//        list.add(new JLabel(BONUS.getName() + ":", null, SwingConstants.TRAILING));
         list.add(playerBonus);
 
         gbc.fill = GridBagConstraints.BOTH;
@@ -94,17 +89,15 @@ public class CardPanel extends JPanel implements IPanelObserver {
         exchangeButton.setMargin(new Insets(1, 0, 1, 0));
         this.add(exchangeButton, gbc);
 
-//        exchangeButton.setEnabled(false);
-
         Game.getInstance().attachObserver(this);
     }
 
     /**
      * Updater for the observer
-     * @param iModelObservable
+     * @param iObservable
      */
     @Override
-    public void updateObserver(IModelObservable iModelObservable) {
+    public void updateObserver(IObservable iObservable) {
         Game game = Game.getInstance();
         if (game.getCurrentGamePhase() == GamePhase.REINFORCEMENT) {
             if (!enabled) {

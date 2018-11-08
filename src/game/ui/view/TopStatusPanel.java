@@ -1,7 +1,7 @@
 package game.ui.view;
 
 import game.Game;
-import game.model.IModelObservable;
+import game.IObservable;
 import game.model.Player;
 
 import javax.swing.*;
@@ -13,11 +13,6 @@ import java.awt.*;
  * @see Player
  */
 public class TopStatusPanel extends JPanel implements IPanelObserver {
-
-    private Player player;
-    private String turnPhraseText;
-    private String gamePhaseText;
-
 
     private JLabel playerName = new JLabel();
     private JLabel gamePhase = new JLabel();
@@ -55,10 +50,10 @@ public class TopStatusPanel extends JPanel implements IPanelObserver {
 
     /**
      * Updater for observer
-     * @param iModelObservable
+     * @param iObservable
      */
     @Override
-    public void updateObserver(IModelObservable iModelObservable) {
+    public void updateObserver(IObservable iObservable) {
         Game game = Game.getInstance();
         playerName.setText(game.getCurrentPlayer() != null ? game.getCurrentPlayer().getName() : "");
         gamePhase.setText(game.getCurrentGamePhase() != null ? game.getCurrentGamePhase().getName() : "");

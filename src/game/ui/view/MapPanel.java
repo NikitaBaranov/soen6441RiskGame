@@ -2,7 +2,7 @@ package game.ui.view;
 
 import game.Game;
 import game.model.Country;
-import game.model.IModelObservable;
+import game.IObservable;
 import game.model.Neighbour;
 import game.utils.MapLoader;
 
@@ -62,10 +62,10 @@ public class MapPanel extends JPanel implements IPanelObserver {
 
     /**
      * Updater for observer
-     * @param iModelObservable
+     * @param iObservable
      */
     @Override
-    public void updateObserver(IModelObservable iModelObservable) {
+    public void updateObserver(IObservable iObservable) {
         Game game = Game.getInstance();
         countries = game.getCountries();
         neighbours = game.getNeighbours();

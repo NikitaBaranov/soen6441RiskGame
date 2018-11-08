@@ -1,11 +1,11 @@
-package game.model;
+package game;
 
 import game.ui.view.IPanelObserver;
 
 /**
  * Observable interface
  */
-public interface IModelObservable {
+public interface IObservable {
     /**
      * Attach observer
      * @param iPanelObserver

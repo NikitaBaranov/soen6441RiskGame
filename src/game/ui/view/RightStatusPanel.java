@@ -2,7 +2,7 @@ package game.ui.view;
 
 import game.Game;
 import game.model.Country;
-import game.model.IModelObservable;
+import game.IObservable;
 import game.model.Player;
 
 import javax.swing.*;
@@ -25,16 +25,9 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
     private JLabel countryName = new JLabel("", null, SwingConstants.TRAILING);
     private JLabel countryArmy = new JLabel("", null, SwingConstants.TRAILING);
 
-    private JLabel playerInfantry = new JLabel("", null, SwingConstants.TRAILING);
-    private JLabel playerCavalry = new JLabel("", null, SwingConstants.TRAILING);
-    private JLabel playerArtillery = new JLabel("", null, SwingConstants.TRAILING);
-    private JLabel playerWildcards = new JLabel("", null, SwingConstants.TRAILING);
-    private JLabel playerBonus = new JLabel("", null, SwingConstants.TRAILING);
-
     private JButton exchangeButton = new JButton("Exchange");
 
     private JPanel countryPanel = new JPanel();
-//    private JPanel cardsPanel = new JPanel();
 
     /**
      * Constructor of the class.
@@ -78,9 +71,6 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
         gbc.weightx = 0;
         gbc.weighty = 0;
         this.add(new JLabel("Attack:", null, SwingConstants.CENTER), gbc);
-//        exchangeButton.addActionListener(exchangeButtonListner());
-//        exchangeButton.setMargin(new Insets(10, 0, 10, 0));
-//        this.add(exchangeButton, gbc);
 
         // setup Country panel
         countryPanel.setMaximumSize(new Dimension(width, height));
@@ -97,10 +87,10 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
 
     /**
      * Updater for observer
-     * @param iModelObservable
+     * @param iObservable
      */
     @Override
-    public void updateObserver(IModelObservable iModelObservable) {
+    public void updateObserver(IObservable iObservable) {
         Game game = Game.getInstance();
 
         countryName.setText(game.getCurrentCountry() != null ? game.getCurrentCountry().getName() : "");

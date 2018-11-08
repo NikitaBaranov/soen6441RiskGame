@@ -268,7 +268,6 @@ public class Country {
         Graphics2D g2d = (Graphics2D) g;
 
         if (isSelected) {
-//            Ellipse2D.Double selection = new Ellipse2D.Double(x - radius - HIGHLIGHT_BORDER_WITHT, y - radius - HIGHLIGHT_BORDER_WITHT, radius * 2 + HIGHLIGHT_BORDER_WITHT * 2, radius * 2 + HIGHLIGHT_BORDER_WITHT * 2);
             Ellipse2D.Double selection = new Ellipse2D.Double(x - radius - HIGHLIGHT_BORDER_WITHT / 2, y - radius - HIGHLIGHT_BORDER_WITHT / 2, radius * 2 + HIGHLIGHT_BORDER_WITHT, radius * 2 + HIGHLIGHT_BORDER_WITHT);
             g2d.setColor(Color.GREEN);
             g2d.fill(selection);

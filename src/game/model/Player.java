@@ -103,6 +103,7 @@ public class Player {
                     game.setCurrentTurnPhraseText("Use Attack window to Attack.");
                 }
             } else {
+                game.setCurrentTurnPhraseText("Select a Country to attack from.");
                 game.resetToAndFrom();
                 Dice.resetDice(game.getRedDice(), game.getWhiteDice());
             }
@@ -124,7 +125,6 @@ public class Player {
                     game.getCountryTo().setArmy(game.getCountryTo().getArmy() - 1);
                 } else {
                     game.getCountryFrom().setArmy(game.getCountryFrom().getArmy() - 1);
-
                 }
             }
 

@@ -2,7 +2,7 @@ package game.ui.view;
 
 import game.Game;
 import game.enums.GamePhase;
-import game.model.IModelObservable;
+import game.IObservable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -99,10 +99,10 @@ public class AttackPanel extends JPanel implements IPanelObserver {
 
     /**
      * Updater for observer
-     * @param iModelObservable
+     * @param iObservable
      */
     @Override
-    public void updateObserver(IModelObservable iModelObservable) {
+    public void updateObserver(IObservable iObservable) {
         Game game = Game.getInstance();
         if (game.getCurrentGamePhase() == GamePhase.ATTACK) {
             if (!game.isWinBattle()) {
