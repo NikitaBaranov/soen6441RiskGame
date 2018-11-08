@@ -82,4 +82,13 @@ public class Continent {
         }
         return true;
     }
+
+    public boolean isOwnByPlayer(Player player) {
+        for (Country country : countryList) {
+            if (country.getPlayer() != player) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

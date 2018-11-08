@@ -1,19 +1,25 @@
 package game.ui.view;
 
 import game.Game;
-import game.model.Country;
 import game.IObservable;
+import game.model.Continent;
+import game.model.Country;
 import game.model.Player;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * The status panel class. Descrive the properties of the right panel.
  * Displaying the player needed information. Such as bonus cards
  * Displaying the buttons to echange cards or go to next turn
+ *
  * @author Dmitry Kryukov
  * @see Country
  * @see Player
@@ -27,17 +33,19 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
 
     private JButton exchangeButton = new JButton("Exchange");
 
-    private JPanel countryPanel = new JPanel();
+//    private JPanel countryPanel = new JPanel();
+
+    private JPanel worldDomination = new JPanel();
+
 
     /**
      * Constructor of the class.
      * Create the panel and draw it in game main window
-     * @param width of the panel
+     *
+     * @param width  of the panel
      * @param height of the panel
      */
     public RightStatusPanel(int width, int height) {
-        Game game = Game.getInstance();
-        // setup overall setup
         this.setPreferredSize(new Dimension(width, height));
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -55,7 +63,7 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
         gbc.gridy = 2;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
-        this.add(countryPanel, gbc);
+        this.add(worldDomination, gbc);
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.weightx = 0;
@@ -73,20 +81,20 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
         this.add(new JLabel("Attack:", null, SwingConstants.CENTER), gbc);
 
         // setup Country panel
-        countryPanel.setMaximumSize(new Dimension(width, height));
-        countryPanel.setLayout(new GridLayout(2, 2));
-        countryPanel.setBackground(new Color(121, 180, 115));
-        countryPanel.add(new JLabel("Name:", null, SwingConstants.TRAILING));
-        countryPanel.add(countryName);
-        countryPanel.add(new JLabel("Army:", null, SwingConstants.TRAILING));
-        countryPanel.add(countryArmy);
-
+//        countryPanel.setMaximumSize(new Dimension(width, height));
+//        countryPanel.setLayout(new GridLayout(2, 2));
+//        countryPanel.setBackground(new Color(121, 180, 115));
+//        countryPanel.add(new JLabel("Name:", null, SwingConstants.TRAILING));
+//        countryPanel.add(countryName);
+//        countryPanel.add(new JLabel("Army:", null, SwingConstants.TRAILING));
+//        countryPanel.add(countryArmy);
 
         Game.getInstance().attachObserver(this);
     }
 
     /**
      * Updater for observer
+     *
      * @param iObservable
      */
     @Override
@@ -95,9 +103,10 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
 
         countryName.setText(game.getCurrentCountry() != null ? game.getCurrentCountry().getName() : "");
         countryArmy.setText(game.getCurrentCountry() != null ? Integer.toString(game.getCurrentCountry().getArmy()) : "");
-
         nextTurnButton.setEnabled(game.isNextTurnButton());
         exchangeButton.setEnabled(game.isExchangeButton());
+
+        createWoldDominationPanel(worldDomination);
     }
 
     /**
@@ -109,5 +118,36 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
                 Game.getInstance().nextTurn();
             }
         };
+    }
+
+    private void createWoldDominationPanel(JPanel jPanel) {
+        Game game = Game.getInstance();
+        jPanel.removeAll();
+        jPanel.setLayout(new GridLayout(game.getPlayers().size() + 1, 4));
+
+        Map<Player, Integer> playerNumberOfCountriesMap = new HashMap<>();
+        Map<Player, Integer> playerNumberOfArmiesMap = new HashMap<>();
+        for (Country country : game.getCountries()) {
+            if (playerNumberOfCountriesMap.containsKey(country.getPlayer())) {
+                playerNumberOfCountriesMap.put(country.getPlayer(), playerNumberOfCountriesMap.get(country.getPlayer()) + 1);
+                playerNumberOfArmiesMap.put(country.getPlayer(), playerNumberOfArmiesMap.get(country.getPlayer()) + country.getArmy());
+            } else {
+                playerNumberOfCountriesMap.put(country.getPlayer(), 1);
+                playerNumberOfArmiesMap.put(country.getPlayer(), country.getArmy());
+            }
+        }
+
+        jPanel.add(new JLabel("Player"));
+        jPanel.add(new JLabel("%"));
+        jPanel.add(new JLabel("# armies"));
+        jPanel.add(new JLabel("Continents"));
+
+        for (Player player : game.getPlayers()) {
+            jPanel.add(new JLabel(player.getName()));
+            jPanel.add(new JLabel(Integer.toString((int) (((float) playerNumberOfCountriesMap.get(player) / game.getCountries().size()) * 100))));
+            jPanel.add(new JLabel(Integer.toString(playerNumberOfArmiesMap.get(player))));
+            List<String> playerContinents = game.getContinents().stream().filter(c -> c.isOwnByPlayer(player)).map(Continent::getName).collect(Collectors.toList());
+            jPanel.add(new JLabel(String.join(", ", playerContinents)));
+        }
     }
 }

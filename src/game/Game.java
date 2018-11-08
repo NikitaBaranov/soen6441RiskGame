@@ -626,4 +626,12 @@ public class Game implements IObservable {
     public void setGiveACard(boolean giveACard) {
         this.giveACard = giveACard;
     }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public List<Continent> getContinents() {
+        return continents;
+    }
 }
