@@ -28,15 +28,10 @@ import java.util.stream.Collectors;
  */
 public class RightStatusPanel extends JPanel implements IPanelObserver {
     private JButton nextTurnButton = new JButton("Next Turn");
-
-    private JLabel countryName = new JLabel("", null, SwingConstants.TRAILING);
-    private JLabel countryArmy = new JLabel("", null, SwingConstants.TRAILING);
-
     private JButton exchangeButton = new JButton("Exchange");
-    private JLabel invisibleLable = new JLabel("invisible", null, SwingConstants.CENTER);
+    private JLabel invisibleLabel = new JLabel("invisible", null, SwingConstants.CENTER);
 
     private JPanel worldDomination = new JPanel();
-
 
     /**
      * Constructor of the class.
@@ -79,8 +74,9 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
         gbc.weightx = 0;
         gbc.weighty = 0;
         this.add(new JLabel("Attack:", null, SwingConstants.CENTER), gbc);
-        this.add(invisibleLable);
-        invisibleLable.setVisible(false);
+
+        this.add(invisibleLabel);
+        invisibleLabel.setVisible(false);
 
         Game.getInstance().attachObserver(this);
     }
@@ -94,14 +90,13 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
     public void updateObserver(IObservable iObservable) {
         Game game = Game.getInstance();
 
-        countryName.setText(game.getCurrentCountry() != null ? game.getCurrentCountry().getName() : "");
-        countryArmy.setText(game.getCurrentCountry() != null ? Integer.toString(game.getCurrentCountry().getArmy()) : "");
         nextTurnButton.setEnabled(game.isNextTurnButton());
         exchangeButton.setEnabled(game.isExchangeButton());
 
         createWoldDominationPanel(worldDomination);
+
         Random r = new Random();
-        invisibleLable.setText(Integer.toString(r.nextInt()));
+        invisibleLabel.setText(Integer.toString(r.nextInt()));
     }
 
     /**
