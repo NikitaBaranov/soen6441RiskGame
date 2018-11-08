@@ -36,6 +36,10 @@ public class TestMapEditor {
 	IMapLoader mapLoaderObj;
 	ILoadedMap loadedMapObj;
 	
+	static String mapNameCorrect;
+	IMapLoader mapLoaderObjCorrect;
+	ILoadedMap loadedMapObjCorrect;
+	
 	/**
 	 * This function is called before test cases start getting executed.
 	 * It initializes paths and test map name.
@@ -82,7 +86,7 @@ public class TestMapEditor {
 		Integer X3 = 900;
 		Integer Y3 = 900;
 		ArrayList<String> adjacents3 = new ArrayList<String>();
-		adjacents2.add("usa2");
+		adjacents3.add("usa2");
 		String continent3 = "canada";
 		
 		ITerritory terr = new Territory(territoryName, X, Y, continent1, adjacents);
@@ -111,11 +115,87 @@ public class TestMapEditor {
 	}
 	
 	/**
+	 * This function initializes a correct dummy for testing verification
+	 */
+	public void initDummyMapCorrect() {
+		String authorName = "test";
+		
+		String continentName = "usa";
+		Integer continentControlValue = 40;
+		IContinent continent = new Continent();
+		continent.setContinentName(continentName);
+		continent.setControlValue(continentControlValue);
+		
+		String continentName2 = "canada";
+		Integer continentControlValue2 = 40;
+		IContinent two_continent = new Continent();
+		two_continent.setContinentName(continentName2);
+		two_continent.setControlValue(continentControlValue2);
+		
+		String territoryName = "usa1";
+		Integer X = 900;
+		Integer Y = 900;
+		ArrayList<String> adjacents = new ArrayList<String>();
+		adjacents.add("usa2");
+		String continent1 = "usa";
+		
+		String territoryName2 = "usa2";
+		Integer X2 = 900;
+		Integer Y2 = 900;
+		ArrayList<String> adjacents2 = new ArrayList<String>();
+		adjacents2.add("usa1");
+		adjacents2.add("usa3");
+		String continent2 = "usa";
+		
+		String territoryName3 = "usa3";
+		Integer X3 = 900;
+		Integer Y3 = 900;
+		ArrayList<String> adjacents3 = new ArrayList<String>();
+		adjacents3.add("usa2");
+		adjacents3.add("usa4");
+		String continent3 = "canada";
+		
+		String territoryName4 = "usa4";
+		Integer X4 = 900;
+		Integer Y4 = 900;
+		ArrayList<String> adjacents4 = new ArrayList<String>();
+		adjacents4.add("usa3");
+		String continent4 = "canada";
+		
+		ITerritory terr = new Territory(territoryName, X, Y, continent1, adjacents);
+		ITerritory terr2 = new Territory(territoryName2, X2, Y2, continent2, adjacents2);
+		ITerritory terr3 = new Territory(territoryName3, X3, Y3, continent3, adjacents3);
+		ITerritory terr4 = new Territory(territoryName4, X4, Y4, continent4, adjacents4);
+		
+		mapLoaderObjCorrect = new MapLoader(path + mapNameCorrect, 0);
+		loadedMapObjCorrect = mapLoaderObjCorrect.getLoadedMap();
+		loadedMapObjCorrect.setAuthor(authorName);
+		loadedMapObjCorrect.addContinent(continent);
+		loadedMapObjCorrect.addContinent(two_continent);
+		loadedMapObjCorrect.addTerritory(terr);
+		loadedMapObjCorrect.addTerritory(terr2);
+		loadedMapObjCorrect.addTerritory(terr3);
+		loadedMapObjCorrect.addTerritory(terr4);
+		try {
+			File file = new File(path + mapNameCorrect); 
+	        file.delete();
+	        loadedMapObjCorrect.saveMapToFile(path + mapNameCorrect);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
 	 * This function calls the dymmy map creator before each test case.
 	 */
 	@Before
 	public void setup() {
 		initDummyMap();
+		initDummyMapCorrect();
 	}
 	
 	/**
@@ -349,5 +429,31 @@ public class TestMapEditor {
 		Verification verificationObj = new Verification();
 		verificationObj.map = loadedMapObj;
 		assertTrue(verificationObj.checkTerritoryConnectivity() == false);
+	}
+	
+
+	/**
+	 * This function checks the verification for map
+	 */
+	@Test
+	public void testVerifyMap() {
+		IVerification verificationObj = new Verification();
+		assertTrue(verificationObj.verifyMap(loadedMapObjCorrect, path + mapNameCorrect) == true);
+	}
+
+	/**
+	 * This function checks the list of continents received
+	 */
+	@Test
+	public void testGetListOfContinents() {
+		assertTrue(loadedMapObjCorrect.getListOfContinents().size() == 2);
+	}
+	
+	/**
+	 * This function checks the list of territories received
+	 */
+	@Test
+	public void testGetListOfTerritories() {
+		assertTrue(loadedMapObjCorrect.getListOfTerritories().size() == 4);
 	}
 }

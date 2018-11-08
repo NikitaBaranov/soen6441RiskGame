@@ -18,8 +18,9 @@ public class MainMenuTest {
      * Test if the window object exists.
      * @throws Exception
      */
-    @Before
-    public void setUp() throws Exception {
+    @Test
+    public void ifExist() throws Exception {
         MainMenu window = new MainMenu("RiskGame by Team 3", 450, 250);
+        assertTrue(window != null);
     }
 }
