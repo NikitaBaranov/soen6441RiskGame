@@ -78,7 +78,7 @@ public class CardPanel extends JPanel implements IPanelObserver {
         list.add(playerBonus);
 
         gbc.fill = GridBagConstraints.BOTH;
-        gbc.insets = new Insets(4, 0, 4, 0);
+        gbc.insets = new Insets(1, 0, 1, 0);
         gbc.gridx = 0;
         gbc.gridy = 0;
         this.add(list, gbc);

@@ -32,9 +32,8 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
     private JLabel countryName = new JLabel("", null, SwingConstants.TRAILING);
     private JLabel countryArmy = new JLabel("", null, SwingConstants.TRAILING);
 
-    private JLabel invisibleLable = new JLabel("invisible", null, SwingConstants.CENTER);
-
     private JButton exchangeButton = new JButton("Exchange");
+    private JLabel invisibleLable = new JLabel("invisible", null, SwingConstants.CENTER);
 
     private JPanel worldDomination = new JPanel();
 
@@ -59,7 +58,7 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
         this.add(nextTurnButton, gbc);
         gbc.gridx = 0;
         gbc.gridy = 1;
-        this.add(new JLabel("Country:", null, SwingConstants.CENTER), gbc);
+        this.add(new JLabel("Domination:", null, SwingConstants.CENTER), gbc);
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.weightx = 1.0;
@@ -81,7 +80,6 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
         gbc.weighty = 0;
         this.add(new JLabel("Attack:", null, SwingConstants.CENTER), gbc);
         this.add(invisibleLable);
-
         invisibleLable.setVisible(false);
 
         Game.getInstance().attachObserver(this);
@@ -136,7 +134,7 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
 
         jPanel.add(new JLabel("Player"));
         jPanel.add(new JLabel("%"));
-        jPanel.add(new JLabel("# armies"));
+        jPanel.add(new JLabel("Armies #"));
         jPanel.add(new JLabel("Continents"));
 
         for (Player player : game.getPlayers()) {

@@ -24,7 +24,7 @@ import java.awt.*;
  */
 public class Main {
 
-    private int width = 1200;
+    private int width = 1300;
     private int height = 700;
 
     /**
@@ -58,17 +58,17 @@ public class Main {
         // Right Panel
         // Right Controls Panel
         JPanel infoPanel = new JPanel(new FlowLayout());
-        infoPanel.setPreferredSize(new Dimension(250, height));
+        infoPanel.setPreferredSize(new Dimension(350, height));
         infoPanel.setBackground(new Color(65,102,138));
 
         // Right Info Panel
 //        JLabel attackLable = new JLabel("Attack:");
         // Player Panel
-        RightStatusPanel rightStatusPanel = new RightStatusPanel(220, 270);
+        RightStatusPanel rightStatusPanel = new RightStatusPanel(320, 300);
         rightStatusPanel.setBackground(new Color(65,102,138));
 
         // Attack Panel
-        AttackPanel attackPanel = new AttackPanel(220, 350);
+        AttackPanel attackPanel = new AttackPanel(320, 340);
         attackPanel.setBackground(new Color(65,102,138));
 
         // Dice Panel
@@ -78,7 +78,7 @@ public class Main {
         // Left Panel
         // Map Panel Map
         //TODO: Extract Logic and reshuffle top to bottom left to right.
-        MapPanel mapPanel = new MapPanel(new Dimension(width - 250, height), loader);
+        MapPanel mapPanel = new MapPanel(new Dimension(width - 350, height), loader);
         //mapPanel.setBorder(new LineBorder(Color.BLACK, 4));
         mapPanel.setBackground(new Color(119,178,140));
 //        game.mapPanel = mapPanel;

@@ -143,7 +143,7 @@ public class EditorTerritory implements IEditorTerritory {
 		case 9:
 			break;
 		case 10:
-			System.out.println("Googbye !!");
+			System.out.println("Goodbye !!");
 			System.exit(0);
 			break;
 		}

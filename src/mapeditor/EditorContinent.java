@@ -113,7 +113,7 @@ public class EditorContinent implements IEditorContinent {
 		case 5:
 			break;
 		case 6:
-			System.out.println("Googbye !!");
+			System.out.println("Goodbye !!");
 			System.exit(0);
 			break;
 		}
