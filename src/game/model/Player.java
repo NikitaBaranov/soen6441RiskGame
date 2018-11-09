@@ -8,9 +8,9 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static game.enums.CardsEnum.ARTILLERY;
-import static game.enums.CardsEnum.BONUS;
 import static game.enums.CardsEnum.CAVALRY;
 import static game.enums.CardsEnum.INFANTRY;
 import static game.enums.CardsEnum.WILDCARDS;
@@ -42,7 +42,7 @@ public class Player {
         cardsEnumIntegerMap.put(CAVALRY, 0);
         cardsEnumIntegerMap.put(ARTILLERY, 0);
         cardsEnumIntegerMap.put(WILDCARDS, 0);
-        cardsEnumIntegerMap.put(BONUS, 0);
+//        cardsEnumIntegerMap.put(BONUS, 0);
     }
 
     /**
@@ -116,7 +116,6 @@ public class Player {
     public void attack() {
         Game game = Game.getInstance();
         if (game.getCountryFrom() != null && game.getCountryFrom().getArmy() >= 2 && game.getCountryTo() != null) {
-//            Dice.resetDice(game.getRedDice(), game.getWhiteDice());
 
             Dice.rollDice(game.getNumberOfRedDicesSelected(), game.getNumberOfWhiteDicesSelected(), game.getRedDice(), game.getWhiteDice());
 
@@ -162,19 +161,24 @@ public class Player {
 
     /**
      * Exchange cards for armies
+     *
      * @param cardsEnumList
      */
     public void exchange(List<CardsEnum> cardsEnumList) {
+        Game game = Game.getInstance();
+        String phrase = "";
         if (cardsEnumList.size() == 3) {
             for (CardsEnum cardsEnum : cardsEnumList) {
                 cardsEnumIntegerMap.put(cardsEnum, cardsEnumIntegerMap.get(cardsEnum) - 1);
             }
+            phrase = String.join(", ", cardsEnumList.stream().map(CardsEnum::getName).collect(Collectors.toList())) + " cards";
         } else if (cardsEnumList.size() == 1) {
             cardsEnumIntegerMap.put(cardsEnumList.get(0), cardsEnumIntegerMap.get(cardsEnumList.get(0)) - 3);
+            phrase = cardsEnumList.get(0).getName() + " card";
         }
-        Game game = Game.getInstance();
         armies = armies + game.getArmiesToCardExchange();
         game.setArmiesToCardExchange(game.getArmiesToCardExchange() + Game.ARMIES_TO_EXCHANGE_INCREASE);
+        game.setCurrentTurnPhraseText("Exchanged " + phrase + " for " + Game.ARMIES_TO_EXCHANGE_INCREASE + " armies. Armies to place " + armies);
     }
 
     /**

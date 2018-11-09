@@ -1,9 +1,9 @@
 package game.ui.view;
 
 import game.Game;
+import game.IObservable;
 import game.enums.CardsEnum;
 import game.enums.GamePhase;
-import game.IObservable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,13 +15,13 @@ import java.util.List;
 import java.util.Map;
 
 import static game.enums.CardsEnum.ARTILLERY;
-import static game.enums.CardsEnum.BONUS;
 import static game.enums.CardsEnum.CAVALRY;
 import static game.enums.CardsEnum.INFANTRY;
 import static game.enums.CardsEnum.WILDCARDS;
 
 /**
  * The cards panel. Display the cards functionality
+ *
  * @author Dmitry Kryukov, Ksenia Popova
  */
 public class CardPanel extends JPanel implements IPanelObserver {
@@ -40,12 +40,13 @@ public class CardPanel extends JPanel implements IPanelObserver {
     private JCheckBox playerCavalryCheckBox = new JCheckBox(CAVALRY.getName());
     private JCheckBox playerArtilleryCheckBox = new JCheckBox(ARTILLERY.getName());
     private JCheckBox playerWildcardsCheckBox = new JCheckBox(WILDCARDS.getName());
-    private JCheckBox playerBonusCheckBox = new JCheckBox(BONUS.getName());
+//    private JCheckBox playerBonusCheckBox = new JCheckBox(BONUS.getName());
 
     private JButton exchangeButton = new JButton("Exchange");
 
     /**
      * The constructor of the card panel
+     *
      * @param width
      * @param height
      */
@@ -54,7 +55,7 @@ public class CardPanel extends JPanel implements IPanelObserver {
         stringCardsEnumMap.put(CAVALRY.getName(), CAVALRY);
         stringCardsEnumMap.put(ARTILLERY.getName(), ARTILLERY);
         stringCardsEnumMap.put(WILDCARDS.getName(), WILDCARDS);
-        stringCardsEnumMap.put(BONUS.getName(), BONUS);
+//        stringCardsEnumMap.put(BONUS.getName(), BONUS);
 
         this.setMaximumSize(new Dimension(width, height));
         this.setLayout(new GridBagLayout());
@@ -63,7 +64,7 @@ public class CardPanel extends JPanel implements IPanelObserver {
         jCheckBoxList.add(playerCavalryCheckBox);
         jCheckBoxList.add(playerArtilleryCheckBox);
         jCheckBoxList.add(playerWildcardsCheckBox);
-        jCheckBoxList.add(playerBonusCheckBox);
+//        jCheckBoxList.add(playerBonusCheckBox);
 
         JPanel list = new JPanel(new GridLayout(5, 2));
         list.add(playerInfantryCheckBox);
@@ -74,8 +75,8 @@ public class CardPanel extends JPanel implements IPanelObserver {
         list.add(playerArtillery);
         list.add(playerWildcardsCheckBox);
         list.add(playerWildcards);
-        list.add(playerBonusCheckBox);
-        list.add(playerBonus);
+//        list.add(playerBonusCheckBox);
+//        list.add(playerBonus);
 
         gbc.fill = GridBagConstraints.BOTH;
         gbc.insets = new Insets(1, 0, 1, 0);
@@ -94,6 +95,7 @@ public class CardPanel extends JPanel implements IPanelObserver {
 
     /**
      * Updater for the observer
+     *
      * @param iObservable
      */
     @Override
@@ -107,7 +109,7 @@ public class CardPanel extends JPanel implements IPanelObserver {
             playerCavalry.setText(Integer.toString(game.getCurrentPlayer().getCardsEnumIntegerMap().get(CAVALRY)));
             playerArtillery.setText(Integer.toString(game.getCurrentPlayer().getCardsEnumIntegerMap().get(ARTILLERY)));
             playerWildcards.setText(Integer.toString(game.getCurrentPlayer().getCardsEnumIntegerMap().get(WILDCARDS)));
-            playerBonus.setText(Integer.toString(game.getCurrentPlayer().getCardsEnumIntegerMap().get(BONUS)));
+//            playerBonus.setText(Integer.toString(game.getCurrentPlayer().getCardsEnumIntegerMap().get(BONUS)));
 
         } else {
             setAllEnabled(false);
@@ -140,6 +142,7 @@ public class CardPanel extends JPanel implements IPanelObserver {
 
     /**
      * Enable all cards for selecting
+     *
      * @param value
      */
     private void setAllEnabled(boolean value) {

@@ -9,8 +9,8 @@ public enum CardsEnum {
     INFANTRY("Infantry"),
     CAVALRY("Cavalry"),
     ARTILLERY("Artillery"),
-    WILDCARDS("Wildcards"),
-    BONUS("Bonus");
+    WILDCARDS("Wildcards");
+//    BONUS("Bonus");
 
     private String name;
 
