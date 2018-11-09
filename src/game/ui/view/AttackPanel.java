@@ -82,25 +82,29 @@ public class AttackPanel extends JPanel implements IPanelObserver {
         attackAllInButton.addActionListener(attackAllInButtonListner());
         attackAllInButton.setMargin(new Insets(5, 0, 5, 0));
 
-        gbc.fill = GridBagConstraints.BOTH;
+//        gbc.fill = GridBagConstraints.BOTH;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        gbc.weightx = 1;
+        gbc.gridwidth = 2;
+        gbc.weightx = 0.0;
         gbc.gridx = 0;
         gbc.gridy = 0;
         this.add(numbersPanel, gbc);
 
+        gbc.gridwidth = 1;
+        gbc.weightx = 0.5;
         gbc.gridx = 0;
         gbc.gridy = 1;
         this.add(attackButton, gbc);
 
-        gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridx = 1;
+        gbc.gridy = 1;
         this.add(attackAllInButton, gbc);
 
+        gbc.gridwidth = 2;
+        gbc.weightx = 0.0;
         gbc.gridx = 0;
-        gbc.gridy = 3;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
+        gbc.gridy = 2;
         this.add(dicePanel, gbc);
 
         attackButton.setEnabled(false);
