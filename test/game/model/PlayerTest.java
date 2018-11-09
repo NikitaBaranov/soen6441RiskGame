@@ -73,11 +73,14 @@ public class PlayerTest {
     @Test
     public void reinforcementSelectedCorrectCountry() {
         game.initialise();
-        while (game.getCurrentGamePhase() != GamePhase.ATTACK) {
+        while (!(game.getCurrentGamePhase() == GamePhase.REINFORCEMENT && game.getCurrentPlayer() == player1)) {
             game.nextTurn();
         }
+        country1.setArmy(10);
+        player1.setArmies(5);
+        game.makeAction(0, 0);
         game.makeAction(10, 10);
-        assertTrue(country3.isHighlighted());
+        assertEquals(11, country1.getArmy());
     }
 
     /**
@@ -86,7 +89,7 @@ public class PlayerTest {
     @Test
     public void reinforcementNotSelectedIncorrectCountry() {
         game.initialise();
-        while (game.getCurrentGamePhase() != GamePhase.ATTACK) {
+        while (!(game.getCurrentGamePhase() == GamePhase.REINFORCEMENT && game.getCurrentPlayer() == player1)) {
             game.nextTurn();
         }
         game.makeAction(0, 0);
@@ -113,6 +116,7 @@ public class PlayerTest {
         while (game.getCurrentGamePhase() != GamePhase.ATTACK) {
             game.nextTurn();
         }
+        game.makeAction(0, 0);
         game.makeAction(30, 30);
         assertFalse(country1.isHighlighted());
     }
@@ -139,6 +143,7 @@ public class PlayerTest {
         while (game.getCurrentGamePhase() != GamePhase.REINFORCEMENT) {
             game.nextTurn();
         }
+        game.makeAction(0, 0);
         game.makeAction(10, 10);
         assertEquals(1, country1.getArmy());
     }
