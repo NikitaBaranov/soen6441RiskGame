@@ -183,6 +183,10 @@ public class Game implements IObservable {
                 currentTurnPhraseText = "Select a Country to attack from.";
                 System.out.println("Next Turn Button Clicked. Next Player is " + currentGamePhase);
                 unHighlightCountries();
+
+                if (!isMoreAttacks()) {
+                    nextTurn();
+                }
                 break;
 
             case ATTACK:
@@ -373,6 +377,19 @@ public class Game implements IObservable {
         unHighlightCountries();
         nextTurnButton = false;
         notifyObservers();
+    }
+
+    public boolean isMoreAttacks() {
+        for (Country country : countries) {
+            if (country.getPlayer() == currentPlayer && country.getArmy() >= 2) {
+                for (Country neighbor : country.getNeighbours()) {
+                    if (neighbor.getPlayer() != currentPlayer) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     public void setRADIUS(int RADIUS) {

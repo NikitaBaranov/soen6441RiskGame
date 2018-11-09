@@ -84,7 +84,9 @@ public class Player {
                     game.resetToAndFrom();
                     Dice.resetDice(game.getRedDice(), game.getWhiteDice());
                     game.setWinBattle(false);
-
+                    if (!game.isMoreAttacks()) {
+                        game.nextTurn();
+                    }
                 }
             }
         } else {
