@@ -3,6 +3,7 @@ package game.model;
 import game.Game;
 import game.enums.GamePhase;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 
 import java.awt.*;
@@ -10,6 +11,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import org.junit.runners.MethodSorters;
 
 import static game.enums.CardsEnum.ARTILLERY;
 import static game.enums.CardsEnum.CAVALRY;
@@ -22,6 +24,7 @@ import static org.junit.Assert.assertTrue;
  * Test for model Player
  * @author Ksenia Popova, Dmitry Kryukov
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class PlayerTest {
 
     Game game = Game.getInstance();
@@ -86,6 +89,7 @@ public class PlayerTest {
         while (game.getCurrentGamePhase() != GamePhase.ATTACK) {
             game.nextTurn();
         }
+        game.makeAction(0, 0);
         game.makeAction(10, 10);
         assertFalse(country4.isHighlighted());
     }
@@ -97,6 +101,7 @@ public class PlayerTest {
         while (game.getCurrentGamePhase() != GamePhase.ATTACK) {
             game.nextTurn();
         }
+        game.makeAction(0, 0);
         game.makeAction(30, 30);
         assertTrue(country4.isHighlighted());
     }
