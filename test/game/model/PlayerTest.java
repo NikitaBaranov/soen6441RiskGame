@@ -85,7 +85,22 @@ public class PlayerTest {
     }
 
     @Test
-    public void fortification() {
+    public void fortificationCorrectTransitionToNextPlayer() {
+        game.initialise();
+        while (game.getCurrentGamePhase() != GamePhase.REINFORCEMENT) {
+            game.nextTurn();
+        }
+        assertEquals(player2, game.getCurrentPlayer());
+    }
+
+    @Test
+    public void fortificationNoActionsWhenSelectedEnemiesCountry() {
+        game.initialise();
+        while (game.getCurrentGamePhase() != GamePhase.REINFORCEMENT) {
+            game.nextTurn();
+        }
+        game.makeAction(10, 10);
+        assertEquals(1, country1.getArmy());
     }
 
     @Test
