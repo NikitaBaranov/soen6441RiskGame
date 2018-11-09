@@ -90,19 +90,28 @@ public class PlayerTest {
         assertFalse(country4.isHighlighted());
     }
 
-    /**
-     * Stub
-     */
     @Test
-    public void beforeAndAfterAttack() {
+    public void attackSelectedCorrectCountry() {
+        game.initialise();
+        country3.setArmy(10);
+        while (game.getCurrentGamePhase() != GamePhase.ATTACK) {
+            game.nextTurn();
+        }
+        game.makeAction(30, 30);
+        assertTrue(country4.isHighlighted());
     }
 
-    /**
-     * Stub
-     */
     @Test
-    public void attack() {
+    public void attackNoSelectedPlayersCountries() {
+        game.initialise();
+        country3.setArmy(10);
+        while (game.getCurrentGamePhase() != GamePhase.ATTACK) {
+            game.nextTurn();
+        }
+        game.makeAction(30, 30);
+        assertFalse(country1.isHighlighted());
     }
+
 
     /**
      * Check fortification correct transition to next player
