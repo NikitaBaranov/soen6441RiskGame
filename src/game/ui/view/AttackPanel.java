@@ -1,8 +1,8 @@
 package game.ui.view;
 
 import game.Game;
-import game.enums.GamePhase;
 import game.IObservable;
+import game.enums.GamePhase;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,7 +29,8 @@ public class AttackPanel extends JPanel implements IPanelObserver {
 
     private DicePanel dicePanel;
 
-    private JButton attackButton;
+    private JButton attackButton = new JButton();
+    private JButton attackAllInButton = new JButton();
 
     /**
      * Constructor for Attack panel
@@ -38,10 +39,8 @@ public class AttackPanel extends JPanel implements IPanelObserver {
      */
     public AttackPanel(int width, int height) {
         this.setPreferredSize(new Dimension(width, height));
-
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        Game.getInstance().attachObserver(this);
 
         numbersPanel = new JPanel();
         numbersPanel.setLayout(new GridLayout(4, 2));
@@ -75,26 +74,40 @@ public class AttackPanel extends JPanel implements IPanelObserver {
         dicePanel = new DicePanel(100, 170);
 //        dicePanel.setBackground(new Color(255, 255, 255));
 
-        attackButton = new JButton();
         attackButton.setText("Attack!");
         attackButton.addActionListener(attackButtonListner());
         attackButton.setMargin(new Insets(5, 0, 5, 0));
 
+        attackAllInButton.setText("All In!");
+        attackAllInButton.addActionListener(attackAllInButtonListner());
+        attackAllInButton.setMargin(new Insets(5, 0, 5, 0));
+
         gbc.fill = GridBagConstraints.BOTH;
+
+        gbc.weightx = 1;
         gbc.gridx = 0;
         gbc.gridy = 0;
         this.add(numbersPanel, gbc);
+
         gbc.gridx = 0;
         gbc.gridy = 1;
         this.add(attackButton, gbc);
+
         gbc.gridx = 0;
         gbc.gridy = 2;
+        this.add(attackAllInButton, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 3;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         this.add(dicePanel, gbc);
 
         attackButton.setEnabled(false);
+        attackAllInButton.setEnabled(false);
         this.setVisible(false);
+
+        Game.getInstance().attachObserver(this);
     }
 
     /**
@@ -119,6 +132,7 @@ public class AttackPanel extends JPanel implements IPanelObserver {
                     white2.setEnabled(game.getCountryTo().getArmy() >= 2);
 
                     attackButton.setEnabled(true);
+                    attackAllInButton.setEnabled(true);
                 } else {
                     setAllDisabled();
                 }
@@ -160,6 +174,22 @@ public class AttackPanel extends JPanel implements IPanelObserver {
     }
 
     /**
+     * Next button listener
+     */
+    public ActionListener attackAllInButtonListner() {
+        return new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Game game = Game.getInstance();
+
+                game.setNumberOfRedDicesSelected(Math.min(game.getCountryFrom().getArmy(), 3));
+                game.setNumberOfWhiteDicesSelected(Math.min(game.getCountryTo().getArmy(), 2));
+
+                game.attack();
+            }
+        };
+    }
+
+    /**
      * Set all checkbuttons enabled
      */
     private void setAllDisabled() {
@@ -175,5 +205,6 @@ public class AttackPanel extends JPanel implements IPanelObserver {
             jRadioButton.setEnabled(false);
         }
         attackButton.setEnabled(false);
+        attackAllInButton.setEnabled(false);
     }
 }
