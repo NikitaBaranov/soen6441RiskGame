@@ -28,7 +28,6 @@ import java.util.stream.Collectors;
  */
 public class RightStatusPanel extends JPanel implements IPanelObserver {
     private JButton nextTurnButton = new JButton("Next Turn");
-    private JButton exchangeButton = new JButton("Exchange");
     private JLabel invisibleLabel = new JLabel("invisible", null, SwingConstants.CENTER);
 
     private JPanel worldDomination = new JPanel();
@@ -91,7 +90,6 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
         Game game = Game.getInstance();
 
         nextTurnButton.setEnabled(game.isNextTurnButton());
-        exchangeButton.setEnabled(game.isExchangeButton());
 
         createWoldDominationPanel(worldDomination);
 
@@ -134,8 +132,13 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
 
         for (Player player : game.getPlayers()) {
             jPanel.add(new JLabel(player.getName()));
-            jPanel.add(new JLabel(Integer.toString((int) (((float) playerNumberOfCountriesMap.get(player) / game.getCountries().size()) * 100))));
-            jPanel.add(new JLabel(Integer.toString(playerNumberOfArmiesMap.get(player))));
+            if (playerNumberOfCountriesMap.containsKey(player)) {
+                jPanel.add(new JLabel(Integer.toString((int) (((float) playerNumberOfCountriesMap.get(player) / game.getCountries().size()) * 100))));
+                jPanel.add(new JLabel(Integer.toString(playerNumberOfArmiesMap.get(player))));
+            } else {
+                jPanel.add(new JLabel("0"));
+                jPanel.add(new JLabel("0"));
+            }
             List<String> playerContinents = game.getContinents().stream().filter(c -> c.isOwnByPlayer(player)).map(Continent::getName).collect(Collectors.toList());
             jPanel.add(new JLabel(String.join(", ", playerContinents)));
         }

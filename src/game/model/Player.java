@@ -84,6 +84,7 @@ public class Player {
                     game.resetToAndFrom();
                     Dice.resetDice(game.getRedDice(), game.getWhiteDice());
                     game.setWinBattle(false);
+
                 }
             }
         } else {
@@ -132,6 +133,9 @@ public class Player {
                 game.getCountryTo().setPlayer(this);
                 game.setMinArmiesToMoveAfterWin(game.getNumberOfRedDicesSelected());
                 game.setGiveACard(true);
+                if (game.isGameWonBy(this)) {
+                    game.gameOver();
+                }
             }
         }
     }

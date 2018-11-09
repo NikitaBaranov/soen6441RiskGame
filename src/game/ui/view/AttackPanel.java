@@ -185,8 +185,8 @@ public class AttackPanel extends JPanel implements IPanelObserver {
             public void actionPerformed(ActionEvent e) {
                 Game game = Game.getInstance();
 
-                game.setNumberOfRedDicesSelected(Math.min(game.getCountryFrom().getArmy(), 3));
-                game.setNumberOfWhiteDicesSelected(Math.min(game.getCountryTo().getArmy(), 2));
+                game.setNumberOfRedDicesSelected(Math.max(0, Math.min(game.getCountryFrom().getArmy() - 1, 3)));
+                game.setNumberOfWhiteDicesSelected(Math.max(0, Math.min(game.getCountryTo().getArmy(), 2)));
 
                 game.attack();
             }

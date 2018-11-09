@@ -8,7 +8,8 @@ public enum  GamePhase {
     PLACING_ARMIES(0, "Initial Army placing."),
     REINFORCEMENT(1, "Reinforce your positions."),
     ATTACK(2, "Attack your enemy."),
-    FORTIFICATION(3, "Fortify your position.");
+    FORTIFICATION(3, "Fortify your position."),
+    GAME_OVER(4, "Game Over!");
 
     private String name;
     private int number;

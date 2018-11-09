@@ -25,6 +25,7 @@ import static game.enums.CardsEnum.INFANTRY;
 import static game.enums.CardsEnum.WILDCARDS;
 import static game.enums.GamePhase.ATTACK;
 import static game.enums.GamePhase.FORTIFICATION;
+import static game.enums.GamePhase.GAME_OVER;
 import static game.enums.GamePhase.PLACING_ARMIES;
 import static game.enums.GamePhase.REINFORCEMENT;
 
@@ -51,7 +52,6 @@ public class Game implements IObservable {
     private static Game gameInstance;
     private final int DICE_ROW_TO_SHOW = 3;
     private boolean nextTurnButton;
-    private boolean exchangeButton;
     private int RADIUS;
     private List<Country> countries;
     private List<Neighbour> neighbours;
@@ -121,7 +121,6 @@ public class Game implements IObservable {
         currentGamePhase = PLACING_ARMIES;
         currentPlayer = players.get(0);
         nextTurnButton = false;
-        exchangeButton = false;
         Dice.resetDice(redDice, whiteDice);
         highlightPayerCountries();
 
@@ -184,7 +183,6 @@ public class Game implements IObservable {
                 currentTurnPhraseText = "Select a Country to attack from.";
                 System.out.println("Next Turn Button Clicked. Next Player is " + currentGamePhase);
                 unHighlightCountries();
-                exchangeButton = false;
                 break;
 
             case ATTACK:
@@ -233,7 +231,6 @@ public class Game implements IObservable {
                         }
                     }
                 }
-                exchangeButton = true;
                 currentTurnPhraseText = "Select a country to place your army. Armies to place  " + currentPlayer.getArmies();
                 highlightPayerCountries();
                 break;
@@ -361,6 +358,23 @@ public class Game implements IObservable {
         }
     }
 
+    public boolean isGameWonBy(Player player) {
+        for (Country country : countries) {
+            if (country.getPlayer() != player) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void gameOver() {
+        currentGamePhase = GAME_OVER;
+        currentTurnPhraseText = "Game over. The " + currentPlayer.getName() + " win.";
+        unHighlightCountries();
+        nextTurnButton = false;
+        notifyObservers();
+    }
+
     public void setRADIUS(int RADIUS) {
         this.RADIUS = RADIUS;
     }
@@ -480,15 +494,6 @@ public class Game implements IObservable {
      */
     public boolean isNextTurnButton() {
         return nextTurnButton;
-    }
-
-    /**
-     * Exchange button
-     *
-     * @return exchangeButton
-     */
-    public boolean isExchangeButton() {
-        return exchangeButton;
     }
 
     /**
