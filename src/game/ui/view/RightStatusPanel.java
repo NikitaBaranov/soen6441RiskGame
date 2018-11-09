@@ -108,6 +108,10 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
         };
     }
 
+    /**
+     * Domination of the world view
+     * @param jPanel
+     */
     private void createWoldDominationPanel(JPanel jPanel) {
         Game game = Game.getInstance();
         jPanel.removeAll();

@@ -5,7 +5,7 @@ package mapeditor;
  * to modify the map. It also calls the loader to load map in memory.
  * And provides user an option to verify the changes made and save the
  * modified map to file.
- * @author Nikitha Papani, Dinesh Pattapu 
+ * @author Nikitha Papani, Dinesh Pattapu, Rodolfo Mota Miranda
  *
  */
 public interface IEditor {

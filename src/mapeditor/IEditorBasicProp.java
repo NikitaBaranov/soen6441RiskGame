@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 /**
  * The class lets the user modify the basic properties of map.
- * @author Nikitha Papani
+ * @author Nikitha Papani, Rodolfo Mota Miranda
  *
  */
 public interface IEditorBasicProp {

@@ -2,7 +2,7 @@ package mapeditor;
 
 /**
  * This class is responsible for managing the continents loaded from file.
- * @author Nikitha Papani, Dinesh Pattapu
+ * @author Nikitha Papani, Dinesh Pattapu, Rodolfo Mota Miranda
  *
  */
 public interface IContinent {

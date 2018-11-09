@@ -1,0 +1,10 @@
+[Map]
+author=Dmitry
+
+[Continents]
+Europe=3
+America=2
+
+[Territories]
+Usa,64,150,America,Germany
+Germany,164,190,Europe,Usa

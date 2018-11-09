@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  * The class to load territory in data structures.
- * @author Nikitha Papani, Dinesh Pattapu
+ * @author Nikitha Papani, Dinesh Pattapu, Rodolfo Mota Miranda
  *
  */
 public interface ITerritory {

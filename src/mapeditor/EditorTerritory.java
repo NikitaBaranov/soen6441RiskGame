@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 /**
  * This class provides options for modifications of territories.
- * @author Nikitha Papani
+ * @author Nikitha Papani, Rodolfo Mota Miranda
  *
  */
 public class EditorTerritory implements IEditorTerritory {
@@ -15,7 +15,7 @@ public class EditorTerritory implements IEditorTerritory {
 	/**
 	 * This function initializes the territory editor
 	 * @param in Scanner object
-	 * @param loadedMapObj The laoded map in memory
+	 * @param loadedMapObj The loaded map in memory
 	 */
 	public void init(Scanner in, ILoadedMap loadedMapObj) {
 		this.in = in;
@@ -55,7 +55,7 @@ public class EditorTerritory implements IEditorTerritory {
 	}
 
 	/**
-	 * This functin dispalys the territory list and asks user to select one.
+	 * This function displays the territory list and asks user to select one.
 	 * @return The selected territory by user.
 	 */
 	@Override
@@ -231,7 +231,7 @@ public class EditorTerritory implements IEditorTerritory {
 	}
 
 	/**
-	 * The funtion to modify territory name.
+	 * The function to modify territory name.
 	 * @return Returns success of failure
 	 */
 	@Override

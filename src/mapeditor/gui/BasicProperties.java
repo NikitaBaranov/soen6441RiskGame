@@ -46,7 +46,7 @@ public class BasicProperties extends JFrame {
 
 		setTitle("Simple");
 		setLocationRelativeTo(null);
-		setDefaultCloseOperation(DISPOSE_ON_CLOSE);	
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
 	}
 }

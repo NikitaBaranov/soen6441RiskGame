@@ -20,18 +20,18 @@ import mapeditor.Territory;
 
 public class MainMenu extends JFrame {
 
-	private static final long serialVersionUID = 1L;
-	private int width, height;
+    private static final long serialVersionUID = 1L;
+    private int width, height;
     private ILoadedMap loadedMapObj;
-	
-	/**
-	 * The constructor of the class.
-	 * Creates the window and put the buttons on there.
-	 * @param title of the window
-	 * @param width of the window
-	 * @param height of the window
-	 */
-	public MainMenu(String title, int width, int height) {
+
+    /**
+     * The constructor of the class.
+     * Creates the window and put the buttons on there.
+     * @param title of the window
+     * @param width of the window
+     * @param height of the window
+     */
+    public MainMenu(String title, int width, int height) {
         super(title);
         this.width = width;
         this.height = height;
@@ -52,7 +52,7 @@ public class MainMenu extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
     }
-	
+
     /**
      * Method generate the button for menu bar with calling additional functionality
      * Such: testing continent bonus with 4 players
@@ -74,69 +74,59 @@ public class MainMenu extends JFrame {
         });
         return file;
     }
-	/**
+    /**
      * Method generates the button for menu bar with calling map editor
      * @return mapEditor object to attach it to the menu bar panel
      */
-	private JMenu mapEditor() {
-		JMenu mapEditor = new JMenu("Map Editor");
-		JMenuItem createMAP = new JMenuItem("Create Map");
-		mapEditor.add(createMAP);
-		JMenuItem editMAP = new JMenuItem("Edit Map");
-		mapEditor.add(editMAP);
+    private JMenu mapEditor() {
+        JMenu mapEditor = new JMenu("Map Editor");
+        JMenuItem createMAP = new JMenuItem("Create Map");
+        mapEditor.add(createMAP);
+        JMenuItem editMAP = new JMenuItem("Edit Map");
+        mapEditor.add(editMAP);
 
-		createMAP.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				EventQueue.invokeLater(() -> {
-                                    JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        createMAP.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                EventQueue.invokeLater(() -> {
+                    IMapLoader mapLoaderObj = new mapeditor.MapLoader("", 1);
+                    loadedMapObj = mapLoaderObj.getLoadedMap();
+                    Continent.setContinents(loadedMapObj.getContinents());
+                    Territory.setTerritories(loadedMapObj.getTerritories());
+                    CreateMapMenu ex = new CreateMapMenu("", loadedMapObj);
+                    ex.setVisible(true);
+                });
 
-                                    int returnValue = jfc.showOpenDialog(null);
-                                    // int returnValue = jfc.showSaveDialog(null);
+            }
+        });
+        editMAP.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                EventQueue.invokeLater(() -> {
+                    JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 
-                                    if (returnValue == JFileChooser.APPROVE_OPTION) {
-                                            File selectedFile = jfc.getSelectedFile();
-                                            IMapLoader mapLoaderObj = new mapeditor.MapLoader(selectedFile.getAbsolutePath(), 1);
-                                            loadedMapObj = mapLoaderObj.getLoadedMap();
-                                            Continent.setContinents(loadedMapObj.getContinents());
-                                            Territory.setTerritories(loadedMapObj.getTerritories());
-                                            CreateMapMenu ex = new CreateMapMenu(selectedFile.getAbsolutePath(), loadedMapObj);
-                                            ex.setVisible(true);
-                                    }else{
-                                        //ERROR
-                                    }
-				});
+                    int returnValue = jfc.showOpenDialog(null);
+                    // int returnValue = jfc.showSaveDialog(null);
 
-			}
-		});
-		editMAP.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				EventQueue.invokeLater(() -> {
-                                    JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+                    if (returnValue == JFileChooser.APPROVE_OPTION) {
+                        File selectedFile = jfc.getSelectedFile();
+                        IMapLoader mapLoaderObj = new mapeditor.MapLoader(selectedFile.getAbsolutePath(), 1);
+                        loadedMapObj = mapLoaderObj.getLoadedMap();
+                        Continent.setContinents(loadedMapObj.getContinents());
+                        Territory.setTerritories(loadedMapObj.getTerritories());
+                        CreateMapMenu ex = new CreateMapMenu(selectedFile.getAbsolutePath(), loadedMapObj);
+                        ex.setVisible(true);
+                    }else{
+                        //Deu pau manda mensagem de erro ai tiosao
+                    }
 
-                                    int returnValue = jfc.showOpenDialog(null);
-                                    // int returnValue = jfc.showSaveDialog(null);
+                });
+            }
+        });
+        return mapEditor;
+    }
 
-                                    if (returnValue == JFileChooser.APPROVE_OPTION) {
-                                            File selectedFile = jfc.getSelectedFile();
-                                            IMapLoader mapLoaderObj = new mapeditor.MapLoader(selectedFile.getAbsolutePath(), 1);
-                                            loadedMapObj = mapLoaderObj.getLoadedMap();
-                                            Continent.setContinents(loadedMapObj.getContinents());
-                                            Territory.setTerritories(loadedMapObj.getTerritories());
-                                            CreateMapMenu ex = new CreateMapMenu(selectedFile.getAbsolutePath(), loadedMapObj);
-                                            ex.setVisible(true);
-                                    }else{
-                                        //Deu pau manda mensagem de erro ai tiosao
-                                    }
-					
-				});
-			}
-		});
-		return mapEditor;
-	}
-
-	/**
+    /**
      * Method generates the button for menu bar with calling exit
      * @return exit object to attach it to the menu bar panel
      */
@@ -147,7 +137,7 @@ public class MainMenu extends JFrame {
         return exit;
     }
 
-	/**
+    /**
      * Method generates the buttons for menu bar with calling start game with different number of players
      * @return startButtons object to attach the buttons to the window
      */

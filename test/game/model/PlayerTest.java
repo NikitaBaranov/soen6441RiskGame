@@ -18,6 +18,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * Test for model Player
+ * @author Ksenia Popova, Dmitry Kryukov
+ */
 public class PlayerTest {
 
     Game game = Game.getInstance();
@@ -29,6 +33,10 @@ public class PlayerTest {
     Country country3;
     Country country4;
 
+    /**
+     * Setup the players, countries, map and run the game.
+     * @throws Exception
+     */
     @Before
     public void setUp() throws Exception {
         player1 = new Player("test Player 1", Color.BLACK);
@@ -56,6 +64,9 @@ public class PlayerTest {
         game.setContinents(Collections.singletonList(continent));
     }
 
+    /**
+     * Check if reinforcement selected correct country
+     */
     @Test
     public void reinforcementSelectedCorrectCountry() {
         game.initialise();
@@ -66,6 +77,9 @@ public class PlayerTest {
         assertTrue(country3.isHighlighted());
     }
 
+    /**
+     * Check if reinforcement not selected incorrect country
+     */
     @Test
     public void reinforcementNotSelectedIncorrectCountry() {
         game.initialise();
@@ -76,14 +90,23 @@ public class PlayerTest {
         assertFalse(country4.isHighlighted());
     }
 
+    /**
+     * Stub
+     */
     @Test
     public void beforeAndAfterAttack() {
     }
 
+    /**
+     * Stub
+     */
     @Test
     public void attack() {
     }
 
+    /**
+     * Check fortification correct transition to next player
+     */
     @Test
     public void fortificationCorrectTransitionToNextPlayer() {
         game.initialise();
@@ -93,6 +116,9 @@ public class PlayerTest {
         assertEquals(player2, game.getCurrentPlayer());
     }
 
+    /**
+     * Check fortification that player has no actions when selected enemies counrty
+     */
     @Test
     public void fortificationNoActionsWhenSelectedEnemiesCountry() {
         game.initialise();
@@ -103,6 +129,9 @@ public class PlayerTest {
         assertEquals(1, country1.getArmy());
     }
 
+    /**
+     * Check feature of exchanging of 3 identical cards
+     */
     @Test
     public void exchangeThreeIdenticalCards() {
         player1.setArmies(0);
@@ -114,7 +143,9 @@ public class PlayerTest {
         assertEquals(5, player1.getArmies());
     }
 
-
+    /**
+     * Check feature of exchanging 3 different cards
+     */
     @Test
     public void exchangeThreeDifferentCards() {
         player1.setArmies(0);

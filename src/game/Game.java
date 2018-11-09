@@ -362,6 +362,11 @@ public class Game implements IObservable {
         }
     }
 
+    /**
+     * Check if game was won by player
+     * @param player
+     * @return boolean
+     */
     public boolean isGameWonBy(Player player) {
         for (Country country : countries) {
             if (country.getPlayer() != player) {
@@ -371,6 +376,9 @@ public class Game implements IObservable {
         return true;
     }
 
+    /**
+     * Game over phase. Block any actions
+     */
     public void gameOver() {
         currentGamePhase = GAME_OVER;
         currentTurnPhraseText = "Game over. The " + currentPlayer.getName() + " win.";
@@ -379,6 +387,10 @@ public class Game implements IObservable {
         notifyObservers();
     }
 
+    /**
+     * Check if player can attack anybody or go to next turn
+     * @return
+     */
     public boolean isMoreAttacks() {
         for (Country country : countries) {
             if (country.getPlayer() == currentPlayer && country.getArmy() >= 2) {
@@ -392,6 +404,10 @@ public class Game implements IObservable {
         return false;
     }
 
+    /**
+     * Set radius method
+     * @param RADIUS
+     */
     public void setRADIUS(int RADIUS) {
         this.RADIUS = RADIUS;
     }

@@ -178,7 +178,7 @@ public class AttackPanel extends JPanel implements IPanelObserver {
     }
 
     /**
-     * Next button listener
+     * All in button listener
      */
     public ActionListener attackAllInButtonListner() {
         return new ActionListener() {

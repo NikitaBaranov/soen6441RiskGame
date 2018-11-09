@@ -83,6 +83,11 @@ public class Continent {
         return true;
     }
 
+    /**
+     * Is continent owned by player?
+     * @param player
+     * @return
+     */
     public boolean isOwnByPlayer(Player player) {
         for (Country country : countryList) {
             if (country.getPlayer() != player) {

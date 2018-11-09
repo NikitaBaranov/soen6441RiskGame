@@ -187,7 +187,7 @@ public class LoadedMap implements ILoadedMap {
 	
 	/**
 	 * The function to get list of continents.
-	 * @return The arraylist of continents.
+	 * @return The array list of continents.
 	 */
 	public ArrayList<String> getListOfContinents() {
 		return new ArrayList<String>(listOfContinents.keySet());
@@ -195,7 +195,7 @@ public class LoadedMap implements ILoadedMap {
         
         /**
 	 * The function to get list of continents.
-	 * @return The arraylist of continents to the interface.
+	 * @return The array list of continents to the interface.
 	 */        
         public ArrayList<IContinent> getContinents() {
 		return new ArrayList<IContinent>(listOfContinents.values());
@@ -203,7 +203,7 @@ public class LoadedMap implements ILoadedMap {
 	
 	/**
 	 * The function to get list of territories.
-	 * @return The arraylist of territories.
+	 * @return The array list of territories.
 	 */
 	public ArrayList<String> getListOfTerritories() {
 		return new ArrayList<String>(listOfTerritories.keySet());
@@ -211,7 +211,7 @@ public class LoadedMap implements ILoadedMap {
         
         /**
 	 * The function to get list of territories.
-	 * @return The arraylist of territories to the interface.
+	 * @return The array list of territories to the interface.
 	 */
         public ArrayList<ITerritory> getTerritories() {
 		return new ArrayList<ITerritory>(listOfTerritories.values());

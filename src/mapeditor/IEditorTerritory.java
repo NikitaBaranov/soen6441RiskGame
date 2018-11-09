@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 /**
  * This class provides options for modifications of territories.
- * @author Nikitha Papani
+ * @author Nikitha Papani, Rodolfo Mota Miranda
  *
  */
 public interface IEditorTerritory {

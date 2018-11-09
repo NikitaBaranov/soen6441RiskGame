@@ -7,13 +7,13 @@ import java.util.HashMap;
 
 /**
  * This class verifies map data in data structures.
- * @author Nikitha Papani, Dinesh Pattapu
+ * @author Nikitha Papani, Dinesh Pattapu, Rodolfo Mota Miranda
  *
  */
 public class Verification implements IVerification {
 
-	public ILoadedMap map; 
-	
+	public ILoadedMap map;
+
 	/**
 	 * This is the function called by editor to make verifications.
 	 * Also this functions calls actual verification functions.
@@ -26,23 +26,23 @@ public class Verification implements IVerification {
 		this.map = map;
 		result = checkEmptyContinents();
 		if(result == false) return result;
-		
+
 		result = checkContinentExistence();
 		if(result == false) return result;
-		
+
 		result = checkTerritoryAdjacencyRelation();
 		if(result == false) return result;
-		
+
 		result = checkTerritoryConnectivity();
 		if(result == false) return result;
-		
+
 		try {
 			this.map.saveMapToFile(path);
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
-			
+
 			e.printStackTrace();
-		} 
-		
+		}
+
 		return true;
 	}
 
@@ -60,14 +60,14 @@ public class Verification implements IVerification {
 			}
 			String continent = territory.getContinent();
 			if(this.map.getListOfContinents().contains(continent) == false) {
-				System.out.println("Map cannot be saved, as continent " + continent + " does not exist, but territory " + 
-			territory.getTerritoryName() + " is supposed to be in that continent");
+				System.out.println("Map cannot be saved, as continent " + continent + " does not exist, but territory " +
+						territory.getTerritoryName() + " is supposed to be in that continent");
 				return false;
 			}
 		}
 		return true;
 	}
-	
+
 	/**
 	 * The function to check for whether there are any continents
 	 * that have no territories.
@@ -76,12 +76,18 @@ public class Verification implements IVerification {
 	@Override
 	public boolean checkEmptyContinents() {
 		ArrayList<String> continents = this.map.getListOfContinents();
+		int totalTerritories = 0;
 		for(int i = 0; i < continents.size(); i++) {
 			IContinent continent = this.map.getContinent(continents.get(i));
-			if(continent.numTerritories() < 2) {
+			totalTerritories += continent.numTerritories();
+			if(continent.numTerritories() < 1) {
 				System.out.println("Map cannot be saved, as " + continent.getContinentName() + " does not have enough territories");
 				return false;
 			}
+		}
+		if(totalTerritories < 2){
+			System.out.println("Map cannot be saved, as the map does not have enough territories");
+			return false;
 		}
 		return true;
 	}
@@ -105,13 +111,13 @@ public class Verification implements IVerification {
 				}
 				if(adjacentTerritory.checkIfAdjacent(territory.getTerritoryName()) == false) {
 					System.out.println("Map cannot be saved, as " + adjacentTerritory.getTerritoryName() + " is not adjacent to " +
-							territory.getTerritoryName() + " while " + territory.getTerritoryName() + " says, that " + 
+							territory.getTerritoryName() + " while " + territory.getTerritoryName() + " says, that " +
 							adjacentTerritory.getTerritoryName() + " is adjacent to it.");
 					return false;
 				}
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -127,23 +133,23 @@ public class Verification implements IVerification {
 			System.out.println("Verification: checkTerritoryConnectivity: Minimum territories should be 2");
 			return false;
 		}
-		
+
 		for(int i = 0; i < territories.size(); i++) {
 			visited.put(territories.get(i), false);
 		}
-		
+
 		startVisiting(this.map.getTerritory(territories.get(0)), visited);
-		
+
 		for(int i = 0; i < territories.size(); i++) {
 			if(visited.get(territories.get(i)) == false) {
 				System.out.println("Cannot save map, as all the territories are not connected to each other");
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * The recursive function to check for a connected graph among territories.
 	 * First make a hashmap of all territories in map, with a boolean value as false.
