@@ -25,6 +25,7 @@ import java.util.Set;
 
 /**
  * The map loader class. Responsible for loading and validation of the map.
+ *
  * @author Ksenia Popova, Dmitry Kryukov
  * @see Main
  * @see Continent
@@ -45,9 +46,10 @@ public class MapLoader {
     /**
      * Constructor of the class.
      * Loading and validation of the map.
+     *
      * @param numberOfPlayers number of players
-     * @param filePath path to the map
-     * @param mode boolean mode that can be used to start the program in special mode to test features
+     * @param filePath        path to the map
+     * @param mode            boolean mode that can be used to start the program in special mode to test features
      */
     public MapLoader(int numberOfPlayers, String filePath, boolean mode) {
         // If true - the program in test mode.
@@ -186,15 +188,21 @@ public class MapLoader {
             //System.out.println(str);
         }
 
-        // TODO Add here the validation checking
-        // Comment the line below to stop exiting every time
+        // Map Validation
         try {
+            // Validate that exist at least 1 Country per player
+            if (countries.size() < players.size()) {
+                throw new InvalidObjectException("Map should contain at least one Country per player");
+            }
+
+            // Validate empty continents
             for (Continent continent : continents) {
                 if (continent.getCountryList().size() == 0) {
                     throw new InvalidObjectException("Continent " + continent.getName() + " does not have Countries.");
                 }
             }
 
+            // Validate that graph is connected
             Queue<Country> toExplore = new LinkedList<>();
             Set<Country> seenCountries = new HashSet<>();
             toExplore.add(countries.get(0));
@@ -212,11 +220,11 @@ public class MapLoader {
         } catch (Exception e) {
             invalidMap = true;
             new WarningWindow("Map is not valid. \n " + e.getMessage() + "\n Please, use another one.");
-//            System.exit(1);
+            // Comment the line below to stop exiting every time
+            // System.exit(1);
         }
 
         // Create the instance of the game class and send it to Main
-//        Game game = new Game(RADIUS, countries, neighbours, players, continents);
         Game game = Game.getInstance();
         game.setRADIUS(RADIUS);
         game.setCountries(countries);
@@ -228,6 +236,7 @@ public class MapLoader {
 
     /**
      * File path getter.
+     *
      * @return filePath to the map
      */
     public String getFilePath() {
