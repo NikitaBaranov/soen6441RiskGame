@@ -15,6 +15,7 @@ import game.ui.view.RightStatusPanel;
 import game.ui.view.TopStatusPanel;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -152,9 +153,14 @@ public class Game implements IObservable {
      */
     @Override
     public void notifyObservers() {
-        for (IPanelObserver iPanelObserver : iPanelObservers) {
-            iPanelObserver.updateObserver(this);
+        Iterator<IPanelObserver> iPanelObserverIterator = iPanelObservers.iterator();
+        while (iPanelObserverIterator.hasNext()) {
+            iPanelObserverIterator.next().updateObserver(this);
         }
+
+//        for (IPanelObserver iPanelObserver : iPanelObservers) {
+//            iPanelObserver.updateObserver(this);
+//        }
     }
 
     /**
