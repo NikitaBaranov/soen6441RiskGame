@@ -152,7 +152,7 @@ public class Game implements IObservable {
      */
     @Override
     public void notifyObservers() {
-        IPanelObserver[] iPanelObserversArray = (IPanelObserver[]) iPanelObservers.toArray();
+        IPanelObserver[] iPanelObserversArray = iPanelObservers.toArray(new IPanelObserver[0]);
         for (int i = 0; i < iPanelObserversArray.length; i++) {
             iPanelObserversArray[i].updateObserver(this);
         }
