@@ -156,15 +156,6 @@ public class Game implements IObservable {
         for (int i = 0; i < iPanelObserversArray.length; i++) {
             iPanelObserversArray[i].updateObserver(this);
         }
-
-//        Iterator<IPanelObserver> iPanelObserverIterator = iPanelObservers.iterator();
-//        while (iPanelObserverIterator.hasNext()) {
-//            iPanelObserverIterator.next().updateObserver(this);
-//        }
-
-//        for (IPanelObserver iPanelObserver : iPanelObservers) {
-//            iPanelObserver.updateObserver(this);
-//        }
     }
 
     /**

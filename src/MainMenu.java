@@ -1,16 +1,16 @@
 import game.utils.MapLoader;
-import mapeditor.StartEditor;
+import mapeditor.Continent;
+import mapeditor.ILoadedMap;
+import mapeditor.IMapLoader;
+import mapeditor.Territory;
 import mapeditor.gui.CreateMapMenu;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
-import mapeditor.Continent;
-import mapeditor.ILoadedMap;
-import mapeditor.IMapLoader;
-import mapeditor.Territory;
 
 /**
  * This class contains the main menu of the game
@@ -209,7 +209,9 @@ public class MainMenu extends JFrame {
      * @return default.map default map file
      */
     private String filePath() {
-        JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+//        JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        String path = Thread.currentThread().getContextClassLoader().getResource("").getPath() + "maps";
+        JFileChooser fileChooser = new JFileChooser(new File(path));
         int returnValue = fileChooser.showOpenDialog(null);
 
         if (returnValue == JFileChooser.APPROVE_OPTION) {
@@ -217,6 +219,6 @@ public class MainMenu extends JFrame {
             return selectedFile.getAbsolutePath();
         }
         System.out.println("DEBUG: Using the default map!\n---------------------------------------\n");
-        return "default.map";
+        return path + "/default.map";
     }
 }
