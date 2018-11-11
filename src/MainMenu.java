@@ -6,6 +6,7 @@ import mapeditor.Territory;
 import mapeditor.gui.CreateMapMenu;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -212,6 +213,9 @@ public class MainMenu extends JFrame {
 //        JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
         String path = Thread.currentThread().getContextClassLoader().getResource("").getPath() + "maps";
         JFileChooser fileChooser = new JFileChooser(new File(path));
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("MAP FILES", "map", "maps");
+        fileChooser.setFileFilter(filter);
+
         int returnValue = fileChooser.showOpenDialog(null);
 
         if (returnValue == JFileChooser.APPROVE_OPTION) {
