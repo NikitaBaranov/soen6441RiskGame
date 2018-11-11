@@ -39,7 +39,6 @@ public class MapPanel extends JPanel implements IPanelObserver {
     public MapPanel(Dimension dimension, MapLoader loader) {
         try {
             image = ImageIO.read(new File(loader.getFilePath().replace(".map", ".bmp")));
-//            image = ImageIO.read(new File(loader.getFilePath().split(".map")[0] + ".bmp" ));
         }
         catch (IOException e) {
         }

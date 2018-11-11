@@ -3,7 +3,7 @@ package game.ui.view;
 import game.Game;
 import game.IObservable;
 import game.enums.CardsEnum;
-import game.enums.GamePhase;
+import game.enums.GamePhaseEnum;
 
 import javax.swing.*;
 import java.awt.*;
@@ -101,7 +101,7 @@ public class CardPanel extends JPanel implements IPanelObserver {
     @Override
     public void updateObserver(IObservable iObservable) {
         Game game = Game.getInstance();
-        if (game.getCurrentGamePhase() == GamePhase.REINFORCEMENT) {
+        if (game.getCurrentGamePhase() == GamePhaseEnum.REINFORCEMENT) {
             if (!enabled) {
                 setAllEnabled(true);
             }

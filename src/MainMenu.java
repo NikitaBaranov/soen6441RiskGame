@@ -210,7 +210,6 @@ public class MainMenu extends JFrame {
      * @return default.map default map file
      */
     private String filePath() {
-//        JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
         String path = Thread.currentThread().getContextClassLoader().getResource("").getPath() + "maps";
         JFileChooser fileChooser = new JFileChooser(new File(path));
         FileNameExtensionFilter filter = new FileNameExtensionFilter("MAP FILES", "map", "maps");

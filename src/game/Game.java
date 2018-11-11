@@ -2,12 +2,15 @@ package game;
 
 import game.enums.CardsEnum;
 import game.enums.DiceEnum;
-import game.enums.GamePhase;
+import game.enums.GamePhaseEnum;
+import game.enums.StrategyEnum;
 import game.model.Continent;
 import game.model.Country;
 import game.model.Dice;
 import game.model.Neighbour;
 import game.model.Player;
+import game.strategies.IStrategy;
+import game.strategies.StrategiesFactory;
 import game.ui.view.DicePanel;
 import game.ui.view.IPanelObserver;
 import game.ui.view.MapPanel;
@@ -23,11 +26,11 @@ import static game.enums.CardsEnum.ARTILLERY;
 import static game.enums.CardsEnum.CAVALRY;
 import static game.enums.CardsEnum.INFANTRY;
 import static game.enums.CardsEnum.WILDCARDS;
-import static game.enums.GamePhase.ATTACK;
-import static game.enums.GamePhase.FORTIFICATION;
-import static game.enums.GamePhase.GAME_OVER;
-import static game.enums.GamePhase.PLACING_ARMIES;
-import static game.enums.GamePhase.REINFORCEMENT;
+import static game.enums.GamePhaseEnum.ATTACK;
+import static game.enums.GamePhaseEnum.FORTIFICATION;
+import static game.enums.GamePhaseEnum.GAME_OVER;
+import static game.enums.GamePhaseEnum.PLACING_ARMIES;
+import static game.enums.GamePhaseEnum.REINFORCEMENT;
 
 /**
  * The game file which control all the game flow.
@@ -36,7 +39,7 @@ import static game.enums.GamePhase.REINFORCEMENT;
  * @author Dmitry kryukov, Ksenia Popova
  * @see DiceEnum
  * @see CardsEnum
- * @see GamePhase
+ * @see GamePhaseEnum
  * @see Continent
  * @see Country
  * @see Player
@@ -56,7 +59,8 @@ public class Game implements IObservable {
     private List<Country> countries;
     private List<Neighbour> neighbours;
     private List<Player> players;
-    private GamePhase currentGamePhase;
+    // Strategies
+    StrategiesFactory strategiesFactory = new StrategiesFactory();
     private Player currentPlayer;
     private String currentTurnPhraseText;
     private Country currentCountry;
@@ -81,6 +85,7 @@ public class Game implements IObservable {
 
     // Observers
     private List<IPanelObserver> iPanelObservers = new ArrayList<>();
+    private GamePhaseEnum currentGamePhase;
 
     /**
      * get instance method for Controller
@@ -244,6 +249,19 @@ public class Game implements IObservable {
                 break;
         }
         notifyObservers();
+
+        // Example of Strategy in use
+        IStrategy iStrategy = strategiesFactory.getStrategy(StrategyEnum.HUMAN_STRATEGY);
+        iStrategy.placeArmies();
+        iStrategy.reinforce();
+        iStrategy.attack();
+        iStrategy.fortify();
+
+        iStrategy = strategiesFactory.getStrategy(StrategyEnum.AI_AGGRESSIVE_STRATEGY);
+        iStrategy.placeArmies();
+        iStrategy.reinforce();
+        iStrategy.attack();
+        iStrategy.fortify();
     }
 
     /**
@@ -460,7 +478,7 @@ public class Game implements IObservable {
      *
      * @return currentGamePhase
      */
-    public GamePhase getCurrentGamePhase() {
+    public GamePhaseEnum getCurrentGamePhase() {
         return currentGamePhase;
     }
 

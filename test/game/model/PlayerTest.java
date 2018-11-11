@@ -1,17 +1,17 @@
 package game.model;
 
 import game.Game;
-import game.enums.GamePhase;
+import game.enums.GamePhaseEnum;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import java.awt.*;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import org.junit.runners.MethodSorters;
 
 import static game.enums.CardsEnum.ARTILLERY;
 import static game.enums.CardsEnum.CAVALRY;
@@ -73,7 +73,7 @@ public class PlayerTest {
     @Test
     public void reinforcementSelectedCorrectCountry() {
         game.initialise();
-        while (!(game.getCurrentGamePhase() == GamePhase.REINFORCEMENT && game.getCurrentPlayer() == player1)) {
+        while (!(game.getCurrentGamePhase() == GamePhaseEnum.REINFORCEMENT && game.getCurrentPlayer() == player1)) {
             game.nextTurn();
         }
         country1.setArmy(10);
@@ -89,7 +89,7 @@ public class PlayerTest {
     @Test
     public void reinforcementNotSelectedIncorrectCountry() {
         game.initialise();
-        while (!(game.getCurrentGamePhase() == GamePhase.REINFORCEMENT && game.getCurrentPlayer() == player1)) {
+        while (!(game.getCurrentGamePhase() == GamePhaseEnum.REINFORCEMENT && game.getCurrentPlayer() == player1)) {
             game.nextTurn();
         }
         game.makeAction(0, 0);
@@ -101,7 +101,7 @@ public class PlayerTest {
     public void attackSelectedCorrectCountry() {
         game.initialise();
         country3.setArmy(10);
-        while (game.getCurrentGamePhase() != GamePhase.ATTACK) {
+        while (game.getCurrentGamePhase() != GamePhaseEnum.ATTACK) {
             game.nextTurn();
         }
         game.makeAction(0, 0);
@@ -113,7 +113,7 @@ public class PlayerTest {
     public void attackNoSelectedPlayersCountries() {
         game.initialise();
         country3.setArmy(10);
-        while (game.getCurrentGamePhase() != GamePhase.ATTACK) {
+        while (game.getCurrentGamePhase() != GamePhaseEnum.ATTACK) {
             game.nextTurn();
         }
         game.makeAction(0, 0);
@@ -128,7 +128,7 @@ public class PlayerTest {
     @Test
     public void fortificationCorrectTransitionToNextPlayer() {
         game.initialise();
-        while (game.getCurrentGamePhase() != GamePhase.REINFORCEMENT) {
+        while (game.getCurrentGamePhase() != GamePhaseEnum.REINFORCEMENT) {
             game.nextTurn();
         }
         assertEquals(player2, game.getCurrentPlayer());
@@ -140,7 +140,7 @@ public class PlayerTest {
     @Test
     public void fortificationNoActionsWhenSelectedEnemiesCountry() {
         game.initialise();
-        while (game.getCurrentGamePhase() != GamePhase.REINFORCEMENT) {
+        while (game.getCurrentGamePhase() != GamePhaseEnum.REINFORCEMENT) {
             game.nextTurn();
         }
         game.makeAction(0, 0);

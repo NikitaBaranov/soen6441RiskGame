@@ -2,9 +2,10 @@ package game.enums;
 
 /**
  * Class for storing the phases that used in game.
+ *
  * @author Dmitry Kryukov
  */
-public enum  GamePhase {
+public enum GamePhaseEnum {
     PLACING_ARMIES(0, "Initial Army placing."),
     REINFORCEMENT(1, "Reinforce your positions."),
     ATTACK(2, "Attack your enemy."),
@@ -16,16 +17,18 @@ public enum  GamePhase {
 
     /**
      * Constructor of the class.
+     *
      * @param number of phase
-     * @param name of phase
+     * @param name   of phase
      */
-    GamePhase(int number, String name) {
+    GamePhaseEnum(int number, String name) {
         this.name = name;
         this.number = number;
     }
 
     /**
      * Getter for name. Return the name
+     *
      * @return name
      */
     public String getName() {
@@ -34,6 +37,7 @@ public enum  GamePhase {
 
     /**
      * setter for the name. Set the name
+     *
      * @param name name of phase
      */
     public void setName(String name) {

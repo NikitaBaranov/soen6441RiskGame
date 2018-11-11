@@ -2,7 +2,7 @@ package game.ui.view;
 
 import game.Game;
 import game.IObservable;
-import game.enums.GamePhase;
+import game.enums.GamePhaseEnum;
 
 import javax.swing.*;
 import java.awt.*;
@@ -121,7 +121,7 @@ public class AttackPanel extends JPanel implements IPanelObserver {
     @Override
     public void updateObserver(IObservable iObservable) {
         Game game = Game.getInstance();
-        if (game.getCurrentGamePhase() == GamePhase.ATTACK) {
+        if (game.getCurrentGamePhase() == GamePhaseEnum.ATTACK) {
             if (!game.isWinBattle()) {
                 this.setVisible(true);
                 if (game.getCountryFrom() != null && game.getCountryFrom().getArmy() > 1 && game.getCountryTo() != null) {
