@@ -3,6 +3,7 @@ package game.model;
 
 import game.Game;
 import game.enums.CardsEnum;
+import game.strategies.IStrategy;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -23,6 +24,7 @@ import static game.enums.CardsEnum.WILDCARDS;
  */
 public class Player {
     private String name;
+    IStrategy strategy;
 
     private Color color;
     private Map<CardsEnum, Integer> cardsEnumIntegerMap = new HashMap<>();
@@ -34,9 +36,10 @@ public class Player {
      * @param name  name of player
      * @param color color of player
      */
-    public Player(String name, Color color) {
+    public Player(String name, Color color, IStrategy strategy) {
         this.name = name;
         this.color = color;
+        this.strategy = strategy;
 
         cardsEnumIntegerMap.put(INFANTRY, 0);
         cardsEnumIntegerMap.put(CAVALRY, 0);

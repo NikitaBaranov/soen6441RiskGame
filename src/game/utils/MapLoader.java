@@ -1,10 +1,12 @@
 package game.utils;
 
 import game.Game;
+import game.enums.StrategyEnum;
 import game.model.Continent;
 import game.model.Country;
 import game.model.Neighbour;
 import game.model.Player;
+import game.strategies.StrategiesFactory;
 import game.ui.Main;
 
 import java.awt.*;
@@ -43,6 +45,8 @@ public class MapLoader {
     public String mapPath;
     public boolean invalidMap;
 
+    StrategiesFactory strategiesFactory = new StrategiesFactory();
+
     /**
      * Constructor of the class.
      * Loading and validation of the map.
@@ -70,7 +74,7 @@ public class MapLoader {
 
         int[] countriesPerPlayer = new int[numberOfPlayers];
         for (int i = 0; i < numberOfPlayers; i++) {
-            players.add(new Player("Player " + (i + 1), playerColor[i]));
+            players.add(new Player("Player " + (i + 1), playerColor[i], strategiesFactory.getStrategy(StrategyEnum.HUMAN_STRATEGY)));
             countriesPerPlayer[i] = 0;
         }
 
