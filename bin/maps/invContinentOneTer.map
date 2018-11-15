@@ -1,9 +1,0 @@
-[Map]
-author=Dmitry
-
-[Continents]
-Europe=3
-
-
-[Territories]
-Usa,64,150,Europe

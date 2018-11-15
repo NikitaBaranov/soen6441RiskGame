@@ -23,6 +23,7 @@
 hs_err_pid*
 
 out/
+bin/
 # I don't now how else I can remove this bloody folder
 .idea/
 .idea
