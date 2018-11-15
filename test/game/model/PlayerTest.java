@@ -65,10 +65,10 @@ public class PlayerTest {
         neighbours.add(new Neighbour(countries.get(1), countries.get(2)));
         neighbours.add(new Neighbour(countries.get(2), countries.get(3)));
 
-        game.setCountries(countries);
-        game.setNeighbours(neighbours);
-        game.setPlayers(Arrays.asList(player1, player2));
-        game.setContinents(Collections.singletonList(continent));
+        game.getGameState().setCountries(countries);
+        game.getGameState().setNeighbours(neighbours);
+        game.getGameState().setPlayers(Arrays.asList(player1, player2));
+        game.getGameState().setContinents(Collections.singletonList(continent));
     }
 
     /**
@@ -77,7 +77,7 @@ public class PlayerTest {
     @Test
     public void reinforcementSelectedCorrectCountry() {
         game.initialise();
-        while (!(game.getCurrentGamePhase() == GamePhaseEnum.REINFORCEMENT && game.getCurrentPlayer() == player1)) {
+        while (!(game.getGameState().getCurrentGamePhase() == GamePhaseEnum.REINFORCEMENT && game.getGameState().getCurrentPlayer() == player1)) {
             game.nextTurn();
         }
         country1.setArmy(10);
@@ -93,7 +93,7 @@ public class PlayerTest {
     @Test
     public void reinforcementNotSelectedIncorrectCountry() {
         game.initialise();
-        while (!(game.getCurrentGamePhase() == GamePhaseEnum.REINFORCEMENT && game.getCurrentPlayer() == player1)) {
+        while (!(game.getGameState().getCurrentGamePhase() == GamePhaseEnum.REINFORCEMENT && game.getGameState().getCurrentPlayer() == player1)) {
             game.nextTurn();
         }
         game.makeAction(0, 0);
@@ -105,7 +105,7 @@ public class PlayerTest {
     public void attackSelectedCorrectCountry() {
         game.initialise();
         country3.setArmy(10);
-        while (game.getCurrentGamePhase() != GamePhaseEnum.ATTACK) {
+        while (game.getGameState().getCurrentGamePhase() != GamePhaseEnum.ATTACK) {
             game.nextTurn();
         }
         game.makeAction(0, 0);
@@ -117,7 +117,7 @@ public class PlayerTest {
     public void attackNoSelectedPlayersCountries() {
         game.initialise();
         country3.setArmy(10);
-        while (game.getCurrentGamePhase() != GamePhaseEnum.ATTACK) {
+        while (game.getGameState().getCurrentGamePhase() != GamePhaseEnum.ATTACK) {
             game.nextTurn();
         }
         game.makeAction(0, 0);
@@ -132,10 +132,10 @@ public class PlayerTest {
     @Test
     public void fortificationCorrectTransitionToNextPlayer() {
         game.initialise();
-        while (game.getCurrentGamePhase() != GamePhaseEnum.REINFORCEMENT) {
+        while (game.getGameState().getCurrentGamePhase() != GamePhaseEnum.REINFORCEMENT) {
             game.nextTurn();
         }
-        assertEquals(player2, game.getCurrentPlayer());
+        assertEquals(player2, game.getGameState().getCurrentPlayer());
     }
 
     /**
@@ -144,7 +144,7 @@ public class PlayerTest {
     @Test
     public void fortificationNoActionsWhenSelectedEnemiesCountry() {
         game.initialise();
-        while (game.getCurrentGamePhase() != GamePhaseEnum.REINFORCEMENT) {
+        while (game.getGameState().getCurrentGamePhase() != GamePhaseEnum.REINFORCEMENT) {
             game.nextTurn();
         }
         game.makeAction(0, 0);
@@ -158,7 +158,7 @@ public class PlayerTest {
     @Test
     public void exchangeThreeIdenticalCards() {
         player1.setArmies(0);
-        game.setArmiesToCardExchange(5);
+        game.getGameState().setArmiesToCardExchange(5);
         player1.getCardsEnumIntegerMap().put(INFANTRY, 1);
 
         player1.exchange(Collections.singletonList(INFANTRY));
@@ -172,7 +172,7 @@ public class PlayerTest {
     @Test
     public void exchangeThreeDifferentCards() {
         player1.setArmies(0);
-        game.setArmiesToCardExchange(5);
+        game.getGameState().setArmiesToCardExchange(5);
         player1.getCardsEnumIntegerMap().put(INFANTRY, 1);
         player1.getCardsEnumIntegerMap().put(CAVALRY, 1);
         player1.getCardsEnumIntegerMap().put(ARTILLERY, 1);

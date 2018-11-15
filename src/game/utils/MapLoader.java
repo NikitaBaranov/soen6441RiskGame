@@ -4,6 +4,7 @@ import game.Game;
 import game.enums.StrategyEnum;
 import game.model.Continent;
 import game.model.Country;
+import game.model.GameState;
 import game.model.Neighbour;
 import game.model.Player;
 import game.strategies.StrategiesFactory;
@@ -229,12 +230,18 @@ public class MapLoader {
         }
 
         // Create the instance of the game class and send it to Main
+        GameState gameState = new GameState();
+//        game.getGameState().setCountries(countries);
+//        game.getGameState().setNeighbours(neighbours);
+//        game.getGameState().setPlayers(players);
+//        game.getGameState().setContinents(continents);
+        gameState.setCountries(countries);
+        gameState.setNeighbours(neighbours);
+        gameState.setPlayers(players);
+        gameState.setContinents(continents);
         Game game = Game.getInstance();
-        game.setRADIUS(RADIUS);
-        game.setCountries(countries);
-        game.setNeighbours(neighbours);
-        game.setPlayers(players);
-        game.setContinents(continents);
+        game.setGameState(gameState);
+
         new Main(game, this);
     }
 

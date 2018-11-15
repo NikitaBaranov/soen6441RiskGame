@@ -111,7 +111,7 @@ public class AttackPanel extends JPanel implements IPanelObserver {
         attackAllInButton.setEnabled(false);
         this.setVisible(false);
 
-        Game.getInstance().attachObserver(this);
+        Game.getInstance().getGameState().attachObserver(this);
     }
 
     /**
@@ -121,19 +121,19 @@ public class AttackPanel extends JPanel implements IPanelObserver {
     @Override
     public void updateObserver(IObservable iObservable) {
         Game game = Game.getInstance();
-        if (game.getCurrentGamePhase() == GamePhaseEnum.ATTACK) {
-            if (!game.isWinBattle()) {
+        if (game.getGameState().getCurrentGamePhase() == GamePhaseEnum.ATTACK) {
+            if (!game.getGameState().isWinBattle()) {
                 this.setVisible(true);
-                if (game.getCountryFrom() != null && game.getCountryFrom().getArmy() > 1 && game.getCountryTo() != null) {
+                if (game.getGameState().getCountryFrom() != null && game.getGameState().getCountryFrom().getArmy() > 1 && game.getGameState().getCountryTo() != null) {
                     red1.setSelected(true);
                     white1.setSelected(true);
 
-                    red1.setEnabled(game.getCountryFrom().getArmy() >= 2);
-                    red2.setEnabled(game.getCountryFrom().getArmy() >= 3);
-                    red3.setEnabled(game.getCountryFrom().getArmy() >= 4);
+                    red1.setEnabled(game.getGameState().getCountryFrom().getArmy() >= 2);
+                    red2.setEnabled(game.getGameState().getCountryFrom().getArmy() >= 3);
+                    red3.setEnabled(game.getGameState().getCountryFrom().getArmy() >= 4);
 
-                    white1.setEnabled(game.getCountryTo().getArmy() >= 1);
-                    white2.setEnabled(game.getCountryTo().getArmy() >= 2);
+                    white1.setEnabled(game.getGameState().getCountryTo().getArmy() >= 1);
+                    white2.setEnabled(game.getGameState().getCountryTo().getArmy() >= 2);
 
                     attackButton.setEnabled(true);
                     attackAllInButton.setEnabled(true);
@@ -161,7 +161,7 @@ public class AttackPanel extends JPanel implements IPanelObserver {
                 while (redEnumeration.hasMoreElements()) {
                     JRadioButton jRadioButton = (JRadioButton) redEnumeration.nextElement();
                     if (jRadioButton.isSelected()) {
-                        game.setNumberOfRedDicesSelected(Integer.parseInt(jRadioButton.getText()));
+                        game.getGameState().setNumberOfRedDicesSelected(Integer.parseInt(jRadioButton.getText()));
                     }
                 }
 
@@ -169,7 +169,7 @@ public class AttackPanel extends JPanel implements IPanelObserver {
                 while (whiteEnumeration.hasMoreElements()) {
                     JRadioButton jRadioButton = (JRadioButton) whiteEnumeration.nextElement();
                     if (jRadioButton.isSelected()) {
-                        game.setNumberOfWhiteDicesSelected(Integer.parseInt(jRadioButton.getText()));
+                        game.getGameState().setNumberOfWhiteDicesSelected(Integer.parseInt(jRadioButton.getText()));
                     }
                 }
                 game.attack();
@@ -185,8 +185,8 @@ public class AttackPanel extends JPanel implements IPanelObserver {
             public void actionPerformed(ActionEvent e) {
                 Game game = Game.getInstance();
 
-                game.setNumberOfRedDicesSelected(Math.max(0, Math.min(game.getCountryFrom().getArmy() - 1, 3)));
-                game.setNumberOfWhiteDicesSelected(Math.max(0, Math.min(game.getCountryTo().getArmy(), 2)));
+                game.getGameState().setNumberOfRedDicesSelected(Math.max(0, Math.min(game.getGameState().getCountryFrom().getArmy() - 1, 3)));
+                game.getGameState().setNumberOfWhiteDicesSelected(Math.max(0, Math.min(game.getGameState().getCountryTo().getArmy(), 2)));
 
                 game.attack();
             }

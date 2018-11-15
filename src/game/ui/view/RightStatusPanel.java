@@ -77,7 +77,7 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
         this.add(invisibleLabel);
         invisibleLabel.setVisible(false);
 
-        Game.getInstance().attachObserver(this);
+        Game.getInstance().getGameState().attachObserver(this);
     }
 
     /**
@@ -89,7 +89,7 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
     public void updateObserver(IObservable iObservable) {
         Game game = Game.getInstance();
 
-        nextTurnButton.setEnabled(game.isNextTurnButton());
+        nextTurnButton.setEnabled(game.getGameState().isNextTurnButton());
 
         createWoldDominationPanel(worldDomination);
 
@@ -115,11 +115,11 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
     private void createWoldDominationPanel(JPanel jPanel) {
         Game game = Game.getInstance();
         jPanel.removeAll();
-        jPanel.setLayout(new GridLayout(game.getPlayers().size() + 1, 4));
+        jPanel.setLayout(new GridLayout(game.getGameState().getPlayers().size() + 1, 4));
 
         Map<Player, Integer> playerNumberOfCountriesMap = new HashMap<>();
         Map<Player, Integer> playerNumberOfArmiesMap = new HashMap<>();
-        for (Country country : game.getCountries()) {
+        for (Country country : game.getGameState().getCountries()) {
             if (playerNumberOfCountriesMap.containsKey(country.getPlayer())) {
                 playerNumberOfCountriesMap.put(country.getPlayer(), playerNumberOfCountriesMap.get(country.getPlayer()) + 1);
                 playerNumberOfArmiesMap.put(country.getPlayer(), playerNumberOfArmiesMap.get(country.getPlayer()) + country.getArmy());
@@ -134,16 +134,16 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
         jPanel.add(new JLabel("Armies #"));
         jPanel.add(new JLabel("Continents"));
 
-        for (Player player : game.getPlayers()) {
+        for (Player player : game.getGameState().getPlayers()) {
             jPanel.add(new JLabel(player.getName()));
             if (playerNumberOfCountriesMap.containsKey(player)) {
-                jPanel.add(new JLabel(Integer.toString((int) (((float) playerNumberOfCountriesMap.get(player) / game.getCountries().size()) * 100))));
+                jPanel.add(new JLabel(Integer.toString((int) (((float) playerNumberOfCountriesMap.get(player) / game.getGameState().getCountries().size()) * 100))));
                 jPanel.add(new JLabel(Integer.toString(playerNumberOfArmiesMap.get(player))));
             } else {
                 jPanel.add(new JLabel("0"));
                 jPanel.add(new JLabel("0"));
             }
-            List<String> playerContinents = game.getContinents().stream().filter(c -> c.isOwnByPlayer(player)).map(Continent::getName).collect(Collectors.toList());
+            List<String> playerContinents = game.getGameState().getContinents().stream().filter(c -> c.isOwnByPlayer(player)).map(Continent::getName).collect(Collectors.toList());
             jPanel.add(new JLabel(String.join(", ", playerContinents)));
         }
     }

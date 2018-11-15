@@ -45,7 +45,7 @@ public class MapPanel extends JPanel implements IPanelObserver {
         this.setPreferredSize(dimension);
         addMouseListener(getMouseAdapter());
 
-        Game.getInstance().attachObserver(this);
+        Game.getInstance().getGameState().attachObserver(this);
     }
 
     /**
@@ -67,8 +67,8 @@ public class MapPanel extends JPanel implements IPanelObserver {
     @Override
     public void updateObserver(IObservable iObservable) {
         Game game = Game.getInstance();
-        countries = game.getCountries();
-        neighbours = game.getNeighbours();
+        countries = game.getGameState().getCountries();
+        neighbours = game.getGameState().getNeighbours();
         this.repaint();
     }
 

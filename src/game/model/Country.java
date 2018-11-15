@@ -178,11 +178,11 @@ public class Country {
             isHighlighted = true;
             for (Country country : neighbours) {
                 if (enemies) {
-                    if (country.getPlayer() != game.getCurrentPlayer()) {
+                    if (country.getPlayer() != game.getGameState().getCurrentPlayer()) {
                         country.highlight(enemies, depth == -1 ? -1 : depth - 1);
                     }
                 } else {
-                    if (country.getPlayer() == game.getCurrentPlayer()) {
+                    if (country.getPlayer() == game.getGameState().getCurrentPlayer()) {
                         country.highlight(enemies, depth == -1 ? -1 : depth - 1);
                     }
                 }

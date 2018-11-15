@@ -54,9 +54,9 @@ public class Player {
     public void reinforcement() {
         Game game = Game.getInstance();
         if (armies > 0) {
-            game.getCurrentCountry().setArmy(game.getCurrentCountry().getArmy() + 1);
+            game.getGameState().getCurrentCountry().setArmy(game.getGameState().getCurrentCountry().getArmy() + 1);
             armies--;
-            game.setCurrentTurnPhraseText("Armies to place " + armies);
+            game.getGameState().setCurrentTurnPhraseText("Armies to place " + armies);
         } else {
             game.unHighlightCountries();
         }
@@ -68,50 +68,50 @@ public class Player {
     public void beforeAndAfterAttack() {
         Game game = Game.getInstance();
 
-        if (game.isWinBattle()) {
+        if (game.getGameState().isWinBattle()) {
             //TODO: If at the end of your attacking turn you've conquered at least one territory, then you have earned a Risk card. You cannot earn more than one Risk card for this.
             //TODO: If you manage to wipe out an opponent by destroying his or her last army, you gain possession of all the Risk cards he or she may have had in their hands.
 
-            if (game.getMinArmiesToMoveAfterWin() > 0) {
-                if (game.getCurrentCountry() == game.getCountryTo()) {
-                    game.getCountryTo().setArmy(game.getCountryTo().getArmy() + 1);
-                    game.getCountryFrom().setArmy(game.getCountryFrom().getArmy() - 1);
-                    game.setMinArmiesToMoveAfterWin(game.getMinArmiesToMoveAfterWin() - 1);
+            if (game.getGameState().getMinArmiesToMoveAfterWin() > 0) {
+                if (game.getGameState().getCurrentCountry() == game.getGameState().getCountryTo()) {
+                    game.getGameState().getCountryTo().setArmy(game.getGameState().getCountryTo().getArmy() + 1);
+                    game.getGameState().getCountryFrom().setArmy(game.getGameState().getCountryFrom().getArmy() - 1);
+                    game.getGameState().setMinArmiesToMoveAfterWin(game.getGameState().getMinArmiesToMoveAfterWin() - 1);
                 }
             } else {
-                if (game.getCurrentCountry() == game.getCountryTo() && game.getCountryFrom().getArmy() > 1) {
-                    game.getCountryTo().setArmy(game.getCountryTo().getArmy() + 1);
-                    game.getCountryFrom().setArmy(game.getCountryFrom().getArmy() - 1);
-                    game.setMinArmiesToMoveAfterWin(game.getMinArmiesToMoveAfterWin() - 1);
+                if (game.getGameState().getCurrentCountry() == game.getGameState().getCountryTo() && game.getGameState().getCountryFrom().getArmy() > 1) {
+                    game.getGameState().getCountryTo().setArmy(game.getGameState().getCountryTo().getArmy() + 1);
+                    game.getGameState().getCountryFrom().setArmy(game.getGameState().getCountryFrom().getArmy() - 1);
+                    game.getGameState().setMinArmiesToMoveAfterWin(game.getGameState().getMinArmiesToMoveAfterWin() - 1);
                 } else {
                     game.resetToAndFrom();
-                    Dice.resetDice(game.getRedDice(), game.getWhiteDice());
-                    game.setWinBattle(false);
+                    Dice.resetDice(game.getGameState().getRedDice(), game.getGameState().getWhiteDice());
+                    game.getGameState().setWinBattle(false);
                     if (!game.isMoreAttacks()) {
                         game.nextTurn();
                     }
                 }
             }
         } else {
-            if (game.getCurrentCountry() != null) {
-                if (game.getCurrentCountry().getPlayer() == this) {
-                    if (game.getCountryFrom() == null && game.getCurrentCountry().getArmy() > 1) {
+            if (game.getGameState().getCurrentCountry() != null) {
+                if (game.getGameState().getCurrentCountry().getPlayer() == this) {
+                    if (game.getGameState().getCountryFrom() == null && game.getGameState().getCurrentCountry().getArmy() > 1) {
                         game.unHighlightCountries();
-                        game.setCountryFrom(game.getCurrentCountry());
-                        game.setCurrentTurnPhraseText("Select a country to Attack.");
-                        game.getCurrentCountry().select(true, 2);
+                        game.getGameState().setCountryFrom(game.getGameState().getCurrentCountry());
+                        game.getGameState().setCurrentTurnPhraseText("Select a country to Attack.");
+                        game.getGameState().getCurrentCountry().select(true, 2);
                     }
-                } else if (game.getCountryTo() == null && game.getCurrentCountry().isHighlighted()) {
-                    game.getCountryFrom().unSelect(true);
-                    game.getCountryFrom().setSelected(true);
-                    game.setCountryTo(game.getCurrentCountry());
-                    game.getCountryTo().setHighlighted(true);
-                    game.setCurrentTurnPhraseText("Use Attack window to Attack.");
+                } else if (game.getGameState().getCountryTo() == null && game.getGameState().getCurrentCountry().isHighlighted()) {
+                    game.getGameState().getCountryFrom().unSelect(true);
+                    game.getGameState().getCountryFrom().setSelected(true);
+                    game.getGameState().setCountryTo(game.getGameState().getCurrentCountry());
+                    game.getGameState().getCountryTo().setHighlighted(true);
+                    game.getGameState().setCurrentTurnPhraseText("Use Attack window to Attack.");
                 }
             } else {
-                game.setCurrentTurnPhraseText("Select a Country to attack from.");
+                game.getGameState().setCurrentTurnPhraseText("Select a Country to attack from.");
                 game.resetToAndFrom();
-                Dice.resetDice(game.getRedDice(), game.getWhiteDice());
+                Dice.resetDice(game.getGameState().getRedDice(), game.getGameState().getWhiteDice());
             }
         }
     }
@@ -121,23 +121,23 @@ public class Player {
      */
     public void attack() {
         Game game = Game.getInstance();
-        if (game.getCountryFrom() != null && game.getCountryFrom().getArmy() >= 2 && game.getCountryTo() != null) {
+        if (game.getGameState().getCountryFrom() != null && game.getGameState().getCountryFrom().getArmy() >= 2 && game.getGameState().getCountryTo() != null) {
 
-            Dice.rollDice(game.getNumberOfRedDicesSelected(), game.getNumberOfWhiteDicesSelected(), game.getRedDice(), game.getWhiteDice());
+            Dice.rollDice(game.getGameState().getNumberOfRedDicesSelected(), game.getGameState().getNumberOfWhiteDicesSelected(), game.getGameState().getRedDice(), game.getGameState().getWhiteDice());
 
-            for (int i = 0; i < Math.min(game.getNumberOfRedDicesSelected(), game.getNumberOfWhiteDicesSelected()); i++) {
-                if (game.getRedDice()[i].getNumber() > game.getWhiteDice()[i].getNumber()) {
-                    game.getCountryTo().setArmy(game.getCountryTo().getArmy() - 1);
+            for (int i = 0; i < Math.min(game.getGameState().getNumberOfRedDicesSelected(), game.getGameState().getNumberOfWhiteDicesSelected()); i++) {
+                if (game.getGameState().getRedDice()[i].getNumber() > game.getGameState().getWhiteDice()[i].getNumber()) {
+                    game.getGameState().getCountryTo().setArmy(game.getGameState().getCountryTo().getArmy() - 1);
                 } else {
-                    game.getCountryFrom().setArmy(game.getCountryFrom().getArmy() - 1);
+                    game.getGameState().getCountryFrom().setArmy(game.getGameState().getCountryFrom().getArmy() - 1);
                 }
             }
 
-            if (game.getCountryTo().getArmy() == 0) {
-                game.setWinBattle(true);
-                game.getCountryTo().setPlayer(this);
-                game.setMinArmiesToMoveAfterWin(game.getNumberOfRedDicesSelected());
-                game.setGiveACard(true);
+            if (game.getGameState().getCountryTo().getArmy() == 0) {
+                game.getGameState().setWinBattle(true);
+                game.getGameState().getCountryTo().setPlayer(this);
+                game.getGameState().setMinArmiesToMoveAfterWin(game.getGameState().getNumberOfRedDicesSelected());
+                game.getGameState().setGiveACard(true);
                 if (game.isGameWonBy(this)) {
                     game.gameOver();
                 }
@@ -150,21 +150,21 @@ public class Player {
      */
     public void fortification() {
         Game game = Game.getInstance();
-        if (game.getCountryFrom() == null) {
+        if (game.getGameState().getCountryFrom() == null) {
             game.unHighlightCountries();
-            game.setCountryFrom(game.getCurrentCountry());
-            game.setCurrentTurnPhraseText("Select a country to move an army.");
-            game.getCurrentCountry().select(false, -1);
-        } else if (game.getCountryTo() == null && game.getCurrentCountry().isHighlighted()) {
-            game.getCountryFrom().unSelect(false);
-            game.getCountryFrom().setSelected(true);
-            game.setCountryTo(game.getCurrentCountry());
-            game.getCountryTo().setHighlighted(true);
-            game.setCurrentTurnPhraseText("Click on country to move one army.");
+            game.getGameState().setCountryFrom(game.getGameState().getCurrentCountry());
+            game.getGameState().setCurrentTurnPhraseText("Select a country to move an army.");
+            game.getGameState().getCurrentCountry().select(false, -1);
+        } else if (game.getGameState().getCountryTo() == null && game.getGameState().getCurrentCountry().isHighlighted()) {
+            game.getGameState().getCountryFrom().unSelect(false);
+            game.getGameState().getCountryFrom().setSelected(true);
+            game.getGameState().setCountryTo(game.getGameState().getCurrentCountry());
+            game.getGameState().getCountryTo().setHighlighted(true);
+            game.getGameState().setCurrentTurnPhraseText("Click on country to move one army.");
         }
-        if (game.getCountryFrom() != null && game.getCountryFrom().getArmy() > 1 && game.getCountryTo() != null) {
-            game.getCountryFrom().setArmy(game.getCountryFrom().getArmy() - 1);
-            game.getCountryTo().setArmy(game.getCountryTo().getArmy() + 1);
+        if (game.getGameState().getCountryFrom() != null && game.getGameState().getCountryFrom().getArmy() > 1 && game.getGameState().getCountryTo() != null) {
+            game.getGameState().getCountryFrom().setArmy(game.getGameState().getCountryFrom().getArmy() - 1);
+            game.getGameState().getCountryTo().setArmy(game.getGameState().getCountryTo().getArmy() + 1);
         }
     }
 
@@ -185,9 +185,9 @@ public class Player {
             cardsEnumIntegerMap.put(cardsEnumList.get(0), cardsEnumIntegerMap.get(cardsEnumList.get(0)) - 3);
             phrase = cardsEnumList.get(0).getName() + " card";
         }
-        armies = armies + game.getArmiesToCardExchange();
-        game.setArmiesToCardExchange(game.getArmiesToCardExchange() + Game.ARMIES_TO_EXCHANGE_INCREASE);
-        game.setCurrentTurnPhraseText("Exchanged " + phrase + " for " + Game.ARMIES_TO_EXCHANGE_INCREASE + " armies. Armies to place " + armies);
+        armies = armies + game.getGameState().getArmiesToCardExchange();
+        game.getGameState().setArmiesToCardExchange(game.getGameState().getArmiesToCardExchange() + game.getGameState().getARMIES_TO_EXCHANGE_INCREASE());
+        game.getGameState().setCurrentTurnPhraseText("Exchanged " + phrase + " for " + game.getGameState().getARMIES_TO_EXCHANGE_INCREASE() + " armies. Armies to place " + armies);
     }
 
     /**

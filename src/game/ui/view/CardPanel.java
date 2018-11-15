@@ -14,7 +14,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static game.enums.CardsEnum.*;
+import static game.enums.CardsEnum.ARTILLERY;
+import static game.enums.CardsEnum.CAVALRY;
+import static game.enums.CardsEnum.INFANTRY;
+import static game.enums.CardsEnum.WILDCARDS;
 
 /**
  * The cards panel. Display the cards functionality
@@ -87,7 +90,7 @@ public class CardPanel extends JPanel implements IPanelObserver {
         exchangeButton.setMargin(new Insets(1, 0, 1, 0));
         this.add(exchangeButton, gbc);
 
-        Game.getInstance().attachObserver(this);
+        Game.getInstance().getGameState().attachObserver(this);
     }
 
     /**
@@ -98,14 +101,14 @@ public class CardPanel extends JPanel implements IPanelObserver {
     @Override
     public void updateObserver(IObservable iObservable) {
         Game game = Game.getInstance();
-        if (game.getCurrentGamePhase() == GamePhaseEnum.REINFORCEMENT) {
+        if (game.getGameState().getCurrentGamePhase() == GamePhaseEnum.REINFORCEMENT) {
             if (!enabled) {
                 setAllEnabled(true);
             }
-            playerInfantry.setText(Integer.toString(game.getCurrentPlayer().getCardsEnumIntegerMap().get(INFANTRY)));
-            playerCavalry.setText(Integer.toString(game.getCurrentPlayer().getCardsEnumIntegerMap().get(CAVALRY)));
-            playerArtillery.setText(Integer.toString(game.getCurrentPlayer().getCardsEnumIntegerMap().get(ARTILLERY)));
-            playerWildcards.setText(Integer.toString(game.getCurrentPlayer().getCardsEnumIntegerMap().get(WILDCARDS)));
+            playerInfantry.setText(Integer.toString(game.getGameState().getCurrentPlayer().getCardsEnumIntegerMap().get(INFANTRY)));
+            playerCavalry.setText(Integer.toString(game.getGameState().getCurrentPlayer().getCardsEnumIntegerMap().get(CAVALRY)));
+            playerArtillery.setText(Integer.toString(game.getGameState().getCurrentPlayer().getCardsEnumIntegerMap().get(ARTILLERY)));
+            playerWildcards.setText(Integer.toString(game.getGameState().getCurrentPlayer().getCardsEnumIntegerMap().get(WILDCARDS)));
 //            playerBonus.setText(Integer.toString(game.getCurrentPlayer().getCardsEnumIntegerMap().get(BONUS)));
 
         } else {
@@ -123,14 +126,14 @@ public class CardPanel extends JPanel implements IPanelObserver {
                 List<CardsEnum> selectedCards = new ArrayList<>();
                 for (JCheckBox jCheckBox : jCheckBoxList) {
                     if (jCheckBox.isSelected() &&
-                            Game.getInstance().getCurrentPlayer().getCardsEnumIntegerMap().get(stringCardsEnumMap.get(jCheckBox.getText())) >= 1) {
+                            Game.getInstance().getGameState().getCurrentPlayer().getCardsEnumIntegerMap().get(stringCardsEnumMap.get(jCheckBox.getText())) >= 1) {
                         selectedCards.add(stringCardsEnumMap.get(jCheckBox.getText()));
                     }
                 }
                 if (selectedCards.size() == 3) {
                     Game.getInstance().exchange(selectedCards);
                 } else if (selectedCards.size() == 1 &&
-                        Game.getInstance().getCurrentPlayer().getCardsEnumIntegerMap().get(stringCardsEnumMap.get(selectedCards.get(0).getName())) >= 3) {
+                        Game.getInstance().getGameState().getCurrentPlayer().getCardsEnumIntegerMap().get(stringCardsEnumMap.get(selectedCards.get(0).getName())) >= 3) {
                     Game.getInstance().exchange(selectedCards);
                 }
             }

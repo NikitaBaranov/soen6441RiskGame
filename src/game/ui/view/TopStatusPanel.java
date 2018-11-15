@@ -45,7 +45,7 @@ public class TopStatusPanel extends JPanel implements IPanelObserver {
         this.add(new JLabel("Phase: "));
         this.add(gamePhase);
 
-        Game.getInstance().attachObserver(this);
+        Game.getInstance().getGameState().attachObserver(this);
     }
 
     /**
@@ -55,8 +55,8 @@ public class TopStatusPanel extends JPanel implements IPanelObserver {
     @Override
     public void updateObserver(IObservable iObservable) {
         Game game = Game.getInstance();
-        playerName.setText(game.getCurrentPlayer() != null ? game.getCurrentPlayer().getName() : "");
-        gamePhase.setText(game.getCurrentGamePhase() != null ? game.getCurrentGamePhase().getName() : "");
-        turnPhrase.setText(game.getCurrentTurnPhraseText() != null ? game.getCurrentTurnPhraseText() : "");
+        playerName.setText(game.getGameState().getCurrentPlayer() != null ? game.getGameState().getCurrentPlayer().getName() : "");
+        gamePhase.setText(game.getGameState().getCurrentGamePhase() != null ? game.getGameState().getCurrentGamePhase().getName() : "");
+        turnPhrase.setText(game.getGameState().getCurrentTurnPhraseText() != null ? game.getGameState().getCurrentTurnPhraseText() : "");
     }
 }
