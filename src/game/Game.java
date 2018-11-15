@@ -4,33 +4,18 @@ import game.enums.CardsEnum;
 import game.enums.DiceEnum;
 import game.enums.GamePhaseEnum;
 import game.enums.StrategyEnum;
-import game.model.Continent;
-import game.model.Country;
-import game.model.Dice;
-import game.model.Neighbour;
-import game.model.Player;
+import game.model.*;
 import game.strategies.IStrategy;
 import game.strategies.StrategiesFactory;
-import game.ui.view.DicePanel;
-import game.ui.view.IPanelObserver;
-import game.ui.view.MapPanel;
-import game.ui.view.RightStatusPanel;
-import game.ui.view.TopStatusPanel;
+import game.ui.view.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import static game.enums.CardsEnum.ARTILLERY;
-import static game.enums.CardsEnum.CAVALRY;
-import static game.enums.CardsEnum.INFANTRY;
-import static game.enums.CardsEnum.WILDCARDS;
-import static game.enums.GamePhaseEnum.ATTACK;
-import static game.enums.GamePhaseEnum.FORTIFICATION;
-import static game.enums.GamePhaseEnum.GAME_OVER;
-import static game.enums.GamePhaseEnum.PLACING_ARMIES;
-import static game.enums.GamePhaseEnum.REINFORCEMENT;
+import static game.enums.CardsEnum.*;
+import static game.enums.GamePhaseEnum.*;
 
 /**
  * The game file which control all the game flow.

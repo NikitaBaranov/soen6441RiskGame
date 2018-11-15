@@ -1,0 +1,11 @@
+[Map]
+author=test
+
+[Continents]
+usa=40
+canada=40
+
+[Territories]
+usa1,900,900,usa,usa2
+usa3,900,900,canada,usa2
+usa2,900,900,usa,usa1,usa3

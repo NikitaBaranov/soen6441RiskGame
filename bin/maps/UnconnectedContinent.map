@@ -1,0 +1,16 @@
+[Map]
+author=Joey Paquet
+image=no
+wrap=no
+scroll=no
+warn=no
+
+[Continents]
+A=3
+B=6
+
+[Territories]
+T1,100,100,A,T2
+T2,200,200,B,T1,T3
+T3,333,333,B,T2,T4
+T4,444,444,A,T3
