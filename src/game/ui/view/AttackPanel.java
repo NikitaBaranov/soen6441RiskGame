@@ -1,8 +1,8 @@
 package game.ui.view;
 
 import game.Game;
-import game.enums.GamePhaseEnum;
 import game.model.IObservable;
+import game.strategies.GamePhaseStrategies.GamePhaseEnum;
 
 import javax.swing.*;
 import java.awt.*;

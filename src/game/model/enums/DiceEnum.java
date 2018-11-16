@@ -1,4 +1,4 @@
-package game.enums;
+package game.model.enums;
 
 /**
  * Class for storing the dices.
@@ -17,6 +17,7 @@ public enum DiceEnum {
 
     private int number;
     private String fileSuffix;
+
     /**
      * Constructor of the class
      *

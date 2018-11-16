@@ -1,6 +1,6 @@
-package game.strategies;
+package game.strategies.PlayerStrategies;
 
-public class AiAggressiveStrategy extends AbstractStrategy {
+public class AiAggressivePlayerStrategy extends AbstractPlayerStrategy {
 
     @Override
     public void placeArmies() {

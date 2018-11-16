@@ -1,10 +1,10 @@
 package game;
 
-import game.enums.StrategyEnum;
 import game.model.Continent;
 import game.model.Country;
 import game.model.Player;
-import game.strategies.StrategiesFactory;
+import game.strategies.PlayerStrategies.PlayerStrategyFactory;
+import game.strategies.PlayerStrategies.StrategyEnum;
 import org.junit.Test;
 
 import java.awt.*;
@@ -19,16 +19,16 @@ import static org.junit.Assert.assertEquals;
  * @see Game
  */
 public class GameTest {
-    StrategiesFactory strategiesFactory = new StrategiesFactory();
+    PlayerStrategyFactory playerStrategyFactory = new PlayerStrategyFactory();
 
     /**
      * Test for calculation of number of reinforcment armies
      */
     @Test
     public void reinforcementCount() {
-        Player player1 = new Player("test Player 1", Color.BLACK, strategiesFactory.getStrategy(StrategyEnum.HUMAN_STRATEGY));
+        Player player1 = new Player("test Player 1", Color.BLACK, playerStrategyFactory.getStrategy(StrategyEnum.HUMAN_STRATEGY));
         player1.setArmies(0);
-        Player player2 = new Player("test Player 2", Color.GREEN, strategiesFactory.getStrategy(StrategyEnum.HUMAN_STRATEGY));
+        Player player2 = new Player("test Player 2", Color.GREEN, playerStrategyFactory.getStrategy(StrategyEnum.HUMAN_STRATEGY));
         player2.setArmies(0);
         Continent continent = new Continent("Continent", 1);
         List<Country> countryList = new ArrayList<>();

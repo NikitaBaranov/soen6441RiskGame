@@ -1,10 +1,8 @@
-package game.strategies;
+package game.strategies.PlayerStrategies;
 
-import game.enums.StrategyEnum;
+public class PlayerStrategyFactory {
 
-public class StrategiesFactory {
-
-    public IStrategy getStrategy(StrategyEnum strategyEnum) {
+    public IPlayerStrategy getStrategy(StrategyEnum strategyEnum) {
         try {
             return strategyEnum.getaClass().newInstance();
         } catch (InstantiationException | IllegalAccessException e) {

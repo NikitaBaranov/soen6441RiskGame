@@ -1,4 +1,4 @@
-package game.enums;
+package game.strategies.GamePhaseStrategies;
 
 /**
  * Class for storing the phases that used in game.

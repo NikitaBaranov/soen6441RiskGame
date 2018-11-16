@@ -1,9 +1,9 @@
 package game.ui.view;
 
 import game.Game;
-import game.enums.CardsEnum;
-import game.enums.GamePhaseEnum;
 import game.model.IObservable;
+import game.model.enums.CardsEnum;
+import game.strategies.GamePhaseStrategies.GamePhaseEnum;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,10 +14,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static game.enums.CardsEnum.ARTILLERY;
-import static game.enums.CardsEnum.CAVALRY;
-import static game.enums.CardsEnum.INFANTRY;
-import static game.enums.CardsEnum.WILDCARDS;
+import static game.model.enums.CardsEnum.ARTILLERY;
+import static game.model.enums.CardsEnum.CAVALRY;
+import static game.model.enums.CardsEnum.INFANTRY;
+import static game.model.enums.CardsEnum.WILDCARDS;
 
 /**
  * The cards panel. Display the cards functionality

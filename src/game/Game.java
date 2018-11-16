@@ -1,14 +1,14 @@
 package game;
 
-import game.enums.CardsEnum;
-import game.enums.DiceEnum;
-import game.enums.GamePhaseEnum;
 import game.model.Continent;
 import game.model.Country;
-import game.model.Dice;
 import game.model.GameState;
 import game.model.Neighbour;
 import game.model.Player;
+import game.model.enums.CardsEnum;
+import game.model.enums.DiceEnum;
+import game.strategies.GamePhaseStrategies.GamePhaseEnum;
+import game.strategies.GamePhaseStrategies.GamePhaseStrategyFactory;
 import game.ui.view.DicePanel;
 import game.ui.view.MapPanel;
 import game.ui.view.RightStatusPanel;
@@ -18,15 +18,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import static game.enums.CardsEnum.ARTILLERY;
-import static game.enums.CardsEnum.CAVALRY;
-import static game.enums.CardsEnum.INFANTRY;
-import static game.enums.CardsEnum.WILDCARDS;
-import static game.enums.GamePhaseEnum.ATTACK;
-import static game.enums.GamePhaseEnum.FORTIFICATION;
-import static game.enums.GamePhaseEnum.GAME_OVER;
-import static game.enums.GamePhaseEnum.PLACING_ARMIES;
-import static game.enums.GamePhaseEnum.REINFORCEMENT;
+import static game.model.enums.CardsEnum.ARTILLERY;
+import static game.model.enums.CardsEnum.CAVALRY;
+import static game.model.enums.CardsEnum.INFANTRY;
+import static game.model.enums.CardsEnum.WILDCARDS;
+import static game.strategies.GamePhaseStrategies.GamePhaseEnum.ATTACK;
+import static game.strategies.GamePhaseStrategies.GamePhaseEnum.FORTIFICATION;
+import static game.strategies.GamePhaseStrategies.GamePhaseEnum.GAME_OVER;
+import static game.strategies.GamePhaseStrategies.GamePhaseEnum.PLACING_ARMIES;
+import static game.strategies.GamePhaseStrategies.GamePhaseEnum.REINFORCEMENT;
 
 /**
  * The game file which control all the game flow.
@@ -86,26 +86,17 @@ public class Game {
      */
     public void initialise() {
         // initial setup.
-        gameState.setCurrentGamePhase(PLACING_ARMIES);
-        gameState.setCurrentPlayer(gameState.getPlayers().get(0));
-        gameState.setNextTurnButton(false);
-        Dice.resetDice(gameState.getRedDice(), gameState.getWhiteDice());
-        highlightPayerCountries();
-
-        gameState.notifyObservers();
+        gameState.setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(PLACING_ARMIES));
+        gameState.getGamePhaseStrategy().init(gameState);
     }
 
     /**
      * Next turn functionality
      */
     public void nextTurn() {
-        switch (gameState.getCurrentGamePhase()) {
-            case PLACING_ARMIES:
+        gameState.getGamePhaseStrategy().nextTurnButton(gameState);
 
-                gameState.setCurrentGamePhase(ATTACK);
-                getGameState().setCurrentTurnPhraseText("Select a Country to attack from.");
-                System.out.println("Next Turn Button Clicked. Next Player is " + gameState.getCurrentGamePhase());
-                break;
+        switch (gameState.getCurrentGamePhase()) {
 
             case REINFORCEMENT:
                 int cards = 0;
@@ -209,33 +200,9 @@ public class Game {
             }
         }
 
+        gameState.getGamePhaseStrategy().mapClick(gameState, x, y);
+
         switch (gameState.getCurrentGamePhase()) {
-            case PLACING_ARMIES:
-                if (gameState.getCurrentCountry() != null) {
-                    if (gameState.getCurrentPlayer().getArmies() > 0 && gameState.getCurrentCountry().getPlayer() == gameState.getCurrentPlayer()) {
-                        gameState.getCurrentCountry().setArmy(gameState.getCurrentCountry().getArmy() + 1);
-                        gameState.getCurrentPlayer().setArmies(gameState.getCurrentPlayer().getArmies() - 1);
-
-                        Player nextPlayer = gameState.getPlayers().get((gameState.getPlayers().indexOf(gameState.getCurrentPlayer()) + 1) % gameState.getPlayers().size());
-                        System.out.println("Next Turn Button Clicked. Next Player is " + nextPlayer.getName());
-                        gameState.setCurrentPlayer(nextPlayer);
-
-                        for (Country c : gameState.getCountries()) {
-                            if (c.getPlayer() == gameState.getCurrentPlayer()) {
-                                c.setHighlighted(true);
-                            } else {
-                                c.setHighlighted(false);
-                            }
-                        }
-                        getGameState().setCurrentTurnPhraseText("Select a country to place your army. Armies to place  " + gameState.getCurrentPlayer().getArmies());
-                    }
-                    if (gameState.getCurrentPlayer().getArmies() <= 0) {
-                        gameState.setNextTurnButton(true);
-                        getGameState().setCurrentTurnPhraseText("The turn is over. Press \"Next turn\" button.");
-                        unHighlightCountries();
-                    }
-                }
-                break;
 
             case REINFORCEMENT:
                 if (gameState.getCurrentCountry() != null) {

@@ -1,18 +1,18 @@
 package game.model;
 
 
-import game.enums.CardsEnum;
-import game.strategies.IStrategy;
+import game.model.enums.CardsEnum;
+import game.strategies.PlayerStrategies.IPlayerStrategy;
 
 import java.awt.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static game.enums.CardsEnum.ARTILLERY;
-import static game.enums.CardsEnum.CAVALRY;
-import static game.enums.CardsEnum.INFANTRY;
-import static game.enums.CardsEnum.WILDCARDS;
+import static game.model.enums.CardsEnum.ARTILLERY;
+import static game.model.enums.CardsEnum.CAVALRY;
+import static game.model.enums.CardsEnum.INFANTRY;
+import static game.model.enums.CardsEnum.WILDCARDS;
 
 /**
  * The Player model. Describes the Players parameters.
@@ -21,7 +21,7 @@ import static game.enums.CardsEnum.WILDCARDS;
  * @see CardsEnum
  */
 public class Player {
-    IStrategy strategy;
+    IPlayerStrategy strategy;
     private String name;
     private Color color;
     private Map<CardsEnum, Integer> cardsEnumIntegerMap = new HashMap<>();
@@ -33,7 +33,7 @@ public class Player {
      * @param name  name of player
      * @param color color of player
      */
-    public Player(String name, Color color, IStrategy strategy) {
+    public Player(String name, Color color, IPlayerStrategy strategy) {
         this.name = name;
         this.color = color;
         this.strategy = strategy;

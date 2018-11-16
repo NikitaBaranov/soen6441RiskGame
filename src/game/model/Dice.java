@@ -1,6 +1,6 @@
 package game.model;
 
-import game.enums.DiceEnum;
+import game.model.enums.DiceEnum;
 
 import java.util.Arrays;
 import java.util.Collections;

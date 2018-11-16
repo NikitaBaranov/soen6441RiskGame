@@ -1,13 +1,13 @@
-package game.strategies;
+package game.strategies.PlayerStrategies;
 
 import game.Game;
-import game.enums.CardsEnum;
 import game.model.Dice;
+import game.model.enums.CardsEnum;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class HumanStrategy extends AbstractStrategy {
+public class HumanPlayerStrategy extends AbstractPlayerStrategy {
 
     /**
      * Reinforcement for player

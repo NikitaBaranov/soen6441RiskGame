@@ -1,10 +1,10 @@
-package game.strategies;
+package game.strategies.PlayerStrategies;
 
-import game.enums.CardsEnum;
+import game.model.enums.CardsEnum;
 
 import java.util.List;
 
-public class AbstractStrategy implements IStrategy {
+public class AbstractPlayerStrategy implements IPlayerStrategy {
 
     @Override
     public void placeArmies() {
