@@ -24,7 +24,7 @@ Osgiliath,400,550,Gondor,Minas-Tirith,Pelargir,Minas-Morgul
 Minas-Tirith,280,520,Gondor,Ered-Nimrais,Linhir,Pelargir,Osgiliath
 Black-Gate,550,360,Mordor,Dol-Guldur,Durthang,Isenmouthe
 Durthang,500,460,Mordor,Black-Gate,Isenmouthe,Minas-Morgul,Orodruin
-Minas-Morgul,500,570,Mordor,Darthung,Osgiliath,Orodruin
+Minas-Morgul,500,570,Mordor,Darthung,Osgiliath,Orodruin,Barad-Dur
 Isenmouthe,650,450,Mordor,Black-Gate,Durthang,Orodruin
 Orodruin,760,530,Mordor,Isenmouthe,Durthang,Minas-Morgul,Barad-Dur
-Barad-Dur,900,600,Mordor,Orodruin
+Barad-Dur,900,600,Mordor,Orodruin,Minas-Morgul
