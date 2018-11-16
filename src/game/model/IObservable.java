@@ -1,4 +1,4 @@
-package game;
+package game.model;
 
 import game.ui.view.IPanelObserver;
 
@@ -8,12 +8,14 @@ import game.ui.view.IPanelObserver;
 public interface IObservable {
     /**
      * Attach observer
+     *
      * @param iPanelObserver
      */
     public void attachObserver(IPanelObserver iPanelObserver);
 
     /**
      * Detach observer
+     *
      * @param iPanelObserver
      */
     public void detachObserver(IPanelObserver iPanelObserver);

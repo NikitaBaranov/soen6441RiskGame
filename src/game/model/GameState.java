@@ -1,9 +1,7 @@
 package game.model;
 
-import game.IObservable;
 import game.enums.DiceEnum;
 import game.enums.GamePhaseEnum;
-import game.strategies.StrategiesFactory;
 import game.ui.view.IPanelObserver;
 
 import java.util.ArrayList;
@@ -13,8 +11,7 @@ public class GameState implements IObservable {
 
     private final int ARMIES_TO_EXCHANGE_INCREASE = 5;
     private final int DICE_ROW_TO_SHOW = 3;
-    // Strategies
-    StrategiesFactory strategiesFactory = new StrategiesFactory();
+
     private boolean nextTurnButton;
     private List<Country> countries;
     private List<Neighbour> neighbours;
@@ -368,10 +365,6 @@ public class GameState implements IObservable {
 
     public int getARMIES_TO_EXCHANGE_INCREASE() {
         return ARMIES_TO_EXCHANGE_INCREASE;
-    }
-
-    public int getDICE_ROW_TO_SHOW() {
-        return DICE_ROW_TO_SHOW;
     }
 
     public boolean isGiveACard() {

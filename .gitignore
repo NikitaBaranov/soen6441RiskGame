@@ -28,4 +28,4 @@ bin/
 .idea/
 .idea
 .idea/*
-/soen6441RiskGame.iml
+*.iml

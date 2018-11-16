@@ -1,9 +1,9 @@
 package game.ui.view;
 
 import game.Game;
-import game.IObservable;
 import game.enums.DiceEnum;
 import game.model.Dice;
+import game.model.IObservable;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

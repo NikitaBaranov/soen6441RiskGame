@@ -253,7 +253,7 @@ public class Game {
                 if (gameState.getCurrentCountry() != null) {
 
                     if (gameState.getCurrentCountry().getPlayer() == gameState.getCurrentPlayer()) {
-                        gameState.getCurrentPlayer().fortification();
+                        gameState.getCurrentPlayer().fortify();
                     }
                 }
                 break;

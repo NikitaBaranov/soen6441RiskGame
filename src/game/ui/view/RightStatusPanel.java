@@ -1,9 +1,9 @@
 package game.ui.view;
 
 import game.Game;
-import game.IObservable;
 import game.model.Continent;
 import game.model.Country;
+import game.model.IObservable;
 import game.model.Player;
 
 import javax.swing.*;

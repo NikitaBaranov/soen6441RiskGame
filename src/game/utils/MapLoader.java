@@ -231,10 +231,6 @@ public class MapLoader {
 
         // Create the instance of the game class and send it to Main
         GameState gameState = new GameState();
-//        game.getGameState().setCountries(countries);
-//        game.getGameState().setNeighbours(neighbours);
-//        game.getGameState().setPlayers(players);
-//        game.getGameState().setContinents(continents);
         gameState.setCountries(countries);
         gameState.setNeighbours(neighbours);
         gameState.setPlayers(players);

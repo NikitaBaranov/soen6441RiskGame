@@ -1,6 +1,6 @@
 package game.ui.view;
 
-import game.IObservable;
+import game.model.IObservable;
 
 /**
  * Interface for Observer

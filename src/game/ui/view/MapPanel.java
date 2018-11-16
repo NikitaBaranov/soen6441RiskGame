@@ -1,8 +1,8 @@
 package game.ui.view;
 
 import game.Game;
-import game.IObservable;
 import game.model.Country;
+import game.model.IObservable;
 import game.model.Neighbour;
 import game.utils.MapLoader;
 

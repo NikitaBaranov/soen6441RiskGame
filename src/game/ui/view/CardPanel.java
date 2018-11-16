@@ -1,9 +1,9 @@
 package game.ui.view;
 
 import game.Game;
-import game.IObservable;
 import game.enums.CardsEnum;
 import game.enums.GamePhaseEnum;
+import game.model.IObservable;
 
 import javax.swing.*;
 import java.awt.*;
