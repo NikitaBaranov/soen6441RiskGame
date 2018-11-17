@@ -9,16 +9,16 @@ public class GamePhaseStrategyFactory {
                 return new PlacingArmiesPhaseStrategy();
 
             case REINFORCEMENT:
-                return null;
+                return new ReinforcementPhaseStrategy();
 
             case ATTACK:
-                return null;
+                return new AttackPhaseStrategy();
 
             case FORTIFICATION:
-                return null;
+                return new FortificationPhaseStrategy();
 
             case GAME_OVER:
-                return null;
+                return new GameOverPhaseStrategy();
 
             default:
                 System.out.println("Incorrect Game Phase.");

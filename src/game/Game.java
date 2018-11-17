@@ -9,24 +9,16 @@ import game.model.enums.CardsEnum;
 import game.model.enums.DiceEnum;
 import game.strategies.GamePhaseStrategies.GamePhaseEnum;
 import game.strategies.GamePhaseStrategies.GamePhaseStrategyFactory;
+import game.strategies.GamePhaseStrategies.IGamePhaseStrategy;
 import game.ui.view.DicePanel;
 import game.ui.view.MapPanel;
 import game.ui.view.RightStatusPanel;
 import game.ui.view.TopStatusPanel;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
-import static game.model.enums.CardsEnum.ARTILLERY;
-import static game.model.enums.CardsEnum.CAVALRY;
-import static game.model.enums.CardsEnum.INFANTRY;
-import static game.model.enums.CardsEnum.WILDCARDS;
-import static game.strategies.GamePhaseStrategies.GamePhaseEnum.ATTACK;
-import static game.strategies.GamePhaseStrategies.GamePhaseEnum.FORTIFICATION;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.GAME_OVER;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.PLACING_ARMIES;
-import static game.strategies.GamePhaseStrategies.GamePhaseEnum.REINFORCEMENT;
 
 /**
  * The game file which control all the game flow.
@@ -49,6 +41,7 @@ public class Game {
 
     private static Game gameInstance;
     private GameState gameState;
+    private IGamePhaseStrategy gamePhaseStrategy;
 
     /**
      * get instance method for Controller
@@ -63,110 +56,18 @@ public class Game {
     }
 
     /**
-     * Get the number of reinforcements armies
-     *
-     * @param player    current player
-     * @param countries countries of player
-     * @return int number of reinforcement armies
-     */
-    public static int getReinforcementArmies(Player player, List<Country> countries) {
-        int countriesOwnedByPlayer = 0;
-        for (Country country : countries) {
-            if (country.getPlayer() == player) {
-                countriesOwnedByPlayer++;
-            }
-        }
-        System.out.println("Player " + player.getName() + " owns " + countriesOwnedByPlayer + " countries and  gets " + countriesOwnedByPlayer / 3 + " armies.");
-        if ((player.getArmies() + countriesOwnedByPlayer / 3) < 3) return 3;
-        else return player.getArmies() + countriesOwnedByPlayer / 3;
-    }
-
-    /**
      * Initialize the game
      */
     public void initialise() {
-        // initial setup.
-        gameState.setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(PLACING_ARMIES));
-        gameState.getGamePhaseStrategy().init(gameState);
+        gamePhaseStrategy = GamePhaseStrategyFactory.getStrategy(PLACING_ARMIES);
+        gamePhaseStrategy.init(gameState);
     }
 
     /**
      * Next turn functionality
      */
     public void nextTurn() {
-        gameState.getGamePhaseStrategy().nextTurnButton(gameState);
-
-        switch (gameState.getCurrentGamePhase()) {
-
-            case REINFORCEMENT:
-                int cards = 0;
-                for (Integer i : gameState.getCurrentPlayer().getCardsEnumIntegerMap().values()) {
-                    cards += i;
-                }
-
-                if (cards >= 5) {
-                    getGameState().setCurrentTurnPhraseText("The current player has more than 5 cards on hands. Players have to change them to armies.");
-
-                    break;
-                }
-                // Prepare to next turn
-                gameState.setCurrentGamePhase(ATTACK);
-                getGameState().setCurrentTurnPhraseText("Select a Country to attack from.");
-                System.out.println("Next Turn Button Clicked. Next Player is " + gameState.getCurrentGamePhase());
-                unHighlightCountries();
-
-                if (!isMoreAttacks()) {
-                    nextTurn();
-                }
-                break;
-
-            case ATTACK:
-
-                unHighlightCountries();
-
-                if (gameState.isGiveACard()) {
-                    CardsEnum[] cardsEnums = new CardsEnum[]{INFANTRY, CAVALRY, ARTILLERY, WILDCARDS};
-                    Random r = new Random();
-                    Map<CardsEnum, Integer> cardsEnumIntegerMap = gameState.getCurrentPlayer().getCardsEnumIntegerMap();
-                    CardsEnum randomCard = cardsEnums[r.nextInt(cardsEnums.length)];
-
-                    cardsEnumIntegerMap.put(randomCard, cardsEnumIntegerMap.get(randomCard) + 1);
-                    gameState.setGiveACard(false);
-                }
-                gameState.setCurrentGamePhase(FORTIFICATION);
-                getGameState().setCurrentTurnPhraseText("Select a country to move armies from. ");
-                System.out.println("Next Turn Button Clicked. Next Player is " + gameState.getCurrentGamePhase());
-
-                resetToAndFrom();
-                highlightPayerCountries();
-                break;
-
-            case FORTIFICATION:
-                gameState.setCurrentGamePhase(REINFORCEMENT);
-                System.out.println("Next Turn Button Clicked. Next Phase is " + gameState.getCurrentGamePhase());
-
-                resetToAndFrom();
-
-                // Change current player
-                gameState.setCurrentPlayer(gameState.getPlayers().get((gameState.getPlayers().indexOf(gameState.getCurrentPlayer()) + 1) % gameState.getPlayers().size()));
-                System.out.println("Select next Player. Next Player is " + gameState.getCurrentPlayer().getName());
-
-                // Add base armies
-                gameState.getCurrentPlayer().setArmies(getReinforcementArmies(gameState.getCurrentPlayer(), gameState.getCountries()));
-
-                // Add continent Bonus
-                for (Continent continent : gameState.getContinents()) {
-                    if (continent.isOwnByOnePlayer()) {
-                        if (continent.getCountryList().get(0).getPlayer() == gameState.getCurrentPlayer()) {
-                            gameState.getCurrentPlayer().setArmies(gameState.getCurrentPlayer().getArmies() + continent.getBonus());
-                            System.out.println("Player " + gameState.getCurrentPlayer().getName() + " owns " + continent.getName() + " continent and  gets " + continent.getBonus() + " armies.");
-                        }
-                    }
-                }
-                getGameState().setCurrentTurnPhraseText("Select a country to place your army. Armies to place  " + gameState.getCurrentPlayer().getArmies());
-                highlightPayerCountries();
-                break;
-        }
+        gamePhaseStrategy.nextTurnButton(gameState);
         gameState.notifyObservers();
     }
 
@@ -200,7 +101,7 @@ public class Game {
             }
         }
 
-        gameState.getGamePhaseStrategy().mapClick(gameState, x, y);
+        gamePhaseStrategy.mapClick(gameState, x, y);
 
         switch (gameState.getCurrentGamePhase()) {
 
@@ -244,17 +145,6 @@ public class Game {
     public void attack() {
         gameState.getCurrentPlayer().attack();
         gameState.notifyObservers();
-    }
-
-    /**
-     * Method to highlight the player countries
-     */
-    private void highlightPayerCountries() {
-        for (Country c : gameState.getCountries()) {
-            if (c.getPlayer() == gameState.getCurrentPlayer()) {
-                c.setHighlighted(true);
-            }
-        }
     }
 
     /**
@@ -316,5 +206,13 @@ public class Game {
 
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
+    }
+
+    public IGamePhaseStrategy getGamePhaseStrategy() {
+        return gamePhaseStrategy;
+    }
+
+    public void setGamePhaseStrategy(IGamePhaseStrategy gamePhaseStrategy) {
+        this.gamePhaseStrategy = gamePhaseStrategy;
     }
 }

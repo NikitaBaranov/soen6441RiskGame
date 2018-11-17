@@ -52,11 +52,25 @@ public class AbstractGamePhaseStrategy implements IGamePhaseStrategy {
     /**
      * Method that unhighlight the players countries
      */
-    public void unHighlightCountries(List<Country> countries) {
+    public static void unHighlightCountries(List<Country> countries) {
         for (Country c : countries) {
             c.setHighlighted(false);
         }
     }
 
+    /**
+     * Reset highlights
+     */
+    public static void resetToAndFrom(GameState gameState) {
+        unHighlightCountries(gameState.getCountries());
+        if (gameState.getCountryFrom() != null) {
+            gameState.getCountryFrom().unSelect(false);
+        }
+        gameState.setCountryFrom(null);
 
+        if (gameState.getCountryTo() != null) {
+            gameState.getCountryTo().unSelect(false);
+        }
+        gameState.setCountryTo(null);
+    }
 }

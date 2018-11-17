@@ -2,15 +2,12 @@ package game.model;
 
 import game.model.enums.DiceEnum;
 import game.strategies.GamePhaseStrategies.GamePhaseEnum;
-import game.strategies.GamePhaseStrategies.IGamePhaseStrategy;
 import game.ui.view.IPanelObserver;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameState implements IObservable {
-
-    private IGamePhaseStrategy gamePhaseStrategy;
 
     private final int ARMIES_TO_EXCHANGE_INCREASE = 5;
     private final int DICE_ROW_TO_SHOW = 3;
@@ -381,13 +378,5 @@ public class GameState implements IObservable {
      */
     public void setGiveACard(boolean giveACard) {
         this.giveACard = giveACard;
-    }
-
-    public IGamePhaseStrategy getGamePhaseStrategy() {
-        return gamePhaseStrategy;
-    }
-
-    public void setGamePhaseStrategy(IGamePhaseStrategy gamePhaseStrategy) {
-        this.gamePhaseStrategy = gamePhaseStrategy;
     }
 }

@@ -1,5 +1,6 @@
 package game.strategies.GamePhaseStrategies;
 
+import game.Game;
 import game.model.Country;
 import game.model.Dice;
 import game.model.GameState;
@@ -52,9 +53,7 @@ public class PlacingArmiesPhaseStrategy extends AbstractGamePhaseStrategy {
 
     @Override
     public void nextTurnButton(GameState gameState) {
-        gameState.setCurrentGamePhase(ATTACK);
-        gameState.setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(ATTACK));
-        gameState.setCurrentTurnPhraseText("Select a Country to attack from.");
-        System.out.println("Next Turn Button Clicked. Next Player is " + gameState.getCurrentGamePhase());
+        Game.getInstance().setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(ATTACK));
+        Game.getInstance().getGamePhaseStrategy().init(gameState);
     }
 }
