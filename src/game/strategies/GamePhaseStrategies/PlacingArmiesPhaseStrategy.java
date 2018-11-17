@@ -13,13 +13,10 @@ public class PlacingArmiesPhaseStrategy extends AbstractGamePhaseStrategy {
     @Override
     public void init(GameState gameState) {
         gameState.setCurrentGamePhase(PLACING_ARMIES);
-//        gameState.setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(PLACING_ARMIES));
         gameState.setCurrentPlayer(gameState.getPlayers().get(0));
         gameState.setNextTurnButton(false);
         Dice.resetDice(gameState.getRedDice(), gameState.getWhiteDice());
         highlightPayerCountries(gameState.getCountries(), gameState.getCurrentPlayer());
-
-        gameState.notifyObservers();
     }
 
     @Override

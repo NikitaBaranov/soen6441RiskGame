@@ -58,6 +58,7 @@ public class Game {
     public void initialise() {
         gamePhaseStrategy = GamePhaseStrategyFactory.getStrategy(PLACING_ARMIES);
         gamePhaseStrategy.init(gameState);
+        gameState.notifyObservers();
     }
 
     /**
