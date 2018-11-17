@@ -63,7 +63,7 @@ public class ReinforcementPhaseStrategy extends AbstractGamePhaseStrategy {
     public void mapClick(GameState gameState, int x, int y) {
         if (selectCountry(gameState, x, y)) {
             if (gameState.getCurrentCountry().getPlayer() == gameState.getCurrentPlayer()) {
-                gameState.getCurrentPlayer().reinforcement();
+                gameState.getCurrentPlayer().reinforcement(gameState);
             }
         }
     }
@@ -82,5 +82,10 @@ public class ReinforcementPhaseStrategy extends AbstractGamePhaseStrategy {
             Game.getInstance().setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(ATTACK));
             Game.getInstance().getGamePhaseStrategy().init(gameState);
         }
+    }
+
+    @Override
+    public void exchangeButton(GameState gameState) {
+        gameState.getCurrentPlayer().exchange(gameState);
     }
 }

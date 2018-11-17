@@ -1,20 +1,18 @@
 package game.strategies.PlayerStrategies;
 
-import game.model.enums.CardsEnum;
-
-import java.util.List;
+import game.model.GameState;
 
 public interface IPlayerStrategy {
 
-    public void placeArmies();
+    public void placeArmies(GameState gameState);
 
-    public void exchange(List<CardsEnum> cardsEnumList);
+    public void exchange(GameState gameState);
 
-    public void reinforce();
+    public void reinforce(GameState gameState);
 
-    public void beforeAndAfterAttack();
+    public void beforeAndAfterAttack(GameState gameState);
 
-    public void attack();
+    public void attack(GameState gameState);
 
-    public void fortify();
+    public void fortify(GameState gameState);
 }

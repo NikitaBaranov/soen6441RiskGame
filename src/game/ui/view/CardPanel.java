@@ -123,18 +123,21 @@ public class CardPanel extends JPanel implements IPanelObserver {
     public ActionListener exchangeButtonListner() {
         return new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                Game game = Game.getInstance();
                 List<CardsEnum> selectedCards = new ArrayList<>();
                 for (JCheckBox jCheckBox : jCheckBoxList) {
                     if (jCheckBox.isSelected() &&
-                            Game.getInstance().getGameState().getCurrentPlayer().getCardsEnumIntegerMap().get(stringCardsEnumMap.get(jCheckBox.getText())) >= 1) {
+                            game.getGameState().getCurrentPlayer().getCardsEnumIntegerMap().get(stringCardsEnumMap.get(jCheckBox.getText())) >= 1) {
                         selectedCards.add(stringCardsEnumMap.get(jCheckBox.getText()));
                     }
                 }
                 if (selectedCards.size() == 3) {
-                    Game.getInstance().exchange(selectedCards);
+                    game.getGameState().setSelectedCardsToExchange(selectedCards);
+                    game.exchange();
                 } else if (selectedCards.size() == 1 &&
                         Game.getInstance().getGameState().getCurrentPlayer().getCardsEnumIntegerMap().get(stringCardsEnumMap.get(selectedCards.get(0).getName())) >= 3) {
-                    Game.getInstance().exchange(selectedCards);
+                    game.getGameState().setSelectedCardsToExchange(selectedCards);
+                    game.exchange();
                 }
             }
         };

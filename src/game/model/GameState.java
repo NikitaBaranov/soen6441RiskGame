@@ -1,5 +1,6 @@
 package game.model;
 
+import game.model.enums.CardsEnum;
 import game.model.enums.DiceEnum;
 import game.strategies.GamePhaseStrategies.GamePhaseEnum;
 import game.ui.view.IPanelObserver;
@@ -25,6 +26,7 @@ public class GameState implements IObservable {
 
     // Reinforcement
     private int armiesToCardExchange = 5;
+    private List<CardsEnum> selectedCardsToExchange;
 
     // Attack
     private int numberOfRedDicesSelected;
@@ -378,5 +380,13 @@ public class GameState implements IObservable {
      */
     public void setGiveACard(boolean giveACard) {
         this.giveACard = giveACard;
+    }
+
+    public List<CardsEnum> getSelectedCardsToExchange() {
+        return selectedCardsToExchange;
+    }
+
+    public void setSelectedCardsToExchange(List<CardsEnum> selectedCardsToExchange) {
+        this.selectedCardsToExchange = selectedCardsToExchange;
     }
 }

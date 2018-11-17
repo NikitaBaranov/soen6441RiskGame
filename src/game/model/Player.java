@@ -6,7 +6,6 @@ import game.strategies.PlayerStrategies.IPlayerStrategy;
 
 import java.awt.*;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static game.model.enums.CardsEnum.ARTILLERY;
@@ -47,38 +46,38 @@ public class Player {
     /**
      * Reinforcement for player
      */
-    public void reinforcement() {
-        strategy.reinforce();
+    public void reinforcement(GameState gameState) {
+        strategy.reinforce(gameState);
     }
 
     /**
      * Preparing for attach phase
      */
-    public void beforeAndAfterAttack() {
-        strategy.beforeAndAfterAttack();
+    public void beforeAndAfterAttack(GameState gameState) {
+        strategy.beforeAndAfterAttack(gameState);
     }
 
     /**
      * Attack phase
      */
-    public void attack() {
-        strategy.attack();
+    public void attack(GameState gameState) {
+        strategy.attack(gameState);
     }
 
     /**
      * Fortification for Player
      */
-    public void fortify() {
-        strategy.fortify();
+    public void fortify(GameState gameState) {
+        strategy.fortify(gameState);
     }
 
     /**
      * Exchange cards for armies
      *
-     * @param cardsEnumList
+     * @param gameState
      */
-    public void exchange(List<CardsEnum> cardsEnumList) {
-        strategy.exchange(cardsEnumList);
+    public void exchange(GameState gameState) {
+        strategy.exchange(gameState);
     }
 
     /**

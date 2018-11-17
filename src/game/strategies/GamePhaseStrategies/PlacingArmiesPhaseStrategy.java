@@ -1,7 +1,6 @@
 package game.strategies.GamePhaseStrategies;
 
 import game.Game;
-import game.model.Country;
 import game.model.Dice;
 import game.model.GameState;
 import game.model.Player;
@@ -32,16 +31,11 @@ public class PlacingArmiesPhaseStrategy extends AbstractGamePhaseStrategy {
 
                 Player nextPlayer = gameState.getPlayers().get((gameState.getPlayers().indexOf(gameState.getCurrentPlayer()) + 1) % gameState.getPlayers().size());
                 System.out.println("Next Turn Button Clicked. Next Player is " + nextPlayer.getName());
-                gameState.setCurrentPlayer(nextPlayer);
 
-                for (Country c : gameState.getCountries()) {
-                    if (c.getPlayer() == gameState.getCurrentPlayer()) {
-                        c.setHighlighted(true);
-                    } else {
-                        c.setHighlighted(false);
-                    }
-                }
                 gameState.setCurrentTurnPhraseText("Select a country to place your army. Armies to place  " + gameState.getCurrentPlayer().getArmies());
+
+                gameState.setCurrentPlayer(nextPlayer);
+                highlightPayerCountries(gameState.getCountries(), gameState.getCurrentPlayer());
             }
             if (gameState.getCurrentPlayer().getArmies() <= 0) {
                 gameState.setNextTurnButton(true);

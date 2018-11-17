@@ -15,8 +15,6 @@ import game.ui.view.MapPanel;
 import game.ui.view.RightStatusPanel;
 import game.ui.view.TopStatusPanel;
 
-import java.util.List;
-
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.PLACING_ARMIES;
 
 /**
@@ -80,11 +78,9 @@ public class Game {
 
     /**
      * Exchange methods for exchanging cards for player.
-     *
-     * @param cardsEnumList
      */
-    public void exchange(List<CardsEnum> cardsEnumList) {
-        gameState.getCurrentPlayer().exchange(cardsEnumList);
+    public void exchange() {
+        gameState.getCurrentPlayer().exchange(gameState);
         gameState.notifyObservers();
     }
 
@@ -92,7 +88,7 @@ public class Game {
      * Attack
      */
     public void attack() {
-        gameState.getCurrentPlayer().attack();
+        gamePhaseStrategy.attackButton(gameState);
         gameState.notifyObservers();
     }
 

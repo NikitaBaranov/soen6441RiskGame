@@ -50,7 +50,7 @@ public class AttackPhaseStrategy extends AbstractGamePhaseStrategy {
     @Override
     public void mapClick(GameState gameState, int x, int y) {
         selectCountry(gameState, x, y);
-        gameState.getCurrentPlayer().beforeAndAfterAttack();
+        gameState.getCurrentPlayer().beforeAndAfterAttack(gameState);
     }
 
     @Override
@@ -69,4 +69,8 @@ public class AttackPhaseStrategy extends AbstractGamePhaseStrategy {
         Game.getInstance().getGamePhaseStrategy().init(gameState);
     }
 
+    @Override
+    public void attackButton(GameState gameState) {
+        gameState.getCurrentPlayer().attack(gameState);
+    }
 }
