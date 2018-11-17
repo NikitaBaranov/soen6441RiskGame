@@ -60,6 +60,15 @@ public class ReinforcementPhaseStrategy extends AbstractGamePhaseStrategy {
     }
 
     @Override
+    public void mapClick(GameState gameState, int x, int y) {
+        if (selectCountry(gameState, x, y)) {
+            if (gameState.getCurrentCountry().getPlayer() == gameState.getCurrentPlayer()) {
+                gameState.getCurrentPlayer().reinforcement();
+            }
+        }
+    }
+
+    @Override
     public void nextTurnButton(GameState gameState) {
 
         int cards = 0;

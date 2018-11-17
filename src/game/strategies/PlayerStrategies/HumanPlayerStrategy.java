@@ -3,9 +3,12 @@ package game.strategies.PlayerStrategies;
 import game.Game;
 import game.model.Dice;
 import game.model.enums.CardsEnum;
+import game.strategies.GamePhaseStrategies.GamePhaseStrategyFactory;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static game.strategies.GamePhaseStrategies.GamePhaseEnum.GAME_OVER;
 
 public class HumanPlayerStrategy extends AbstractPlayerStrategy {
 
@@ -102,8 +105,9 @@ public class HumanPlayerStrategy extends AbstractPlayerStrategy {
                 game.getGameState().getCountryTo().setPlayer(game.getGameState().getCurrentPlayer());
                 game.getGameState().setMinArmiesToMoveAfterWin(game.getGameState().getNumberOfRedDicesSelected());
                 game.getGameState().setGiveACard(true);
-                if (game.isGameWonBy(game.getGameState().getCurrentPlayer())) {
-                    game.gameOver();
+                if (isGameWonBy(game.getGameState(), game.getGameState().getCurrentPlayer())) {
+                    Game.getInstance().setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(GAME_OVER));
+                    Game.getInstance().getGamePhaseStrategy().init(game.getGameState());
                 }
             }
         }

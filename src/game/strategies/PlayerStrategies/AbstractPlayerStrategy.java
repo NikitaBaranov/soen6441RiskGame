@@ -1,10 +1,28 @@
 package game.strategies.PlayerStrategies;
 
+import game.model.Country;
+import game.model.GameState;
+import game.model.Player;
 import game.model.enums.CardsEnum;
 
 import java.util.List;
 
 public class AbstractPlayerStrategy implements IPlayerStrategy {
+
+    /**
+     * Check if game was won by player
+     *
+     * @param player
+     * @return boolean
+     */
+    static boolean isGameWonBy(GameState gameState, Player player) {
+        for (Country country : gameState.getCountries()) {
+            if (country.getPlayer() != player) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     @Override
     public void placeArmies() {

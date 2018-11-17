@@ -17,7 +17,6 @@ import game.ui.view.TopStatusPanel;
 
 import java.util.List;
 
-import static game.strategies.GamePhaseStrategies.GamePhaseEnum.GAME_OVER;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.PLACING_ARMIES;
 
 /**
@@ -64,68 +63,18 @@ public class Game {
     }
 
     /**
-     * Next turn functionality
+     * Method describes the main flow. I.E. actions with the game.
      */
-    public void nextTurn() {
-        gamePhaseStrategy.nextTurnButton(gameState);
+    public void makeAction(int x, int y) {
+        gamePhaseStrategy.mapClick(gameState, x, y);
         gameState.notifyObservers();
     }
 
     /**
-     * Reset highlights
+     * Next turn functionality
      */
-    public void resetToAndFrom() {
-        unHighlightCountries();
-        if (gameState.getCountryFrom() != null) {
-            gameState.getCountryFrom().unSelect(false);
-        }
-        gameState.setCountryFrom(null);
-
-        if (gameState.getCountryTo() != null) {
-            gameState.getCountryTo().unSelect(false);
-        }
-        gameState.setCountryTo(null);
-    }
-
-    /**
-     * Method describes the main flow. I.E. actions with the game.
-     */
-    public void makeAction(int x, int y) {
-        gameState.setCurrentCountry(null);
-
-        for (Country country : gameState.getCountries()) {
-            if (country.isInBorder(x, y)) {
-                gameState.setCurrentCountry(country);
-                System.out.println("Selected " + country.getName());
-                break;
-            }
-        }
-
-        gamePhaseStrategy.mapClick(gameState, x, y);
-
-        switch (gameState.getCurrentGamePhase()) {
-
-            case REINFORCEMENT:
-                if (gameState.getCurrentCountry() != null) {
-                    if (gameState.getCurrentCountry().getPlayer() == gameState.getCurrentPlayer()) {
-                        gameState.getCurrentPlayer().reinforcement();
-                    }
-                }
-                break;
-
-            case ATTACK:
-                gameState.getCurrentPlayer().beforeAndAfterAttack();
-                break;
-
-            case FORTIFICATION:
-                if (gameState.getCurrentCountry() != null) {
-
-                    if (gameState.getCurrentCountry().getPlayer() == gameState.getCurrentPlayer()) {
-                        gameState.getCurrentPlayer().fortify();
-                    }
-                }
-                break;
-        }
+    public void nextTurn() {
+        gamePhaseStrategy.nextTurnButton(gameState);
         gameState.notifyObservers();
     }
 
@@ -147,6 +96,23 @@ public class Game {
         gameState.notifyObservers();
     }
 
+
+    /**
+     * Reset highlights
+     */
+    public void resetToAndFrom() {
+        unHighlightCountries();
+        if (gameState.getCountryFrom() != null) {
+            gameState.getCountryFrom().unSelect(false);
+        }
+        gameState.setCountryFrom(null);
+
+        if (gameState.getCountryTo() != null) {
+            gameState.getCountryTo().unSelect(false);
+        }
+        gameState.setCountryTo(null);
+    }
+
     /**
      * Method that unhighlight the players countries
      */
@@ -154,32 +120,6 @@ public class Game {
         for (Country c : gameState.getCountries()) {
             c.setHighlighted(false);
         }
-    }
-
-    /**
-     * Check if game was won by player
-     *
-     * @param player
-     * @return boolean
-     */
-    public boolean isGameWonBy(Player player) {
-        for (Country country : gameState.getCountries()) {
-            if (country.getPlayer() != player) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Game over phase. Block any actions
-     */
-    public void gameOver() {
-        gameState.setCurrentGamePhase(GAME_OVER);
-        getGameState().setCurrentTurnPhraseText("Game over. The " + gameState.getCurrentPlayer().getName() + " win.");
-        unHighlightCountries();
-        gameState.setNextTurnButton(false);
-        gameState.notifyObservers();
     }
 
     /**

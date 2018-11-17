@@ -25,7 +25,7 @@ public class PlacingArmiesPhaseStrategy extends AbstractGamePhaseStrategy {
 
     @Override
     public void mapClick(GameState gameState, int x, int y) {
-        if (gameState.getCurrentCountry() != null) {
+        if (selectCountry(gameState, x, y)) {
             if (gameState.getCurrentPlayer().getArmies() > 0 && gameState.getCurrentCountry().getPlayer() == gameState.getCurrentPlayer()) {
                 gameState.getCurrentCountry().setArmy(gameState.getCurrentCountry().getArmy() + 1);
                 gameState.getCurrentPlayer().setArmies(gameState.getCurrentPlayer().getArmies() - 1);

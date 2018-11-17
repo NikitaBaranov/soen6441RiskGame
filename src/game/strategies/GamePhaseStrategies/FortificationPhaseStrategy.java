@@ -21,6 +21,15 @@ public class FortificationPhaseStrategy extends AbstractGamePhaseStrategy {
     }
 
     @Override
+    public void mapClick(GameState gameState, int x, int y) {
+        if (selectCountry(gameState, x, y)) {
+            if (gameState.getCurrentCountry().getPlayer() == gameState.getCurrentPlayer()) {
+                gameState.getCurrentPlayer().fortify();
+            }
+        }
+    }
+
+    @Override
     public void nextTurnButton(GameState gameState) {
         Game.getInstance().setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(REINFORCEMENT));
         Game.getInstance().getGamePhaseStrategy().init(gameState);

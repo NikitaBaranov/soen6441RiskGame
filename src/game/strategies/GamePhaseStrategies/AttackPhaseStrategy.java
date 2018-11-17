@@ -48,6 +48,12 @@ public class AttackPhaseStrategy extends AbstractGamePhaseStrategy {
     }
 
     @Override
+    public void mapClick(GameState gameState, int x, int y) {
+        selectCountry(gameState, x, y);
+        gameState.getCurrentPlayer().beforeAndAfterAttack();
+    }
+
+    @Override
     public void nextTurnButton(GameState gameState) {
         if (gameState.isGiveACard()) {
             CardsEnum[] cardsEnums = new CardsEnum[]{INFANTRY, CAVALRY, ARTILLERY, WILDCARDS};

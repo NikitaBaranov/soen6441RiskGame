@@ -19,6 +19,45 @@ public class AbstractGamePhaseStrategy implements IGamePhaseStrategy {
         }
     }
 
+    /**
+     * Method that unhighlight the players countries
+     */
+    static void unHighlightCountries(List<Country> countries) {
+        for (Country c : countries) {
+            c.setHighlighted(false);
+        }
+    }
+
+    /**
+     * Reset highlights
+     */
+    static void resetToAndFrom(GameState gameState) {
+        unHighlightCountries(gameState.getCountries());
+        if (gameState.getCountryFrom() != null) {
+            gameState.getCountryFrom().unSelect(false);
+        }
+        gameState.setCountryFrom(null);
+
+        if (gameState.getCountryTo() != null) {
+            gameState.getCountryTo().unSelect(false);
+        }
+        gameState.setCountryTo(null);
+    }
+
+
+    boolean selectCountry(GameState gameState, int x, int y) {
+        gameState.setCurrentCountry(null);
+
+        for (Country country : gameState.getCountries()) {
+            if (country.isInBorder(x, y)) {
+                gameState.setCurrentCountry(country);
+                System.out.println("Selected " + country.getName());
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public void init(GameState gameState) {
         System.out.println("The init method is not implemented in " + this.getClass().getName() + " strategy.");
@@ -47,30 +86,5 @@ public class AbstractGamePhaseStrategy implements IGamePhaseStrategy {
     @Override
     public void cleanup(GameState gameState) {
         System.out.println("The cleanup method is not implemented in " + this.getClass().getName() + " strategy.");
-    }
-
-    /**
-     * Method that unhighlight the players countries
-     */
-    public static void unHighlightCountries(List<Country> countries) {
-        for (Country c : countries) {
-            c.setHighlighted(false);
-        }
-    }
-
-    /**
-     * Reset highlights
-     */
-    public static void resetToAndFrom(GameState gameState) {
-        unHighlightCountries(gameState.getCountries());
-        if (gameState.getCountryFrom() != null) {
-            gameState.getCountryFrom().unSelect(false);
-        }
-        gameState.setCountryFrom(null);
-
-        if (gameState.getCountryTo() != null) {
-            gameState.getCountryTo().unSelect(false);
-        }
-        gameState.setCountryTo(null);
     }
 }
