@@ -6,7 +6,7 @@ import game.model.GameState;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.FORTIFICATION;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.REINFORCEMENT;
 
-public class FortificationPhaseStrategy extends AbstractGamePhaseStrategy {
+public class FortificationPhaseStrategy extends BasePhaseStrategy {
 
     @Override
     public void init(GameState gameState) {

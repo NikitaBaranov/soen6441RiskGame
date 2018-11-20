@@ -11,7 +11,7 @@ import java.util.List;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.ATTACK;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.REINFORCEMENT;
 
-public class ReinforcementPhaseStrategy extends AbstractGamePhaseStrategy {
+public class ReinforcementPhaseStrategy extends BasePhaseStrategy {
 
     /**
      * Get the number of reinforcements armies

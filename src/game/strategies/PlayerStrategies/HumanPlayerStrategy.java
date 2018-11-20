@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.GAME_OVER;
 
-public class HumanPlayerStrategy extends AbstractPlayerStrategy {
+public class HumanPlayerStrategy extends BasePlayerStrategy {
 
     /**
      * Reinforcement for player

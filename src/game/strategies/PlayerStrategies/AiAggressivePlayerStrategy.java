@@ -2,7 +2,7 @@ package game.strategies.PlayerStrategies;
 
 import game.model.GameState;
 
-public class AiAggressivePlayerStrategy extends AbstractPlayerStrategy {
+public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
 
     @Override
     public void placeArmies(GameState gameState) {

@@ -4,7 +4,7 @@ import game.model.GameState;
 
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.GAME_OVER;
 
-public class GameOverPhaseStrategy extends AbstractGamePhaseStrategy {
+public class GameOverPhaseStrategy extends BasePhaseStrategy {
 
     @Override
     public void init(GameState gameState) {

@@ -6,8 +6,8 @@ import game.model.Country;
 import game.model.GameState;
 import game.model.Neighbour;
 import game.model.Player;
+import game.strategies.PlayerStrategies.PlayerStrategyEnum;
 import game.strategies.PlayerStrategies.PlayerStrategyFactory;
-import game.strategies.PlayerStrategies.StrategyEnum;
 import game.ui.Main;
 
 import java.awt.*;
@@ -75,7 +75,7 @@ public class MapLoader {
 
         int[] countriesPerPlayer = new int[numberOfPlayers];
         for (int i = 0; i < numberOfPlayers; i++) {
-            players.add(new Player("Player " + (i + 1), playerColor[i], playerStrategyFactory.getStrategy(StrategyEnum.HUMAN_STRATEGY)));
+            players.add(new Player("Player " + (i + 1), playerColor[i], playerStrategyFactory.getStrategy(PlayerStrategyEnum.HUMAN_STRATEGY)));
             countriesPerPlayer[i] = 0;
         }
 

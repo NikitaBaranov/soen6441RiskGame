@@ -6,7 +6,7 @@ import game.model.Player;
 
 import java.util.List;
 
-public class AbstractGamePhaseStrategy implements IGamePhaseStrategy {
+public class BasePhaseStrategy implements IGamePhaseStrategy {
 
     /**
      * Method to highlight the player countries

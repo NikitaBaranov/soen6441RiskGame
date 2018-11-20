@@ -8,7 +8,7 @@ import game.model.Player;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.ATTACK;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.PLACING_ARMIES;
 
-public class PlacingArmiesPhaseStrategy extends AbstractGamePhaseStrategy {
+public class PlacingArmiesPhaseStrategy extends BasePhaseStrategy {
 
     @Override
     public void init(GameState gameState) {
@@ -22,6 +22,7 @@ public class PlacingArmiesPhaseStrategy extends AbstractGamePhaseStrategy {
     @Override
     public void mapClick(GameState gameState, int x, int y) {
         if (selectCountry(gameState, x, y)) {
+            unHighlightCountries(gameState.getCountries());
             if (gameState.getCurrentPlayer().getArmies() > 0 && gameState.getCurrentCountry().getPlayer() == gameState.getCurrentPlayer()) {
                 gameState.getCurrentCountry().setArmy(gameState.getCurrentCountry().getArmy() + 1);
                 gameState.getCurrentPlayer().setArmies(gameState.getCurrentPlayer().getArmies() - 1);

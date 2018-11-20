@@ -15,7 +15,7 @@ import static game.model.enums.CardsEnum.WILDCARDS;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.ATTACK;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.FORTIFICATION;
 
-public class AttackPhaseStrategy extends AbstractGamePhaseStrategy {
+public class AttackPhaseStrategy extends BasePhaseStrategy {
 
     /**
      * Check if player can attack anybody or go to next turn

@@ -2,13 +2,26 @@ package game.strategies.PlayerStrategies;
 
 public class PlayerStrategyFactory {
 
-    public IPlayerStrategy getStrategy(StrategyEnum strategyEnum) {
-        try {
-            return strategyEnum.getaClass().newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
+    public static IPlayerStrategy getStrategy(PlayerStrategyEnum playerStrategyEnum) {
+        switch (playerStrategyEnum) {
+            case HUMAN_STRATEGY:
+                return new HumanPlayerStrategy();
+
+            case AI_AGGRESSIVE_STRATEGY:
+                return new AiAggressivePlayerStrategy();
+
+            case AI_BENEVOLENT_STRATEGY:
+                return null;
+
+            case AI_RANDOM_STRATEGY:
+                return null;
+
+            case AI_CHEATER_STRATEGY:
+                return null;
+
+            default:
+                System.out.println("Incorrect Player Strategy.");
+                return null;
         }
-        return null;
-//        return strategyEnum.getInstance();
     }
 }

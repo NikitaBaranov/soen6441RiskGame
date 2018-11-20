@@ -4,7 +4,7 @@ import game.model.Country;
 import game.model.GameState;
 import game.model.Player;
 
-public class AbstractPlayerStrategy implements IPlayerStrategy {
+public class BasePlayerStrategy implements IPlayerStrategy {
 
     /**
      * Check if game was won by player

@@ -2,8 +2,8 @@ package game.model;
 
 import game.Game;
 import game.strategies.GamePhaseStrategies.GamePhaseEnum;
+import game.strategies.PlayerStrategies.PlayerStrategyEnum;
 import game.strategies.PlayerStrategies.PlayerStrategyFactory;
-import game.strategies.PlayerStrategies.StrategyEnum;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -45,9 +45,9 @@ public class PlayerTest {
      */
     @Before
     public void setUp() throws Exception {
-        Player player1 = new Player("test Player 1", Color.BLACK, playerStrategyFactory.getStrategy(StrategyEnum.HUMAN_STRATEGY));
+        Player player1 = new Player("test Player 1", Color.BLACK, playerStrategyFactory.getStrategy(PlayerStrategyEnum.HUMAN_STRATEGY));
         player1.setArmies(0);
-        Player player2 = new Player("test Player 2", Color.GREEN, playerStrategyFactory.getStrategy(StrategyEnum.HUMAN_STRATEGY));
+        Player player2 = new Player("test Player 2", Color.GREEN, playerStrategyFactory.getStrategy(PlayerStrategyEnum.HUMAN_STRATEGY));
         player2.setArmies(0);
         player2.setArmies(0);
         Continent continent = new Continent("Continent", 1);
