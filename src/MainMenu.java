@@ -6,6 +6,7 @@ import mapeditor.Territory;
 import mapeditor.gui.CreateMapMenu;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
@@ -47,9 +48,19 @@ public class MainMenu extends JFrame {
         menuBar.add(exit());
         setJMenuBar(menuBar);
 
-        getContentPane().add(startButtons());
+        this.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        getContentPane().add(startButtons(), gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        getContentPane().add(aiButtons(), gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        getContentPane().add(tournamentButtons(), gbc);
 
-        // pack(); // ignore sizing
+        pack(); // ignore sizing
         setLocationRelativeTo(null);
         setVisible(true);
     }
@@ -60,8 +71,10 @@ public class MainMenu extends JFrame {
      * @return file object to attach to the menu bar panel
      */
     private JMenu file() {
-        JMenu file = new JMenu("File");
+        JMenu file = new JMenu("Risk");
+        JMenuItem loadGame = new JMenuItem("Load game");
         JMenuItem continentBonus = new JMenuItem("test: Continent bonus with 4 players");
+        file.add(loadGame);
         file.add(continentBonus);
 
         continentBonus.addActionListener(new ActionListener() {
@@ -71,6 +84,14 @@ public class MainMenu extends JFrame {
                 int players = 4;
                 String filePath = filePath();
                 new MapLoader(players, filePath, true);
+            }
+        });
+        loadGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                System.out.println("DEBUG: Load game\n ------------------------ \n");
+                // TODO load the game from file
+                String savedGame = savedGamefilePath();
             }
         });
         return file;
@@ -146,7 +167,10 @@ public class MainMenu extends JFrame {
         JPanel buttonPanel = new JPanel();
         JPanel startButtons = new JPanel();
 
-        buttonPanel.setPreferredSize(new Dimension(350, 200));
+        TitledBorder title = BorderFactory.createTitledBorder("Human game");
+        buttonPanel.setBorder(title);
+
+        buttonPanel.setPreferredSize(new Dimension(380, 50));
         buttonPanel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(0,5,0,0);
@@ -191,6 +215,122 @@ public class MainMenu extends JFrame {
     }
 
     /**
+     * Method generates the buttons for menu bar with calling start game with AI
+     *
+     * @return aiButtons object to attach the buttons to the window
+     */
+    private JPanel aiButtons() {
+        JPanel aiPanel = new JPanel();
+        JPanel aiButtons = new JPanel();
+
+        TitledBorder title = BorderFactory.createTitledBorder("AI game");
+        aiPanel.setBorder(title);
+
+        aiPanel.setPreferredSize(new Dimension(380, 100));
+        aiPanel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 0, 0);
+        JButton aiAggressive = new JButton(("Aggressive"));
+        JButton aiBenevolent = new JButton(("Benevolent"));
+        JButton aiRandom = new JButton(("Random"));
+        JButton aiCheater = new JButton(("Cheater"));
+
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        aiPanel.add(aiAggressive, gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        aiPanel.add(aiBenevolent, gbc);
+        gbc.gridx = 2;
+        gbc.gridy = 1;
+        aiPanel.add(aiRandom, gbc);
+        gbc.gridx = 2;
+        gbc.gridy = 2;
+        aiPanel.add(aiCheater, gbc);
+
+        aiButtons.add(aiPanel);
+
+        aiAggressive.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                System.out.println("DEBUG: Chosen Aggressive\n ------------------------ \n");
+                int players = 1;
+                // TODO ai mode
+                String filePath = filePath();
+                MapLoader loader = new MapLoader(players, filePath, false);
+            }
+        });
+        aiBenevolent.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                System.out.println("DEBUG: Chosen Benevolent\n ------------------------ \n");
+                int players = 1;
+                // TODO ai mode
+                String filePath = filePath();
+                MapLoader loader = new MapLoader(players, filePath, false);
+            }
+        });
+        aiRandom.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                System.out.println("DEBUG: Chosen Random\n ------------------------ \n");
+                int players = 1;
+                // TODO ai mode
+                String filePath = filePath();
+                MapLoader loader = new MapLoader(players, filePath, false);
+            }
+        });
+        aiCheater.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                System.out.println("DEBUG: Chosen Cheater\n ------------------------ \n");
+                int players = 1;
+                // TODO ai mode
+                String filePath = filePath();
+                MapLoader loader = new MapLoader(players, filePath, false);
+            }
+        });
+        return aiButtons;
+    }
+
+    /**
+     * Method generates the buttons for menu bar with calling AI game
+     *
+     * @return tournamentButtons object to attach the buttons to the window
+     */
+    private JPanel tournamentButtons() {
+        JPanel tournamentPanel = new JPanel();
+        JPanel tournamentButtons = new JPanel();
+
+        TitledBorder title = BorderFactory.createTitledBorder("Tournament");
+        tournamentPanel.setBorder(title);
+
+        tournamentPanel.setPreferredSize(new Dimension(380, 50));
+        tournamentPanel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 0, 0);
+        JButton tournament = new JButton(("Tournament"));
+
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        tournamentPanel.add(tournament, gbc);
+
+        tournamentButtons.add(tournamentPanel);
+
+        tournament.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                System.out.println("DEBUG: Chosen tournament\n ------------------------ \n");
+                int players = 1;
+                // TODO ai mode
+                String filePath = filePath();
+                MapLoader loader = new MapLoader(players, filePath, false);
+            }
+        });
+        return tournamentButtons;
+    }
+
+    /**
      * Exit functionality
      */
     class ExitAction extends AbstractAction {
@@ -210,6 +350,7 @@ public class MainMenu extends JFrame {
      * @return default.map default map file
      */
     private String filePath() {
+        //JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
         String path = Thread.currentThread().getContextClassLoader().getResource("").getPath() + "maps";
         JFileChooser fileChooser = new JFileChooser(new File(path));
         FileNameExtensionFilter filter = new FileNameExtensionFilter("MAP FILES", "map", "maps");
@@ -223,5 +364,26 @@ public class MainMenu extends JFrame {
         }
         System.out.println("DEBUG: Using the default map!\n---------------------------------------\n");
         return path + "/default.map";
+    }
+
+    /**
+     * The method which returns the filepath of the saved game
+     *
+     * @return start the new game
+     */
+    private String savedGamefilePath() {
+        JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Saved game files", "risk", "risk");
+        fileChooser.setFileFilter(filter);
+
+        int returnValue = fileChooser.showOpenDialog(null);
+
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            return selectedFile.getAbsolutePath();
+        }
+        System.out.println("DEBUG: Start the new game!\n---------------------------------------\n");
+        return "Start the new game";
     }
 }
