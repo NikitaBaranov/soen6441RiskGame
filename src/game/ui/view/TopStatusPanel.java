@@ -6,6 +6,9 @@ import game.model.Player;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Enumeration;
 
 /**
  * The top status panel. Displays the status of the player current state
@@ -17,6 +20,7 @@ public class TopStatusPanel extends JPanel implements IPanelObserver {
     private JLabel playerName = new JLabel();
     private JLabel gamePhase = new JLabel();
     private JLabel turnPhrase = new JLabel();
+    private JButton saveGameButton = new JButton();
 
     /**
      * Constructor of the class.
@@ -45,6 +49,11 @@ public class TopStatusPanel extends JPanel implements IPanelObserver {
         this.add(new JLabel("Phase: "));
         this.add(gamePhase);
 
+        saveGameButton.setText("Save");
+        saveGameButton.addActionListener(saveGameButtonListner());
+        saveGameButton.setMargin(new Insets(5, 0, 5, 0));
+        this.add(saveGameButton);
+
         Game.getInstance().getGameState().attachObserver(this);
     }
 
@@ -58,5 +67,16 @@ public class TopStatusPanel extends JPanel implements IPanelObserver {
         playerName.setText(game.getGameState().getCurrentPlayer() != null ? game.getGameState().getCurrentPlayer().getName() : "");
         gamePhase.setText(game.getGameState().getCurrentGamePhase() != null ? game.getGameState().getCurrentGamePhase().getName() : "");
         turnPhrase.setText(game.getGameState().getCurrentTurnPhraseText() != null ? game.getGameState().getCurrentTurnPhraseText() : "");
+    }
+
+    /**
+     * Save game button listener
+     */
+    public ActionListener saveGameButtonListner() {
+        return new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Save game");
+            }
+        };
     }
 }
