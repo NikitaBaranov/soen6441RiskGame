@@ -56,7 +56,7 @@ public class MapLoader {
      * @param filePath        path to the map
      * @param mode            boolean mode that can be used to start the program in special mode to test features
      */
-    public MapLoader(int numberOfPlayers, String filePath, boolean mode) {
+    public MapLoader(int numberOfPlayers, String filePath, boolean mode, String game_mode) {
         // If true - the program in test mode.
         boolean testMode = mode;
         mapPath = filePath;
@@ -72,14 +72,37 @@ public class MapLoader {
         playerColor[3] = Color.GRAY;
 
         //Player[] playerList = new Player[numberOfPlayers];
-
         int[] countriesPerPlayer = new int[numberOfPlayers];
-        players.add(new Player("Human Player ", playerColor[0], playerStrategyFactory.getStrategy(PlayerStrategyEnum.HUMAN_STRATEGY), false));
-        for (int i = 1; i < numberOfPlayers; i++) {
-            players.add(new Player("Player " + (i + 1), playerColor[i], playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_AGGRESSIVE_STRATEGY), true));
-            countriesPerPlayer[i] = 0;
-        }
 
+        switch (game_mode) {
+            case "human":
+                for (int i = 0; i < numberOfPlayers; i++) {
+                    players.add(new Player("Human Player " + (i + 1), playerColor[i], playerStrategyFactory.getStrategy(PlayerStrategyEnum.HUMAN_STRATEGY), false));
+                    countriesPerPlayer[i] = 0;
+                }
+                break;
+            case "aggressive":
+                players.add(new Player("Human Player ", playerColor[0], playerStrategyFactory.getStrategy(PlayerStrategyEnum.HUMAN_STRATEGY), false));
+                players.add(new Player("Aggressive AI", playerColor[1], playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_AGGRESSIVE_STRATEGY), true));
+                break;
+            case "benevolent":
+                players.add(new Player("Human Player ", playerColor[0], playerStrategyFactory.getStrategy(PlayerStrategyEnum.HUMAN_STRATEGY), false));
+                players.add(new Player("Benevolent AI", playerColor[1], playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_BENEVOLENT_STRATEGY), true));
+                break;
+            case "random":
+                players.add(new Player("Human Player ", playerColor[0], playerStrategyFactory.getStrategy(PlayerStrategyEnum.HUMAN_STRATEGY), false));
+                players.add(new Player("Random AI", playerColor[1], playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_RANDOM_STRATEGY), true));
+                break;
+            case "cheater":
+                players.add(new Player("Human Player ", playerColor[0], playerStrategyFactory.getStrategy(PlayerStrategyEnum.HUMAN_STRATEGY), false));
+                players.add(new Player("Cheater AI", playerColor[1], playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_CHEATER_STRATEGY), true));
+                break;
+            case "tournament":
+                // TODO need to be implemented
+                break;
+            default:
+                break;
+        }
         List<String> neighboursList = new ArrayList<String>();
 
         // Stub continents

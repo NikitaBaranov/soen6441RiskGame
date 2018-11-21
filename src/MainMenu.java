@@ -82,8 +82,9 @@ public class MainMenu extends JFrame {
             public void actionPerformed(ActionEvent arg0) {
                 System.out.println ("DEBUG: Testing continent bonus with 4 players\n ------------------------ \n");
                 int players = 4;
+                String game_mode = "human";
                 String filePath = filePath();
-                new MapLoader(players, filePath, true);
+                new MapLoader(players, filePath, true, game_mode);
             }
         });
         loadGame.addActionListener(new ActionListener() {
@@ -189,8 +190,9 @@ public class MainMenu extends JFrame {
             public void actionPerformed(ActionEvent arg0) {
                 System.out.println ("DEBUG: Chosen 2 players\n ------------------------ \n");
                 int players = 2;
+                String game_mode = "human";
                 String filePath = filePath();
-                MapLoader loader = new MapLoader(players, filePath, false);
+                MapLoader loader = new MapLoader(players, filePath, false, game_mode);
             }
         });
         player3.addActionListener(new ActionListener() {
@@ -198,8 +200,9 @@ public class MainMenu extends JFrame {
             public void actionPerformed(ActionEvent arg0) {
                 System.out.println ("DEBUG: Chosen 3 players\n ------------------------ \n");
                 int players = 3;
+                String game_mode = "human";
                 String filePath = filePath();
-                MapLoader loader = new MapLoader(players, filePath, false);
+                MapLoader loader = new MapLoader(players, filePath, false, game_mode);
             }
         });
         player4.addActionListener(new ActionListener() {
@@ -207,8 +210,9 @@ public class MainMenu extends JFrame {
             public void actionPerformed(ActionEvent arg0) {
                 System.out.println ("DEBUG: Chosen 4 players\n ------------------------ \n");
                 int players = 4;
+                String game_mode = "human";
                 String filePath = filePath();
-                MapLoader loader = new MapLoader(players, filePath,false);
+                MapLoader loader = new MapLoader(players, filePath,false, game_mode);
             }
         });
         return startButtons;
@@ -254,40 +258,40 @@ public class MainMenu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 System.out.println("DEBUG: Chosen Aggressive\n ------------------------ \n");
-                int players = 1;
-                // TODO ai mode
+                int players = 2;
+                String game_mode = "aggressive";
                 String filePath = filePath();
-                MapLoader loader = new MapLoader(players, filePath, false);
+                MapLoader loader = new MapLoader(players, filePath, false, game_mode);
             }
         });
         aiBenevolent.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 System.out.println("DEBUG: Chosen Benevolent\n ------------------------ \n");
-                int players = 1;
-                // TODO ai mode
+                int players = 2;
+                String game_mode = "benevolent";
                 String filePath = filePath();
-                MapLoader loader = new MapLoader(players, filePath, false);
+                MapLoader loader = new MapLoader(players, filePath, false, game_mode);
             }
         });
         aiRandom.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 System.out.println("DEBUG: Chosen Random\n ------------------------ \n");
-                int players = 1;
-                // TODO ai mode
+                int players = 2;
+                String game_mode = "random";
                 String filePath = filePath();
-                MapLoader loader = new MapLoader(players, filePath, false);
+                MapLoader loader = new MapLoader(players, filePath, false, game_mode);
             }
         });
         aiCheater.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 System.out.println("DEBUG: Chosen Cheater\n ------------------------ \n");
-                int players = 1;
-                // TODO ai mode
+                int players = 2;
+                String game_mode = "cheater";
                 String filePath = filePath();
-                MapLoader loader = new MapLoader(players, filePath, false);
+                MapLoader loader = new MapLoader(players, filePath, false, game_mode);
             }
         });
         return aiButtons;
@@ -321,10 +325,10 @@ public class MainMenu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 System.out.println("DEBUG: Chosen tournament\n ------------------------ \n");
-                int players = 1;
-                // TODO ai mode
+                int players = 2;
+                String game_mode = "tournament";
                 String filePath = filePath();
-                MapLoader loader = new MapLoader(players, filePath, false);
+                MapLoader loader = new MapLoader(players, filePath, false, game_mode);
             }
         });
         return tournamentButtons;
