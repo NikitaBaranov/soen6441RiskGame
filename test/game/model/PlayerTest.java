@@ -15,8 +15,12 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import static game.model.enums.CardsEnum.*;
-import static org.junit.Assert.*;
+import static game.model.enums.CardsEnum.ARTILLERY;
+import static game.model.enums.CardsEnum.CAVALRY;
+import static game.model.enums.CardsEnum.INFANTRY;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Test for model Player
@@ -41,9 +45,9 @@ public class PlayerTest {
      */
     @Before
     public void setUp() throws Exception {
-        Player player1 = new Player("test Player 1", Color.BLACK, playerStrategyFactory.getStrategy(PlayerStrategyEnum.HUMAN_STRATEGY));
+        Player player1 = new Player("test Player 1", Color.BLACK, playerStrategyFactory.getStrategy(PlayerStrategyEnum.HUMAN_STRATEGY), true);
         player1.setArmies(0);
-        Player player2 = new Player("test Player 2", Color.GREEN, playerStrategyFactory.getStrategy(PlayerStrategyEnum.HUMAN_STRATEGY));
+        Player player2 = new Player("test Player 2", Color.GREEN, playerStrategyFactory.getStrategy(PlayerStrategyEnum.HUMAN_STRATEGY), true);
         player2.setArmies(0);
         player2.setArmies(0);
         Continent continent = new Continent("Continent", 1);

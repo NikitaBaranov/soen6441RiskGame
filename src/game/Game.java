@@ -1,6 +1,10 @@
 package game;
 
-import game.model.*;
+import game.model.Continent;
+import game.model.Country;
+import game.model.GameState;
+import game.model.Neighbour;
+import game.model.Player;
 import game.model.enums.CardsEnum;
 import game.model.enums.DiceEnum;
 import game.strategies.GamePhaseStrategies.GamePhaseEnum;
@@ -87,32 +91,6 @@ public class Game {
     public void attack() {
         gamePhaseStrategy.attackButton(gameState);
         gameState.notifyObservers();
-    }
-
-
-    /**
-     * Reset highlights
-     */
-    public void resetToAndFrom() {
-        unHighlightCountries();
-        if (gameState.getCountryFrom() != null) {
-            gameState.getCountryFrom().unSelect(false);
-        }
-        gameState.setCountryFrom(null);
-
-        if (gameState.getCountryTo() != null) {
-            gameState.getCountryTo().unSelect(false);
-        }
-        gameState.setCountryTo(null);
-    }
-
-    /**
-     * Method that unhighlight the players countries
-     */
-    public void unHighlightCountries() {
-        for (Country c : gameState.getCountries()) {
-            c.setHighlighted(false);
-        }
     }
 
     /**

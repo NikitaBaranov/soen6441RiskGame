@@ -8,9 +8,13 @@ import game.model.enums.CardsEnum;
 import java.util.Map;
 import java.util.Random;
 
-import static game.model.enums.CardsEnum.*;
+import static game.model.enums.CardsEnum.ARTILLERY;
+import static game.model.enums.CardsEnum.CAVALRY;
+import static game.model.enums.CardsEnum.INFANTRY;
+import static game.model.enums.CardsEnum.WILDCARDS;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.ATTACK;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.FORTIFICATION;
+import static game.strategies.GamePhaseStrategies.GamePhaseEnum.GAME_OVER;
 
 public class AttackPhaseStrategy extends BasePhaseStrategy {
 
@@ -34,13 +38,24 @@ public class AttackPhaseStrategy extends BasePhaseStrategy {
 
     @Override
     public void init(GameState gameState) {
+        resetToAndFrom(gameState);
+        gameState.setMinArmiesToMoveAfterWin(0);
+        gameState.setWinBattle(false);
+        gameState.setGiveACard(false);
+
         if (!isMoreAttacks(gameState)) {
             nextTurnButton(gameState);
         } else {
             gameState.setCurrentGamePhase(ATTACK);
-            gameState.setCurrentTurnPhraseText("Select a Country to attack from.");
-            System.out.println("Next Turn Button Clicked. Next Player is " + gameState.getCurrentGamePhase());
-            unHighlightCountries(gameState.getCountries());
+
+            if (gameState.getCurrentPlayer().isComputerPlayer()) {
+                gameState.getCurrentPlayer().attack(gameState);
+                nextTurnButton(gameState);
+            } else {
+                gameState.setCurrentTurnPhraseText("Select a Country to attack from.");
+                System.out.println("Next Turn Button Clicked. Next Player is " + gameState.getCurrentGamePhase());
+                unHighlightCountries(gameState.getCountries());
+            }
         }
     }
 
@@ -69,5 +84,9 @@ public class AttackPhaseStrategy extends BasePhaseStrategy {
     @Override
     public void attackButton(GameState gameState) {
         gameState.getCurrentPlayer().attack(gameState);
+        if (isGameWonBy(gameState, gameState.getCurrentPlayer())) {
+            Game.getInstance().setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(GAME_OVER));
+            Game.getInstance().getGamePhaseStrategy().init(gameState);
+        }
     }
 }

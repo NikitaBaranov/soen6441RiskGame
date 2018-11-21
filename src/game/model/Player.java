@@ -8,7 +8,10 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import static game.model.enums.CardsEnum.*;
+import static game.model.enums.CardsEnum.ARTILLERY;
+import static game.model.enums.CardsEnum.CAVALRY;
+import static game.model.enums.CardsEnum.INFANTRY;
+import static game.model.enums.CardsEnum.WILDCARDS;
 
 /**
  * The Player model. Describes the Players parameters.
@@ -17,6 +20,7 @@ import static game.model.enums.CardsEnum.*;
  * @see CardsEnum
  */
 public class Player {
+    private boolean computerPlayer;
     IPlayerStrategy strategy;
     private String name;
     private Color color;
@@ -29,15 +33,20 @@ public class Player {
      * @param name  name of player
      * @param color color of player
      */
-    public Player(String name, Color color, IPlayerStrategy strategy) {
+    public Player(String name, Color color, IPlayerStrategy strategy, boolean computerPlayer) {
         this.name = name;
         this.color = color;
         this.strategy = strategy;
+        this.computerPlayer = computerPlayer;
 
         cardsEnumIntegerMap.put(INFANTRY, 0);
         cardsEnumIntegerMap.put(CAVALRY, 0);
         cardsEnumIntegerMap.put(ARTILLERY, 0);
         cardsEnumIntegerMap.put(WILDCARDS, 0);
+    }
+
+    public void placeArmies(GameState gameState) {
+        strategy.placeArmies(gameState);
     }
 
     /**
@@ -138,5 +147,9 @@ public class Player {
      */
     public void setArmies(int armies) {
         this.armies = armies;
+    }
+
+    public boolean isComputerPlayer() {
+        return computerPlayer;
     }
 }

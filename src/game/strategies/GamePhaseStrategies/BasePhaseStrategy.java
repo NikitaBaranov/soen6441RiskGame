@@ -58,6 +58,21 @@ public class BasePhaseStrategy implements IGamePhaseStrategy {
         return false;
     }
 
+    /**
+     * Check if game was won by player
+     *
+     * @param player
+     * @return boolean
+     */
+    static boolean isGameWonBy(GameState gameState, Player player) {
+        for (Country country : gameState.getCountries()) {
+            if (country.getPlayer() != player) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     @Override
     public void init(GameState gameState) {
         System.out.println("The init method is not implemented in " + this.getClass().getName() + " strategy.");

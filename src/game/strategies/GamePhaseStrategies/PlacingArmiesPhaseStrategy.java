@@ -35,6 +35,11 @@ public class PlacingArmiesPhaseStrategy extends BasePhaseStrategy {
                 gameState.setCurrentPlayer(nextPlayer);
                 highlightPayerCountries(gameState.getCountries(), gameState.getCurrentPlayer());
             }
+//            if (gameState.getCurrentPlayer().isComputerPlayer()){
+//                gameState.getCurrentPlayer().placeArmies(gameState);
+//                gameState.setNextTurnButton(true);
+//                nextTurnButton(gameState);
+//            }
             if (gameState.getCurrentPlayer().getArmies() <= 0) {
                 gameState.setNextTurnButton(true);
                 gameState.setCurrentTurnPhraseText("The turn is over. Press \"Next turn\" button.");

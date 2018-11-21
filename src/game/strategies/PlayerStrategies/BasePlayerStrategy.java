@@ -1,24 +1,60 @@
 package game.strategies.PlayerStrategies;
 
 import game.model.Country;
+import game.model.Dice;
 import game.model.GameState;
-import game.model.Player;
 
 public class BasePlayerStrategy implements IPlayerStrategy {
 
     /**
-     * Check if game was won by player
-     *
-     * @param player
-     * @return boolean
+     * Reset highlights
      */
-    static boolean isGameWonBy(GameState gameState, Player player) {
-        for (Country country : gameState.getCountries()) {
-            if (country.getPlayer() != player) {
-                return false;
+    static void resetToAndFrom(GameState gameState) {
+        if (gameState.getCountryFrom() != null) {
+            gameState.getCountryFrom().unSelect(false);
+        }
+        gameState.setCountryFrom(null);
+
+        if (gameState.getCountryTo() != null) {
+            gameState.getCountryTo().unSelect(false);
+        }
+        gameState.setCountryTo(null);
+    }
+
+    /**
+     * Method that unhighlight the players countries
+     */
+    static void unHighlightCountries(GameState gameState) {
+        for (Country c : gameState.getCountries()) {
+            c.setHighlighted(false);
+        }
+    }
+
+    static void rollDiceAndProcessResults(GameState gameState) {
+        Dice.rollDice(gameState.getNumberOfRedDicesSelected(), gameState.getNumberOfWhiteDicesSelected(), gameState.getRedDice(), gameState.getWhiteDice());
+
+        for (int i = 0; i < Math.min(gameState.getNumberOfRedDicesSelected(), gameState.getNumberOfWhiteDicesSelected()); i++) {
+            if (gameState.getRedDice()[i].getNumber() > gameState.getWhiteDice()[i].getNumber()) {
+                gameState.getCountryTo().setArmy(gameState.getCountryTo().getArmy() - 1);
+            } else {
+                gameState.getCountryFrom().setArmy(gameState.getCountryFrom().getArmy() - 1);
             }
         }
-        return true;
+        if (gameState.getCountryTo().getArmy() == 0) {
+            gameState.setWinBattle(true);
+            gameState.getCountryTo().setPlayer(gameState.getCurrentPlayer());
+            gameState.setMinArmiesToMoveAfterWin(gameState.getNumberOfRedDicesSelected());
+            gameState.setGiveACard(true);
+        }
+    }
+
+    static void pauseAndRefresh(GameState gameState, int seconds) {
+        gameState.notifyObservers();
+        try {
+            Thread.sleep(seconds * 1000);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     @Override

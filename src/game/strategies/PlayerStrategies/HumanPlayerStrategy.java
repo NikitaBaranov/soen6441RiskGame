@@ -4,11 +4,8 @@ import game.Game;
 import game.model.Dice;
 import game.model.GameState;
 import game.model.enums.CardsEnum;
-import game.strategies.GamePhaseStrategies.GamePhaseStrategyFactory;
 
 import java.util.stream.Collectors;
-
-import static game.strategies.GamePhaseStrategies.GamePhaseEnum.GAME_OVER;
 
 public class HumanPlayerStrategy extends BasePlayerStrategy {
 
@@ -17,13 +14,12 @@ public class HumanPlayerStrategy extends BasePlayerStrategy {
      */
     @Override
     public void reinforce(GameState gameState) {
-        Game game = Game.getInstance();
         if (gameState.getCurrentPlayer().getArmies() > 0) {
             gameState.getCurrentCountry().setArmy(gameState.getCurrentCountry().getArmy() + 1);
             gameState.getCurrentPlayer().setArmies(gameState.getCurrentPlayer().getArmies() - 1);
             gameState.setCurrentTurnPhraseText("Armies to place " + gameState.getCurrentPlayer().getArmies());
         } else {
-            game.unHighlightCountries();
+            unHighlightCountries(gameState);
         }
     }
 
@@ -50,7 +46,8 @@ public class HumanPlayerStrategy extends BasePlayerStrategy {
                     gameState.getCountryFrom().setArmy(gameState.getCountryFrom().getArmy() - 1);
                     gameState.setMinArmiesToMoveAfterWin(gameState.getMinArmiesToMoveAfterWin() - 1);
                 } else {
-                    game.resetToAndFrom();
+                    unHighlightCountries(gameState);
+                    resetToAndFrom(gameState);
                     Dice.resetDice(gameState.getRedDice(), gameState.getWhiteDice());
                     gameState.setWinBattle(false);
                     if (!game.isMoreAttacks()) {
@@ -62,7 +59,7 @@ public class HumanPlayerStrategy extends BasePlayerStrategy {
             if (gameState.getCurrentCountry() != null) {
                 if (gameState.getCurrentCountry().getPlayer() == gameState.getCurrentPlayer()) {
                     if (gameState.getCountryFrom() == null && gameState.getCurrentCountry().getArmy() > 1) {
-                        game.unHighlightCountries();
+                        unHighlightCountries(gameState);
                         gameState.setCountryFrom(gameState.getCurrentCountry());
                         gameState.setCurrentTurnPhraseText("Select a country to Attack.");
                         gameState.getCurrentCountry().select(true, 2);
@@ -76,7 +73,8 @@ public class HumanPlayerStrategy extends BasePlayerStrategy {
                 }
             } else {
                 gameState.setCurrentTurnPhraseText("Select a Country to attack from.");
-                game.resetToAndFrom();
+
+                resetToAndFrom(gameState);
                 Dice.resetDice(gameState.getRedDice(), gameState.getWhiteDice());
             }
         }
@@ -87,29 +85,26 @@ public class HumanPlayerStrategy extends BasePlayerStrategy {
      */
     @Override
     public void attack(GameState gameState) {
-        Game game = Game.getInstance();
         if (gameState.getCountryFrom() != null && gameState.getCountryFrom().getArmy() >= 2 && gameState.getCountryTo() != null) {
 
-            Dice.rollDice(gameState.getNumberOfRedDicesSelected(), gameState.getNumberOfWhiteDicesSelected(), gameState.getRedDice(), gameState.getWhiteDice());
+//            Dice.rollDiceAndProcessResults(gameState.getNumberOfRedDicesSelected(), gameState.getNumberOfWhiteDicesSelected(), gameState.getRedDice(), gameState.getWhiteDice());
+//
+//            for (int i = 0; i < Math.min(gameState.getNumberOfRedDicesSelected(), gameState.getNumberOfWhiteDicesSelected()); i++) {
+//                if (gameState.getRedDice()[i].getNumber() > gameState.getWhiteDice()[i].getNumber()) {
+//                    gameState.getCountryTo().setArmy(gameState.getCountryTo().getArmy() - 1);
+//                } else {
+//                    gameState.getCountryFrom().setArmy(gameState.getCountryFrom().getArmy() - 1);
+//                }
+//            }
 
-            for (int i = 0; i < Math.min(gameState.getNumberOfRedDicesSelected(), gameState.getNumberOfWhiteDicesSelected()); i++) {
-                if (gameState.getRedDice()[i].getNumber() > gameState.getWhiteDice()[i].getNumber()) {
-                    gameState.getCountryTo().setArmy(gameState.getCountryTo().getArmy() - 1);
-                } else {
-                    gameState.getCountryFrom().setArmy(gameState.getCountryFrom().getArmy() - 1);
-                }
-            }
+            rollDiceAndProcessResults(gameState);
 
-            if (gameState.getCountryTo().getArmy() == 0) {
-                gameState.setWinBattle(true);
-                gameState.getCountryTo().setPlayer(gameState.getCurrentPlayer());
-                gameState.setMinArmiesToMoveAfterWin(gameState.getNumberOfRedDicesSelected());
-                gameState.setGiveACard(true);
-                if (isGameWonBy(gameState, gameState.getCurrentPlayer())) {
-                    Game.getInstance().setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(GAME_OVER));
-                    Game.getInstance().getGamePhaseStrategy().init(gameState);
-                }
-            }
+//            if (gameState.getCountryTo().getArmy() == 0) {
+//                gameState.setWinBattle(true);
+//                gameState.getCountryTo().setPlayer(gameState.getCurrentPlayer());
+//                gameState.setMinArmiesToMoveAfterWin(gameState.getNumberOfRedDicesSelected());
+//                gameState.setGiveACard(true);
+//            }
         }
     }
 
@@ -118,9 +113,8 @@ public class HumanPlayerStrategy extends BasePlayerStrategy {
      */
     @Override
     public void fortify(GameState gameState) {
-        Game game = Game.getInstance();
         if (gameState.getCountryFrom() == null) {
-            game.unHighlightCountries();
+            unHighlightCountries(gameState);
             gameState.setCountryFrom(gameState.getCurrentCountry());
             gameState.setCurrentTurnPhraseText("Select a country to move an army.");
             gameState.getCurrentCountry().select(false, -1);

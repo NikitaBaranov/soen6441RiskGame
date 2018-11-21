@@ -1,16 +1,30 @@
 package game.utils;
 
 import game.Game;
-import game.model.*;
+import game.model.Continent;
+import game.model.Country;
+import game.model.GameState;
+import game.model.Neighbour;
+import game.model.Player;
 import game.strategies.PlayerStrategies.PlayerStrategyEnum;
 import game.strategies.PlayerStrategies.PlayerStrategyFactory;
 import game.ui.Main;
 
 import java.awt.*;
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InvalidObjectException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
+import java.util.Random;
+import java.util.Set;
 
 /**
  * The map loader class. Responsible for loading and validation of the map.
@@ -60,8 +74,9 @@ public class MapLoader {
         //Player[] playerList = new Player[numberOfPlayers];
 
         int[] countriesPerPlayer = new int[numberOfPlayers];
-        for (int i = 0; i < numberOfPlayers; i++) {
-            players.add(new Player("Player " + (i + 1), playerColor[i], playerStrategyFactory.getStrategy(PlayerStrategyEnum.HUMAN_STRATEGY)));
+        players.add(new Player("Human Player ", playerColor[0], playerStrategyFactory.getStrategy(PlayerStrategyEnum.HUMAN_STRATEGY), false));
+        for (int i = 1; i < numberOfPlayers; i++) {
+            players.add(new Player("Player " + (i + 1), playerColor[i], playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_AGGRESSIVE_STRATEGY), true));
             countriesPerPlayer[i] = 0;
         }
 
