@@ -1,10 +1,6 @@
-import mapeditor.StartEditor;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.BeforeClass;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 /**
  * The main menu test.

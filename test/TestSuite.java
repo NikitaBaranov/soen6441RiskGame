@@ -1,9 +1,5 @@
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import mapeditor.TestMapEditor;
-import game.utils.WarningWindowTest;
-import game.utils.MapLoaderTest;
-import game.GameTest;
 
 /**
  * Test suite

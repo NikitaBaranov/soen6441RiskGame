@@ -14,10 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static game.model.enums.CardsEnum.ARTILLERY;
-import static game.model.enums.CardsEnum.CAVALRY;
-import static game.model.enums.CardsEnum.INFANTRY;
-import static game.model.enums.CardsEnum.WILDCARDS;
+import static game.model.enums.CardsEnum.*;
 
 /**
  * The cards panel. Display the cards functionality

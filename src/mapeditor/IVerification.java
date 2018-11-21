@@ -11,4 +11,5 @@ public interface IVerification {
 	public boolean checkTerritoryAdjacencyRelation();
 	public boolean checkTerritoryConnectivity();
 	public boolean checkContinentExistence();
+	public boolean runChecks(ILoadedMap map);
 }

@@ -41,10 +41,14 @@ public class Editor implements IEditor {
 			System.out.println("3) Quit");
 			choice = in.next();
 			if(choice.equals("1") == true) {
-				getMapToEdit();
+				if(getMapToEdit() == false) {
+					continue;
+				}
 			}
 			else if(choice.equals("2") == true) {
-				createMapToEdit();
+				if(createMapToEdit() == false) {
+					continue;
+				}
 			}
 			else if(choice.equals("3") == true) {
 				System.out.println("Good Bye!");
@@ -68,8 +72,9 @@ public class Editor implements IEditor {
 	
 	/**
 	 * Creates a new map to edit.
+	 * @return Success or Failure
 	 */
-	public void createMapToEdit() {
+	public boolean createMapToEdit() {
 		System.out.println("Please enter the full path with name of new map: ");
 		String mapPath = "";
 		while(mapPath.length() < 5) {
@@ -81,12 +86,17 @@ public class Editor implements IEditor {
 		this.path = mapPath;
 		IMapLoader mapLoaderObj = new MapLoader(mapPath, 2);
 		this.loadedMapObj = mapLoaderObj.getLoadedMap();
+		if(this.loadedMapObj == null) {
+			return false;
+		}
+		return true;
 	}
 	
 	/**
 	 * The actual function that calls loader and loads the map.
+	 * @return Success or Failure
 	 */
-	public void getMapToEdit() {
+	public boolean getMapToEdit() {
 		System.out.println("Please enter the full path of map you want to edit: ");
 		String mapPath = "";
 		while(mapPath.length() < 5) {
@@ -98,6 +108,10 @@ public class Editor implements IEditor {
 		this.path = mapPath;
 		IMapLoader mapLoaderObj = new MapLoader(mapPath, 1);
 		this.loadedMapObj = mapLoaderObj.getLoadedMap();
+		if(this.loadedMapObj == null) {
+			return false;
+		}
+		return true;
 	}
 	
 	/**

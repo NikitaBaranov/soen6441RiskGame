@@ -1,10 +1,6 @@
 package game;
 
-import game.model.Continent;
-import game.model.Country;
-import game.model.GameState;
-import game.model.Neighbour;
-import game.model.Player;
+import game.model.*;
 import game.model.enums.CardsEnum;
 import game.model.enums.DiceEnum;
 import game.strategies.GamePhaseStrategies.GamePhaseEnum;

@@ -1,10 +1,8 @@
 package game.utils;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.BeforeClass;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 /**
  * The map loader test

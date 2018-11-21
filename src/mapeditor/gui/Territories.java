@@ -1,14 +1,14 @@
 package mapeditor.gui;
 
-import java.util.ArrayList;
-import java.util.Vector;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
-import mapeditor.Continent;
 import mapeditor.ILoadedMap;
 import mapeditor.ITerritory;
 import mapeditor.Territory;
+
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
+import java.util.Vector;
 
 /**
  * This class is responsible to create the Territories Editor Interface.

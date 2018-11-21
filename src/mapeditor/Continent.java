@@ -92,4 +92,12 @@ public class Continent implements IContinent {
 	public Integer numTerritories() {
 		return this.listOfTerritories.size();
 	}
+	
+	/**
+	 * Returns the list of territories.
+	 * @return The list of territories.
+	 */
+	public ArrayList<String> getTerritories() {
+		return this.listOfTerritories;
+	}
 }

@@ -8,10 +8,7 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import static game.model.enums.CardsEnum.ARTILLERY;
-import static game.model.enums.CardsEnum.CAVALRY;
-import static game.model.enums.CardsEnum.INFANTRY;
-import static game.model.enums.CardsEnum.WILDCARDS;
+import static game.model.enums.CardsEnum.*;
 
 /**
  * The Player model. Describes the Players parameters.

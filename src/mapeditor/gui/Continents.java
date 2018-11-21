@@ -1,34 +1,12 @@
 package mapeditor.gui;
 
-import static javax.swing.LayoutStyle.ComponentPlacement.RELATED;
-import java.awt.Container;
-import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.GraphicsEnvironment;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Vector;
-
-import javax.swing.GroupLayout;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
-
-import mapeditor.ILoadedMap;
 import mapeditor.Continent;
 import mapeditor.IContinent;
-import mapeditor.IMapLoader;
-import mapeditor.MapLoader;
+import mapeditor.ILoadedMap;
+
+import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
+import java.util.Vector;
 
 /**
  * This class is responsible to create the Continent Editor Interface.

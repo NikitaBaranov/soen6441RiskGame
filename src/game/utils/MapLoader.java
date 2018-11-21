@@ -1,30 +1,16 @@
 package game.utils;
 
 import game.Game;
-import game.model.Continent;
-import game.model.Country;
-import game.model.GameState;
-import game.model.Neighbour;
-import game.model.Player;
+import game.model.*;
 import game.strategies.PlayerStrategies.PlayerStrategyEnum;
 import game.strategies.PlayerStrategies.PlayerStrategyFactory;
 import game.ui.Main;
 
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InvalidObjectException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
+import java.io.*;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 import java.util.Queue;
-import java.util.Random;
-import java.util.Set;
 
 /**
  * The map loader class. Responsible for loading and validation of the map.

@@ -1,28 +1,16 @@
 package mapeditor;
 
-import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import mapeditor.Continent;
-import mapeditor.Editor;
-import mapeditor.IContinent;
-import mapeditor.IEditor;
-import mapeditor.ILoadedMap;
-import mapeditor.IMapLoader;
-import mapeditor.ITerritory;
-import mapeditor.IVerification;
-import mapeditor.LoadedMap;
-import mapeditor.MapLoader;
-import mapeditor.Territory;
-import mapeditor.Verification;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * This class tests the functionality of map editor.

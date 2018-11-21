@@ -113,8 +113,8 @@ public class MainMenu extends JFrame {
                 EventQueue.invokeLater(() -> {
                     IMapLoader mapLoaderObj = new mapeditor.MapLoader("", 1);
                     loadedMapObj = mapLoaderObj.getLoadedMap();
-                    Continent.setContinents(loadedMapObj.getContinents());
-                    Territory.setTerritories(loadedMapObj.getTerritories());
+                    //Continent.setContinents(loadedMapObj.getContinents());
+                    //Territory.setTerritories(loadedMapObj.getTerritories());
                     CreateMapMenu ex = new CreateMapMenu("", loadedMapObj);
                     ex.setVisible(true);
                 });

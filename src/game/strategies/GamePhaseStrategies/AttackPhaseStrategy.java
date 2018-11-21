@@ -8,10 +8,7 @@ import game.model.enums.CardsEnum;
 import java.util.Map;
 import java.util.Random;
 
-import static game.model.enums.CardsEnum.ARTILLERY;
-import static game.model.enums.CardsEnum.CAVALRY;
-import static game.model.enums.CardsEnum.INFANTRY;
-import static game.model.enums.CardsEnum.WILDCARDS;
+import static game.model.enums.CardsEnum.*;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.ATTACK;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.FORTIFICATION;
 

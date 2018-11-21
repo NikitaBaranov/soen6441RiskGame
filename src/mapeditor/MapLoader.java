@@ -1,6 +1,8 @@
 package mapeditor;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -13,7 +15,7 @@ import java.util.ArrayList;
 public class MapLoader implements IMapLoader {
 	ILoadedMap loadedMapObj;
 	/**
-	 * Constructor accepts file path and loads it into memory.
+	 * Constructor accepts filepath and laods it into memory.
 	 * @param filePath The path of map file.
 	 * @param createEditFlag The flag to check whether to create map or edit it.
 	 */
@@ -33,7 +35,7 @@ public class MapLoader implements IMapLoader {
 	 * @param filePath The path of the new file.
 	 */
 	public void createMap(String filePath) {
-		initdatastructures();
+		initDataStructures();
 	}
 	
 	/**
@@ -41,8 +43,20 @@ public class MapLoader implements IMapLoader {
 	 * @param filePath The path of map file.
 	 */
 	public void loadmap(String filePath) {
-		initdatastructures();
+		initDataStructures();
 		readmap(filePath);
+		if(verifyLoadedMap() == false) {
+			System.out.println("The map cannot be loaded");
+			this.loadedMapObj = null;
+		}
+	}
+	
+	/**
+	 * Function to verify the loaded map
+	 */
+	public boolean verifyLoadedMap() {
+		IVerification verificationObj = new Verification();
+		return verificationObj.runChecks(loadedMapObj);
 	}
 	
 	/**
@@ -56,7 +70,7 @@ public class MapLoader implements IMapLoader {
 	/**
 	 * Function to initialize data structures.
 	 */
-	private void initdatastructures() {
+	private void initDataStructures() {
 		loadedMapObj = new LoadedMap();
 		loadedMapObj.resetLoadedMap();
 	}
@@ -86,13 +100,13 @@ public class MapLoader implements IMapLoader {
 					currentParserMethod = 2;
 				}
 				else if(currentParserMethod == 0) {
-					parsemapline(sCurrentLine);
+					parseMapLine(sCurrentLine);
 				}
 				else if(currentParserMethod == 1) {
-					parsecontinentline(sCurrentLine);
+					parseContinentLine(sCurrentLine);
 				}
 				else if(currentParserMethod == 2) {
-					parseterritoryline(sCurrentLine);
+					parseTerritoryLine(sCurrentLine);
 				}
 			}
 
@@ -105,7 +119,7 @@ public class MapLoader implements IMapLoader {
 	 * The function to parse map line.
 	 * @param lineText The line from map section.
 	 */
-	private void parsemapline(String lineText) {
+	private void parseMapLine(String lineText) {
 		if(lineText.contains("author=")) {
 			Integer substrBegIdx = "author=".length();
 			String author = lineText.substring(substrBegIdx);
@@ -117,7 +131,7 @@ public class MapLoader implements IMapLoader {
 	 * The function to parse continent line.
 	 * @param lineText The line from continent section.
 	 */
-	private void parsecontinentline(String lineText) {
+	private void parseContinentLine(String lineText) {
 		if(lineText.contains("=") == false)
 			return;
 		String tokens[] = lineText.split("=");
@@ -139,10 +153,9 @@ public class MapLoader implements IMapLoader {
 	 * The function to parse territory line.
 	 * @param lineText The line of territory section.
 	 */
-	private void parseterritoryline(String lineText) {
+	private void parseTerritoryLine(String lineText) {
 		String tokens[] = lineText.split(",");
 		if(tokens.length < 5) {
-			System.out.println("MapLoader: parse_territory_line: The territory information is incomplete. Skipped");
 			return;
 		}
 		
@@ -157,10 +170,9 @@ public class MapLoader implements IMapLoader {
 			Y = Integer.parseInt(tokens[2]);
 		}
 		catch (NumberFormatException e) {
-			System.out.println("MapLoader: parse_territory_line: The territory coordinates cannot be converted to integer. Defaulted to 0");
 		}
 		
-		// Array list to store the adjacent territories.
+		// Arraylist to store the adjacent territories.
 		ArrayList<String> adjacents = new ArrayList<String>();
 		for(int i = 4; i < tokens.length; i++)
 		{
