@@ -1,13 +1,34 @@
 package mapeditor.gui;
 
-import mapeditor.*;
-
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+import java.awt.Container;
+import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import mapeditor.Continent;
+import mapeditor.ILoadedMap;
+import mapeditor.IMapLoader;
+import mapeditor.MapLoader;
+import mapeditor.Verification;
+import javax.swing.JOptionPane;
+import mapeditor.IContinent;
+import mapeditor.ITerritory;
+import mapeditor.Territory;
 
 /**
  * This class is responsible to create the CreateMap and EditMap Interface.

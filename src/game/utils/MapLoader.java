@@ -246,6 +246,30 @@ public class MapLoader {
                 throw new InvalidObjectException("Map has disconnected component.");
             }
 
+            // Validate that subgraphs are connected
+            for (Continent continent : continents) {
+                Queue<Country> toExploreSubgraph = new LinkedList<>();
+                Set<Country> seenCountriesSubgraph = new HashSet<>();
+                List<Country> countriesSubgraph = new ArrayList<>();
+                countriesSubgraph = continent.getCountryList();
+                toExploreSubgraph.add(countriesSubgraph.get(0));
+                while (!toExploreSubgraph.isEmpty()) {
+                    Country current = ((LinkedList<Country>) toExploreSubgraph).pop();
+                    if (!seenCountriesSubgraph.contains(current)) {
+                        seenCountriesSubgraph.add(current);
+
+                        for(Country neighbour : current.getNeighbours()){
+                            if (countriesSubgraph.contains(neighbour)){
+                                toExploreSubgraph.add(neighbour);
+                            }
+                        }
+                    }
+                }
+                if (seenCountriesSubgraph.size() != countriesSubgraph.size()) {
+                    throw new InvalidObjectException("Map has disconnected continent: "+ continent.getName()+".");
+                }
+            }
+
         } catch (Exception e) {
             invalidMap = true;
             new WarningWindow("Map is not valid. \n " + e.getMessage() + "\n Please, use another one.");

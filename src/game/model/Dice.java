@@ -2,7 +2,11 @@ package game.model;
 
 import game.model.enums.DiceEnum;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 /**
  * The dice model. Describes the dice parameters

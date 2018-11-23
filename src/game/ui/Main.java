@@ -1,7 +1,11 @@
 package game.ui;
 
 import game.Game;
-import game.ui.view.*;
+import game.ui.view.AttackPanel;
+import game.ui.view.DicePanel;
+import game.ui.view.MapPanel;
+import game.ui.view.RightStatusPanel;
+import game.ui.view.TopStatusPanel;
 import game.utils.MapLoader;
 
 import javax.swing.*;

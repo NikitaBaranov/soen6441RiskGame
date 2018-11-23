@@ -1,6 +1,7 @@
 package mapeditor;
 
 import java.util.ArrayList;
+import static mapeditor.Continent.continents;
 
 /**
  * The class to load territory in data structures.

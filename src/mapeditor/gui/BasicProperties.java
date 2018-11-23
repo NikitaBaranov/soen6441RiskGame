@@ -1,7 +1,13 @@
 package mapeditor.gui;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.GroupLayout;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.WindowConstants;
+import java.awt.Container;
+import java.awt.EventQueue;
+import java.awt.event.WindowAdapter;
 
 import static javax.swing.GroupLayout.Alignment.LEADING;
 import static javax.swing.LayoutStyle.ComponentPlacement.RELATED;
