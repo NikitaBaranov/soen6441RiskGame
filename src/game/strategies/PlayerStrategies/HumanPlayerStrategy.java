@@ -69,7 +69,7 @@ public class HumanPlayerStrategy extends BasePlayerStrategy {
                     gameState.getCountryFrom().setSelected(true);
                     gameState.setCountryTo(gameState.getCurrentCountry());
                     gameState.getCountryTo().setHighlighted(true);
-                    gameState.setCurrentTurnPhraseText("Use Attack window to Attack.");
+                    gameState.setCurrentTurnPhraseText("Choose number of dices to attack.");
                 }
             } else {
                 gameState.setCurrentTurnPhraseText("Select a Country to attack from.");

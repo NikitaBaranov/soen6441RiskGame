@@ -63,8 +63,8 @@ public class AttackPanel extends JPanel implements IPanelObserver {
         whiteDiceGroup.add(white2);
 
 
-        numbersPanel.add(new JLabel("Red Dices"));
-        numbersPanel.add(new JLabel("White Dices"));
+        numbersPanel.add(new JLabel("Attacker"));
+        numbersPanel.add(new JLabel("Defender"));
         numbersPanel.add(red1);
         numbersPanel.add(white1);
         numbersPanel.add(red2);
