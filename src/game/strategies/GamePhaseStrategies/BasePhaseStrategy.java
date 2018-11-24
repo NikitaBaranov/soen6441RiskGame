@@ -22,9 +22,18 @@ public class BasePhaseStrategy implements IGamePhaseStrategy {
     /**
      * Method that unhighlight the players countries
      */
-    static void unHighlightCountries(List<Country> countries) {
-        for (Country c : countries) {
+    static void unHighlightCountries(GameState gameState) {
+        for (Country c : gameState.getCountries()) {
             c.setHighlighted(false);
+        }
+    }
+
+    /**
+     * Method that unhighlight the players countries
+     */
+    static void unSelectCountries(GameState gameState) {
+        for (Country c : gameState.getCountries()) {
+            c.setSelected(false);
         }
     }
 
@@ -32,7 +41,7 @@ public class BasePhaseStrategy implements IGamePhaseStrategy {
      * Reset highlights
      */
     static void resetToAndFrom(GameState gameState) {
-        unHighlightCountries(gameState.getCountries());
+        unHighlightCountries(gameState);
         if (gameState.getCountryFrom() != null) {
             gameState.getCountryFrom().unSelect(false);
         }

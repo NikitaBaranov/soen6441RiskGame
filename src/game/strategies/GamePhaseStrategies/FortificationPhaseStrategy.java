@@ -15,8 +15,10 @@ public class FortificationPhaseStrategy extends BasePhaseStrategy {
 
         System.out.println("Next Turn Button Clicked. Next Player is " + gameState.getCurrentGamePhase());
 
-        unHighlightCountries(gameState.getCountries());
+        unHighlightCountries(gameState);
+        unSelectCountries(gameState);
         resetToAndFrom(gameState);
+
         highlightPayerCountries(gameState.getCountries(), gameState.getCurrentPlayer());
     }
 

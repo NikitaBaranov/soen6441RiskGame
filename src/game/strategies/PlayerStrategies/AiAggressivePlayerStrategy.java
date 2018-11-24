@@ -5,6 +5,8 @@ import game.model.Country;
 import game.model.GameState;
 import game.model.enums.CardsEnum;
 
+import javax.swing.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
@@ -17,53 +19,82 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
     @Override
     public void attack(GameState gameState) {
         System.out.println("AI Aggressive Attack!");
-        boolean done = false;
-        while (!done) {
-            done = true;
-            resetToAndFrom(gameState);
-            int maxArmies = 1;
-            for (Country country : gameState.getCountries()) {
-                if (country.getPlayer() == gameState.getCurrentPlayer() && country.getArmy() > maxArmies) {
-                    maxArmies = country.getArmy();
-                    gameState.setCountryFrom(country);
-                }
-            }
-            if (gameState.getCountryFrom() != null) {
-                int minArmies = Integer.MAX_VALUE;
-                for (Country country : gameState.getCountryFrom().getNeighbours()) {
-                    if (country.getPlayer() != gameState.getCurrentPlayer() && country.getArmy() < minArmies) {
-                        done = false;
-                        minArmies = country.getArmy();
-                        gameState.setCountryTo(country);
+        unHighlightCountries(gameState);
+        unSelectCountries(gameState);
+        new AttackWorker(gameState).execute();
+        Game.getInstance().getGamePhaseStrategy().nextTurnButton(gameState);
+    }
+
+    private class AttackWorker extends SwingWorker<Void, String> {
+
+        GameState gameState;
+
+        public AttackWorker(GameState gameState) {
+            this.gameState = gameState;
+        }
+
+        @Override
+        protected Void doInBackground() {
+            boolean done = false;
+            while (!done) {
+                unHighlightCountries(gameState);
+                unSelectCountries(gameState);
+                done = true;
+                resetToAndFrom(gameState);
+                int maxArmies = 1;
+                for (Country country : gameState.getCountries()) {
+                    if (country.getPlayer() == gameState.getCurrentPlayer() && country.getArmy() > maxArmies) {
+                        maxArmies = country.getArmy();
+                        gameState.setCountryFrom(country);
                     }
                 }
-            }
+                if (gameState.getCountryFrom() != null) {
+                    int minArmies = Integer.MAX_VALUE;
+                    for (Country country : gameState.getCountryFrom().getNeighbours()) {
+                        if (country.getPlayer() != gameState.getCurrentPlayer() && country.getArmy() < minArmies) {
+                            done = false;
+                            minArmies = country.getArmy();
+                            gameState.setCountryTo(country);
+                        }
+                    }
+                }
 
-            if (gameState.getCountryFrom() != null && gameState.getCountryTo() != null) {
-                System.out.println("AI Aggressive attacks from " + gameState.getCountryFrom().getName() + " to " + gameState.getCountryTo().getName());
-                gameState.setCurrentTurnPhraseText("Attack from " + gameState.getCountryFrom().getName() + " to " + gameState.getCountryTo().getName());
-                gameState.getCountryFrom().setSelected(true);
-                gameState.getCountryTo().setHighlighted(true);
-                pauseAndRefresh(gameState, 1);
-                gameState.setNumberOfRedDicesSelected(Math.max(0, Math.min(gameState.getCountryFrom().getArmy() - 1, 3)));
-                gameState.setNumberOfWhiteDicesSelected(Math.max(0, Math.min(gameState.getCountryTo().getArmy(), 2)));
-
-                rollDiceAndProcessResults(gameState);
-                pauseAndRefresh(gameState, 1);
-
-                if (gameState.getMinArmiesToMoveAfterWin() > 0) {
-                    gameState.getCountryTo().setArmy(gameState.getCountryFrom().getArmy() - 1);
-                    gameState.getCountryFrom().setArmy(1);
-
+                if (gameState.getCountryFrom() != null && gameState.getCountryTo() != null) {
+//                    System.out.println("AI Aggressive attacks from " + gameState.getCountryFrom().getName() + " to " + gameState.getCountryTo().getName());
+                    publish("Published attacks from " + gameState.getCountryFrom().getName() + " to " + gameState.getCountryTo().getName());
+                    gameState.setCurrentTurnPhraseText("Attack from " + gameState.getCountryFrom().getName() + " to " + gameState.getCountryTo().getName());
+                    gameState.getCountryFrom().setSelected(true);
+                    gameState.getCountryTo().setHighlighted(true);
                     pauseAndRefresh(gameState, 1);
 
-                    gameState.setMinArmiesToMoveAfterWin(0);
-                    gameState.getCountryFrom().setSelected(false);
-                    gameState.getCountryTo().setHighlighted(false);
+                    gameState.setNumberOfRedDicesSelected(Math.max(0, Math.min(gameState.getCountryFrom().getArmy() - 1, 3)));
+                    gameState.setNumberOfWhiteDicesSelected(Math.max(0, Math.min(gameState.getCountryTo().getArmy(), 2)));
+
+                    rollDiceAndProcessResults(gameState);
+                    pauseAndRefresh(gameState, 1);
+
+                    if (gameState.getMinArmiesToMoveAfterWin() > 0) {
+                        gameState.getCountryTo().setArmy(gameState.getCountryFrom().getArmy() - 1);
+                        gameState.getCountryFrom().setArmy(1);
+
+                        pauseAndRefresh(gameState, 1);
+
+                        gameState.setMinArmiesToMoveAfterWin(0);
+                        gameState.getCountryFrom().setSelected(false);
+                        gameState.getCountryTo().setHighlighted(false);
+                    }
                 }
+                pauseAndRefresh(gameState, 1);
+            }
+            return null;
+        }
+
+        @Override
+        protected void process(List<String> chunks) {
+            for (String c : chunks) {
+                System.out.println(c);
             }
         }
-        Game.getInstance().getGamePhaseStrategy().nextTurnButton(gameState);
     }
 
     // Copy from Human

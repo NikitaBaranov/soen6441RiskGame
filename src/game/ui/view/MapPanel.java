@@ -69,11 +69,6 @@ public class MapPanel extends JPanel implements IPanelObserver {
         Game game = Game.getInstance();
         countries = game.getGameState().getCountries();
         neighbours = game.getGameState().getNeighbours();
-        System.out.println("repaint!");
-        this.repaint();
-        this.invalidate();
-        this.repaint();
-        this.validate();
         this.repaint();
     }
 
@@ -83,7 +78,6 @@ public class MapPanel extends JPanel implements IPanelObserver {
      */
     @Override
     protected void paintComponent(Graphics g) {
-        System.out.println("paintComponent!");
         super.paintComponent(g);
         g.drawImage(image, 0, 0, null);
         for (Neighbour neighbour : neighbours) {

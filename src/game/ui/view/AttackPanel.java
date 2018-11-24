@@ -194,7 +194,7 @@ public class AttackPanel extends JPanel implements IPanelObserver {
     }
 
     /**
-     * Set all checkbuttons enabled
+     * Set all checkbuttons Disabled
      */
     private void setAllDisabled() {
         Enumeration<AbstractButton> redEnumeration = redDiceGroup.getElements();

@@ -70,7 +70,6 @@ public class GameState implements IObservable {
      */
     @Override
     public void notifyObservers() {
-        System.out.println("Notify!");
         IPanelObserver[] iPanelObserversArray = iPanelObservers.toArray(new IPanelObserver[0]);
         for (int i = 0; i < iPanelObserversArray.length; i++) {
             iPanelObserversArray[i].updateObserver(this);

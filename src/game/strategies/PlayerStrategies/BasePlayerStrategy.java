@@ -30,6 +30,16 @@ public class BasePlayerStrategy implements IPlayerStrategy {
         }
     }
 
+    /**
+     * Method that unhighlight the players countries
+     */
+    //TODO: move to Util
+    static void unSelectCountries(GameState gameState) {
+        for (Country c : gameState.getCountries()) {
+            c.setSelected(false);
+        }
+    }
+
     static void rollDiceAndProcessResults(GameState gameState) {
         Dice.rollDice(gameState.getNumberOfRedDicesSelected(), gameState.getNumberOfWhiteDicesSelected(), gameState.getRedDice(), gameState.getWhiteDice());
 
