@@ -1,7 +1,6 @@
 package game.strategies.GamePhaseStrategies;
 
 import game.Game;
-import game.model.Country;
 import game.model.GameState;
 import game.model.enums.CardsEnum;
 
@@ -15,35 +14,17 @@ import static game.model.enums.CardsEnum.WILDCARDS;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.ATTACK;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.FORTIFICATION;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.GAME_OVER;
+import static game.strategies.MapFunctionsUtil.isMoreAttacks;
+import static game.strategies.MapFunctionsUtil.selectCountry;
 
 public class AttackPhaseStrategy extends BasePhaseStrategy {
 
-    /**
-     * Check if player can attack anybody or go to next turn
-     *
-     * @return
-     */
-    private static boolean isMoreAttacks(GameState gameState) {
-        for (Country country : gameState.getCountries()) {
-            if (country.getPlayer() == gameState.getCurrentPlayer() && country.getArmy() >= 2) {
-                for (Country neighbor : country.getNeighbours()) {
-                    if (neighbor.getPlayer() != gameState.getCurrentPlayer()) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
     @Override
     public void init(GameState gameState) {
-        resetToAndFrom(gameState);
+        super.init(gameState);
         gameState.setMinArmiesToMoveAfterWin(0);
         gameState.setWinBattle(false);
         gameState.setGiveACard(false);
-        unHighlightCountries(gameState);
-        unSelectCountries(gameState);
 
         if (!isMoreAttacks(gameState)) {
             nextTurnButton(gameState);

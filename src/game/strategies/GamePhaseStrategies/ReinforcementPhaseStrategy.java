@@ -10,6 +10,8 @@ import java.util.List;
 
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.ATTACK;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.REINFORCEMENT;
+import static game.strategies.MapFunctionsUtil.highlightPayerCountries;
+import static game.strategies.MapFunctionsUtil.selectCountry;
 
 public class ReinforcementPhaseStrategy extends BasePhaseStrategy {
 
@@ -34,11 +36,9 @@ public class ReinforcementPhaseStrategy extends BasePhaseStrategy {
 
     @Override
     public void init(GameState gameState) {
-        gameState.setCurrentGamePhase(REINFORCEMENT);
+        super.init(gameState);
 
-        resetToAndFrom(gameState);
-        unHighlightCountries(gameState);
-        unSelectCountries(gameState);
+        gameState.setCurrentGamePhase(REINFORCEMENT);
 
         // Change current player
         gameState.setCurrentPlayer(gameState.getPlayers().get((gameState.getPlayers().indexOf(gameState.getCurrentPlayer()) + 1) % gameState.getPlayers().size()));

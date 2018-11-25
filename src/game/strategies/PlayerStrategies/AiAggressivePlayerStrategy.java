@@ -9,6 +9,10 @@ import javax.swing.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static game.strategies.MapFunctionsUtil.resetToAndFrom;
+import static game.strategies.MapFunctionsUtil.unHighlightCountries;
+import static game.strategies.MapFunctionsUtil.unSelectCountries;
+
 public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
 
     @Override
@@ -19,34 +23,19 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
     @Override
     public void reinforce(GameState gameState) {
         System.out.println("AI Aggressive Reinforce!");
-        unHighlightCountries(gameState);
-        unSelectCountries(gameState);
         new ReinforceWorker(gameState).execute();
     }
 
     @Override
     public void attack(GameState gameState) {
         System.out.println("AI Aggressive Attack!");
-        unHighlightCountries(gameState);
-        unSelectCountries(gameState);
-        AttackWorker attackWorker = new AttackWorker(gameState);
-        attackWorker.execute();
-//        while (!attackWorker .isDone()){
-//            // just waiting;
-//        }
-//        try {
-//            attackWorker.wait();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+        new AttackWorker(gameState).execute();
     }
 
     // Copy from Human
     @Override
     public void fortify(GameState gameState) {
         System.out.println("AI Aggressive Fortify!");
-        unHighlightCountries(gameState);
-        unSelectCountries(gameState);
         new FortifyWorker(gameState).execute();
     }
 
@@ -112,7 +101,7 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
                 publish(message);
             }
 
-            pauseAndRefresh(gameState, 2);
+            pauseAndRefresh(gameState, 1000);
             return null;
         }
 
@@ -143,8 +132,8 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
             while (!done) {
                 unHighlightCountries(gameState);
                 unSelectCountries(gameState);
-                done = true;
                 resetToAndFrom(gameState);
+                done = true;
                 int maxArmies = 1;
                 for (Country country : gameState.getCountries()) {
                     if (country.getPlayer() == gameState.getCurrentPlayer() && country.getArmy() > maxArmies) {
@@ -170,26 +159,26 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
 
                     gameState.getCountryFrom().setSelected(true);
                     gameState.getCountryTo().setHighlighted(true);
-                    pauseAndRefresh(gameState, 1);
+                    pauseAndRefresh(gameState, 500);
 
                     gameState.setNumberOfRedDicesSelected(Math.max(0, Math.min(gameState.getCountryFrom().getArmy() - 1, 3)));
                     gameState.setNumberOfWhiteDicesSelected(Math.max(0, Math.min(gameState.getCountryTo().getArmy(), 2)));
 
                     rollDiceAndProcessResults(gameState);
-                    pauseAndRefresh(gameState, 1);
+                    pauseAndRefresh(gameState, 500);
 
                     if (gameState.getMinArmiesToMoveAfterWin() > 0) {
                         gameState.getCountryTo().setArmy(gameState.getCountryFrom().getArmy() - 1);
                         gameState.getCountryFrom().setArmy(1);
 
-                        pauseAndRefresh(gameState, 1);
+                        pauseAndRefresh(gameState, 500);
 
                         gameState.setMinArmiesToMoveAfterWin(0);
                         gameState.getCountryFrom().setSelected(false);
                         gameState.getCountryTo().setHighlighted(false);
                     }
                 }
-                pauseAndRefresh(gameState, 2);
+                pauseAndRefresh(gameState, 1000);
             }
             return null;
         }
@@ -257,7 +246,7 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
                 publish(message);
             }
 
-            pauseAndRefresh(gameState, 2);
+            pauseAndRefresh(gameState, 1000);
             return null;
         }
 

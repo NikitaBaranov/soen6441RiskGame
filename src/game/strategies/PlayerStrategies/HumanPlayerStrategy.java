@@ -7,6 +7,10 @@ import game.model.enums.CardsEnum;
 
 import java.util.stream.Collectors;
 
+import static game.strategies.MapFunctionsUtil.isMoreAttacks;
+import static game.strategies.MapFunctionsUtil.resetToAndFrom;
+import static game.strategies.MapFunctionsUtil.unHighlightCountries;
+
 public class HumanPlayerStrategy extends BasePlayerStrategy {
 
     /**
@@ -52,7 +56,7 @@ public class HumanPlayerStrategy extends BasePlayerStrategy {
                     resetToAndFrom(gameState);
                     Dice.resetDice(gameState.getRedDice(), gameState.getWhiteDice());
                     gameState.setWinBattle(false);
-                    if (!game.isMoreAttacks()) {
+                    if (isMoreAttacks(gameState)) {
                         game.nextTurn();
                     }
                 }
@@ -88,25 +92,7 @@ public class HumanPlayerStrategy extends BasePlayerStrategy {
     @Override
     public void attack(GameState gameState) {
         if (gameState.getCountryFrom() != null && gameState.getCountryFrom().getArmy() >= 2 && gameState.getCountryTo() != null) {
-
-//            Dice.rollDiceAndProcessResults(gameState.getNumberOfRedDicesSelected(), gameState.getNumberOfWhiteDicesSelected(), gameState.getRedDice(), gameState.getWhiteDice());
-//
-//            for (int i = 0; i < Math.min(gameState.getNumberOfRedDicesSelected(), gameState.getNumberOfWhiteDicesSelected()); i++) {
-//                if (gameState.getRedDice()[i].getNumber() > gameState.getWhiteDice()[i].getNumber()) {
-//                    gameState.getCountryTo().setArmy(gameState.getCountryTo().getArmy() - 1);
-//                } else {
-//                    gameState.getCountryFrom().setArmy(gameState.getCountryFrom().getArmy() - 1);
-//                }
-//            }
-
             rollDiceAndProcessResults(gameState);
-
-//            if (gameState.getCountryTo().getArmy() == 0) {
-//                gameState.setWinBattle(true);
-//                gameState.getCountryTo().setPlayer(gameState.getCurrentPlayer());
-//                gameState.setMinArmiesToMoveAfterWin(gameState.getNumberOfRedDicesSelected());
-//                gameState.setGiveACard(true);
-//            }
         }
     }
 
