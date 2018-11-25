@@ -101,7 +101,7 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
                 publish(message);
             }
 
-            pauseAndRefresh(gameState, 1000);
+            pauseAndRefresh(gameState, PAUSE);
             return null;
         }
 
@@ -159,26 +159,26 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
 
                     gameState.getCountryFrom().setSelected(true);
                     gameState.getCountryTo().setHighlighted(true);
-                    pauseAndRefresh(gameState, 500);
+                    pauseAndRefresh(gameState, PAUSE);
 
                     gameState.setNumberOfRedDicesSelected(Math.max(0, Math.min(gameState.getCountryFrom().getArmy() - 1, 3)));
                     gameState.setNumberOfWhiteDicesSelected(Math.max(0, Math.min(gameState.getCountryTo().getArmy(), 2)));
 
                     rollDiceAndProcessResults(gameState);
-                    pauseAndRefresh(gameState, 500);
+                    pauseAndRefresh(gameState, PAUSE);
 
                     if (gameState.getMinArmiesToMoveAfterWin() > 0) {
                         gameState.getCountryTo().setArmy(gameState.getCountryFrom().getArmy() - 1);
                         gameState.getCountryFrom().setArmy(1);
 
-                        pauseAndRefresh(gameState, 500);
+                        pauseAndRefresh(gameState, PAUSE);
 
                         gameState.setMinArmiesToMoveAfterWin(0);
                         gameState.getCountryFrom().setSelected(false);
                         gameState.getCountryTo().setHighlighted(false);
                     }
                 }
-                pauseAndRefresh(gameState, 1000);
+                pauseAndRefresh(gameState, PAUSE * 2);
             }
             return null;
         }
@@ -246,7 +246,7 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
                 publish(message);
             }
 
-            pauseAndRefresh(gameState, 1000);
+            pauseAndRefresh(gameState, PAUSE * 2);
             return null;
         }
 

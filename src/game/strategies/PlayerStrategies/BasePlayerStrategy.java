@@ -5,6 +5,8 @@ import game.model.GameState;
 
 public class BasePlayerStrategy implements IPlayerStrategy {
 
+    public final int PAUSE = 500;
+
     static void rollDiceAndProcessResults(GameState gameState) {
         Dice.rollDice(gameState.getNumberOfRedDicesSelected(), gameState.getNumberOfWhiteDicesSelected(), gameState.getRedDice(), gameState.getWhiteDice());
         // TODO add additional message to show which user whom attack with number of dices
