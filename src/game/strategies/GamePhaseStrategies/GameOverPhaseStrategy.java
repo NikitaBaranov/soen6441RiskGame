@@ -18,7 +18,7 @@ public class GameOverPhaseStrategy extends BasePhaseStrategy {
     @Override
     public void init(GameState gameState) {
         super.init(gameState);
-
+        // TODO doesn't work for Aggressive AI. It proceed to play even when the opponent doesn't have any country
         gameState.setCurrentGamePhase(GAME_OVER);
         gameState.setCurrentTurnPhraseText("Game over. The " + gameState.getCurrentPlayer().getName() + " win.");
         gameState.setNextTurnButton(false);

@@ -31,6 +31,7 @@ public class HumanPlayerStrategy extends BasePlayerStrategy {
         } else {
             unHighlightCountries(gameState);
             // TODO automatic go to next turn if no more armies to place
+            // check if this line if fine and in the correct place.
             Game.getInstance().getGamePhaseStrategy().nextTurnButton(gameState);
         }
     }
@@ -134,6 +135,7 @@ public class HumanPlayerStrategy extends BasePlayerStrategy {
         }
         if (gameState.getCountryFrom().getArmy() == 1){
             // TODO automatic go to next turn if user can not move anything to another country
+            // check is this line if in correct place and works fine
             Game.getInstance().getGamePhaseStrategy().nextTurnButton(gameState);
         }
     }

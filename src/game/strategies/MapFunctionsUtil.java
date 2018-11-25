@@ -12,7 +12,7 @@ import java.util.List;
  * @author Dmitry Kryukov
  */
 public class MapFunctionsUtil {
-
+    // TODO Move me to the utils folder
     /**
      * Reset highlights
      */

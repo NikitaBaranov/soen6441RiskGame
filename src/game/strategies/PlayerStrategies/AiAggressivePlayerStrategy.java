@@ -20,6 +20,8 @@ import static game.strategies.MapFunctionsUtil.unSelectCountries;
  * @author Dmitry Kryukov
  * @see BasePlayerStrategy
  */
+// TODO 1. аггрессивная стратегия, нет авто перехода когда не может атаковать. Он делает фортифай автоматически и висит, ждет.
+// TODO 2. аггрессивная стратегия, нет окончания игры, продолжает играть даже когда у первого игрока нет стран
 public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
     /**
      * Place Armies.
@@ -54,6 +56,7 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
      * Fortify phase for AI via worker
      * @param gameState
      */
+    // TODO what is copy to human?
     // Copy from Human
     @Override
     public void fortify(GameState gameState) {
@@ -66,6 +69,7 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
      * Automatic exchange feature if there are 3 cards of equal type
      * @param gameState
      */
+    // TODO what is copy to human?
     // Copy from Human
     @Override
     public void exchange(GameState gameState) {

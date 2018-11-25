@@ -60,6 +60,7 @@ public class BasePhaseStrategy implements IGamePhaseStrategy {
      */
     @Override
     public void mapClick(GameState gameState, int x, int y) {
+        // TODO What are these methods? will they implemented?
         System.out.println("The mapClick method is not implemented in " + this.getClass().getName() + " strategy.");
     }
 

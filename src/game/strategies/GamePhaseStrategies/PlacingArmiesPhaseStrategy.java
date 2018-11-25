@@ -69,6 +69,7 @@ public class PlacingArmiesPhaseStrategy extends BasePhaseStrategy {
                 gameState.setCurrentTurnPhraseText("The turn is over. Press \"Next turn\" button.");
                 unHighlightCountries(gameState);
                 // TODO Check if its done correctly. Automatic go to next turn when placing armies is over
+                // I'm not sure that it works well. Just be sure that I added this line in the correct place
                 nextTurnButton(gameState);
             }
         }

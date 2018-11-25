@@ -92,6 +92,7 @@ public class MapLoader {
 
         //Player[] playerList = new Player[numberOfPlayers];
         // TODO This var needs for testing mode when we test continent bonus
+        // just highlighted it with to do to not forget what is going on
         int[] countriesPerPlayer = new int[numberOfPlayers];
         for (int i = 0; i < numberOfPlayers; i++) {
             countriesPerPlayer[i] = 0;
@@ -190,7 +191,7 @@ public class MapLoader {
 
         // Stub continents
         Map<String, Continent> continentsMap = new HashMap<>();
-        // FIXME Additional reading of file for continents
+        // Additional reading of file for continents
         try {
             FileReader fileReader = new FileReader(filePath);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -265,7 +266,8 @@ public class MapLoader {
         for (int i = 0; i < countries.size(); i++) {
             int newPlayer = rand.nextInt(numberOfPlayers);
 
-            // TODO The feature for testing purposes. Needs to run game with specific rules to test continent bonus featiure.
+            // TODO The feature for testing purposes. Needs to run game with specific rules to test continent bonus feature.
+            // Just highlighed it with TO DO to not forget what is going on
             // It assign to 2 players the whole continents every time
             // Check test mode
             if (testMode) {
@@ -331,6 +333,7 @@ public class MapLoader {
                 throw new InvalidObjectException("Map has disconnected component.");
             }
 
+            // TODO Check that this validation works well and written without mistakes
             // Validate that subgraphs are connected
             for (Continent continent : continents) {
                 Queue<Country> toExploreSubgraph = new LinkedList<>();
