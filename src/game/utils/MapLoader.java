@@ -85,6 +85,10 @@ public class MapLoader {
         pColors.add(playerColor[6]);
         pColors.add(playerColor[7]);
 
+        Random colorRand = new Random();
+
+
+
         //Player[] playerList = new Player[numberOfPlayers];
         // TODO This var needs for testing mode when we test continent bonus
         int[] countriesPerPlayer = new int[numberOfPlayers];
@@ -112,6 +116,8 @@ public class MapLoader {
                         break;
                     case "Aggressive":
                         int aggrCounter = 1;
+                        // TODO Does this think will work correctly every time?
+                        int aggrCol = colorRand.nextInt(pColors.size());
                         if(players.size() > 0){
                             for (Player player: players){
                                 String existedName = player.getName();
@@ -119,13 +125,15 @@ public class MapLoader {
                                     aggrCounter+=1;
                                 }
                             }
-                            players.add(new Player("Aggressive AI " + aggrCounter, pColors.remove(0), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_AGGRESSIVE_STRATEGY), true));
+                            players.add(new Player("Aggressive AI " + aggrCounter, pColors.remove(aggrCol), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_AGGRESSIVE_STRATEGY), true));
                         } else {
-                            players.add(new Player("Aggressive AI " + aggrCounter, pColors.remove(0), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_AGGRESSIVE_STRATEGY), true));
+                            players.add(new Player("Aggressive AI " + aggrCounter, pColors.remove(aggrCol), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_AGGRESSIVE_STRATEGY), true));
                         }
                         break;
                     case "Benevolent":
                         int benevCounter = 1;
+                        // TODO Does this think will work correctly every time?
+                        int benevCol = colorRand.nextInt(pColors.size());
                         if(players.size() > 0){
                             for (Player player: players){
                                 String existedName = player.getName();
@@ -133,13 +141,15 @@ public class MapLoader {
                                     benevCounter+=1;
                                 }
                             }
-                            players.add(new Player("Benevolent AI " + benevCounter, pColors.remove(0), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_BENEVOLENT_STRATEGY), true));
+                            players.add(new Player("Benevolent AI " + benevCounter, pColors.remove(benevCol), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_BENEVOLENT_STRATEGY), true));
                         } else {
-                            players.add(new Player("Benevolent AI " + benevCounter, pColors.remove(0), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_BENEVOLENT_STRATEGY), true));
+                            players.add(new Player("Benevolent AI " + benevCounter, pColors.remove(benevCol), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_BENEVOLENT_STRATEGY), true));
                         }
                         break;
                     case "Random":
                         int randCounter = 1;
+                        // TODO Does this think will work correctly every time?
+                        int randCol = colorRand.nextInt(pColors.size());
                         if(players.size() > 0){
                             for (Player player: players){
                                 String existedName = player.getName();
@@ -147,13 +157,15 @@ public class MapLoader {
                                     randCounter+=1;
                                 }
                             }
-                            players.add(new Player("Random AI " + randCounter, pColors.remove(0), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_RANDOM_STRATEGY), true));
+                            players.add(new Player("Random AI " + randCounter, pColors.remove(randCol), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_RANDOM_STRATEGY), true));
                         } else {
-                            players.add(new Player("Random AI " + randCounter, pColors.remove(0), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_RANDOM_STRATEGY), true));
+                            players.add(new Player("Random AI " + randCounter, pColors.remove(randCol), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_RANDOM_STRATEGY), true));
                         }
                         break;
                     case "Cheater":
                         int cheatCounter = 1;
+                        // TODO Does this think will work correctly every time?
+                        int cheatCol = colorRand.nextInt(pColors.size());
                         if(players.size() > 0){
                             for (Player player: players){
                                 String existedName = player.getName();
@@ -161,9 +173,9 @@ public class MapLoader {
                                     cheatCounter+=1;
                                 }
                             }
-                            players.add(new Player("Cheater AI " + cheatCounter, pColors.remove(0), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_CHEATER_STRATEGY), true));
+                            players.add(new Player("Cheater AI " + cheatCounter, pColors.remove(cheatCol), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_CHEATER_STRATEGY), true));
                         } else {
-                            players.add(new Player("Cheater AI " + cheatCounter, pColors.remove(0), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_CHEATER_STRATEGY), true));
+                            players.add(new Player("Cheater AI " + cheatCounter, pColors.remove(cheatCol), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_CHEATER_STRATEGY), true));
                         }
                         break;
                 }
