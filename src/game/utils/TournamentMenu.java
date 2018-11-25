@@ -58,7 +58,7 @@ public class TournamentMenu extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(this.width, this.height);
         setResizable(false);
-        setAlwaysOnTop(true);
+        setAlwaysOnTop(false);
 
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
