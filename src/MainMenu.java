@@ -181,7 +181,7 @@ public class MainMenu extends JFrame {
         JPanel buttonPanel = new JPanel();
         JPanel startButtons = new JPanel();
 
-        TitledBorder title = BorderFactory.createTitledBorder("Single game mode: Human vs Human");
+        TitledBorder title = BorderFactory.createTitledBorder("Quick access");
         buttonPanel.setBorder(title);
 
         buttonPanel.setPreferredSize(new Dimension(600, 50));
@@ -251,7 +251,7 @@ public class MainMenu extends JFrame {
         JPanel aiPanel = new JPanel();
         JPanel aiButtons = new JPanel();
 
-        TitledBorder title = BorderFactory.createTitledBorder("Single game mode: Human vs AI or AI vs AI");
+        TitledBorder title = BorderFactory.createTitledBorder("Single game mode.");
         aiPanel.setBorder(title);
 
         aiPanel.setPreferredSize(new Dimension(600, 100));
@@ -332,7 +332,7 @@ public class MainMenu extends JFrame {
                     playersModes.add(selectedPlayerMode4);
                 }
                 if (players == 0 || players == 1){
-                    System.out.println("You can't play alone or wothout any players at all.");
+                    System.out.println("You can't play alone or without any players at all.");
                 } else {
                     String filePath = filePath();
                     MapLoader loader = new MapLoader(players, filePath, false, playersModes);
