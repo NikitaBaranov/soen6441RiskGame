@@ -348,6 +348,37 @@ public class TournamentMenu extends JFrame {
                     // I think there is a need to create another maploader constructor and setup game in there.
                     // TODO add map validation before creating the game.
 
+                    try {
+                        String mapfile = mapFiles.get(0);
+                        MapLoader loader1 = new MapLoader(players, mapfile, tournamentStrategies, games, turns);
+                    } catch ( IndexOutOfBoundsException e ) {
+                        System.out.println("no map 1");
+                    }
+                    try {
+                        String mapfile = mapFiles.get(1);
+                        MapLoader loader2 = new MapLoader(players, mapfile, tournamentStrategies, games, turns);
+                    } catch ( IndexOutOfBoundsException e ) {
+                        System.out.println("no map 2");
+                    }
+                    try {
+                        String mapfile = mapFiles.get(2);
+                        MapLoader loader3 = new MapLoader(players, mapfile, tournamentStrategies, games, turns);
+                    } catch ( IndexOutOfBoundsException e ) {
+                        System.out.println("no map 3");
+                    }
+                    try {
+                        String mapfile = mapFiles.get(3);
+                        MapLoader loader4 = new MapLoader(players, mapfile, tournamentStrategies, games, turns);
+                    } catch ( IndexOutOfBoundsException e ) {
+                        System.out.println("no map 4");
+                    }
+                    try {
+                        String mapfile = mapFiles.get(4);
+                        MapLoader loader5 = new MapLoader(players, mapfile, tournamentStrategies, games, turns);
+                    } catch ( IndexOutOfBoundsException e ) {
+                        System.out.println("no map 5");
+                    }
+                    TournamentMenu.this.setVisible(false);
                     // Debug. Show existed settings
                     System.out.println("Number of maps: "+mapFiles.size());
                     for (String map: mapFiles){

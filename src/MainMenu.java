@@ -205,6 +205,7 @@ public class MainMenu extends JFrame {
                 playersModes.add("Human");
                 playersModes.add("Human");
                 String filePath = filePath();
+                MainMenu.this.setVisible(false);
                 MapLoader loader = new MapLoader(players, filePath, false, playersModes);
             }
         });
@@ -219,6 +220,7 @@ public class MainMenu extends JFrame {
                 playersModes.add("Human");
 
                 String filePath = filePath();
+                MainMenu.this.setVisible(false);
                 MapLoader loader = new MapLoader(players, filePath, false, playersModes);
             }
         });
@@ -234,6 +236,7 @@ public class MainMenu extends JFrame {
                 playersModes.add("Human");
 
                 String filePath = filePath();
+                MainMenu.this.setVisible(false);
                 MapLoader loader = new MapLoader(players, filePath,false, playersModes);
             }
         });
@@ -334,6 +337,7 @@ public class MainMenu extends JFrame {
                     System.out.println("You can't play alone or without any players at all.");
                 } else {
                     String filePath = filePath();
+                    MainMenu.this.setVisible(false);
                     MapLoader loader = new MapLoader(players, filePath, false, playersModes);
                 }
             }
@@ -370,6 +374,7 @@ public class MainMenu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 System.out.println("DEBUG: Chosen tournament\n ------------------------ \n");
+                MainMenu.this.setVisible(false);
                 new TournamentMenu();
             }
         });
