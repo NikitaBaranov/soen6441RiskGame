@@ -13,25 +13,47 @@ import static game.strategies.MapFunctionsUtil.resetToAndFrom;
 import static game.strategies.MapFunctionsUtil.unHighlightCountries;
 import static game.strategies.MapFunctionsUtil.unSelectCountries;
 
+/**
+ * AI aggressive player strategy.
+ * Describes the behavoir of aggressive ai.
+ *
+ * @author Dmitry Kryukov
+ * @see BasePlayerStrategy
+ */
 public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
-
+    /**
+     * Place Armies.
+     * @param gameState
+     */
     @Override
     public void placeArmies(GameState gameState) {
 
     }
 
+    /**
+     * Reinforcement phase for AI via worker
+     * @param gameState
+     */
     @Override
     public void reinforce(GameState gameState) {
         System.out.println("AI Aggressive Reinforce!");
         new ReinforceWorker(gameState).execute();
     }
 
+    /**
+     * Attacking phase for AI via worker
+     * @param gameState
+     */
     @Override
     public void attack(GameState gameState) {
         System.out.println("AI Aggressive Attack!");
         new AttackWorker(gameState).execute();
     }
 
+    /**
+     * Fortify phase for AI via worker
+     * @param gameState
+     */
     // Copy from Human
     @Override
     public void fortify(GameState gameState) {
@@ -39,6 +61,11 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
         new FortifyWorker(gameState).execute();
     }
 
+    /**
+     * Exchange action for AI.
+     * Automatic exchange feature if there are 3 cards of equal type
+     * @param gameState
+     */
     // Copy from Human
     @Override
     public void exchange(GameState gameState) {
@@ -57,14 +84,26 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
         gameState.setCurrentTurnPhraseText("Exchanged " + phrase + " for " + gameState.getARMIES_TO_EXCHANGE_INCREASE() + " armies. Armies to place " + gameState.getCurrentPlayer().getArmies());
     }
 
+    /**
+     * Worker for reinforcement phase.
+     * required to correctly repaint swing components.
+     */
     private class ReinforceWorker extends SwingWorker<Void, String> {
 
         GameState gameState;
 
+        /**
+         * Constructor of the class.
+         * @param gameState
+         */
         public ReinforceWorker(GameState gameState) {
             this.gameState = gameState;
         }
 
+        /**
+         * Automatic reinforcement in backgrounds.
+         * @return
+         */
         @Override
         protected Void doInBackground() {
             Country toReinforce = null;
@@ -105,6 +144,10 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
             return null;
         }
 
+        /**
+         * Debug method
+         * @param chunks
+         */
         @Override
         protected void process(List<String> chunks) {
             for (String c : chunks) {
@@ -112,20 +155,35 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
             }
         }
 
+        /**
+         * Automatic go to next turn when phase is done
+         */
         @Override
         protected void done() {
             Game.getInstance().getGamePhaseStrategy().nextTurnButton(gameState);
         }
     }
 
+    /**
+     * Attack phase worker for Ai
+     * Required to correctly repaint swing components
+     */
     private class AttackWorker extends SwingWorker<Void, String> {
 
         GameState gameState;
 
+        /**
+         * Constructor of the class
+         * @param gameState
+         */
         public AttackWorker(GameState gameState) {
             this.gameState = gameState;
         }
 
+        /**
+         * Do attack actions in the background.
+         * @return
+         */
         @Override
         protected Void doInBackground() {
             boolean done = false;
@@ -183,6 +241,10 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
             return null;
         }
 
+        /**
+         * Debug method
+         * @param chunks
+         */
         @Override
         protected void process(List<String> chunks) {
             for (String c : chunks) {
@@ -190,6 +252,9 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
             }
         }
 
+        /**
+         * Automatic go to next turn when phase is done
+         */
         @Override
         protected void done() {
             Game.getInstance().getGamePhaseStrategy().nextTurnButton(gameState);
@@ -197,14 +262,26 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
 
     }
 
+    /**
+     * Fortifying phase worker for AI.
+     * Required for correctly repaint the swing components.
+     */
     private class FortifyWorker extends SwingWorker<Void, String> {
 
         GameState gameState;
 
+        /**
+         * Constructor of the class
+         * @param gameState
+         */
         public FortifyWorker(GameState gameState) {
             this.gameState = gameState;
         }
 
+        /**
+         * Do the foctification actions in the background
+         * @return
+         */
         @Override
         protected Void doInBackground() {
             Country fromFortify = null;
@@ -250,6 +327,10 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
             return null;
         }
 
+        /**
+         * Debug method
+         * @param chunks
+         */
         @Override
         protected void process(List<String> chunks) {
             for (String c : chunks) {
@@ -257,6 +338,9 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
             }
         }
 
+        /**
+         * Automatic go to next turn when phase is done
+         */
         @Override
         protected void done() {
             Game.getInstance().getGamePhaseStrategy().nextTurnButton(gameState);
