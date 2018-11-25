@@ -1,4 +1,5 @@
 import game.utils.MapLoader;
+import game.utils.TournamentMenu;
 import mapeditor.Continent;
 import mapeditor.ILoadedMap;
 import mapeditor.IMapLoader;
@@ -14,7 +15,6 @@ import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-//import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -353,14 +353,14 @@ public class MainMenu extends JFrame {
         JPanel tournamentPanel = new JPanel();
         JPanel tournamentButtons = new JPanel();
 
-        TitledBorder title = BorderFactory.createTitledBorder("Tournament");
+        TitledBorder title = BorderFactory.createTitledBorder("Tournament mode");
         tournamentPanel.setBorder(title);
 
         tournamentPanel.setPreferredSize(new Dimension(600, 50));
         tournamentPanel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 0, 0);
-        JButton tournament = new JButton(("Tournament"));
+        JButton tournament = new JButton(("Tournament game"));
 
         gbc.gridx = 1;
         gbc.gridy = 1;
@@ -372,10 +372,7 @@ public class MainMenu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 System.out.println("DEBUG: Chosen tournament\n ------------------------ \n");
-//                int players = 2;
-//                String game_mode = "tournament";
-//                String filePath = filePath();
-//                MapLoader loader = new MapLoader(players, filePath, false, game_mode);
+                new TournamentMenu();
             }
         });
         return tournamentButtons;
