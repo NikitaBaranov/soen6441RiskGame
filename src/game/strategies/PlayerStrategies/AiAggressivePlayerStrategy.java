@@ -3,11 +3,9 @@ package game.strategies.PlayerStrategies;
 import game.Game;
 import game.model.Country;
 import game.model.GameState;
-import game.model.enums.CardsEnum;
 
 import javax.swing.*;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static game.strategies.MapFunctionsUtil.resetToAndFrom;
 import static game.strategies.MapFunctionsUtil.unHighlightCountries;
@@ -38,6 +36,8 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
      */
     @Override
     public void reinforce(GameState gameState) {
+        exchangeCards(gameState);
+        pauseAndRefresh(gameState, PAUSE * 2);
         System.out.println("AI Aggressive Reinforce!");
         new ReinforceWorker(gameState).execute();
     }
@@ -69,24 +69,7 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
      * Automatic exchange feature if there are 3 cards of equal type
      * @param gameState
      */
-    // TODO what is copy to human?
-    // Copy from Human
-    @Override
-    public void exchange(GameState gameState) {
-        String phrase = "";
-        if (gameState.getSelectedCardsToExchange().size() == 3) {
-            for (CardsEnum cardsEnum : gameState.getSelectedCardsToExchange()) {
-                gameState.getCurrentPlayer().getCardsEnumIntegerMap().put(cardsEnum, gameState.getCurrentPlayer().getCardsEnumIntegerMap().get(cardsEnum) - 1);
-            }
-            phrase = String.join(", ", gameState.getSelectedCardsToExchange().stream().map(CardsEnum::getName).collect(Collectors.toList())) + " cards";
-        } else if (gameState.getSelectedCardsToExchange().size() == 1) {
-            gameState.getCurrentPlayer().getCardsEnumIntegerMap().put(gameState.getSelectedCardsToExchange().get(0), gameState.getCurrentPlayer().getCardsEnumIntegerMap().get(gameState.getSelectedCardsToExchange().get(0)) - 3);
-            phrase = gameState.getSelectedCardsToExchange().get(0).getName() + " card";
-        }
-        gameState.getCurrentPlayer().setArmies(gameState.getCurrentPlayer().getArmies() + gameState.getArmiesToCardExchange());
-        gameState.setArmiesToCardExchange(gameState.getArmiesToCardExchange() + gameState.getARMIES_TO_EXCHANGE_INCREASE());
-        gameState.setCurrentTurnPhraseText("Exchanged " + phrase + " for " + gameState.getARMIES_TO_EXCHANGE_INCREASE() + " armies. Armies to place " + gameState.getCurrentPlayer().getArmies());
-    }
+
 
     /**
      * Worker for reinforcement phase.

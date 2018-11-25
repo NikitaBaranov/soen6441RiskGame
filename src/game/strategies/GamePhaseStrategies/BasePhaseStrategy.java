@@ -21,7 +21,7 @@ public class BasePhaseStrategy implements IGamePhaseStrategy {
      * @param player
      * @return boolean
      */
-    static boolean isGameWonBy(GameState gameState, Player player) {
+    public static boolean isGameWonBy(GameState gameState, Player player) {
         for (Country country : gameState.getCountries()) {
             if (country.getPlayer() != player) {
                 return false;

@@ -13,7 +13,6 @@ import static game.model.enums.CardsEnum.INFANTRY;
 import static game.model.enums.CardsEnum.WILDCARDS;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.ATTACK;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.FORTIFICATION;
-import static game.strategies.GamePhaseStrategies.GamePhaseEnum.GAME_OVER;
 import static game.strategies.MapFunctionsUtil.isMoreAttacks;
 import static game.strategies.MapFunctionsUtil.selectCountry;
 
@@ -77,7 +76,6 @@ public class AttackPhaseStrategy extends BasePhaseStrategy {
             cardsEnumIntegerMap.put(randomCard, cardsEnumIntegerMap.get(randomCard) + 1);
             gameState.setGiveACard(false);
         }
-
         Game.getInstance().setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(FORTIFICATION));
         Game.getInstance().getGamePhaseStrategy().init(gameState);
     }
@@ -89,9 +87,5 @@ public class AttackPhaseStrategy extends BasePhaseStrategy {
     @Override
     public void attackButton(GameState gameState) {
         gameState.getCurrentPlayer().attack(gameState);
-        if (isGameWonBy(gameState, gameState.getCurrentPlayer())) {
-            Game.getInstance().setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(GAME_OVER));
-            Game.getInstance().getGamePhaseStrategy().init(gameState);
-        }
     }
 }

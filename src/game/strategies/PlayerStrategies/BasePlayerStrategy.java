@@ -1,7 +1,18 @@
 package game.strategies.PlayerStrategies;
 
+import game.Game;
 import game.model.Dice;
 import game.model.GameState;
+import game.model.enums.CardsEnum;
+import game.strategies.GamePhaseStrategies.GamePhaseStrategyFactory;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import static game.strategies.GamePhaseStrategies.BasePhaseStrategy.isGameWonBy;
+import static game.strategies.GamePhaseStrategies.GamePhaseEnum.GAME_OVER;
 
 /**
  * Base player strategy. Describes the basic player features.
@@ -37,6 +48,51 @@ public class BasePlayerStrategy implements IPlayerStrategy {
             gameState.getCountryTo().setPlayer(gameState.getCurrentPlayer());
             gameState.setMinArmiesToMoveAfterWin(gameState.getNumberOfRedDicesSelected());
             gameState.setGiveACard(true);
+            if (isGameWonBy(gameState, gameState.getCurrentPlayer())) {
+                Game.getInstance().setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(GAME_OVER));
+                Game.getInstance().getGamePhaseStrategy().init(gameState);
+            } else {
+                gameState.setWinBattle(true);
+                // TODO Add message that attacker win battle
+                gameState.setCurrentTurnPhraseText(gameState.getCurrentPlayer().getName() + " won the battle! Move at least " + gameState.getNumberOfRedDicesSelected() + " armies to the defeated country.");
+                gameState.getCountryTo().setPlayer(gameState.getCurrentPlayer());
+                gameState.setMinArmiesToMoveAfterWin(gameState.getNumberOfRedDicesSelected());
+                gameState.setGiveACard(true);
+            }
+        }
+    }
+
+    static void exchangeCards(GameState gameState) {
+        CardsEnum cardToChange = null;
+        List<CardsEnum> cardsToChangeList = new LinkedList<>();
+        for (Map.Entry<CardsEnum, Integer> entry : gameState.getCurrentPlayer().getCardsEnumIntegerMap().entrySet()) {
+            if (entry.getValue() >= 3) {
+                cardToChange = entry.getKey();
+                break;
+            } else {
+                if (entry.getValue() > 0 && cardsToChangeList.size() < 3) {
+                    cardsToChangeList.add(entry.getKey());
+                }
+            }
+        }
+
+        String phrase = null;
+        if (cardToChange != null) {
+            gameState.getCurrentPlayer().getCardsEnumIntegerMap().put(cardToChange, gameState.getCurrentPlayer().getCardsEnumIntegerMap().get(cardToChange) - 3);
+            phrase = cardToChange.getName() + " card";
+        } else if (cardsToChangeList.size() == 3) {
+            for (CardsEnum cardsEnum : cardsToChangeList) {
+                gameState.getCurrentPlayer().getCardsEnumIntegerMap().put(cardsEnum, gameState.getCurrentPlayer().getCardsEnumIntegerMap().get(cardsEnum) - 1);
+            }
+            phrase = String.join(", ", cardsToChangeList.stream().map(CardsEnum::getName).collect(Collectors.toList())) + " cards";
+        }
+        if (phrase != null) {
+            gameState.getCurrentPlayer().setArmies(gameState.getCurrentPlayer().getArmies() + gameState.getArmiesToCardExchange());
+            gameState.setArmiesToCardExchange(gameState.getArmiesToCardExchange() + gameState.getARMIES_TO_EXCHANGE_INCREASE());
+
+            String message = "Exchanged " + phrase + " for " + gameState.getARMIES_TO_EXCHANGE_INCREASE() + " armies. Armies to place " + gameState.getCurrentPlayer().getArmies();
+            System.out.println(message);
+            gameState.setCurrentTurnPhraseText(message);
         }
     }
 
