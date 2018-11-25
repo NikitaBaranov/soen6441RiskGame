@@ -58,6 +58,12 @@ public class BasePlayerStrategy implements IPlayerStrategy {
         }
     }
 
+    /**
+     * Exchange action for AI.
+     * Automatic exchange feature if there are 3 cards of equal type
+     *
+     * @param gameState
+     */
     static void exchangeCards(GameState gameState) {
         CardsEnum cardToChange = null;
         List<CardsEnum> cardsToChangeList = new LinkedList<>();

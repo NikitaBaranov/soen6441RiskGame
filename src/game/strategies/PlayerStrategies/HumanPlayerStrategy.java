@@ -6,6 +6,7 @@ import game.model.GameState;
 import game.model.enums.CardsEnum;
 
 import java.util.stream.Collectors;
+
 import static game.strategies.MapFunctionsUtil.isMoreAttacks;
 import static game.strategies.MapFunctionsUtil.resetToAndFrom;
 import static game.strategies.MapFunctionsUtil.unHighlightCountries;
@@ -17,6 +18,18 @@ import static game.strategies.MapFunctionsUtil.unHighlightCountries;
  * @see BasePlayerStrategy
  */
 public class HumanPlayerStrategy extends BasePlayerStrategy {
+
+
+    @Override
+    public void placeArmies(GameState gameState) {
+        unHighlightCountries(gameState);
+        if (gameState.getCurrentPlayer().getArmies() > 0 && gameState.getCurrentCountry().getPlayer() == gameState.getCurrentPlayer()) {
+            gameState.getCurrentCountry().setSelected(true);
+            gameState.getCurrentCountry().setArmy(gameState.getCurrentCountry().getArmy() + 1);
+            gameState.getCurrentPlayer().setArmies(gameState.getCurrentPlayer().getArmies() - 1);
+            gameState.setCurrentTurnPhraseText("Select a country to place your army. Armies to place  " + gameState.getCurrentPlayer().getArmies());
+        }
+    }
 
     /**
      * Reinforcement for player.

@@ -50,6 +50,11 @@ public class BasePhaseStrategy implements IGamePhaseStrategy {
         resetToAndFrom(gameState);
         unSelectCountries(gameState);
         unHighlightCountries(gameState);
+        if (gameState.getCurrentPlayer() != null && gameState.getCurrentPlayer().isComputerPlayer()) {
+            gameState.setNextTurnButton(false);
+        } else {
+            gameState.setNextTurnButton(true);
+        }
     }
 
     /**

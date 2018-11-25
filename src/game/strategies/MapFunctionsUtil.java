@@ -95,4 +95,35 @@ public class MapFunctionsUtil {
         return false;
     }
 
+    public static Country getCountryWithMaxArmy(GameState gameState, int minArmy) {
+        Country countryWithMaxArmy = null;
+        int maxArmies = minArmy;
+        for (Country country : gameState.getCountries()) {
+            if (country.getPlayer() == gameState.getCurrentPlayer() && country.getArmy() > maxArmies) {
+                countryWithMaxArmy = country;
+                maxArmies = country.getArmy();
+            }
+        }
+        return countryWithMaxArmy;
+    }
+
+    public static Country getCountryWithMaxOpponentNeighbours(GameState gameState) {
+        Country countryWithMaxNeighbours = null;
+        int maxEnemyNeighbors = 0;
+        for (Country country : gameState.getCountries()) {
+            if (country.getPlayer() == gameState.getCurrentPlayer()) {
+                int enemyNeighbours = 0;
+                for (Country neighbor : country.getNeighbours()) {
+                    if (neighbor.getPlayer() != gameState.getCurrentPlayer()) {
+                        enemyNeighbours++;
+                    }
+                }
+                if (enemyNeighbours > maxEnemyNeighbors) {
+                    countryWithMaxNeighbours = country;
+                    maxEnemyNeighbors = enemyNeighbours;
+                }
+            }
+        }
+        return countryWithMaxNeighbours;
+    }
 }

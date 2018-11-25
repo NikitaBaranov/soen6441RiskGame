@@ -7,6 +7,8 @@ import game.model.GameState;
 import javax.swing.*;
 import java.util.List;
 
+import static game.strategies.MapFunctionsUtil.getCountryWithMaxArmy;
+import static game.strategies.MapFunctionsUtil.getCountryWithMaxOpponentNeighbours;
 import static game.strategies.MapFunctionsUtil.resetToAndFrom;
 import static game.strategies.MapFunctionsUtil.unHighlightCountries;
 import static game.strategies.MapFunctionsUtil.unSelectCountries;
@@ -27,7 +29,8 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
      */
     @Override
     public void placeArmies(GameState gameState) {
-
+        System.out.println("AI Aggressive Place Armies!");
+        new PlaceArmiesWorker(gameState).execute();
     }
 
     /**
@@ -56,20 +59,68 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
      * Fortify phase for AI via worker
      * @param gameState
      */
-    // TODO what is copy to human?
-    // Copy from Human
     @Override
     public void fortify(GameState gameState) {
         System.out.println("AI Aggressive Fortify!");
         new FortifyWorker(gameState).execute();
     }
 
-    /**
-     * Exchange action for AI.
-     * Automatic exchange feature if there are 3 cards of equal type
-     * @param gameState
-     */
+    private class PlaceArmiesWorker extends SwingWorker<Void, String> {
 
+        GameState gameState;
+
+        /**
+         * Constructor of the class.
+         *
+         * @param gameState
+         */
+        public PlaceArmiesWorker(GameState gameState) {
+            this.gameState = gameState;
+        }
+
+        /**
+         * Automatic reinforcement in backgrounds.
+         *
+         * @return
+         */
+        @Override
+        protected Void doInBackground() {
+            Country toPlaceArmy = getCountryWithMaxArmy(gameState, 1);
+            if (toPlaceArmy == null) {
+                toPlaceArmy = getCountryWithMaxOpponentNeighbours(gameState);
+            }
+            if (toPlaceArmy != null) {
+                toPlaceArmy.setSelected(true);
+                toPlaceArmy.setArmy(toPlaceArmy.getArmy() + 1);
+                gameState.getCurrentPlayer().setArmies(gameState.getCurrentPlayer().getArmies() - 1);
+                String message = gameState.getCurrentPlayer().getName() + " placed army to " + toPlaceArmy.getName() + " total armies " + gameState.getCurrentPlayer().getArmies();
+                gameState.setCurrentTurnPhraseText(message);
+                publish(message);
+            }
+            pauseAndRefresh(gameState, PAUSE);
+            return null;
+        }
+
+        /**
+         * Debug method
+         *
+         * @param chunks
+         */
+        @Override
+        protected void process(List<String> chunks) {
+            for (String c : chunks) {
+                System.out.println(c);
+            }
+        }
+
+        /**
+         * Automatic go to next turn when phase is done
+         */
+        @Override
+        protected void done() {
+            Game.getInstance().getGamePhaseStrategy().nextTurnButton(gameState);
+        }
+    }
 
     /**
      * Worker for reinforcement phase.
@@ -95,6 +146,7 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
         protected Void doInBackground() {
             Country toReinforce = null;
             int maxArmies = 1;
+            //TODO: replace with util function
             for (Country country : gameState.getCountries()) {
                 if (country.getPlayer() == gameState.getCurrentPlayer() && country.getArmy() > maxArmies) {
                     toReinforce = country;
@@ -102,6 +154,7 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
                 }
             }
             if (toReinforce == null) {
+                //TODO: replace with util function
                 int maxEnemyNeighbors = 0;
                 for (Country country : gameState.getCountries()) {
                     if (country.getPlayer() == gameState.getCurrentPlayer()) {
