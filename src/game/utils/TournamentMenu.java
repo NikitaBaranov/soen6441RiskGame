@@ -333,11 +333,13 @@ public class TournamentMenu extends JFrame {
                     tournamentStrategies.add(selectedStrategy4);
                 }
 
-                if (players == 0 || players == 1){
-                    System.out.println("At least 2 strategies should be chosen.");
-                }
-                else if (mapFiles.size() < 1) {
+                if (mapFiles.size() < 1) {
                     System.out.println("At least 1 map should be chosen.");
+                    new WarningWindow("At least 1 map should be chosen.", false);
+                }
+                else if (players == 0 || players == 1){
+                    System.out.println("At least 2 strategies should be chosen.");
+                    new WarningWindow("At least 2 strategies should be chosen.", false);
                 }
                 else {
                     // TODO Create new loader with tournament settings.

@@ -10,11 +10,7 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
-import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -181,8 +177,10 @@ public class MainMenu extends JFrame {
         JPanel buttonPanel = new JPanel();
         JPanel startButtons = new JPanel();
 
+
         TitledBorder title = BorderFactory.createTitledBorder("Quick access");
         buttonPanel.setBorder(title);
+
 
         buttonPanel.setPreferredSize(new Dimension(600, 50));
         buttonPanel.setLayout(new GridBagLayout());
