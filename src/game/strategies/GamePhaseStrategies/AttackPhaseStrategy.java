@@ -42,19 +42,18 @@ public class AttackPhaseStrategy extends BasePhaseStrategy {
         gameState.setMinArmiesToMoveAfterWin(0);
         gameState.setWinBattle(false);
         gameState.setGiveACard(false);
+        unHighlightCountries(gameState);
+        unSelectCountries(gameState);
 
         if (!isMoreAttacks(gameState)) {
             nextTurnButton(gameState);
         } else {
             gameState.setCurrentGamePhase(ATTACK);
-            unHighlightCountries(gameState);
-            unSelectCountries(gameState);
-            System.out.println("Next Turn Button Clicked. Next Player is " + gameState.getCurrentGamePhase());
+            gameState.setCurrentTurnPhraseText("Select a Country to attack from.");
+
+            debugMessage(gameState);
             if (gameState.getCurrentPlayer().isComputerPlayer()) {
                 gameState.getCurrentPlayer().attack(gameState);
-                nextTurnButton(gameState);
-            } else {
-                gameState.setCurrentTurnPhraseText("Select a Country to attack from.");
             }
         }
     }

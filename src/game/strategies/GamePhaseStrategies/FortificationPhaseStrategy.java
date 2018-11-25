@@ -20,6 +20,11 @@ public class FortificationPhaseStrategy extends BasePhaseStrategy {
         resetToAndFrom(gameState);
 
         highlightPayerCountries(gameState.getCountries(), gameState.getCurrentPlayer());
+
+        debugMessage(gameState);
+        if (gameState.getCurrentPlayer().isComputerPlayer()) {
+            gameState.getCurrentPlayer().fortify(gameState);
+        }
     }
 
     @Override

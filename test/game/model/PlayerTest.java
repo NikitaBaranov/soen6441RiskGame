@@ -72,7 +72,7 @@ public class PlayerTest {
     }
 
     /**
-     * Check if reinforcement selected correct country
+     * Check if reinforce selected correct country
      */
     @Test
     public void reinforcementSelectedCorrectCountry() {
@@ -88,7 +88,7 @@ public class PlayerTest {
     }
 
     /**
-     * Check if reinforcement not selected incorrect country
+     * Check if reinforce not selected incorrect country
      */
     @Test
     public void reinforcementNotSelectedIncorrectCountry() {

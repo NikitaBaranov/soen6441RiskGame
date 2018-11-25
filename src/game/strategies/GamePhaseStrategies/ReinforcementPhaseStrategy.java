@@ -18,7 +18,7 @@ public class ReinforcementPhaseStrategy extends BasePhaseStrategy {
      *
      * @param player    current player
      * @param countries countries of player
-     * @return int number of reinforcement armies
+     * @return int number of reinforce armies
      */
     private static int getReinforcementArmies(Player player, List<Country> countries) {
         int countriesOwnedByPlayer = 0;
@@ -35,9 +35,10 @@ public class ReinforcementPhaseStrategy extends BasePhaseStrategy {
     @Override
     public void init(GameState gameState) {
         gameState.setCurrentGamePhase(REINFORCEMENT);
-        System.out.println("Next Turn Button Clicked. Next Phase is " + gameState.getCurrentGamePhase());
 
         resetToAndFrom(gameState);
+        unHighlightCountries(gameState);
+        unSelectCountries(gameState);
 
         // Change current player
         gameState.setCurrentPlayer(gameState.getPlayers().get((gameState.getPlayers().indexOf(gameState.getCurrentPlayer()) + 1) % gameState.getPlayers().size()));
@@ -57,13 +58,19 @@ public class ReinforcementPhaseStrategy extends BasePhaseStrategy {
         }
         gameState.setCurrentTurnPhraseText("Select a country to place your army. Armies to place  " + gameState.getCurrentPlayer().getArmies());
         highlightPayerCountries(gameState.getCountries(), gameState.getCurrentPlayer());
+
+        debugMessage(gameState);
+
+        if (gameState.getCurrentPlayer().isComputerPlayer()) {
+            gameState.getCurrentPlayer().reinforce(gameState);
+        }
     }
 
     @Override
     public void mapClick(GameState gameState, int x, int y) {
         if (selectCountry(gameState, x, y)) {
             if (gameState.getCurrentCountry().getPlayer() == gameState.getCurrentPlayer()) {
-                gameState.getCurrentPlayer().reinforcement(gameState);
+                gameState.getCurrentPlayer().reinforce(gameState);
             }
         }
     }

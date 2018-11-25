@@ -17,12 +17,116 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
     }
 
     @Override
+    public void reinforce(GameState gameState) {
+        System.out.println("AI Aggressive Reinforce!");
+        unHighlightCountries(gameState);
+        unSelectCountries(gameState);
+        new ReinforceWorker(gameState).execute();
+    }
+
+    @Override
     public void attack(GameState gameState) {
         System.out.println("AI Aggressive Attack!");
         unHighlightCountries(gameState);
         unSelectCountries(gameState);
-        new AttackWorker(gameState).execute();
-        Game.getInstance().getGamePhaseStrategy().nextTurnButton(gameState);
+        AttackWorker attackWorker = new AttackWorker(gameState);
+        attackWorker.execute();
+//        while (!attackWorker .isDone()){
+//            // just waiting;
+//        }
+//        try {
+//            attackWorker.wait();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+    }
+
+    // Copy from Human
+    @Override
+    public void fortify(GameState gameState) {
+        System.out.println("AI Aggressive Fortify!");
+        unHighlightCountries(gameState);
+        unSelectCountries(gameState);
+        new FortifyWorker(gameState).execute();
+    }
+
+    // Copy from Human
+    @Override
+    public void exchange(GameState gameState) {
+        String phrase = "";
+        if (gameState.getSelectedCardsToExchange().size() == 3) {
+            for (CardsEnum cardsEnum : gameState.getSelectedCardsToExchange()) {
+                gameState.getCurrentPlayer().getCardsEnumIntegerMap().put(cardsEnum, gameState.getCurrentPlayer().getCardsEnumIntegerMap().get(cardsEnum) - 1);
+            }
+            phrase = String.join(", ", gameState.getSelectedCardsToExchange().stream().map(CardsEnum::getName).collect(Collectors.toList())) + " cards";
+        } else if (gameState.getSelectedCardsToExchange().size() == 1) {
+            gameState.getCurrentPlayer().getCardsEnumIntegerMap().put(gameState.getSelectedCardsToExchange().get(0), gameState.getCurrentPlayer().getCardsEnumIntegerMap().get(gameState.getSelectedCardsToExchange().get(0)) - 3);
+            phrase = gameState.getSelectedCardsToExchange().get(0).getName() + " card";
+        }
+        gameState.getCurrentPlayer().setArmies(gameState.getCurrentPlayer().getArmies() + gameState.getArmiesToCardExchange());
+        gameState.setArmiesToCardExchange(gameState.getArmiesToCardExchange() + gameState.getARMIES_TO_EXCHANGE_INCREASE());
+        gameState.setCurrentTurnPhraseText("Exchanged " + phrase + " for " + gameState.getARMIES_TO_EXCHANGE_INCREASE() + " armies. Armies to place " + gameState.getCurrentPlayer().getArmies());
+    }
+
+    private class ReinforceWorker extends SwingWorker<Void, String> {
+
+        GameState gameState;
+
+        public ReinforceWorker(GameState gameState) {
+            this.gameState = gameState;
+        }
+
+        @Override
+        protected Void doInBackground() {
+            Country toReinforce = null;
+            int maxArmies = 1;
+            for (Country country : gameState.getCountries()) {
+                if (country.getPlayer() == gameState.getCurrentPlayer() && country.getArmy() > maxArmies) {
+                    toReinforce = country;
+                    maxArmies = country.getArmy();
+                }
+            }
+            if (toReinforce == null) {
+                int maxEnemyNeighbors = 0;
+                for (Country country : gameState.getCountries()) {
+                    if (country.getPlayer() == gameState.getCurrentPlayer()) {
+                        int enemyNeighbours = 0;
+                        for (Country neighbor : country.getNeighbours()) {
+                            if (neighbor.getPlayer() != gameState.getCurrentPlayer()) {
+                                enemyNeighbours++;
+                            }
+                        }
+                        if (enemyNeighbours > maxEnemyNeighbors) {
+                            toReinforce = country;
+                            maxEnemyNeighbors = enemyNeighbours;
+                        }
+                    }
+                }
+            }
+            if (toReinforce != null) {
+                toReinforce.setSelected(true);
+                toReinforce.setArmy(toReinforce.getArmy() + gameState.getCurrentPlayer().getArmies());
+                String message = gameState.getCurrentPlayer().getName() + " reinforce " + toReinforce.getName() + " by " + gameState.getCurrentPlayer().getArmies();
+                gameState.getCurrentPlayer().setArmies(0);
+                gameState.setCurrentTurnPhraseText(message);
+                publish(message);
+            }
+
+            pauseAndRefresh(gameState, 2);
+            return null;
+        }
+
+        @Override
+        protected void process(List<String> chunks) {
+            for (String c : chunks) {
+                System.out.println(c);
+            }
+        }
+
+        @Override
+        protected void done() {
+            Game.getInstance().getGamePhaseStrategy().nextTurnButton(gameState);
+        }
     }
 
     private class AttackWorker extends SwingWorker<Void, String> {
@@ -60,9 +164,10 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
                 }
 
                 if (gameState.getCountryFrom() != null && gameState.getCountryTo() != null) {
-//                    System.out.println("AI Aggressive attacks from " + gameState.getCountryFrom().getName() + " to " + gameState.getCountryTo().getName());
-                    publish("Published attacks from " + gameState.getCountryFrom().getName() + " to " + gameState.getCountryTo().getName());
-                    gameState.setCurrentTurnPhraseText("Attack from " + gameState.getCountryFrom().getName() + " to " + gameState.getCountryTo().getName());
+                    String message = gameState.getCurrentPlayer().getName() + " attacks from " + gameState.getCountryFrom().getName() + " to " + gameState.getCountryTo().getName();
+                    gameState.setCurrentTurnPhraseText(message);
+                    publish(message);
+
                     gameState.getCountryFrom().setSelected(true);
                     gameState.getCountryTo().setHighlighted(true);
                     pauseAndRefresh(gameState, 1);
@@ -84,7 +189,7 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
                         gameState.getCountryTo().setHighlighted(false);
                     }
                 }
-                pauseAndRefresh(gameState, 1);
+                pauseAndRefresh(gameState, 2);
             }
             return null;
         }
@@ -95,56 +200,77 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
                 System.out.println(c);
             }
         }
+
+        @Override
+        protected void done() {
+            Game.getInstance().getGamePhaseStrategy().nextTurnButton(gameState);
+        }
+
     }
 
-    // Copy from Human
-    @Override
-    public void exchange(GameState gameState) {
-        String phrase = "";
-        if (gameState.getSelectedCardsToExchange().size() == 3) {
-            for (CardsEnum cardsEnum : gameState.getSelectedCardsToExchange()) {
-                gameState.getCurrentPlayer().getCardsEnumIntegerMap().put(cardsEnum, gameState.getCurrentPlayer().getCardsEnumIntegerMap().get(cardsEnum) - 1);
+    private class FortifyWorker extends SwingWorker<Void, String> {
+
+        GameState gameState;
+
+        public FortifyWorker(GameState gameState) {
+            this.gameState = gameState;
+        }
+
+        @Override
+        protected Void doInBackground() {
+            Country fromFortify = null;
+            Country toFortify = null;
+
+            int maxArmies = 1;
+            for (Country country : gameState.getCountries()) {
+                if (country.getPlayer() == gameState.getCurrentPlayer() && country.getArmy() > maxArmies) {
+                    fromFortify = country;
+                    maxArmies = country.getArmy();
+                }
             }
-            phrase = String.join(", ", gameState.getSelectedCardsToExchange().stream().map(CardsEnum::getName).collect(Collectors.toList())) + " cards";
-        } else if (gameState.getSelectedCardsToExchange().size() == 1) {
-            gameState.getCurrentPlayer().getCardsEnumIntegerMap().put(gameState.getSelectedCardsToExchange().get(0), gameState.getCurrentPlayer().getCardsEnumIntegerMap().get(gameState.getSelectedCardsToExchange().get(0)) - 3);
-            phrase = gameState.getSelectedCardsToExchange().get(0).getName() + " card";
-        }
-        gameState.getCurrentPlayer().setArmies(gameState.getCurrentPlayer().getArmies() + gameState.getArmiesToCardExchange());
-        gameState.setArmiesToCardExchange(gameState.getArmiesToCardExchange() + gameState.getARMIES_TO_EXCHANGE_INCREASE());
-        gameState.setCurrentTurnPhraseText("Exchanged " + phrase + " for " + gameState.getARMIES_TO_EXCHANGE_INCREASE() + " armies. Armies to place " + gameState.getCurrentPlayer().getArmies());
-    }
+            if (fromFortify != null) {
+                fromFortify.select(false, -1);
+                int maxEnemyNeighbors = 0;
+                for (Country country : gameState.getCountries()) {
+                    if (country.isHighlighted()) {
+                        int enemyNeighbours = 0;
+                        for (Country neighbor : country.getNeighbours()) {
+                            if (neighbor.getPlayer() != gameState.getCurrentPlayer()) {
+                                enemyNeighbours++;
+                            }
+                        }
+                        if (enemyNeighbours > maxEnemyNeighbors) {
+                            toFortify = country;
+                            maxEnemyNeighbors = enemyNeighbours;
+                        }
+                    }
+                }
+            }
+            if (toFortify != null && fromFortify != null) {
+                unHighlightCountries(gameState);
+                toFortify.setHighlighted(true);
+                int armyToFortify = fromFortify.getArmy() - 1;
+                toFortify.setArmy(toFortify.getArmy() + armyToFortify);
+                fromFortify.setArmy(1);
+                String message = gameState.getCurrentPlayer().getName() + " fortify " + toFortify.getName() + " from " + fromFortify.getName() + " by " + armyToFortify;
+                gameState.setCurrentTurnPhraseText(message);
+                publish(message);
+            }
 
-    // Copy from Human
-    @Override
-    public void reinforce(GameState gameState) {
-        if (gameState.getCurrentPlayer().getArmies() > 0) {
-            gameState.getCurrentCountry().setArmy(gameState.getCurrentCountry().getArmy() + 1);
-            gameState.getCurrentPlayer().setArmies(gameState.getCurrentPlayer().getArmies() - 1);
-            gameState.setCurrentTurnPhraseText("Armies to place " + gameState.getCurrentPlayer().getArmies());
-        } else {
-            unHighlightCountries(gameState);
+            pauseAndRefresh(gameState, 2);
+            return null;
         }
-    }
 
-    // Copy from Human
-    @Override
-    public void fortify(GameState gameState) {
-        if (gameState.getCountryFrom() == null) {
-            unHighlightCountries(gameState);
-            gameState.setCountryFrom(gameState.getCurrentCountry());
-            gameState.setCurrentTurnPhraseText("Select a country to move an army.");
-            gameState.getCurrentCountry().select(false, -1);
-        } else if (gameState.getCountryTo() == null && gameState.getCurrentCountry().isHighlighted()) {
-            gameState.getCountryFrom().unSelect(false);
-            gameState.getCountryFrom().setSelected(true);
-            gameState.setCountryTo(gameState.getCurrentCountry());
-            gameState.getCountryTo().setHighlighted(true);
-            gameState.setCurrentTurnPhraseText("Click on country to move one army.");
+        @Override
+        protected void process(List<String> chunks) {
+            for (String c : chunks) {
+                System.out.println(c);
+            }
         }
-        if (gameState.getCountryFrom() != null && gameState.getCountryFrom().getArmy() > 1 && gameState.getCountryTo() != null) {
-            gameState.getCountryFrom().setArmy(gameState.getCountryFrom().getArmy() - 1);
-            gameState.getCountryTo().setArmy(gameState.getCountryTo().getArmy() + 1);
+
+        @Override
+        protected void done() {
+            Game.getInstance().getGamePhaseStrategy().nextTurnButton(gameState);
         }
     }
 }

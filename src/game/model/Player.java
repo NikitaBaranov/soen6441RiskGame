@@ -52,7 +52,7 @@ public class Player {
     /**
      * Reinforcement for player
      */
-    public void reinforcement(GameState gameState) {
+    public void reinforce(GameState gameState) {
         strategy.reinforce(gameState);
     }
 

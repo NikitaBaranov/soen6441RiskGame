@@ -82,6 +82,13 @@ public class BasePhaseStrategy implements IGamePhaseStrategy {
         return true;
     }
 
+    static void debugMessage(GameState gameState) {
+        System.out.println("-----");
+        System.out.println("Current phase " + gameState.getCurrentGamePhase().toString());
+        System.out.println("Current player " + gameState.getCurrentPlayer().getName());
+        System.out.println("-----");
+    }
+
     @Override
     public void init(GameState gameState) {
         System.out.println("The init method is not implemented in " + this.getClass().getName() + " strategy.");
