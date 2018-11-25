@@ -1,5 +1,10 @@
 package game.strategies.PlayerStrategies;
 
+/**
+ * Player strategy enums. Stores the possible strategies.
+ *
+ * @author Dmitry Kryukov
+ */
 public enum PlayerStrategyEnum {
     HUMAN_STRATEGY(false),
     AI_AGGRESSIVE_STRATEGY(true),

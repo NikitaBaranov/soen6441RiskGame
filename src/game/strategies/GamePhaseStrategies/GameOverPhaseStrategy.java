@@ -4,8 +4,17 @@ import game.model.GameState;
 
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.GAME_OVER;
 
+/**
+ * Game over phase strategy. Describes the game over actions.
+ *
+ * @author Dmitry Kryukov
+ * @see BasePhaseStrategy
+ */
 public class GameOverPhaseStrategy extends BasePhaseStrategy {
-
+    /**
+     * Initialization of game over phase. Show status messages. Block buttons.
+     * @param gameState
+     */
     @Override
     public void init(GameState gameState) {
         super.init(gameState);

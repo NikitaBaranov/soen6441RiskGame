@@ -17,14 +17,25 @@ import static game.strategies.GamePhaseStrategies.GamePhaseEnum.GAME_OVER;
 import static game.strategies.MapFunctionsUtil.isMoreAttacks;
 import static game.strategies.MapFunctionsUtil.selectCountry;
 
+/**
+ * Attack phase strategy class. Describes the attack phase, prepare game for attacing.
+ * @author Dmitry Kryukov, Ksenia popova
+ * @see BasePhaseStrategy
+ */
 public class AttackPhaseStrategy extends BasePhaseStrategy {
 
+    /**
+     * Initialization for attack phase. Set required states and variables.
+     * Show status messages.
+     * @param gameState
+     */
     @Override
     public void init(GameState gameState) {
         super.init(gameState);
         gameState.setMinArmiesToMoveAfterWin(0);
         gameState.setWinBattle(false);
         gameState.setGiveACard(false);
+
 
         if (!isMoreAttacks(gameState)) {
             nextTurnButton(gameState);
@@ -39,12 +50,22 @@ public class AttackPhaseStrategy extends BasePhaseStrategy {
         }
     }
 
+    /**
+     * Force changing state after click on map
+     * @param gameState
+     * @param x
+     * @param y
+     */
     @Override
     public void mapClick(GameState gameState, int x, int y) {
         selectCountry(gameState, x, y);
         gameState.getCurrentPlayer().beforeAndAfterAttack(gameState);
     }
 
+    /**
+     * Assign random card on pressing next turn button. And go to next turn.
+     * @param gameState
+     */
     @Override
     public void nextTurnButton(GameState gameState) {
         if (gameState.isGiveACard()) {
@@ -61,6 +82,10 @@ public class AttackPhaseStrategy extends BasePhaseStrategy {
         Game.getInstance().getGamePhaseStrategy().init(gameState);
     }
 
+    /**
+     *Attack button force required game states and check if game is over.
+     * @param gameState
+     */
     @Override
     public void attackButton(GameState gameState) {
         gameState.getCurrentPlayer().attack(gameState);

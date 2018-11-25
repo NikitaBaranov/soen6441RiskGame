@@ -93,18 +93,34 @@ public class Game {
         gameState.notifyObservers();
     }
 
+    /**
+     * Getter for the game state. Needs to get the game state from the controller
+     * @return gameState
+     */
     public GameState getGameState() {
         return gameState;
     }
 
+    /**
+     * Setter for the game state. Needs to set the game state to the controller
+     * @param gameState
+     */
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
     }
 
+    /**
+     * Getter for strategy of the game.
+     * @return gamePhaseStrategy
+     */
     public IGamePhaseStrategy getGamePhaseStrategy() {
         return gamePhaseStrategy;
     }
 
+    /**
+     * Setter for strategy of the game
+     * @param gamePhaseStrategy
+     */
     public void setGamePhaseStrategy(IGamePhaseStrategy gamePhaseStrategy) {
         this.gamePhaseStrategy = gamePhaseStrategy;
     }

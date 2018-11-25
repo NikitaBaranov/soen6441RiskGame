@@ -6,6 +6,11 @@ import game.model.Player;
 
 import java.util.List;
 
+/**
+ * Utils methods.
+ * methods that required by strategies.
+ * @author Dmitry Kryukov
+ */
 public class MapFunctionsUtil {
 
     /**
@@ -52,6 +57,13 @@ public class MapFunctionsUtil {
         }
     }
 
+    /**
+     * Select country action.
+     * @param gameState
+     * @param x
+     * @param y
+     * @return
+     */
     public static boolean selectCountry(GameState gameState, int x, int y) {
         gameState.setCurrentCountry(null);
 

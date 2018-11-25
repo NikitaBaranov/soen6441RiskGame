@@ -244,6 +244,7 @@ public class MainMenu extends JFrame {
 
     /**
      * Method generates the buttons for menu bar with calling start game with AI
+     * in Single game mode.
      *
      * @return aiButtons object to attach the buttons to the window
      */
@@ -344,6 +345,7 @@ public class MainMenu extends JFrame {
 
     /**
      * Method generates the buttons for menu bar with calling AI game
+     * Tournament mode
      *
      * @return tournamentButtons object to attach the buttons to the window
      */
@@ -381,6 +383,7 @@ public class MainMenu extends JFrame {
 
     /**
      * Exit functionality
+     * Eventlistener that call exit function
      */
     class ExitAction extends AbstractAction {
         private static final long serialVersionUID = 1L;

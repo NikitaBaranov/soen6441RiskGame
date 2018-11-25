@@ -72,7 +72,7 @@ public class PlayerTest {
     }
 
     /**
-     * Check if reinforce selected correct country
+     * Check that during reinforce country moved to another country: country1 correctly.
      */
     @Test
     public void reinforcementSelectedCorrectCountry() {
@@ -88,7 +88,7 @@ public class PlayerTest {
     }
 
     /**
-     * Check if reinforce not selected incorrect country
+     * Check that during reinforce the country that shouldn't be highlithed is not highlighted
      */
     @Test
     public void reinforcementNotSelectedIncorrectCountry() {
@@ -101,6 +101,9 @@ public class PlayerTest {
         assertFalse(country4.isHighlighted());
     }
 
+    /**
+     * Check that within attack phase the correct country are highlighted
+     */
     @Test
     public void attackSelectedCorrectCountry() {
         game.initialise();
@@ -113,6 +116,9 @@ public class PlayerTest {
         assertTrue(country4.isHighlighted());
     }
 
+    /**
+     * Check that during attack the country1 is not highlighted
+     */
     @Test
     public void attackNoSelectedPlayersCountries() {
         game.initialise();
@@ -127,7 +133,9 @@ public class PlayerTest {
 
 
     /**
-     * Check fortification correct transition to next player
+     * Check that during fortification the player transition works ok.
+     * Next player i.e. Player2 should be current.
+     *
      */
     @Test
     public void fortificationCorrectTransitionToNextPlayer() {
@@ -139,7 +147,7 @@ public class PlayerTest {
     }
 
     /**
-     * Check fortification that player has no actions when selected enemies counrty
+     * Check that during fortification that player has no actions when selected enemies counrty
      */
     @Test
     public void fortificationNoActionsWhenSelectedEnemiesCountry() {

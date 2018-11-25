@@ -8,6 +8,11 @@ import game.ui.view.IPanelObserver;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Game state class. Observable that get all states and update all observers.
+ * @author Dmitry Kryukov, Ksenia Popova
+ * @see IObservable
+ */
 public class GameState implements IObservable {
 
     private final int ARMIES_TO_EXCHANGE_INCREASE = 5;
@@ -382,10 +387,18 @@ public class GameState implements IObservable {
         this.giveACard = giveACard;
     }
 
+    /**
+     * Getter of selected cards to exchange.
+     * @return selectedCardsToExcnahge
+     */
     public List<CardsEnum> getSelectedCardsToExchange() {
         return selectedCardsToExchange;
     }
 
+    /**
+     * Setter for selected cards to excnahge.
+     * @param selectedCardsToExchange
+     */
     public void setSelectedCardsToExchange(List<CardsEnum> selectedCardsToExchange) {
         this.selectedCardsToExchange = selectedCardsToExchange;
     }

@@ -1,7 +1,16 @@
 package game.strategies.PlayerStrategies;
 
+/**
+ * Player strategy factory. Allow us to choose strategies for player.
+ *
+ * @author Dmitry kryukov, Ksenia Popova
+ */
 public class PlayerStrategyFactory {
-
+    /**
+     * Get strategies.
+     * @param playerStrategyEnum
+     * @return
+     */
     public static IPlayerStrategy getStrategy(PlayerStrategyEnum playerStrategyEnum) {
         switch (playerStrategyEnum) {
             case HUMAN_STRATEGY:

@@ -55,6 +55,7 @@ public class MapLoader {
      * @param numberOfPlayers number of players
      * @param filePath        path to the map
      * @param mode            boolean mode that can be used to start the program in special mode to test features
+     * @param playersModes    The modes for every player in the game. Choose strategies.
      */
     public MapLoader(int numberOfPlayers, String filePath, boolean mode, List<String> playersModes) {
         // If true - the program in test mode.
@@ -264,6 +265,8 @@ public class MapLoader {
         for (int i = 0; i < countries.size(); i++) {
             int newPlayer = rand.nextInt(numberOfPlayers);
 
+            // TODO The feature for testing purposes. Needs to run game with specific rules to test continent bonus featiure.
+            // It assign to 2 players the whole continents every time
             // Check test mode
             if (testMode) {
                 // Test continent bonus

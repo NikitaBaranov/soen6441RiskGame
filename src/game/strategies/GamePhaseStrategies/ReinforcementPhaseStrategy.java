@@ -13,6 +13,12 @@ import static game.strategies.GamePhaseStrategies.GamePhaseEnum.REINFORCEMENT;
 import static game.strategies.MapFunctionsUtil.highlightPayerCountries;
 import static game.strategies.MapFunctionsUtil.selectCountry;
 
+/**
+ * Reinforcement phase strategy. Describes the reinforcement features.
+ *
+ * @author Dmitry Kryukov, Ksenia Popova
+ * @see BasePhaseStrategy
+ */
 public class ReinforcementPhaseStrategy extends BasePhaseStrategy {
 
     /**
@@ -34,6 +40,12 @@ public class ReinforcementPhaseStrategy extends BasePhaseStrategy {
         else return player.getArmies() + countriesOwnedByPlayer / 3;
     }
 
+    /**
+     * Initialization of the phase.
+     * Setup required game states.
+     * Show status messages
+     * @param gameState
+     */
     @Override
     public void init(GameState gameState) {
         super.init(gameState);
@@ -66,6 +78,12 @@ public class ReinforcementPhaseStrategy extends BasePhaseStrategy {
         }
     }
 
+    /**
+     * Map click action behavoir.
+     * @param gameState
+     * @param x
+     * @param y
+     */
     @Override
     public void mapClick(GameState gameState, int x, int y) {
         if (selectCountry(gameState, x, y)) {
@@ -75,6 +93,12 @@ public class ReinforcementPhaseStrategy extends BasePhaseStrategy {
         }
     }
 
+    /**
+     * Next turn button action behavoir. Set requiresd game states.
+     * Force next phase attack.
+     * Doesn't allow to go to next turn if user has more than 5 cards to excnahge
+     * @param gameState
+     */
     @Override
     public void nextTurnButton(GameState gameState) {
 
@@ -91,6 +115,10 @@ public class ReinforcementPhaseStrategy extends BasePhaseStrategy {
         }
     }
 
+    /**
+     * Exchange button behavoir. Call the required game state function for exchange.
+     * @param gameState
+     */
     @Override
     public void exchangeButton(GameState gameState) {
         gameState.getCurrentPlayer().exchange(gameState);

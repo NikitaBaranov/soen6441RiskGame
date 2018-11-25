@@ -11,11 +11,23 @@ import static game.strategies.MapFunctionsUtil.highlightPayerCountries;
 import static game.strategies.MapFunctionsUtil.selectCountry;
 import static game.strategies.MapFunctionsUtil.unHighlightCountries;
 
+/**
+ * Startup phase strategy.
+ * Setup requires game states. Preparing the game for startup phase
+ * Show status messages
+ *
+ * @author Dmitry Kryukov, Ksenia Popova
+ * @see BasePhaseStrategy
+ */
 public class PlacingArmiesPhaseStrategy extends BasePhaseStrategy {
-
+    /**
+     * Initialization of the startup phase. Setup required game states and vars.
+     * @param gameState
+     */
     @Override
     public void init(GameState gameState) {
         super.init(gameState);
+
         gameState.setCurrentGamePhase(PLACING_ARMIES);
         gameState.setCurrentPlayer(gameState.getPlayers().get(0));
         gameState.setNextTurnButton(false);
@@ -24,6 +36,13 @@ public class PlacingArmiesPhaseStrategy extends BasePhaseStrategy {
         gameState.setCurrentTurnPhraseText("Select a country to place your army.");
     }
 
+    /**
+     * Behavoir of map click action.
+     * Seup requires game states, show status messages. Checks of different game rules conditions
+     * @param gameState
+     * @param x
+     * @param y
+     */
     @Override
     public void mapClick(GameState gameState, int x, int y) {
         if (selectCountry(gameState, x, y)) {
@@ -55,6 +74,10 @@ public class PlacingArmiesPhaseStrategy extends BasePhaseStrategy {
         }
     }
 
+    /**
+     * Next turn button behavoir. Force the game to next phase attack
+     * @param gameState
+     */
     @Override
     public void nextTurnButton(GameState gameState) {
         Game.getInstance().setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(ATTACK));
