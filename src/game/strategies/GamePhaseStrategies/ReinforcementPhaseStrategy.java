@@ -19,6 +19,7 @@ import static game.strategies.MapFunctionsUtil.selectCountry;
  * @author Dmitry Kryukov, Ksenia Popova
  * @see BasePhaseStrategy
  */
+// TODO реинфорсмент. выводит неправильное количество оставшихся армий, доходит до нуля и позволяет тыкнуть на страну когда всего 0 армий доступно для размещения.
 public class ReinforcementPhaseStrategy extends BasePhaseStrategy {
 
     /**

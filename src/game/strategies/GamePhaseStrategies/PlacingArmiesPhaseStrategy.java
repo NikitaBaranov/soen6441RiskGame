@@ -19,6 +19,7 @@ import static game.strategies.MapFunctionsUtil.unHighlightCountries;
  * @author Dmitry Kryukov, Ksenia Popova
  * @see BasePhaseStrategy
  */
+// TODO place armies выводит неправильное количество оставшихся армий, доходит до 0 и позволяет поставить последнюю армию.
 public class PlacingArmiesPhaseStrategy extends BasePhaseStrategy {
     /**
      * Initialization of the startup phase. Setup required game states and vars.
