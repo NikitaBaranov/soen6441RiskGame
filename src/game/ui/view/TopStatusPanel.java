@@ -30,22 +30,25 @@ public class TopStatusPanel extends JPanel implements IPanelObserver {
     public TopStatusPanel(int width, int height) {
         this.setPreferredSize(new Dimension(width, height));
         this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
-
-        this.add(new JLabel(" Player: "));
+        JLabel playerLabel = new JLabel("Player: ");
+        playerLabel.setForeground(Color.YELLOW);
+        this.add(playerLabel);
         this.add(playerName);
         JSeparator separator1 = new JSeparator(SwingConstants.HORIZONTAL); // Horizontal separator
         separator1.setBackground(new Color(121,180,115)); // make it invisible
         separator1.setForeground(new Color(121,180,115)); // make it invisible
         this.add(separator1);
-
-        this.add(new JLabel("Status: "));
+        JLabel statusLabel = new JLabel("Status: ");
+        statusLabel.setForeground(Color.YELLOW);
+        this.add(statusLabel);
         this.add(turnPhrase);
         JSeparator separator3 = new JSeparator(SwingConstants.HORIZONTAL); // Horizontal separator
         separator3.setBackground(new Color(121,180,115)); // make it invisible
         separator3.setForeground(new Color(121,180,115)); // make it invisible
         this.add(separator3);
-
-        this.add(new JLabel("Phase: "));
+        JLabel phaseLabel = new JLabel("Phase: ");
+        phaseLabel.setForeground(Color.YELLOW);
+        this.add(phaseLabel);
         this.add(gamePhase);
 
         saveGameButton.setText("Save");

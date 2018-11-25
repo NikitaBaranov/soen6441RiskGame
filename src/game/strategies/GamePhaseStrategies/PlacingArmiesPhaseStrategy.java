@@ -17,6 +17,7 @@ public class PlacingArmiesPhaseStrategy extends BasePhaseStrategy {
         gameState.setNextTurnButton(false);
         Dice.resetDice(gameState.getRedDice(), gameState.getWhiteDice());
         highlightPayerCountries(gameState.getCountries(), gameState.getCurrentPlayer());
+        gameState.setCurrentTurnPhraseText("Select a country to place your army.");
     }
 
     @Override
@@ -43,9 +44,9 @@ public class PlacingArmiesPhaseStrategy extends BasePhaseStrategy {
             if (gameState.getCurrentPlayer().getArmies() <= 0) {
                 gameState.setNextTurnButton(true);
                 gameState.setCurrentTurnPhraseText("The turn is over. Press \"Next turn\" button.");
+                unHighlightCountries(gameState);
                 // TODO Check if its done correctly. Automatic go to next turn when placing armies is over
                 nextTurnButton(gameState);
-                unHighlightCountries(gameState);
             }
         }
     }

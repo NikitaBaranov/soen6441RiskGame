@@ -20,6 +20,8 @@ public class HumanPlayerStrategy extends BasePlayerStrategy {
             gameState.setCurrentTurnPhraseText("Armies to place " + gameState.getCurrentPlayer().getArmies());
         } else {
             unHighlightCountries(gameState);
+            // TODO automatic go to next turn if no more armies to place
+            Game.getInstance().getGamePhaseStrategy().nextTurnButton(gameState);
         }
     }
 
@@ -123,11 +125,16 @@ public class HumanPlayerStrategy extends BasePlayerStrategy {
             gameState.getCountryFrom().setSelected(true);
             gameState.setCountryTo(gameState.getCurrentCountry());
             gameState.getCountryTo().setHighlighted(true);
-            gameState.setCurrentTurnPhraseText("Click on country to move one army.");
+            gameState.setCurrentTurnPhraseText("Click on country to move an army.");
         }
         if (gameState.getCountryFrom() != null && gameState.getCountryFrom().getArmy() > 1 && gameState.getCountryTo() != null) {
             gameState.getCountryFrom().setArmy(gameState.getCountryFrom().getArmy() - 1);
             gameState.getCountryTo().setArmy(gameState.getCountryTo().getArmy() + 1);
+            gameState.setCurrentTurnPhraseText("Move army from "+ gameState.getCountryFrom().getName()+" to "+ gameState.getCountryTo().getName());
+        }
+        if (gameState.getCountryFrom().getArmy() == 1){
+            // TODO automatic go to next turn if user can not move anything to another country
+            Game.getInstance().getGamePhaseStrategy().nextTurnButton(gameState);
         }
     }
 

@@ -56,7 +56,7 @@ public class MapLoader {
      * @param filePath        path to the map
      * @param mode            boolean mode that can be used to start the program in special mode to test features
      */
-    public MapLoader(int numberOfPlayers, String filePath, boolean mode, String game_mode) {
+    public MapLoader(int numberOfPlayers, String filePath, boolean mode, List<String> playersModes) {
         // If true - the program in test mode.
         boolean testMode = mode;
         mapPath = filePath;
@@ -64,45 +64,115 @@ public class MapLoader {
         // FIXME oh my god.
         invalidMap = false;
         String line2;
-        Color[] playerColor = new Color[4];
+        Color[] playerColor = new Color[8];
 
         playerColor[0] = Color.BLUE;
         playerColor[1] = Color.ORANGE;
         playerColor[2] = Color.CYAN;
         playerColor[3] = Color.GRAY;
+        playerColor[4] = Color.PINK;
+        playerColor[5] = Color.MAGENTA;
+        playerColor[6] = Color.DARK_GRAY;
+        playerColor[7] = Color.BLACK;
+
+        ArrayList<Color> pColors = new ArrayList<>();
+        pColors.add(playerColor[0]);
+        pColors.add(playerColor[1]);
+        pColors.add(playerColor[2]);
+        pColors.add(playerColor[3]);
+        pColors.add(playerColor[4]);
+        pColors.add(playerColor[5]);
+        pColors.add(playerColor[6]);
+        pColors.add(playerColor[7]);
 
         //Player[] playerList = new Player[numberOfPlayers];
+        // TODO This var needs for testing mode when we test continent bonus
         int[] countriesPerPlayer = new int[numberOfPlayers];
-
-        switch (game_mode) {
-            case "human":
-                for (int i = 0; i < numberOfPlayers; i++) {
-                    players.add(new Player("Human Player " + (i + 1), playerColor[i], playerStrategyFactory.getStrategy(PlayerStrategyEnum.HUMAN_STRATEGY), false));
-                    countriesPerPlayer[i] = 0;
-                }
-                break;
-            case "aggressive":
-                players.add(new Player("Human Player ", playerColor[0], playerStrategyFactory.getStrategy(PlayerStrategyEnum.HUMAN_STRATEGY), false));
-                players.add(new Player("Aggressive AI", playerColor[1], playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_AGGRESSIVE_STRATEGY), true));
-                break;
-            case "benevolent":
-                players.add(new Player("Human Player ", playerColor[0], playerStrategyFactory.getStrategy(PlayerStrategyEnum.HUMAN_STRATEGY), false));
-                players.add(new Player("Benevolent AI", playerColor[1], playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_BENEVOLENT_STRATEGY), true));
-                break;
-            case "random":
-                players.add(new Player("Human Player ", playerColor[0], playerStrategyFactory.getStrategy(PlayerStrategyEnum.HUMAN_STRATEGY), false));
-                players.add(new Player("Random AI", playerColor[1], playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_RANDOM_STRATEGY), true));
-                break;
-            case "cheater":
-                players.add(new Player("Human Player ", playerColor[0], playerStrategyFactory.getStrategy(PlayerStrategyEnum.HUMAN_STRATEGY), false));
-                players.add(new Player("Cheater AI", playerColor[1], playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_CHEATER_STRATEGY), true));
-                break;
-            case "tournament":
-                // TODO need to be implemented
-                break;
-            default:
-                break;
+        for (int i = 0; i < numberOfPlayers; i++) {
+            countriesPerPlayer[i] = 0;
         }
+
+        // Players creation. The numberOfPlayers should be the same as size of playersModes.
+        if(numberOfPlayers == playersModes.size()){
+            for (String playermode: playersModes){
+                switch(playermode){
+                    case "Human":
+                        int humanCounter = 1;
+                        if(players.size() > 0){
+                            for (Player player: players){
+                                String existedName = player.getName();
+                                if (existedName.contains("Human")){
+                                    humanCounter+=1;
+                                }
+                            }
+                            players.add(new Player("Human Player " + humanCounter, pColors.remove(0), playerStrategyFactory.getStrategy(PlayerStrategyEnum.HUMAN_STRATEGY), false));
+                        } else {
+                            players.add(new Player("Human Player " + humanCounter, pColors.remove(0), playerStrategyFactory.getStrategy(PlayerStrategyEnum.HUMAN_STRATEGY), false));
+                        }
+                        break;
+                    case "Aggressive":
+                        int aggrCounter = 1;
+                        if(players.size() > 0){
+                            for (Player player: players){
+                                String existedName = player.getName();
+                                if (existedName.contains("Aggressive")){
+                                    aggrCounter+=1;
+                                }
+                            }
+                            players.add(new Player("Aggressive AI " + aggrCounter, pColors.remove(0), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_AGGRESSIVE_STRATEGY), true));
+                        } else {
+                            players.add(new Player("Aggressive AI " + aggrCounter, pColors.remove(0), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_AGGRESSIVE_STRATEGY), true));
+                        }
+                        break;
+                    case "Benevolent":
+                        int benevCounter = 1;
+                        if(players.size() > 0){
+                            for (Player player: players){
+                                String existedName = player.getName();
+                                if (existedName.contains("Benevolent")){
+                                    benevCounter+=1;
+                                }
+                            }
+                            players.add(new Player("Benevolent AI " + benevCounter, pColors.remove(0), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_BENEVOLENT_STRATEGY), true));
+                        } else {
+                            players.add(new Player("Benevolent AI " + benevCounter, pColors.remove(0), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_BENEVOLENT_STRATEGY), true));
+                        }
+                        break;
+                    case "Random":
+                        int randCounter = 1;
+                        if(players.size() > 0){
+                            for (Player player: players){
+                                String existedName = player.getName();
+                                if (existedName.contains("Random")){
+                                    randCounter+=1;
+                                }
+                            }
+                            players.add(new Player("Random AI " + randCounter, pColors.remove(0), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_RANDOM_STRATEGY), true));
+                        } else {
+                            players.add(new Player("Random AI " + randCounter, pColors.remove(0), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_RANDOM_STRATEGY), true));
+                        }
+                        break;
+                    case "Cheater":
+                        int cheatCounter = 1;
+                        if(players.size() > 0){
+                            for (Player player: players){
+                                String existedName = player.getName();
+                                if (existedName.contains("Cheater")){
+                                    cheatCounter+=1;
+                                }
+                            }
+                            players.add(new Player("Cheater AI " + cheatCounter, pColors.remove(0), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_CHEATER_STRATEGY), true));
+                        } else {
+                            players.add(new Player("Cheater AI " + cheatCounter, pColors.remove(0), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_CHEATER_STRATEGY), true));
+                        }
+                        break;
+                }
+            }
+        } else {
+            System.out.println("Error. Number of players doesnt equal to players modes number");
+            new WarningWindow("Error. Number of players doesnt equal to players modes number");
+        }
+
         List<String> neighboursList = new ArrayList<String>();
 
         // Stub continents

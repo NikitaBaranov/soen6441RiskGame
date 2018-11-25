@@ -52,7 +52,9 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
         this.add(nextTurnButton, gbc);
         gbc.gridx = 0;
         gbc.gridy = 1;
-        this.add(new JLabel("Domination:", null, SwingConstants.CENTER), gbc);
+        JLabel dominationLabel = new JLabel("Domination:", null, SwingConstants.CENTER);
+        dominationLabel.setForeground(Color.YELLOW);
+        this.add(dominationLabel, gbc);
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.weightx = 1.0;
@@ -62,7 +64,9 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
         gbc.gridy = 3;
         gbc.weightx = 0;
         gbc.weighty = 0;
-        this.add(new JLabel("Cards:", null, SwingConstants.CENTER), gbc);
+        JLabel cardsLabel = new JLabel("Cards:", null, SwingConstants.CENTER);
+        cardsLabel.setForeground(Color.YELLOW);
+        this.add(cardsLabel, gbc);
         gbc.gridx = 0;
         gbc.gridy = 4;
         gbc.weightx = 1.0;
@@ -72,7 +76,9 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
         gbc.gridy = 5;
         gbc.weightx = 0;
         gbc.weighty = 0;
-        this.add(new JLabel("Attack:", null, SwingConstants.CENTER), gbc);
+        JLabel attackLabel = new JLabel("Attack:", null, SwingConstants.CENTER);
+        attackLabel.setForeground(Color.YELLOW);
+        this.add(attackLabel, gbc);
 
         this.add(invisibleLabel);
         invisibleLabel.setVisible(false);
