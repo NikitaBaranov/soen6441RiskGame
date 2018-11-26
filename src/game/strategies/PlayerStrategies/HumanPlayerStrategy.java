@@ -4,9 +4,12 @@ import game.Game;
 import game.model.Dice;
 import game.model.GameState;
 import game.model.enums.CardsEnum;
+import game.strategies.GamePhaseStrategies.GamePhaseStrategyFactory;
 
 import java.util.stream.Collectors;
 
+import static game.strategies.GamePhaseStrategies.BasePhaseStrategy.isGameWonBy;
+import static game.strategies.GamePhaseStrategies.GamePhaseEnum.GAME_OVER;
 import static game.strategies.MapFunctionsUtil.isMoreAttacks;
 import static game.strategies.MapFunctionsUtil.resetToAndFrom;
 import static game.strategies.MapFunctionsUtil.unHighlightCountries;
@@ -118,6 +121,11 @@ public class HumanPlayerStrategy extends BasePlayerStrategy {
     public void attack(GameState gameState) {
         if (gameState.getCountryFrom() != null && gameState.getCountryFrom().getArmy() >= 2 && gameState.getCountryTo() != null) {
             rollDiceAndProcessResults(gameState);
+            if (isGameWonBy(gameState, gameState.getCurrentPlayer())) {
+                // TODO Add message that attacker win battle
+                Game.getInstance().setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(GAME_OVER));
+                Game.getInstance().getGamePhaseStrategy().init(gameState);
+            }
         }
     }
 
@@ -144,9 +152,9 @@ public class HumanPlayerStrategy extends BasePlayerStrategy {
         if (gameState.getCountryFrom() != null && gameState.getCountryFrom().getArmy() > 1 && gameState.getCountryTo() != null) {
             gameState.getCountryFrom().setArmy(gameState.getCountryFrom().getArmy() - 1);
             gameState.getCountryTo().setArmy(gameState.getCountryTo().getArmy() + 1);
-            gameState.setCurrentTurnPhraseText("Move army from "+ gameState.getCountryFrom().getName()+" to "+ gameState.getCountryTo().getName());
+            gameState.setCurrentTurnPhraseText("Move army from " + gameState.getCountryFrom().getName() + " to " + gameState.getCountryTo().getName());
         }
-        if (gameState.getCountryFrom().getArmy() == 1){
+        if (gameState.getCountryFrom().getArmy() == 1) {
             // TODO automatic go to next turn if user can not move anything to another country
             // check is this line if in correct place and works fine
             Game.getInstance().getGamePhaseStrategy().nextTurnButton(gameState);
