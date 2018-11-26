@@ -60,8 +60,6 @@ public class HumanPlayerStrategy extends BasePlayerStrategy {
      */
     @Override
     public void beforeAndAfterAttack(GameState gameState) {
-        Game game = Game.getInstance();
-
         if (gameState.isWinBattle()) {
             //TODO: If at the end of your attacking turn you've conquered at least one territory, then you have earned a Risk card. You cannot earn more than one Risk card for this.
             //TODO: If you manage to wipe out an opponent by destroying his or her last army, you gain possession of all the Risk cards he or she may have had in their hands.
@@ -82,8 +80,8 @@ public class HumanPlayerStrategy extends BasePlayerStrategy {
                     resetToAndFrom(gameState);
                     Dice.resetDice(gameState.getRedDice(), gameState.getWhiteDice());
                     gameState.setWinBattle(false);
-                    if (isMoreAttacks(gameState)) {
-                        game.nextTurn();
+                    if (!isMoreAttacks(gameState)) {
+                        Game.getInstance().getGamePhaseStrategy().nextTurnButton(gameState);
                     }
                 }
             }
