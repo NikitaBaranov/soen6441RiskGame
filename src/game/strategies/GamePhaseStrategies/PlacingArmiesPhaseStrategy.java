@@ -79,9 +79,9 @@ public class PlacingArmiesPhaseStrategy extends BasePhaseStrategy {
             gameState.setCurrentPlayer(gameState.getPlayers().get(0));
             Game.getInstance().setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(ATTACK));
             Game.getInstance().getGamePhaseStrategy().init(gameState);
+            gameState.notifyObservers();
             // TODO Check if its done correctly. Automatic go to next turn when placing armies is over
             // I'm not sure that it works well. Just be sure that I added this line in the correct place
-
         } else {
             Player nextPlayer = gameState.getPlayers().get((gameState.getPlayers().indexOf(gameState.getCurrentPlayer()) + 1) % gameState.getPlayers().size());
             gameState.setCurrentPlayer(nextPlayer);
