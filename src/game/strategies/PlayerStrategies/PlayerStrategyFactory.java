@@ -20,13 +20,13 @@ public class PlayerStrategyFactory {
                 return new AiAggressivePlayerStrategy();
 
             case AI_BENEVOLENT_STRATEGY:
-                return null;
+                return new AiBenevolentStrategy();
 
             case AI_RANDOM_STRATEGY:
                 return null;
 
             case AI_CHEATER_STRATEGY:
-                return null;
+                return new AiCheaterStrategy();
 
             default:
                 System.out.println("Incorrect Player Strategy.");
