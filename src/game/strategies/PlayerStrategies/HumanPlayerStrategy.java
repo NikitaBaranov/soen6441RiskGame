@@ -142,7 +142,7 @@ public class HumanPlayerStrategy extends BasePlayerStrategy {
             gameState.setCountryFrom(gameState.getCurrentCountry());
             gameState.setCurrentTurnPhraseText("Select a country to move an army.");
             gameState.getCurrentCountry().select(false, -1);
-        } else if (gameState.getCountryTo() == null && gameState.getCurrentCountry().isHighlighted()) {
+        } else if (gameState.getCountryTo() == null && gameState.getCurrentCountry().isHighlighted() && gameState.getCurrentCountry() != gameState.getCountryFrom()) {
             gameState.getCountryFrom().unSelect(false);
             gameState.getCountryFrom().setSelected(true);
             gameState.setCountryTo(gameState.getCurrentCountry());
