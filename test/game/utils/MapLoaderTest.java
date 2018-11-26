@@ -21,7 +21,7 @@ public class MapLoaderTest {
     public void init(){
         playersModes.add("Human");
         playersModes.add("Human");
-        loader = new MapLoader(2, "wrongContinentNoCountries.map", false, playersModes);
+        loader = new MapLoader(2, "wrongContinentNoCountries.map", false, playersModes, new NotificationWindow());
     }
 
     /**

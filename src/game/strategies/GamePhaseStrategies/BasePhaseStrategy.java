@@ -1,5 +1,6 @@
 package game.strategies.GamePhaseStrategies;
 
+import game.Game;
 import game.model.Country;
 import game.model.GameState;
 import game.model.Player;
@@ -39,6 +40,9 @@ public class BasePhaseStrategy implements IGamePhaseStrategy {
         System.out.println("Current phase " + gameState.getCurrentGamePhase().toString());
         System.out.println("Current player " + gameState.getCurrentPlayer().getName());
         System.out.println("-----");
+        Game.getInstance().getNotification().setNotification("\n------------------------------------------");
+        Game.getInstance().getNotification().setNotification("Current phase " + gameState.getCurrentGamePhase().toString());
+        Game.getInstance().getNotification().setNotification("Current player " + gameState.getCurrentPlayer().getName());
     }
 
     /**

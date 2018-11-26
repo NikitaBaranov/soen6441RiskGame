@@ -20,6 +20,7 @@ public class TopStatusPanel extends JPanel implements IPanelObserver {
     private JLabel gamePhase = new JLabel();
     private JLabel turnPhrase = new JLabel();
     private JButton saveGameButton = new JButton();
+    private JButton notification = new JButton();
 
     /**
      * Constructor of the class.
@@ -56,6 +57,11 @@ public class TopStatusPanel extends JPanel implements IPanelObserver {
         saveGameButton.setMargin(new Insets(5, 0, 5, 0));
         this.add(saveGameButton);
 
+        notification.setText("Show/Hide");
+        notification.addActionListener(notificationButtonListner());
+        notification.setMargin(new Insets(5, 0, 5, 0));
+        this.add(notification);
+
         Game.getInstance().getGameState().attachObserver(this);
     }
 
@@ -78,6 +84,17 @@ public class TopStatusPanel extends JPanel implements IPanelObserver {
         return new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Save game");
+            }
+        };
+    }
+
+    /**
+     * Notification button listener
+     */
+    public ActionListener notificationButtonListner() {
+        return new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Game.getInstance().getNotification().setVisible(!Game.getInstance().getNotification().isVisible());
             }
         };
     }

@@ -1,5 +1,6 @@
 package game.model;
 
+import game.Game;
 import game.model.enums.CardsEnum;
 import game.model.enums.DiceEnum;
 import game.strategies.GamePhaseStrategies.GamePhaseEnum;
@@ -159,6 +160,7 @@ public class GameState implements IObservable {
      */
     public void setCurrentTurnPhraseText(String currentTurnPhraseText) {
         this.currentTurnPhraseText = currentTurnPhraseText;
+        Game.getInstance().getNotification().setNotification(currentTurnPhraseText);
     }
 
     /**

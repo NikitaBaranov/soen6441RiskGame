@@ -18,6 +18,8 @@ public class TournamentMenu extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private int width, height;
+    private NotificationWindow notificationWindow;
+
     // Required parameters for tournament mode
     public String mapFile1 = "";
     public String mapFile2 = "";
@@ -50,8 +52,9 @@ public class TournamentMenu extends JFrame {
     /**
      * The constructor of the class.
      */
-    public TournamentMenu() {
+    public TournamentMenu(NotificationWindow notificationWindow) {
         super("Tournament mode");
+        this.notificationWindow = notificationWindow;
         this.width = 1300;
         this.height = 500;
 
@@ -350,31 +353,31 @@ public class TournamentMenu extends JFrame {
 
                     try {
                         String mapfile = mapFiles.get(0);
-                        MapLoader loader1 = new MapLoader(players, mapfile, tournamentStrategies, games, turns);
+                        MapLoader loader1 = new MapLoader(players, mapfile, tournamentStrategies, games, turns, notificationWindow);
                     } catch ( IndexOutOfBoundsException e ) {
                         System.out.println("no map 1");
                     }
                     try {
                         String mapfile = mapFiles.get(1);
-                        MapLoader loader2 = new MapLoader(players, mapfile, tournamentStrategies, games, turns);
+                        MapLoader loader2 = new MapLoader(players, mapfile, tournamentStrategies, games, turns, notificationWindow);
                     } catch ( IndexOutOfBoundsException e ) {
                         System.out.println("no map 2");
                     }
                     try {
                         String mapfile = mapFiles.get(2);
-                        MapLoader loader3 = new MapLoader(players, mapfile, tournamentStrategies, games, turns);
+                        MapLoader loader3 = new MapLoader(players, mapfile, tournamentStrategies, games, turns, notificationWindow);
                     } catch ( IndexOutOfBoundsException e ) {
                         System.out.println("no map 3");
                     }
                     try {
                         String mapfile = mapFiles.get(3);
-                        MapLoader loader4 = new MapLoader(players, mapfile, tournamentStrategies, games, turns);
+                        MapLoader loader4 = new MapLoader(players, mapfile, tournamentStrategies, games, turns, notificationWindow);
                     } catch ( IndexOutOfBoundsException e ) {
                         System.out.println("no map 4");
                     }
                     try {
                         String mapfile = mapFiles.get(4);
-                        MapLoader loader5 = new MapLoader(players, mapfile, tournamentStrategies, games, turns);
+                        MapLoader loader5 = new MapLoader(players, mapfile, tournamentStrategies, games, turns, notificationWindow);
                     } catch ( IndexOutOfBoundsException e ) {
                         System.out.println("no map 5");
                     }

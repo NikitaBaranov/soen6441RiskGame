@@ -23,7 +23,7 @@ public class PlayerStrategyFactory {
                 return new AiBenevolentStrategy();
 
             case AI_RANDOM_STRATEGY:
-                return null;
+                return new AiRandomPlayerStrategy();
 
             case AI_CHEATER_STRATEGY:
                 return new AiCheaterStrategy();

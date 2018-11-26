@@ -14,6 +14,7 @@ import game.ui.view.DicePanel;
 import game.ui.view.MapPanel;
 import game.ui.view.RightStatusPanel;
 import game.ui.view.TopStatusPanel;
+import game.utils.NotificationWindow;
 
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.PLACING_ARMIES;
 
@@ -39,6 +40,7 @@ public class Game {
     private static Game gameInstance;
     private GameState gameState;
     private IGamePhaseStrategy gamePhaseStrategy;
+    private NotificationWindow notification;
 
     /**
      * get instance method for Controller
@@ -123,5 +125,21 @@ public class Game {
      */
     public void setGamePhaseStrategy(IGamePhaseStrategy gamePhaseStrategy) {
         this.gamePhaseStrategy = gamePhaseStrategy;
+    }
+
+    /**
+     * Allows to get notification object everywhere in the game
+     * @return
+     */
+    public NotificationWindow getNotification() {
+        return notification;
+    }
+
+    /**
+     * Set the norification
+     * @param notification
+     */
+    public void setNotification(NotificationWindow notification) {
+        this.notification = notification;
     }
 }

@@ -1,4 +1,5 @@
 import game.utils.MapLoader;
+import game.utils.NotificationWindow;
 import game.utils.TournamentMenu;
 import mapeditor.Continent;
 import mapeditor.ILoadedMap;
@@ -29,6 +30,7 @@ public class MainMenu extends JFrame {
     private static final long serialVersionUID = 1L;
     private int width, height;
     private ILoadedMap loadedMapObj;
+    private NotificationWindow notificationWindow = new NotificationWindow();
 
     /**
      * The constructor of the class.
@@ -93,7 +95,7 @@ public class MainMenu extends JFrame {
                 playersModes.add("Human");
 
                 String filePath = filePath();
-                new MapLoader(players, filePath, true, playersModes);
+                new MapLoader(players, filePath, true, playersModes, notificationWindow);
             }
         });
         loadGame.addActionListener(new ActionListener() {
@@ -206,7 +208,7 @@ public class MainMenu extends JFrame {
                 playersModes.add("Human");
                 String filePath = filePath();
                 MainMenu.this.setVisible(false);
-                MapLoader loader = new MapLoader(players, filePath, false, playersModes);
+                MapLoader loader = new MapLoader(players, filePath, false, playersModes, notificationWindow);
             }
         });
         player3.addActionListener(new ActionListener() {
@@ -221,7 +223,7 @@ public class MainMenu extends JFrame {
 
                 String filePath = filePath();
                 MainMenu.this.setVisible(false);
-                MapLoader loader = new MapLoader(players, filePath, false, playersModes);
+                MapLoader loader = new MapLoader(players, filePath, false, playersModes, notificationWindow);
             }
         });
         player4.addActionListener(new ActionListener() {
@@ -237,7 +239,7 @@ public class MainMenu extends JFrame {
 
                 String filePath = filePath();
                 MainMenu.this.setVisible(false);
-                MapLoader loader = new MapLoader(players, filePath,false, playersModes);
+                MapLoader loader = new MapLoader(players, filePath,false, playersModes, notificationWindow);
             }
         });
         return startButtons;
@@ -338,7 +340,7 @@ public class MainMenu extends JFrame {
                 } else {
                     String filePath = filePath();
                     MainMenu.this.setVisible(false);
-                    MapLoader loader = new MapLoader(players, filePath, false, playersModes);
+                    MapLoader loader = new MapLoader(players, filePath, false, playersModes, notificationWindow);
                 }
             }
         });
@@ -375,7 +377,7 @@ public class MainMenu extends JFrame {
             public void actionPerformed(ActionEvent arg0) {
                 System.out.println("DEBUG: Chosen tournament\n ------------------------ \n");
                 MainMenu.this.setVisible(false);
-                new TournamentMenu();
+                new TournamentMenu(notificationWindow);
             }
         });
         return tournamentButtons;

@@ -57,7 +57,7 @@ public class MapLoader {
      * @param mode            boolean mode that can be used to start the program in special mode to test features
      * @param playersModes    The modes for every player in the game. Choose strategies.
      */
-    public MapLoader(int numberOfPlayers, String filePath, boolean mode, List<String> playersModes) {
+    public MapLoader(int numberOfPlayers, String filePath, boolean mode, List<String> playersModes, NotificationWindow notificationWindow) {
         // If true - the program in test mode.
         boolean testMode = mode;
         mapPath = filePath;
@@ -373,6 +373,7 @@ public class MapLoader {
         gameState.setContinents(continents);
         Game game = Game.getInstance();
         game.setGameState(gameState);
+        game.setNotification(notificationWindow);
 
         new Main(game, this);
     }
@@ -385,7 +386,7 @@ public class MapLoader {
      * @param filePath        path to the map
      * @param playersModes    The modes for every player in the game. Choose strategies.
      */
-    public MapLoader(int numberOfPlayers, String filePath, List<String> playersModes, int games, int turns) {
+    public MapLoader(int numberOfPlayers, String filePath, List<String> playersModes, int games, int turns, NotificationWindow notificationWindow) {
         mapPath = filePath;
         String line;
         // FIXME oh my god.
@@ -661,6 +662,7 @@ public class MapLoader {
         gameState.setContinents(continents);
         Game game = Game.getInstance();
         game.setGameState(gameState);
+        game.setNotification(notificationWindow);
 
         new Main(game, this);
     }
