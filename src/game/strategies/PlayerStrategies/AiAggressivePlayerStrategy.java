@@ -3,10 +3,13 @@ package game.strategies.PlayerStrategies;
 import game.Game;
 import game.model.Country;
 import game.model.GameState;
+import game.strategies.GamePhaseStrategies.GamePhaseStrategyFactory;
 
 import javax.swing.*;
 import java.util.List;
 
+import static game.strategies.GamePhaseStrategies.BasePhaseStrategy.isGameWonBy;
+import static game.strategies.GamePhaseStrategies.GamePhaseEnum.GAME_OVER;
 import static game.strategies.MapFunctionsUtil.getCountryWithMaxArmy;
 import static game.strategies.MapFunctionsUtil.getCountryWithMaxOpponentNeighbours;
 import static game.strategies.MapFunctionsUtil.resetToAndFrom;
@@ -25,6 +28,7 @@ import static game.strategies.MapFunctionsUtil.unSelectCountries;
 public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
     /**
      * Place Armies.
+     *
      * @param gameState
      */
     @Override
@@ -35,6 +39,7 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
 
     /**
      * Reinforcement phase for AI via worker
+     *
      * @param gameState
      */
     @Override
@@ -47,6 +52,7 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
 
     /**
      * Attacking phase for AI via worker
+     *
      * @param gameState
      */
     @Override
@@ -57,6 +63,7 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
 
     /**
      * Fortify phase for AI via worker
+     *
      * @param gameState
      */
     @Override
@@ -132,6 +139,7 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
 
         /**
          * Constructor of the class.
+         *
          * @param gameState
          */
         public ReinforceWorker(GameState gameState) {
@@ -140,6 +148,7 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
 
         /**
          * Automatic reinforcement in backgrounds.
+         *
          * @return
          */
         @Override
@@ -186,6 +195,7 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
 
         /**
          * Debug method
+         *
          * @param chunks
          */
         @Override
@@ -214,6 +224,7 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
 
         /**
          * Constructor of the class
+         *
          * @param gameState
          */
         public AttackWorker(GameState gameState) {
@@ -222,6 +233,7 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
 
         /**
          * Do attack actions in the background.
+         *
          * @return
          */
         @Override
@@ -283,6 +295,7 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
 
         /**
          * Debug method
+         *
          * @param chunks
          */
         @Override
@@ -297,9 +310,15 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
          */
         @Override
         protected void done() {
-            Game.getInstance().getGamePhaseStrategy().nextTurnButton(gameState);
-        }
+            if (isGameWonBy(gameState, gameState.getCurrentPlayer())) {
+                // TODO Add message that attacker win battle
+                Game.getInstance().setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(GAME_OVER));
+                Game.getInstance().getGamePhaseStrategy().init(gameState);
+            } else {
+                Game.getInstance().getGamePhaseStrategy().nextTurnButton(gameState);
+            }
 
+        }
     }
 
     /**
@@ -312,6 +331,7 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
 
         /**
          * Constructor of the class
+         *
          * @param gameState
          */
         public FortifyWorker(GameState gameState) {
@@ -320,6 +340,7 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
 
         /**
          * Do the foctification actions in the background
+         *
          * @return
          */
         @Override
@@ -369,6 +390,7 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
 
         /**
          * Debug method
+         *
          * @param chunks
          */
         @Override
