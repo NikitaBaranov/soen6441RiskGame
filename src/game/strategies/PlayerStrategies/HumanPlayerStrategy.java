@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 import static game.strategies.GamePhaseStrategies.BasePhaseStrategy.isGameWonBy;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.GAME_OVER;
-import static game.strategies.MapFunctionsUtil.isMoreAttacks;
+import static game.strategies.MapFunctionsUtil.isCountyWithMoreThenOneArmy;
 import static game.strategies.MapFunctionsUtil.resetToAndFrom;
 import static game.strategies.MapFunctionsUtil.unHighlightCountries;
 
@@ -80,10 +80,10 @@ public class HumanPlayerStrategy extends BasePlayerStrategy {
                     resetToAndFrom(gameState);
                     Dice.resetDice(gameState.getRedDice(), gameState.getWhiteDice());
                     gameState.setWinBattle(false);
-                    if (!isMoreAttacks(gameState)) {
-                        Game.getInstance().getGamePhaseStrategy().nextTurnButton(gameState);
-                    }
                 }
+            }
+            if (gameState.getMinArmiesToMoveAfterWin() == 0 && !isCountyWithMoreThenOneArmy(gameState)) {
+                Game.getInstance().getGamePhaseStrategy().nextTurnButton(gameState);
             }
         } else {
             if (gameState.getCurrentCountry() != null) {
@@ -122,6 +122,9 @@ public class HumanPlayerStrategy extends BasePlayerStrategy {
                 // TODO Add message that attacker win battle
                 Game.getInstance().setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(GAME_OVER));
                 Game.getInstance().getGamePhaseStrategy().init(gameState);
+            }
+            if (gameState.getMinArmiesToMoveAfterWin() == 0 && !isCountyWithMoreThenOneArmy(gameState)) {
+                Game.getInstance().getGamePhaseStrategy().nextTurnButton(gameState);
             }
         }
     }

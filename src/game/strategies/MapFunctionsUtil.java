@@ -127,7 +127,7 @@ public class MapFunctionsUtil {
         return countryWithMaxNeighbours;
     }
 
-    public static boolean isFortifyPossible(GameState gameState) {
+    public static boolean isCountyWithMoreThenOneArmy(GameState gameState) {
         for (Country country : gameState.getCountries()) {
             if (country.getPlayer() == gameState.getCurrentPlayer() && country.getArmy() > 1) {
                 return true;

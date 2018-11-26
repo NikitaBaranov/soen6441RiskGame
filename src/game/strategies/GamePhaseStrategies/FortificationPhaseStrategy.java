@@ -6,7 +6,7 @@ import game.model.GameState;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.FORTIFICATION;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.REINFORCEMENT;
 import static game.strategies.MapFunctionsUtil.highlightPayerCountries;
-import static game.strategies.MapFunctionsUtil.isFortifyPossible;
+import static game.strategies.MapFunctionsUtil.isCountyWithMoreThenOneArmy;
 import static game.strategies.MapFunctionsUtil.selectCountry;
 
 /**
@@ -36,7 +36,7 @@ public class FortificationPhaseStrategy extends BasePhaseStrategy {
 
         debugMessage(gameState);
 
-        if (isFortifyPossible(gameState)) {
+        if (isCountyWithMoreThenOneArmy(gameState)) {
             if (gameState.getCurrentPlayer().isComputerPlayer()) {
                 gameState.getCurrentPlayer().fortify(gameState);
             }

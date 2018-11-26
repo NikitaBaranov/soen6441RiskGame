@@ -22,5 +22,6 @@ public class GameOverPhaseStrategy extends BasePhaseStrategy {
         gameState.setCurrentGamePhase(GAME_OVER);
         gameState.setCurrentTurnPhraseText("Game over. The " + gameState.getCurrentPlayer().getName() + " win.");
         gameState.setNextTurnButton(false);
+        gameState.notifyObservers();
     }
 }

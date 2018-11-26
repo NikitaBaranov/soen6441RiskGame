@@ -345,16 +345,10 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
          */
         @Override
         protected Void doInBackground() {
-            Country fromFortify = null;
-            Country toFortify = null;
 
-            int maxArmies = 1;
-            for (Country country : gameState.getCountries()) {
-                if (country.getPlayer() == gameState.getCurrentPlayer() && country.getArmy() > maxArmies) {
-                    fromFortify = country;
-                    maxArmies = country.getArmy();
-                }
-            }
+            Country fromFortify = getCountryWithMaxArmy(gameState, 1);
+
+            Country toFortify = null;
             if (fromFortify != null) {
                 fromFortify.select(false, -1);
                 int maxEnemyNeighbors = 0;
