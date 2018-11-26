@@ -42,13 +42,13 @@ public class BasePlayerStrategy implements IPlayerStrategy {
 //                Game.getInstance().setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(GAME_OVER));
 //                Game.getInstance().getGamePhaseStrategy().init(gameState);
 //            } else {
-                gameState.setWinBattle(true);
-                // TODO Add message that attacker win battle
-                // check if this line if fine
-                gameState.setCurrentTurnPhraseText(gameState.getCurrentPlayer().getName() + " won the battle! Move at least " + gameState.getNumberOfRedDicesSelected() + " armies to the defeated country.");
-                gameState.getCountryTo().setPlayer(gameState.getCurrentPlayer());
-                gameState.setMinArmiesToMoveAfterWin(gameState.getNumberOfRedDicesSelected());
-                gameState.setGiveACard(true);
+            gameState.setWinBattle(true);
+            // TODO Add message that attacker win battle
+            // check if this line if fine
+            gameState.setCurrentTurnPhraseText(gameState.getCurrentPlayer().getName() + " won the battle! Move at least " + gameState.getNumberOfRedDicesSelected() + " armies to the defeated country.");
+            gameState.getCountryTo().setPlayer(gameState.getCurrentPlayer());
+            gameState.setMinArmiesToMoveAfterWin(gameState.getNumberOfRedDicesSelected());
+            gameState.setGiveACard(true);
 //            }
         }
     }
