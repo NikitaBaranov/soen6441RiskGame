@@ -25,13 +25,12 @@ public class HumanPlayerStrategy extends BasePlayerStrategy {
 
     @Override
     public void placeArmies(GameState gameState) {
-        unHighlightCountries(gameState);
-        if (gameState.getCurrentPlayer().getArmies() > 0 && gameState.getCurrentCountry().getPlayer() == gameState.getCurrentPlayer()) {
-            gameState.getCurrentCountry().setSelected(true);
-            gameState.getCurrentCountry().setArmy(gameState.getCurrentCountry().getArmy() + 1);
-            gameState.getCurrentPlayer().setArmies(gameState.getCurrentPlayer().getArmies() - 1);
-            gameState.setCurrentTurnPhraseText("Select a country to place your army. Armies to place  " + gameState.getCurrentPlayer().getArmies());
-        }
+        gameState.getCurrentCountry().setSelected(true);
+        gameState.getCurrentCountry().setArmy(gameState.getCurrentCountry().getArmy() + 1);
+        gameState.getCurrentPlayer().setArmies(gameState.getCurrentPlayer().getArmies() - 1);
+        String message = gameState.getCurrentPlayer().getName() + " placed army to " + gameState.getCurrentCountry().getName() + " total armies " + gameState.getCurrentPlayer().getArmies();
+        gameState.setCurrentTurnPhraseText(message);
+        System.out.println(message);
     }
 
     /**
