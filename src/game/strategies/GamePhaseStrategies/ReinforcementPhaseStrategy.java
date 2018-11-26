@@ -72,6 +72,7 @@ public class ReinforcementPhaseStrategy extends BasePhaseStrategy {
         }
         gameState.setCurrentTurnPhraseText("Select a country to place your army. Armies to place  " + gameState.getCurrentPlayer().getArmies());
         highlightPayerCountries(gameState.getCountries(), gameState.getCurrentPlayer());
+        gameState.notifyObservers();
 
         debugMessage(gameState);
 
@@ -88,9 +89,11 @@ public class ReinforcementPhaseStrategy extends BasePhaseStrategy {
      */
     @Override
     public void mapClick(GameState gameState, int x, int y) {
-        if (selectCountry(gameState, x, y)) {
-            if (gameState.getCurrentCountry().getPlayer() == gameState.getCurrentPlayer()) {
-                gameState.getCurrentPlayer().reinforce(gameState);
+        if (!gameState.getCurrentPlayer().isComputerPlayer()) {
+            if (selectCountry(gameState, x, y)) {
+                if (gameState.getCurrentCountry().getPlayer() == gameState.getCurrentPlayer()) {
+                    gameState.getCurrentPlayer().reinforce(gameState);
+                }
             }
         }
     }

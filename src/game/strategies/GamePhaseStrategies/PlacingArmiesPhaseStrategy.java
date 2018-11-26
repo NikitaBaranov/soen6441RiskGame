@@ -53,10 +53,12 @@ public class PlacingArmiesPhaseStrategy extends BasePhaseStrategy {
      */
     @Override
     public void mapClick(GameState gameState, int x, int y) {
-        if (selectCountry(gameState, x, y) && gameState.getCurrentPlayer().getArmies() > 0 && gameState.getCurrentCountry().getPlayer() == gameState.getCurrentPlayer()) {
-            unHighlightCountries(gameState);
-            gameState.getCurrentPlayer().placeArmies(gameState);
-            nextTurnButton(gameState);
+        if (!gameState.getCurrentPlayer().isComputerPlayer()) {
+            if (selectCountry(gameState, x, y) && gameState.getCurrentPlayer().getArmies() > 0 && gameState.getCurrentCountry().getPlayer() == gameState.getCurrentPlayer()) {
+                unHighlightCountries(gameState);
+                gameState.getCurrentPlayer().placeArmies(gameState);
+                nextTurnButton(gameState);
+            }
         }
     }
 

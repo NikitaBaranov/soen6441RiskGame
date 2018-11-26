@@ -6,6 +6,7 @@ import game.model.GameState;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.FORTIFICATION;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.REINFORCEMENT;
 import static game.strategies.MapFunctionsUtil.highlightPayerCountries;
+import static game.strategies.MapFunctionsUtil.isFortifyPossible;
 import static game.strategies.MapFunctionsUtil.selectCountry;
 
 /**
@@ -34,8 +35,13 @@ public class FortificationPhaseStrategy extends BasePhaseStrategy {
         highlightPayerCountries(gameState.getCountries(), gameState.getCurrentPlayer());
 
         debugMessage(gameState);
-        if (gameState.getCurrentPlayer().isComputerPlayer()) {
-            gameState.getCurrentPlayer().fortify(gameState);
+
+        if (isFortifyPossible(gameState)) {
+            if (gameState.getCurrentPlayer().isComputerPlayer()) {
+                gameState.getCurrentPlayer().fortify(gameState);
+            }
+        } else {
+            nextTurnButton(gameState);
         }
     }
 
@@ -47,9 +53,11 @@ public class FortificationPhaseStrategy extends BasePhaseStrategy {
      */
     @Override
     public void mapClick(GameState gameState, int x, int y) {
-        if (selectCountry(gameState, x, y)) {
-            if (gameState.getCurrentCountry().getPlayer() == gameState.getCurrentPlayer()) {
-                gameState.getCurrentPlayer().fortify(gameState);
+        if (!gameState.getCurrentPlayer().isComputerPlayer()) {
+            if (selectCountry(gameState, x, y)) {
+                if (gameState.getCurrentCountry().getPlayer() == gameState.getCurrentPlayer()) {
+                    gameState.getCurrentPlayer().fortify(gameState);
+                }
             }
         }
     }

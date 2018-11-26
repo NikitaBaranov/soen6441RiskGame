@@ -57,8 +57,10 @@ public class AttackPhaseStrategy extends BasePhaseStrategy {
      */
     @Override
     public void mapClick(GameState gameState, int x, int y) {
-        selectCountry(gameState, x, y);
-        gameState.getCurrentPlayer().beforeAndAfterAttack(gameState);
+        if (!gameState.getCurrentPlayer().isComputerPlayer()) {
+            selectCountry(gameState, x, y);
+            gameState.getCurrentPlayer().beforeAndAfterAttack(gameState);
+        }
     }
 
     /**
