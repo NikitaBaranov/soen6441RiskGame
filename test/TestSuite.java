@@ -7,13 +7,13 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 
 @Suite.SuiteClasses({
-//        mapeditor.TestMapEditor.class,
-//        MainMenuTest.class,
-//        LauncherTest.class,
+//        mapeditor.TestMapEditor.class, // Done
+//        MainMenuTest.class, // Done
+//        LauncherTest.class, // Done
 //        game.GameTest.class, // TODO
-//        game.utils.WarningWindowTest.class,
+//        game.utils.WarningWindowTest.class, // Done
         game.utils.MapLoaderTest.class, // TODO
-//        game.model.PlayerTest.class
+//        game.model.PlayerTest.class // TODO
 })
 /**
  * Test suite empty class. According to the official doc of jUnit

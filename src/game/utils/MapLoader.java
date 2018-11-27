@@ -331,7 +331,7 @@ public class MapLoader {
                 }
             }
             if (seenCountries.size() != countries.size()) {
-                throw new InvalidObjectException("Map has disconnected component.");
+                throw new InvalidObjectException("Map has disconnected component. (Graph is not connected)");
             }
 
             // TODO Check that this validation works well and written without mistakes
@@ -355,7 +355,7 @@ public class MapLoader {
                     }
                 }
                 if (seenCountriesSubgraph.size() != countriesSubgraph.size()) {
-                    throw new InvalidObjectException("Map has disconnected continent: "+ continent.getName()+".");
+                    throw new InvalidObjectException("Map has disconnected continent: "+ continent.getName()+". (Subgraph is not connected)");
                 }
             }
 
@@ -636,7 +636,7 @@ public class MapLoader {
                 }
             }
             if (seenCountries.size() != countries.size()) {
-                throw new InvalidObjectException("Map has disconnected component.");
+                throw new InvalidObjectException("Map has disconnected component. (Graph is not connected)");
             }
 
             // TODO Check that this validation works well and written without mistakes
@@ -660,7 +660,7 @@ public class MapLoader {
                     }
                 }
                 if (seenCountriesSubgraph.size() != countriesSubgraph.size()) {
-                    throw new InvalidObjectException("Map has disconnected continent: "+ continent.getName()+".");
+                    throw new InvalidObjectException("Map has disconnected continent: "+ continent.getName()+". (Subgraph is not connected)");
                 }
             }
 
