@@ -1,42 +1,105 @@
 package game.utils;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 /**
  * The map loader test
+ * Map validation tests.
  * @author Dmitry Kryukov, Ksenia Popova
  * @see MapLoader
  */
 public class MapLoaderTest {
-    static List<String> playersModes = new ArrayList<>();
-    MapLoader loader;
-
-    @Before
-    public void init(){
-        playersModes.add("Human");
-        playersModes.add("Human");
-        loader = new MapLoader(2, "wrongContinentNoCountries.map", false, playersModes, new NotificationWindow());
-    }
-
-    /**
-     * Test invalid map with map wrong continent
-     */
-    @Test
-    public void invalidMapWrongContinent() {
-        assertTrue(loader.invalidMap);
-    }
-
     /**
      * Check if the instance exist
      */
     @Test
-    public void ifExist() {
+    public void ifLoaderExist() {
+        int players = 2;
+        List<String> playersModes = new ArrayList<>();
+        playersModes.add("Human");
+        playersModes.add("Human");
+        String mapFile1 = "./src/maps/invContinentNoTerr.map"; // no territories
+        MapLoader loader = new MapLoader(players, mapFile1, false, playersModes, new NotificationWindow());
         assertTrue(loader != null);
     }
+
+    /**
+     * Map Validation: No territories on the continent
+     */
+    @Test
+    public void invContinentNoTerr() {
+        int players = 2;
+        List<String> playersModes = new ArrayList<>();
+        playersModes.add("Human");
+        playersModes.add("Human");
+        String mapFile1 = "./src/maps/invContinentNoTerr.map"; // no territories
+        MapLoader loader1 = new MapLoader(players, mapFile1, false, playersModes, new NotificationWindow());
+        assertTrue(loader1.invalidMap);
+    }
+
+    /**
+     * Map Validation: One territory on the continent
+     */
+    @Test
+    public void invContinentOneTerr() {
+        int players = 2;
+        List<String> playersModes = new ArrayList<>();
+        playersModes.add("Human");
+        playersModes.add("Human");
+        String mapFile2 = "./src/maps/invContinentOneTerr.map"; // one territory
+        MapLoader loader2 = new MapLoader(players, mapFile2, false, playersModes, new NotificationWindow());
+        assertTrue(loader2.invalidMap);
+    }
+
+//    /**
+//     * Map Validation: Disconnected continents
+//     */
+//    @Test
+//    public void invDisconnectedContinents() {
+//        int players = 2;
+//        List<String> playersModes = new ArrayList<>();
+//        playersModes.add("Human");
+//        playersModes.add("Human");
+//        String mapFile3 = "./src/maps/invNoConnectionTwoCont.map"; // Disconnected continents
+//        MapLoader loader3 = new MapLoader(players, mapFile3, false, playersModes, new NotificationWindow());
+//        assertTrue(loader3.invalidMap);
+//    }
+
+//
+//    /**
+//     * Map Validation: Disconnected Continents
+//     */
+//    @Test
+//    public void invDisconnectedCont() {
+//        int players = 2;
+//        List<String> playersModes = new ArrayList<>();
+//        playersModes.add("Human");
+//        playersModes.add("Human");
+//        String mapFile5 = "./src/maps/UnconnectedContinent.map"; // Disconnected continents
+//        MapLoader loader5 = new MapLoader(players, mapFile5, false, playersModes, new NotificationWindow());
+//        assertTrue(loader5.invalidMap);
+//    }
+//
+//    /**
+//     * Map Validation: Correct if map has one direction connections
+//     */
+//    @Test
+//    public void valOneDirection() {
+//        int players = 2;
+//        List<String> playersModes = new ArrayList<>();
+//        playersModes.add("Human");
+//        playersModes.add("Human");
+//        String mapFile6 = "./src/maps/oneDirection.map";
+//        MapLoader loader6 = new MapLoader(players, mapFile6, false, playersModes, new NotificationWindow());
+//        assertFalse(loader6.invalidMap);
+//    }
+
 }

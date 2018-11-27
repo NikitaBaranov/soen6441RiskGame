@@ -7,5 +7,6 @@ America=2
 
 [Territories]
 Usa,64,150,America,Canada
-Canada,164,150,America,Usa
-Germany,164,190,Europe
+Canada,264,150,America,Usa
+Germany,464,190,Europe,France
+France,564,190,Europe,Germany

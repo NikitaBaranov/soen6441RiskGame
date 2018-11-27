@@ -430,6 +430,20 @@ public class MapLoader {
         if(numberOfPlayers == playersModes.size()){
             for (String playermode: playersModes){
                 switch(playermode){
+                    case "Human":
+                        int humanCounter = 1;
+                        if(players.size() > 0){
+                            for (Player player: players){
+                                String existedName = player.getName();
+                                if (existedName.contains("Human")){
+                                    humanCounter+=1;
+                                }
+                            }
+                            players.add(new Player("Human Player " + humanCounter, pColors.remove(0), playerStrategyFactory.getStrategy(PlayerStrategyEnum.HUMAN_STRATEGY), false));
+                        } else {
+                            players.add(new Player("Human Player " + humanCounter, pColors.remove(0), playerStrategyFactory.getStrategy(PlayerStrategyEnum.HUMAN_STRATEGY), false));
+                        }
+                        break;
                     case "Aggressive":
                         int aggrCounter = 1;
                         // TODO Does this think will work correctly every time?

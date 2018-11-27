@@ -45,9 +45,9 @@ public class PlayerTest {
      */
     @Before
     public void setUp() throws Exception {
-        Player player1 = new Player("test Player 1", Color.BLACK, playerStrategyFactory.getStrategy(PlayerStrategyEnum.HUMAN_STRATEGY), true);
+        Player player1 = new Player("test Player 1", Color.BLACK, playerStrategyFactory.getStrategy(PlayerStrategyEnum.HUMAN_STRATEGY), false);
         player1.setArmies(0);
-        Player player2 = new Player("test Player 2", Color.GREEN, playerStrategyFactory.getStrategy(PlayerStrategyEnum.HUMAN_STRATEGY), true);
+        Player player2 = new Player("test Player 2", Color.GREEN, playerStrategyFactory.getStrategy(PlayerStrategyEnum.HUMAN_STRATEGY), false);
         player2.setArmies(0);
         player2.setArmies(0);
         Continent continent = new Continent("Continent", 1);

@@ -10,14 +10,21 @@ import static org.junit.Assert.assertTrue;
  * @see WarningWindow
  */
 public class WarningWindowTest {
-    static WarningWindow window = new WarningWindow("I'm the warning");
 
     /**
-     * If the instance exist
+     * If the instance of closing window exist
      */
     @Test
-    public void ifExist() {
-        assertTrue(window != null);
+    public void ifClosingExist() {
+        assertTrue(new WarningWindow("I'm the warning") != null);
+    }
+
+    /**
+     * If the instance of not closing window exist
+     */
+    @Test
+    public void ifNotClosingExist() {
+        assertTrue(new WarningWindow("I'm the warning", false) != null);
     }
 
 }
