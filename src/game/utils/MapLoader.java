@@ -6,6 +6,7 @@ import game.model.Country;
 import game.model.GameState;
 import game.model.Neighbour;
 import game.model.Player;
+import game.strategies.GamePhaseStrategies.GamePhaseStrategyFactory;
 import game.strategies.PlayerStrategies.PlayerStrategyEnum;
 import game.strategies.PlayerStrategies.PlayerStrategyFactory;
 import game.ui.Main;
@@ -371,11 +372,13 @@ public class MapLoader {
         gameState.setNeighbours(neighbours);
         gameState.setPlayers(players);
         gameState.setContinents(continents);
+        gameState.setMapFilePath(mapPath);
+
         Game game = Game.getInstance();
         game.setGameState(gameState);
         game.setNotification(notificationWindow);
 
-        new Main(game, this);
+        new Main(game);
     }
 
     /**
@@ -660,18 +663,22 @@ public class MapLoader {
         gameState.setNeighbours(neighbours);
         gameState.setPlayers(players);
         gameState.setContinents(continents);
+        gameState.setMapFilePath(mapPath);
+
         Game game = Game.getInstance();
         game.setGameState(gameState);
         game.setNotification(notificationWindow);
 
-        new Main(game, this);
+        new Main(game);
     }
-    /**
-     * File path getter.
-     *
-     * @return filePath to the map
-     */
-    public String getFilePath() {
-        return mapPath;
+
+    public MapLoader(GameState gameState, NotificationWindow notificationWindow) {
+        gameState.setiPanelObservers(new LinkedList<>());
+        Game game = Game.getInstance();
+        game.setGameState(gameState);
+        game.setNotification(notificationWindow);
+        game.setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(gameState.getCurrentGamePhase()));
+        game.getGamePhaseStrategy().init(gameState);
+        new Main(game);
     }
 }

@@ -5,6 +5,7 @@ import game.model.enums.CardsEnum;
 import game.strategies.PlayerStrategies.IPlayerStrategy;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,13 +20,16 @@ import static game.model.enums.CardsEnum.WILDCARDS;
  * @author Dmitry Kryukov, Ksenia Popova
  * @see CardsEnum
  */
-public class Player {
+public class Player implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private boolean computerPlayer;
     IPlayerStrategy strategy;
     private String name;
     private Color color;
     private Map<CardsEnum, Integer> cardsEnumIntegerMap = new HashMap<>();
     private int armies = 5;
+    private boolean lost = false;
 
     /**
      * Constructor of the class
@@ -151,5 +155,13 @@ public class Player {
 
     public boolean isComputerPlayer() {
         return computerPlayer;
+    }
+
+    public boolean isLost() {
+        return lost;
+    }
+
+    public void setLost(boolean lost) {
+        this.lost = lost;
     }
 }

@@ -7,10 +7,10 @@ import game.model.Player;
 
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.ATTACK;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.PLACING_ARMIES;
-import static game.strategies.MapFunctionsUtil.highlightPayerCountries;
-import static game.strategies.MapFunctionsUtil.selectCountry;
-import static game.strategies.MapFunctionsUtil.unHighlightCountries;
-import static game.strategies.MapFunctionsUtil.unSelectCountries;
+import static game.utils.MapFunctionsUtil.highlightPayerCountries;
+import static game.utils.MapFunctionsUtil.selectCountry;
+import static game.utils.MapFunctionsUtil.unHighlightCountries;
+import static game.utils.MapFunctionsUtil.unSelectCountries;
 
 /**
  * Startup phase strategy.
@@ -36,6 +36,7 @@ public class PlacingArmiesPhaseStrategy extends BasePhaseStrategy {
         gameState.setNextTurnButton(false);
         Dice.resetDice(gameState.getRedDice(), gameState.getWhiteDice());
         highlightPayerCountries(gameState.getCountries(), gameState.getCurrentPlayer());
+        debugMessage(gameState);
         if (gameState.getCurrentPlayer().isComputerPlayer()) {
             gameState.getCurrentPlayer().placeArmies(gameState);
         } else {

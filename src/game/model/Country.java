@@ -4,6 +4,7 @@ import game.Game;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,9 @@ import java.util.List;
  *
  * @author Dmitry Kryukov, Ksenia Popova
  */
-public class Country {
+public class Country implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private int HIGHLIGHT_BORDER_WITHT = 10;
     private int ARMY_BACKGROUND_WITHT = 6;
 

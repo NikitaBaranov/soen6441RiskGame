@@ -10,11 +10,12 @@ import java.util.List;
 
 import static game.strategies.GamePhaseStrategies.BasePhaseStrategy.isGameWonBy;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.GAME_OVER;
-import static game.strategies.MapFunctionsUtil.getCountryWithMaxArmy;
-import static game.strategies.MapFunctionsUtil.getCountryWithMaxOpponentNeighbours;
-import static game.strategies.MapFunctionsUtil.resetToAndFrom;
-import static game.strategies.MapFunctionsUtil.unHighlightCountries;
-import static game.strategies.MapFunctionsUtil.unSelectCountries;
+import static game.utils.MapFunctionsUtil.countNeighbors;
+import static game.utils.MapFunctionsUtil.getCountryWithMaxArmy;
+import static game.utils.MapFunctionsUtil.getCountryWithMaxOpponentNeighbours;
+import static game.utils.MapFunctionsUtil.resetToAndFrom;
+import static game.utils.MapFunctionsUtil.unHighlightCountries;
+import static game.utils.MapFunctionsUtil.unSelectCountries;
 
 /**
  * AI aggressive player strategy.
@@ -354,12 +355,7 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
                 int maxEnemyNeighbors = 0;
                 for (Country country : gameState.getCountries()) {
                     if (country.isHighlighted()) {
-                        int enemyNeighbours = 0;
-                        for (Country neighbor : country.getNeighbours()) {
-                            if (neighbor.getPlayer() != gameState.getCurrentPlayer()) {
-                                enemyNeighbours++;
-                            }
-                        }
+                        int enemyNeighbours = countNeighbors(country.getNeighbours(), gameState.getCurrentPlayer(), true);
                         if (enemyNeighbours > maxEnemyNeighbors) {
                             toFortify = country;
                             maxEnemyNeighbors = enemyNeighbours;

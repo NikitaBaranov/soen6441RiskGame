@@ -34,11 +34,10 @@ public class MapPanel extends JPanel implements IPanelObserver {
     /**
      * Constructor of the class
      * @param dimension size
-     * @param loader map loader
      */
-    public MapPanel(Dimension dimension, MapLoader loader) {
+    public MapPanel(Dimension dimension) {
         try {
-            image = ImageIO.read(new File(loader.getFilePath().replace(".map", ".bmp")));
+            image = ImageIO.read(new File(Game.getInstance().getGameState().getMapFilePath().replace(".map", ".bmp")));
         }
         catch (IOException e) {
         }

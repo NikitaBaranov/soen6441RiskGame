@@ -1,18 +1,20 @@
-package game.strategies;
+package game.utils;
 
 import game.model.Country;
 import game.model.GameState;
 import game.model.Player;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Utils methods.
  * methods that required by strategies.
+ *
  * @author Dmitry Kryukov
  */
 public class MapFunctionsUtil {
-    // TODO Move me to the utils folder
     /**
      * Reset highlights
      */
@@ -59,6 +61,7 @@ public class MapFunctionsUtil {
 
     /**
      * Select country action.
+     *
      * @param gameState
      * @param x
      * @param y
@@ -112,12 +115,7 @@ public class MapFunctionsUtil {
         int maxEnemyNeighbors = 0;
         for (Country country : gameState.getCountries()) {
             if (country.getPlayer() == gameState.getCurrentPlayer()) {
-                int enemyNeighbours = 0;
-                for (Country neighbor : country.getNeighbours()) {
-                    if (neighbor.getPlayer() != gameState.getCurrentPlayer()) {
-                        enemyNeighbours++;
-                    }
-                }
+                int enemyNeighbours = countNeighbors(country.getNeighbours(), gameState.getCurrentPlayer(), true);
                 if (enemyNeighbours > maxEnemyNeighbors) {
                     countryWithMaxNeighbours = country;
                     maxEnemyNeighbors = enemyNeighbours;
@@ -134,5 +132,35 @@ public class MapFunctionsUtil {
             }
         }
         return false;
+    }
+
+    public static int countNeighbors(List<Country> neighbors, Player player, boolean enemy) {
+        int count = 0;
+        if (enemy) {
+            for (Country neighbor : neighbors) {
+                if (neighbor.getPlayer() != player) {
+                    count++;
+                }
+            }
+        } else {
+            for (Country neighbor : neighbors) {
+                if (neighbor.getPlayer() == player) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    public static Map<Player, Integer> getPlayerToCountiesNumberMap(GameState gameState) {
+        Map<Player, Integer> playerNumberOfCountriesMap = new HashMap<>();
+        for (Country country : gameState.getCountries()) {
+            if (playerNumberOfCountriesMap.containsKey(country.getPlayer())) {
+                playerNumberOfCountriesMap.put(country.getPlayer(), playerNumberOfCountriesMap.get(country.getPlayer()) + 1);
+            } else {
+                playerNumberOfCountriesMap.put(country.getPlayer(), 1);
+            }
+        }
+        return playerNumberOfCountriesMap;
     }
 }

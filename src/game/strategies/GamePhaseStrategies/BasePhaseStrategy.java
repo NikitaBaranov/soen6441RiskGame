@@ -5,9 +5,11 @@ import game.model.Country;
 import game.model.GameState;
 import game.model.Player;
 
-import static game.strategies.MapFunctionsUtil.resetToAndFrom;
-import static game.strategies.MapFunctionsUtil.unHighlightCountries;
-import static game.strategies.MapFunctionsUtil.unSelectCountries;
+import java.io.Serializable;
+
+import static game.utils.MapFunctionsUtil.resetToAndFrom;
+import static game.utils.MapFunctionsUtil.unHighlightCountries;
+import static game.utils.MapFunctionsUtil.unSelectCountries;
 
 /**
  * Base phase strategy class. Required to prepare game state for base phase.
@@ -15,7 +17,9 @@ import static game.strategies.MapFunctionsUtil.unSelectCountries;
  * @author Dmitry Kryukov, Ksenia Popova
  * @see IGamePhaseStrategy
  */
-public class BasePhaseStrategy implements IGamePhaseStrategy {
+public class BasePhaseStrategy implements IGamePhaseStrategy, Serializable {
+    private static final long serialVersionUID = 1L;
+
     /**
      * Check if game was won by player
      *

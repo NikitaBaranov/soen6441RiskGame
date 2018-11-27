@@ -85,6 +85,7 @@ public class TopStatusPanel extends JPanel implements IPanelObserver {
         return new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Save game");
+                Game.getInstance().save();
             }
         };
     }

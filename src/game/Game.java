@@ -16,6 +16,11 @@ import game.ui.view.RightStatusPanel;
 import game.ui.view.TopStatusPanel;
 import game.utils.NotificationWindow;
 
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.PLACING_ARMIES;
 
 /**
@@ -97,6 +102,7 @@ public class Game {
 
     /**
      * Getter for the game state. Needs to get the game state from the controller
+     *
      * @return gameState
      */
     public GameState getGameState() {
@@ -105,6 +111,7 @@ public class Game {
 
     /**
      * Setter for the game state. Needs to set the game state to the controller
+     *
      * @param gameState
      */
     public void setGameState(GameState gameState) {
@@ -113,6 +120,7 @@ public class Game {
 
     /**
      * Getter for strategy of the game.
+     *
      * @return gamePhaseStrategy
      */
     public IGamePhaseStrategy getGamePhaseStrategy() {
@@ -121,6 +129,7 @@ public class Game {
 
     /**
      * Setter for strategy of the game
+     *
      * @param gamePhaseStrategy
      */
     public void setGamePhaseStrategy(IGamePhaseStrategy gamePhaseStrategy) {
@@ -129,6 +138,7 @@ public class Game {
 
     /**
      * Allows to get notification object everywhere in the game
+     *
      * @return
      */
     public NotificationWindow getNotification() {
@@ -137,9 +147,24 @@ public class Game {
 
     /**
      * Set the norification
+     *
      * @param notification
      */
     public void setNotification(NotificationWindow notification) {
         this.notification = notification;
+    }
+
+    public void save() {
+        try {
+            String path = Thread.currentThread().getContextClassLoader().getResource("").getPath() + "saves/";
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
+            FileOutputStream myFileOutputStream = new FileOutputStream(path + "save" + dateTimeFormatter.format(LocalDateTime.now()) + ".risk");
+            ObjectOutputStream myObjectOutputStream = new ObjectOutputStream(myFileOutputStream);
+            myObjectOutputStream.writeObject(gameState);
+            myObjectOutputStream.close();
+        } catch (Exception e) {
+            System.out.println("Error when saving to file. ");
+            e.printStackTrace();
+        }
     }
 }

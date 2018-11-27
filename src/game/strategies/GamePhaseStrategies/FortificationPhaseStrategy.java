@@ -5,9 +5,9 @@ import game.model.GameState;
 
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.FORTIFICATION;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.REINFORCEMENT;
-import static game.strategies.MapFunctionsUtil.highlightPayerCountries;
-import static game.strategies.MapFunctionsUtil.isCountyWithMoreThenOneArmy;
-import static game.strategies.MapFunctionsUtil.selectCountry;
+import static game.utils.MapFunctionsUtil.highlightPayerCountries;
+import static game.utils.MapFunctionsUtil.isCountyWithMoreThenOneArmy;
+import static game.utils.MapFunctionsUtil.selectCountry;
 
 /**
  * Fortification phase strategy class.

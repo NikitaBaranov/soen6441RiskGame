@@ -30,12 +30,11 @@ public class Main {
     /**
      * Constructor of the class. Runs the game
      * @param game instance of the game class
-     * @param loader instance of map loader
      */
-    public Main(Game game, MapLoader loader) {
+    public Main(Game game) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                createAndShowGui(game, loader);
+                createAndShowGui(game);
             }
         });
     }
@@ -43,9 +42,8 @@ public class Main {
     /**
      * Method created the panels, windows and all gui, then runs the game.
      * @param game instance of game controller
-     * @param loader map loader
      */
-    private void createAndShowGui(Game game, MapLoader loader) {
+    private void createAndShowGui(Game game) {
         final JFrame frame = new JFrame("Risk");
         frame.setPreferredSize(new Dimension(width,height));
         //frame.setDefaultLookAndFeelDecorated(true);
@@ -78,7 +76,7 @@ public class Main {
         // Left Panel
         // Map Panel Map
         //TODO: Extract Logic and reshuffle top to bottom left to right.
-        MapPanel mapPanel = new MapPanel(new Dimension(width - 350, height), loader);
+        MapPanel mapPanel = new MapPanel(new Dimension(width - 350, height));
         //mapPanel.setBorder(new LineBorder(Color.BLACK, 4));
         mapPanel.setBackground(new Color(119,178,140));
 //        game.mapPanel = mapPanel;

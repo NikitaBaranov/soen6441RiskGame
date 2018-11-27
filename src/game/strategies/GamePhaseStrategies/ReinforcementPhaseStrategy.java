@@ -10,8 +10,8 @@ import java.util.List;
 
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.ATTACK;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.REINFORCEMENT;
-import static game.strategies.MapFunctionsUtil.highlightPayerCountries;
-import static game.strategies.MapFunctionsUtil.selectCountry;
+import static game.utils.MapFunctionsUtil.highlightPayerCountries;
+import static game.utils.MapFunctionsUtil.selectCountry;
 
 /**
  * Reinforcement phase strategy. Describes the reinforcement features.
@@ -54,7 +54,10 @@ public class ReinforcementPhaseStrategy extends BasePhaseStrategy {
         gameState.setCurrentGamePhase(REINFORCEMENT);
 
         // Change current player
-        gameState.setCurrentPlayer(gameState.getPlayers().get((gameState.getPlayers().indexOf(gameState.getCurrentPlayer()) + 1) % gameState.getPlayers().size()));
+        do {
+            gameState.setCurrentPlayer(gameState.getPlayers().get((gameState.getPlayers().indexOf(gameState.getCurrentPlayer()) + 1) % gameState.getPlayers().size()));
+        } while (!gameState.getCurrentPlayer().isLost());
+
         System.out.println("\n----------------------------------------------------------------------------\n");
         System.out.println("Select next Player. Next Player is " + gameState.getCurrentPlayer().getName());
 

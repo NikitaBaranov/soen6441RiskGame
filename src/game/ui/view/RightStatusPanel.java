@@ -97,7 +97,7 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
 
         nextTurnButton.setEnabled(game.getGameState().isNextTurnButton());
 
-        createWoldDominationPanel(worldDomination);
+        createWorldDominationPanel(worldDomination);
 
         Random r = new Random();
         invisibleLabel.setText(Integer.toString(r.nextInt()));
@@ -118,7 +118,7 @@ public class RightStatusPanel extends JPanel implements IPanelObserver {
      * Domination of the world view
      * @param jPanel
      */
-    private void createWoldDominationPanel(JPanel jPanel) {
+    private void createWorldDominationPanel(JPanel jPanel) {
         Game game = Game.getInstance();
         jPanel.removeAll();
         jPanel.setLayout(new GridLayout(game.getGameState().getPlayers().size() + 1, 4));

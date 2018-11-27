@@ -4,6 +4,7 @@ import game.model.Dice;
 import game.model.GameState;
 import game.model.enums.CardsEnum;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +16,9 @@ import java.util.stream.Collectors;
  * @author Dmitry Kryukov, Ksenia popova
  * @see IPlayerStrategy
  */
-public class BasePlayerStrategy implements IPlayerStrategy {
+public class BasePlayerStrategy implements IPlayerStrategy, Serializable {
+    private static final long serialVersionUID = 1L;
+
     public final int PAUSE = 500;
     /**
      * Method describes the behavior of the game during rolling the dices. i.e. attacking phase.

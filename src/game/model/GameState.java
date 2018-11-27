@@ -6,18 +6,25 @@ import game.model.enums.DiceEnum;
 import game.strategies.GamePhaseStrategies.GamePhaseEnum;
 import game.ui.view.IPanelObserver;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Game state class. Observable that get all states and update all observers.
+ *
  * @author Dmitry Kryukov, Ksenia Popova
  * @see IObservable
  */
-public class GameState implements IObservable {
+public class GameState implements IObservable, Serializable {
+
+    // Need for serialisation
+    private static final long serialVersionUID = 1L;
 
     private final int ARMIES_TO_EXCHANGE_INCREASE = 5;
     private final int DICE_ROW_TO_SHOW = 3;
+
+    private String mapFilePath = "";
 
     private boolean nextTurnButton;
     private List<Country> countries;
@@ -47,9 +54,9 @@ public class GameState implements IObservable {
     private List<Continent> continents;
 
     // Observers
-    private List<IPanelObserver> iPanelObservers = new ArrayList<>();
-    private GamePhaseEnum currentGamePhase;
+    transient private List<IPanelObserver> iPanelObservers = new ArrayList<>();
 
+    private GamePhaseEnum currentGamePhase;
 
     /**
      * attach observer
@@ -391,6 +398,7 @@ public class GameState implements IObservable {
 
     /**
      * Getter of selected cards to exchange.
+     *
      * @return selectedCardsToExcnahge
      */
     public List<CardsEnum> getSelectedCardsToExchange() {
@@ -399,9 +407,22 @@ public class GameState implements IObservable {
 
     /**
      * Setter for selected cards to excnahge.
+     *
      * @param selectedCardsToExchange
      */
     public void setSelectedCardsToExchange(List<CardsEnum> selectedCardsToExchange) {
         this.selectedCardsToExchange = selectedCardsToExchange;
+    }
+
+    public String getMapFilePath() {
+        return mapFilePath;
+    }
+
+    public void setMapFilePath(String mapFilePath) {
+        this.mapFilePath = mapFilePath;
+    }
+
+    public void setiPanelObservers(List<IPanelObserver> iPanelObservers) {
+        this.iPanelObservers = iPanelObservers;
     }
 }

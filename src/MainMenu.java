@@ -1,3 +1,4 @@
+import game.model.GameState;
 import game.utils.MapLoader;
 import game.utils.NotificationWindow;
 import game.utils.TournamentMenu;
@@ -15,6 +16,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,10 +107,21 @@ public class MainMenu extends JFrame {
                 System.out.println("DEBUG: Load game\n ------------------------ \n");
                 // TODO load the game from file
                 String savedGame = savedGamefilePath();
+                try {
+                    FileInputStream myFileInputStream = new FileInputStream(savedGame);
+                    ObjectInputStream myObjectInputStream = new ObjectInputStream(myFileInputStream);
+                    GameState gameState = (GameState) myObjectInputStream.readObject();
+                    myObjectInputStream.close();
+                    new MapLoader(gameState, notificationWindow);
+                } catch (Exception e) {
+                    System.out.println("Error when loading from file.");
+                    e.printStackTrace();
+                }
             }
         });
         return file;
     }
+
     /**
      * Method generates the button for menu bar with calling map editor
      * @return mapEditor object to attach it to the menu bar panel
@@ -384,27 +398,34 @@ public class MainMenu extends JFrame {
     }
 
     /**
-     * Exit functionality
-     * Eventlistener that call exit function
+     * The method which returns the filepath of the saved game
+     *
+     * @return start the new game
      */
-    class ExitAction extends AbstractAction {
-        private static final long serialVersionUID = 1L;
-        ExitAction() {
-            putValue(NAME, "Quit");
+    private String savedGamefilePath() {
+        String path = Thread.currentThread().getContextClassLoader().getResource("").getPath() + "saves";
+//        JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        JFileChooser fileChooser = new JFileChooser(new File(path));
+
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Saved game files", "risk", "risk");
+        fileChooser.setFileFilter(filter);
+
+        int returnValue = fileChooser.showOpenDialog(null);
+
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            return selectedFile.getAbsolutePath();
         }
-        public void actionPerformed(ActionEvent e) {
-            System.exit(0);
-        }
+        System.out.println("DEBUG: Start the new game!\n---------------------------------------\n");
+        return "Start the new game";
     }
 
     /**
      * The method which returns the filepath of the map
-     * @return filepath path to the map file
-     * or
+     *
      * @return default.map default map file
      */
     private String filePath() {
-        //JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
         String path = Thread.currentThread().getContextClassLoader().getResource("").getPath() + "maps";
         JFileChooser fileChooser = new JFileChooser(new File(path));
         FileNameExtensionFilter filter = new FileNameExtensionFilter("MAP FILES", "map", "maps");
@@ -421,23 +442,18 @@ public class MainMenu extends JFrame {
     }
 
     /**
-     * The method which returns the filepath of the saved game
-     *
-     * @return start the new game
+     * Exit functionality
+     * Eventlistener that call exit function
      */
-    private String savedGamefilePath() {
-        JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+    class ExitAction extends AbstractAction {
+        private static final long serialVersionUID = 1L;
 
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Saved game files", "risk", "risk");
-        fileChooser.setFileFilter(filter);
-
-        int returnValue = fileChooser.showOpenDialog(null);
-
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-            return selectedFile.getAbsolutePath();
+        ExitAction() {
+            putValue(NAME, "Quit");
         }
-        System.out.println("DEBUG: Start the new game!\n---------------------------------------\n");
-        return "Start the new game";
+
+        public void actionPerformed(ActionEvent e) {
+            System.exit(0);
+        }
     }
 }

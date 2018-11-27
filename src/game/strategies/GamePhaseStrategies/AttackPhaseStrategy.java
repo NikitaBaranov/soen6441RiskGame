@@ -2,6 +2,7 @@ package game.strategies.GamePhaseStrategies;
 
 import game.Game;
 import game.model.GameState;
+import game.model.Player;
 import game.model.enums.CardsEnum;
 
 import java.util.Map;
@@ -13,8 +14,9 @@ import static game.model.enums.CardsEnum.INFANTRY;
 import static game.model.enums.CardsEnum.WILDCARDS;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.ATTACK;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.FORTIFICATION;
-import static game.strategies.MapFunctionsUtil.isMoreAttacks;
-import static game.strategies.MapFunctionsUtil.selectCountry;
+import static game.utils.MapFunctionsUtil.getPlayerToCountiesNumberMap;
+import static game.utils.MapFunctionsUtil.isMoreAttacks;
+import static game.utils.MapFunctionsUtil.selectCountry;
 
 /**
  * Attack phase strategy class. Describes the attack phase, prepare game for attacing.
@@ -78,6 +80,14 @@ public class AttackPhaseStrategy extends BasePhaseStrategy {
             cardsEnumIntegerMap.put(randomCard, cardsEnumIntegerMap.get(randomCard) + 1);
             gameState.setGiveACard(false);
         }
+
+        Map<Player, Integer> playerToCountiesNumberMap = getPlayerToCountiesNumberMap(gameState);
+        for (Player player : gameState.getPlayers()) {
+            if (playerToCountiesNumberMap.get(player) == 0) {
+                player.setLost(true);
+            }
+        }
+
         Game.getInstance().setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(FORTIFICATION));
         Game.getInstance().getGamePhaseStrategy().init(gameState);
     }

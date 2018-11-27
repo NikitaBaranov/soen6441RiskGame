@@ -1,6 +1,7 @@
 package game.model;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +9,9 @@ import java.util.List;
  * The continnt model. Describes the continents parameters.
  * @author Dmitry Kryukov, Ksenia Popova
  */
-public class Continent {
+public class Continent implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String name = "";
     private List<Country> countryList = new ArrayList<>();
     private int bonus = 0;

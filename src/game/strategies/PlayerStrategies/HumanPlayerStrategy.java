@@ -10,9 +10,10 @@ import java.util.stream.Collectors;
 
 import static game.strategies.GamePhaseStrategies.BasePhaseStrategy.isGameWonBy;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.GAME_OVER;
-import static game.strategies.MapFunctionsUtil.isCountyWithMoreThenOneArmy;
-import static game.strategies.MapFunctionsUtil.resetToAndFrom;
-import static game.strategies.MapFunctionsUtil.unHighlightCountries;
+import static game.utils.MapFunctionsUtil.isCountyWithMoreThenOneArmy;
+import static game.utils.MapFunctionsUtil.isMoreAttacks;
+import static game.utils.MapFunctionsUtil.resetToAndFrom;
+import static game.utils.MapFunctionsUtil.unHighlightCountries;
 
 /**
  * Human player strategy. Describes the actions for human player.
@@ -43,7 +44,8 @@ public class HumanPlayerStrategy extends BasePlayerStrategy {
             gameState.getCurrentCountry().setArmy(gameState.getCurrentCountry().getArmy() + 1);
             gameState.getCurrentPlayer().setArmies(gameState.getCurrentPlayer().getArmies() - 1);
             gameState.setCurrentTurnPhraseText("Armies to place " + gameState.getCurrentPlayer().getArmies());
-        } else {
+        }
+        if (gameState.getCurrentPlayer().getArmies() == 0) {
             unHighlightCountries(gameState);
             // TODO automatic go to next turn if no more armies to place
             // check if this line if fine and in the correct place.
@@ -123,7 +125,7 @@ public class HumanPlayerStrategy extends BasePlayerStrategy {
                 Game.getInstance().setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(GAME_OVER));
                 Game.getInstance().getGamePhaseStrategy().init(gameState);
             }
-            if (gameState.getMinArmiesToMoveAfterWin() == 0 && !isCountyWithMoreThenOneArmy(gameState)) {
+            if (gameState.getMinArmiesToMoveAfterWin() == 0 && !isMoreAttacks(gameState)) {
                 Game.getInstance().getGamePhaseStrategy().nextTurnButton(gameState);
             }
         }
@@ -149,7 +151,7 @@ public class HumanPlayerStrategy extends BasePlayerStrategy {
             gameState.getCountryTo().setHighlighted(true);
             gameState.setCurrentTurnPhraseText("Click on country to move an army.");
         }
-        if (gameState.getCountryFrom() != null && gameState.getCountryFrom().getArmy() > 1 && gameState.getCountryTo() != null) {
+        if (gameState.getCountryFrom() != null && gameState.getCountryFrom().getArmy() > 1 && gameState.getCountryTo() != null && gameState.getCountryTo() == gameState.getCurrentCountry()) {
             gameState.getCountryFrom().setArmy(gameState.getCountryFrom().getArmy() - 1);
             gameState.getCountryTo().setArmy(gameState.getCountryTo().getArmy() + 1);
             gameState.setCurrentTurnPhraseText("Move army from " + gameState.getCountryFrom().getName() + " to " + gameState.getCountryTo().getName());

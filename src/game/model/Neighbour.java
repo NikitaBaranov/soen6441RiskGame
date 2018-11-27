@@ -1,12 +1,15 @@
 package game.model;
 
 import java.awt.*;
+import java.io.Serializable;
 
 /**
  * The neighbour model. Describes the neighbours parameters.
  * @author Dmitry Kryukov, Ksenia Popova
  */
-public class Neighbour {
+public class Neighbour implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private Country one;
     private Country two;
 

@@ -1,7 +1,6 @@
 package game.strategies.PlayerStrategies;
 
 import game.Game;
-import game.model.Country;
 import game.model.GameState;
 import game.strategies.GamePhaseStrategies.GamePhaseStrategyFactory;
 
@@ -10,7 +9,6 @@ import java.util.List;
 
 import static game.strategies.GamePhaseStrategies.BasePhaseStrategy.isGameWonBy;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.GAME_OVER;
-import static game.strategies.MapFunctionsUtil.*;
 
 /**
  * AI random player strategy.
