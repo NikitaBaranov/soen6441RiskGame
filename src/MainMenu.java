@@ -84,6 +84,7 @@ public class MainMenu extends JFrame {
         JMenuItem loadGame = new JMenuItem("Load game");
         JMenuItem continentBonus = new JMenuItem("test: Feature for testing continent bonus with 4 players");
         file.add(loadGame);
+        file.addSeparator();
         file.add(continentBonus);
 
         continentBonus.addActionListener(new ActionListener() {
