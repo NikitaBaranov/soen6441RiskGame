@@ -73,6 +73,7 @@ public class TopStatusPanel extends JPanel implements IPanelObserver {
     public void updateObserver(IObservable iObservable) {
         Game game = Game.getInstance();
         playerName.setText(game.getGameState().getCurrentPlayer() != null ? game.getGameState().getCurrentPlayer().getName() : "");
+        playerName.setForeground(game.getGameState().getCurrentPlayer().getColor());
         gamePhase.setText(game.getGameState().getCurrentGamePhase() != null ? game.getGameState().getCurrentGamePhase().getName() : "");
         turnPhrase.setText(game.getGameState().getCurrentTurnPhraseText() != null ? game.getGameState().getCurrentTurnPhraseText() : "");
     }
