@@ -2,6 +2,7 @@ package game.strategies.PlayerStrategies;
 
 import static game.strategies.GamePhaseStrategies.BasePhaseStrategy.isGameWonBy;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.GAME_OVER;
+import static game.utils.MapFunctionsUtil.countNeighbors;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -233,55 +234,65 @@ public class AiBenevolentStrategy extends BaseStrategy {
         @Override
         protected Void doInBackground() {
         	System.out.println("Bene fortifies");
+
         	HashMap<Integer, ArrayList<Country>> armyOnCountries = new HashMap<Integer, ArrayList<Country>>();
-        	int max = 0;
-        	Country maxArmyCountry = null;
-        	
+        	int min = 100;
+        	Country minCountry = null;
+
         	for (Country country : gameState.getCountries()) {
                 if (country.getPlayer() == gameState.getCurrentPlayer()) {
                 	if(armyOnCountries.containsKey(country.getArmy())) {
                 		ArrayList<Country> tmp = armyOnCountries.get(country.getArmy());
                 		tmp.add(country);
+                        System.out.println("TMP: ");
+                        System.out.println(tmp);
                 	}
                 	else {
                 		ArrayList<Country> tmp = new ArrayList<Country>();
                 		tmp.add(country);
                 		armyOnCountries.put(country.getArmy(), tmp);
+                        System.out.println("armyOnCountries: ");
+                        System.out.println(armyOnCountries);
                 	}
-                	if(country.getArmy() > max) {
+                	if(country.getArmy() <= min) {
                 		List<Country> neighbours = country.getNeighbours();
                 		for(int ctrN = 0; ctrN < neighbours.size(); ctrN++) {
                 			if(neighbours.get(ctrN).getPlayer() == gameState.getCurrentPlayer()) {
-                        		maxArmyCountry = country;
-                        		max = country.getArmy();
+                        		minCountry = country;
+                        		min = country.getArmy();
+                                System.out.println(minCountry.getName() + min);
                 			}
                 		}
                 	}
                 }
             }
         	
-        	if(maxArmyCountry != null) {
-        		int min = 100;
-        		Country minCountry = null;
-        		List<Country> neighbours = maxArmyCountry.getNeighbours();
+        	if(minCountry != null) {
+        		int max = 1;
+        		Country maxArmyCountry = null;
+        		List<Country> neighbours = minCountry.getNeighbours();
         		for(int ctrN = 0; ctrN < neighbours.size(); ctrN++) {
         			if(neighbours.get(ctrN).getPlayer() == gameState.getCurrentPlayer()) {
-                		if(neighbours.get(ctrN).getArmy() < min) {
-                			min = neighbours.get(ctrN).getArmy();
-                			minCountry = neighbours.get(ctrN);
+                		if(neighbours.get(ctrN).getArmy() > max) {
+                			max = neighbours.get(ctrN).getArmy();
+                			maxArmyCountry = neighbours.get(ctrN);
                 		}
         			}
         		}
-        		
-        		if(minCountry != null) {
-    	    		while(minCountry.getArmy() <= maxArmyCountry.getArmy()) {
-    	    			minCountry.setArmy(minCountry.getArmy() + 1);
-    	    			maxArmyCountry.setArmy(maxArmyCountry.getArmy() + 1);
-    	    		}
+
+                System.out.println(maxArmyCountry.getName() + ": " + maxArmyCountry.getArmy());
+                int armyToFortify = maxArmyCountry.getArmy() - 1;
+
+        		if(maxArmyCountry != null) {
+                    minCountry.setArmy(minCountry.getArmy() + armyToFortify);
+                    maxArmyCountry.setArmy(1);
+                    String message = gameState.getCurrentPlayer().getName() + " fortify " + minCountry.getName() + " from " + maxArmyCountry.getName() + " by " + armyToFortify;
+                    gameState.setCurrentTurnPhraseText(message);
+                    publish(message);
         		}
         	}
 
-            pauseAndRefresh(gameState, PAUSE * 2);
+            pauseAndRefresh(gameState, PAUSE * 10);
             return null;
         }
 
@@ -354,14 +365,7 @@ public class AiBenevolentStrategy extends BaseStrategy {
          */
         @Override
         protected void done() {
-            if (isGameWonBy(gameState, gameState.getCurrentPlayer())) {
-                // TODO Add message that attacker win battle
-                Game.getInstance().setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(GAME_OVER));
-                Game.getInstance().getGamePhaseStrategy().init(gameState);
-            } else {
-                Game.getInstance().getGamePhaseStrategy().nextTurnButton(gameState);
-            }
-
+            Game.getInstance().getGamePhaseStrategy().nextTurnButton(gameState);
         }
     }
 }
