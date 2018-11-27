@@ -56,7 +56,7 @@ public class ReinforcementPhaseStrategy extends BasePhaseStrategy {
         // Change current player
         do {
             gameState.setCurrentPlayer(gameState.getPlayers().get((gameState.getPlayers().indexOf(gameState.getCurrentPlayer()) + 1) % gameState.getPlayers().size()));
-        } while (!gameState.getCurrentPlayer().isLost());
+        } while (gameState.getCurrentPlayer().isLost());
 
         System.out.println("\n----------------------------------------------------------------------------\n");
         System.out.println("Select next Player. Next Player is " + gameState.getCurrentPlayer().getName());

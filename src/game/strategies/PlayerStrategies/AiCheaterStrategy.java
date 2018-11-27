@@ -21,7 +21,7 @@ public class AiCheaterStrategy extends BasePlayerStrategy {
      */
     @Override
     public void placeArmies(GameState gameState) {
-    	System.out.println("AI Aggressive Place Armies!");
+    	System.out.println("AI Cheater Place Armies!");
         new PlaceArmiesWorker(gameState).execute();
     }
 
@@ -33,7 +33,7 @@ public class AiCheaterStrategy extends BasePlayerStrategy {
     public void reinforce(GameState gameState) {
     	exchangeCards(gameState);
         pauseAndRefresh(gameState, PAUSE * 2);
-        System.out.println("AI Aggressive Reinforce!");
+        System.out.println("AI Cheater Reinforce!");
         new ReinforceWorker(gameState).execute();
     }
 
@@ -42,17 +42,8 @@ public class AiCheaterStrategy extends BasePlayerStrategy {
      * @param gameState
      */
     @Override
-    public void beforeAndAfterAttack(GameState gameState) {
-        //System.out.println("BeforeAndAfterAttack is not implemented in " + this.getClass().getName() + " strategy.");
-    }
-
-    /**
-     * method needs to be implemented
-     * @param gameState
-     */
-    @Override
     public void attack(GameState gameState) {
-    	System.out.println("AI Aggressive Attack!");
+    	System.out.println("AI Cheater Attack!");
         new AttackWorker(gameState).execute();
     }
 
@@ -62,17 +53,10 @@ public class AiCheaterStrategy extends BasePlayerStrategy {
      */
     @Override
     public void fortify(GameState gameState) {
-    	System.out.println("AI Aggressive Fortify!");
+    	System.out.println("AI Cheater Fortify!");
         new FortifyWorker(gameState).execute();
     }
-    
-    
-    
-    
-    
-    
-    
-    
+
 
     private class PlaceArmiesWorker extends SwingWorker<Void, String> {
 
@@ -88,20 +72,23 @@ public class AiCheaterStrategy extends BasePlayerStrategy {
         }
 
         /**
-         * Automatic reinforcement in backgrounds.
+         * Automatic placing armies in backgrounds.
          *
          * @return
          */
         @Override
         protected Void doInBackground() {
-        	System.out.println("Cheater place armies");
         	for (Country country : gameState.getCountries()) {
         		if(country.getPlayer() == gameState.getCurrentPlayer()) {
+        		    country.setSelected(true);
         			country.setArmy(country.getArmy() * 2);
-        			//System.out.println("Reinforcement: Armies doubled on " + country.getName());
+                    gameState.getCurrentPlayer().setArmies(gameState.getCurrentPlayer().getArmies() - 1);
+                    String message = gameState.getCurrentPlayer().getName() + " placed army to " + country.getName() + " total armies " + gameState.getCurrentPlayer().getArmies();
+                    gameState.setCurrentTurnPhraseText(message);
+                    publish(message);
         		}
         	}
-        	gameState.getCurrentPlayer().setArmies(0);
+
             pauseAndRefresh(gameState, PAUSE);
             return null;
         }
@@ -151,14 +138,16 @@ public class AiCheaterStrategy extends BasePlayerStrategy {
          */
         @Override
         protected Void doInBackground() {
-        	System.out.println("Cheater reinforces");
         	for (Country country : gameState.getCountries()) {
         		if(country.getPlayer() == gameState.getCurrentPlayer()) {
+                    country.setSelected(true);
         			country.setArmy(country.getArmy() * 2);
-        			System.out.println("Reinforcement: Armies doubled on " + country.getName());
+                    String message = gameState.getCurrentPlayer().getName() + " reinforce " + country.getName() + " by " + gameState.getCurrentPlayer().getArmies();
+                    gameState.getCurrentPlayer().setArmies(0);
+                    gameState.setCurrentTurnPhraseText(message);
+                    publish(message);
         		}
         	}
-        	gameState.getCurrentPlayer().setArmies(0);
 
             pauseAndRefresh(gameState, PAUSE);
             return null;
@@ -209,7 +198,6 @@ public class AiCheaterStrategy extends BasePlayerStrategy {
          */
         @Override
         protected Void doInBackground() {
-        	System.out.println("Cheater attacks");
         	ArrayList<Country> countriesCaptured = new ArrayList<Country>();
         	for (Country country : gameState.getCountries()) {
         		if(country.getPlayer() == gameState.getCurrentPlayer()) {
@@ -221,9 +209,12 @@ public class AiCheaterStrategy extends BasePlayerStrategy {
         		}
         	}
         	
-        	System.out.println("Countries to capture: " + countriesCaptured.size());
         	for (Country country : countriesCaptured) {
-        		country.setPlayer(gameState.getCurrentPlayer());
+                String message = "Captured.";
+                gameState.setCurrentTurnPhraseText(message);
+                publish(message);
+        		country.setSelected(true);
+        	    country.setPlayer(gameState.getCurrentPlayer());
         	}
 
             pauseAndRefresh(gameState, PAUSE * 2);
@@ -282,14 +273,16 @@ public class AiCheaterStrategy extends BasePlayerStrategy {
          */
         @Override
         protected Void doInBackground() {
-        	System.out.println("Cheater fortifies");
         	for (Country country : gameState.getCountries()) {
         		if(country.getPlayer() == gameState.getCurrentPlayer()) {
         			List<Country> neighbours = country.getNeighbours();
         			for(Country neighbour : neighbours) {
         				if(neighbour.getPlayer() != gameState.getCurrentPlayer()) {
+        				    country.setHighlighted(true);
         					country.setArmy(country.getArmy() * 2);
-        					//System.out.println("Fortify: Armies doubled on " + country.getName());
+                            String message = gameState.getCurrentPlayer().getName() + " fortify " + country.getName();
+                            gameState.setCurrentTurnPhraseText(message);
+                            publish(message);
         				}
         			}
         		}
