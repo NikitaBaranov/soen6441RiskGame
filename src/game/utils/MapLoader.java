@@ -40,10 +40,10 @@ import java.util.Set;
  */
 public class MapLoader {
     public static int RADIUS = 20;
-    public static List<Country> countries = new ArrayList<>();
-    public static List<Neighbour> neighbours = new ArrayList<>();
-    public static List<Player> players = new ArrayList<>();
-    public static List<Continent> continents = new ArrayList<>();
+    public List<Country> countries = new ArrayList<>();
+    public List<Neighbour> neighbours = new ArrayList<>();
+    public List<Player> players = new ArrayList<>();
+    public List<Continent> continents = new ArrayList<>();
     public String mapPath;
     public boolean invalidMap;
 

@@ -59,47 +59,89 @@ public class MapLoaderTest {
         assertTrue(loader2.invalidMap);
     }
 
-//    /**
-//     * Map Validation: Disconnected continents
-//     */
-//    @Test
-//    public void invDisconnectedContinents() {
-//        int players = 2;
-//        List<String> playersModes = new ArrayList<>();
-//        playersModes.add("Human");
-//        playersModes.add("Human");
-//        String mapFile3 = "./src/maps/invNoConnectionTwoCont.map"; // Disconnected continents
-//        MapLoader loader3 = new MapLoader(players, mapFile3, false, playersModes, new NotificationWindow());
-//        assertTrue(loader3.invalidMap);
-//    }
+    /**
+     * Map Validation: Disconnected continents
+     */
+    @Test
+    public void invDisconnectedContinents() {
+        int players = 2;
+        List<String> playersModes = new ArrayList<>();
+        playersModes.add("Human");
+        playersModes.add("Human");
+        String mapFile3 = "./src/maps/invNoConnectionTwoCont.map"; // Disconnected continents
+        MapLoader loader3 = new MapLoader(players, mapFile3, false, playersModes, new NotificationWindow());
+        assertTrue(loader3.invalidMap);
+    }
 
-//
-//    /**
-//     * Map Validation: Disconnected Continents
-//     */
-//    @Test
-//    public void invDisconnectedCont() {
-//        int players = 2;
-//        List<String> playersModes = new ArrayList<>();
-//        playersModes.add("Human");
-//        playersModes.add("Human");
-//        String mapFile5 = "./src/maps/UnconnectedContinent.map"; // Disconnected continents
-//        MapLoader loader5 = new MapLoader(players, mapFile5, false, playersModes, new NotificationWindow());
-//        assertTrue(loader5.invalidMap);
-//    }
-//
-//    /**
-//     * Map Validation: Correct if map has one direction connections
-//     */
-//    @Test
-//    public void valOneDirection() {
-//        int players = 2;
-//        List<String> playersModes = new ArrayList<>();
-//        playersModes.add("Human");
-//        playersModes.add("Human");
-//        String mapFile6 = "./src/maps/oneDirection.map";
-//        MapLoader loader6 = new MapLoader(players, mapFile6, false, playersModes, new NotificationWindow());
-//        assertFalse(loader6.invalidMap);
-//    }
+
+    /**
+     * Map Validation: Disconnected Continents
+     */
+    @Test
+    public void invDisconnectedCont() {
+        int players = 2;
+        List<String> playersModes = new ArrayList<>();
+        playersModes.add("Human");
+        playersModes.add("Human");
+        String mapFile5 = "./src/maps/UnconnectedContinent.map"; // Disconnected continents
+        MapLoader loader5 = new MapLoader(players, mapFile5, false, playersModes, new NotificationWindow());
+        assertTrue(loader5.invalidMap);
+    }
+
+    /**
+     * Map Validation: Disconnected Continents Twin Volcano
+     */
+    @Test
+    public void invTwinVolcano() {
+        int players = 2;
+        List<String> playersModes = new ArrayList<>();
+        playersModes.add("Human");
+        playersModes.add("Human");
+        String mapFile5 = "./src/maps/TwinVolcano.map"; // Disconnected continents
+        MapLoader loader5 = new MapLoader(players, mapFile5, false, playersModes, new NotificationWindow());
+        assertTrue(loader5.invalidMap);
+    }
+
+    /**
+     * Map Validation: Correct if map has one direction connections
+     */
+    @Test
+    public void valOneDirection() {
+        int players = 2;
+        List<String> playersModes = new ArrayList<>();
+        playersModes.add("Human");
+        playersModes.add("Human");
+        String mapFile6 = "./src/maps/oneDirection.map";
+        MapLoader loader6 = new MapLoader(players, mapFile6, false, playersModes, new NotificationWindow());
+        assertFalse(loader6.invalidMap);
+    }
+
+    /**
+     * Map Validation: 3dCliff
+     */
+    @Test
+    public void val3dCliff() {
+        int players = 2;
+        List<String> playersModes = new ArrayList<>();
+        playersModes.add("Human");
+        playersModes.add("Human");
+        String mapFile6 = "./src/maps/3D Cliff.map";
+        MapLoader loader6 = new MapLoader(players, mapFile6, false, playersModes, new NotificationWindow());
+        assertFalse(loader6.invalidMap);
+    }
+
+    /**
+     * Map Validation: World
+     */
+    @Test
+    public void valWorld() {
+        int players = 2;
+        List<String> playersModes = new ArrayList<>();
+        playersModes.add("Human");
+        playersModes.add("Human");
+        String mapFile6 = "./src/maps/World.map";
+        MapLoader loader6 = new MapLoader(players, mapFile6, false, playersModes, new NotificationWindow());
+        assertFalse(loader6.invalidMap);
+    }
 
 }

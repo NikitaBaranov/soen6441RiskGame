@@ -4,9 +4,7 @@ import game.model.Country;
 import game.model.GameState;
 import game.model.Player;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Utils methods.
@@ -162,5 +160,15 @@ public class MapFunctionsUtil {
             }
         }
         return playerNumberOfCountriesMap;
+    }
+
+    public static List<Country> getRandomCountry(GameState gameState, int minArmy) {
+        List<Country> countryRandom = new ArrayList<>();
+        for (Country country : gameState.getCountries()) {
+            if (country.getPlayer() == gameState.getCurrentPlayer() && country.getArmy() >= minArmy) {
+                countryRandom.add(country);
+            }
+        }
+        return countryRandom;
     }
 }
