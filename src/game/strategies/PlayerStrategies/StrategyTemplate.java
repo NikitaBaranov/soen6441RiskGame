@@ -1,7 +1,6 @@
 package game.strategies.PlayerStrategies;
 
 import game.Game;
-import game.model.Country;
 import game.model.GameState;
 import game.strategies.GamePhaseStrategies.GamePhaseStrategyFactory;
 
@@ -10,16 +9,16 @@ import java.util.List;
 
 import static game.strategies.GamePhaseStrategies.BasePhaseStrategy.isGameWonBy;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.GAME_OVER;
-import static game.strategies.MapFunctionsUtil.*;
 
 /**
- * AI random player strategy.
- * Describes the behavoir of random ai.
+ * AI  player strategy.
+ * Describes the behavoir of strategy ai.
  *
  * @author Dmitry Kryukov
  * @see BasePlayerStrategy
  */
-public class AiRandomPlayerStrategy extends BasePlayerStrategy {
+
+public class StrategyTemplate extends BasePlayerStrategy {
     /**
      * Place Armies.
      *
@@ -27,7 +26,7 @@ public class AiRandomPlayerStrategy extends BasePlayerStrategy {
      */
     @Override
     public void placeArmies(GameState gameState) {
-        System.out.println("AI Random Place Armies!");
+        System.out.println("AI Aggressive Place Armies!");
         new PlaceArmiesWorker(gameState).execute();
     }
 
@@ -40,7 +39,7 @@ public class AiRandomPlayerStrategy extends BasePlayerStrategy {
     public void reinforce(GameState gameState) {
         exchangeCards(gameState);
         pauseAndRefresh(gameState, PAUSE * 2);
-        System.out.println("AI Random Reinforce!");
+        System.out.println("AI Aggressive Reinforce!");
         new ReinforceWorker(gameState).execute();
     }
 
@@ -51,7 +50,7 @@ public class AiRandomPlayerStrategy extends BasePlayerStrategy {
      */
     @Override
     public void attack(GameState gameState) {
-        System.out.println("AI Random Attack!");
+        System.out.println("AI Aggressive Attack!");
         new AttackWorker(gameState).execute();
     }
 
@@ -62,7 +61,7 @@ public class AiRandomPlayerStrategy extends BasePlayerStrategy {
      */
     @Override
     public void fortify(GameState gameState) {
-        System.out.println("AI Random Fortify!");
+        System.out.println("AI Aggressive Fortify!");
         new FortifyWorker(gameState).execute();
     }
 
