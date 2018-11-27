@@ -3,6 +3,7 @@ package game.ui.view;
 import game.Game;
 import game.model.IObservable;
 import game.model.Player;
+import game.utils.WarningWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -85,6 +86,7 @@ public class TopStatusPanel extends JPanel implements IPanelObserver {
         return new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Save game");
+                new WarningWindow("Game saved.", false);
                 Game.getInstance().save();
             }
         };
