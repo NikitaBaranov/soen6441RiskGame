@@ -11,15 +11,15 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * Base player strategy. Describes the basic player features.
+ * Base player strategy. Describes the basic any player features.
  *
  * @author Dmitry Kryukov, Ksenia popova
  * @see IPlayerStrategy
  */
-public class BasePlayerStrategy implements IPlayerStrategy, Serializable {
+public class BaseStrategy implements IPlayerStrategy, Serializable {
     private static final long serialVersionUID = 1L;
 
-    public final int PAUSE = 500;
+    public final int PAUSE = 1000;
     /**
      * Method describes the behavior of the game during rolling the dices. i.e. attacking phase.
      * Show status messages.
@@ -50,7 +50,7 @@ public class BasePlayerStrategy implements IPlayerStrategy, Serializable {
     }
 
     /**
-     * Exchange action for AI.
+     * Exchange action.
      * Automatic exchange feature if there are 3 cards of equal type
      *
      * @param gameState
@@ -90,7 +90,7 @@ public class BasePlayerStrategy implements IPlayerStrategy, Serializable {
     }
 
     /**
-     * Pause method for AI strategies.
+     * Pause method for strategies.
      * @param gameState
      * @param milliseconds
      */
@@ -104,7 +104,7 @@ public class BasePlayerStrategy implements IPlayerStrategy, Serializable {
     }
 
     /**
-     * Method need to be implemented
+     * Empty method. Not required in this file
      * @param gameState
      */
     @Override
@@ -113,7 +113,7 @@ public class BasePlayerStrategy implements IPlayerStrategy, Serializable {
     }
 
     /**
-     * method needs to be implemented
+     * Empty method. Not required in this file
      * @param gameState
      */
     @Override
@@ -122,7 +122,7 @@ public class BasePlayerStrategy implements IPlayerStrategy, Serializable {
     }
 
     /**
-     * method needs to be implemented
+     * Empty method. Not required in this file
      * @param gameState
      */
     @Override
@@ -131,7 +131,7 @@ public class BasePlayerStrategy implements IPlayerStrategy, Serializable {
     }
 
     /**
-     * method needs to be implemented
+     * Empty method. Not required in this file
      * @param gameState
      */
     @Override
@@ -140,7 +140,7 @@ public class BasePlayerStrategy implements IPlayerStrategy, Serializable {
     }
 
     /**
-     * method needs to be implemented
+     * Empty method. Not required in this file
      * @param gameState
      */
     @Override
@@ -149,7 +149,7 @@ public class BasePlayerStrategy implements IPlayerStrategy, Serializable {
     }
 
     /**
-     * method needs to be implemented
+     * Empty method. Not required in this file
      * @param gameState
      */
     @Override

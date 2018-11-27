@@ -3,8 +3,7 @@ package game.strategies.PlayerStrategies;
 import static game.strategies.GamePhaseStrategies.BasePhaseStrategy.isGameWonBy;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.GAME_OVER;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.SwingWorker;
 
@@ -13,7 +12,7 @@ import game.model.Country;
 import game.model.GameState;
 import game.strategies.GamePhaseStrategies.GamePhaseStrategyFactory;
 
-public class AiCheaterStrategy extends BasePlayerStrategy {
+public class AiCheaterStrategy extends BaseStrategy {
 
     /**
      * Method need to be implemented
@@ -83,7 +82,7 @@ public class AiCheaterStrategy extends BasePlayerStrategy {
         		    country.setSelected(true);
         			country.setArmy(country.getArmy() * 2);
                     gameState.getCurrentPlayer().setArmies(gameState.getCurrentPlayer().getArmies() - 1);
-                    String message = gameState.getCurrentPlayer().getName() + " placed army to " + country.getName() + " total armies " + gameState.getCurrentPlayer().getArmies();
+                    String message = gameState.getCurrentPlayer().getName() + " placed army to " + country.getName() + ". Armies to place: CHEAT MODE";
                     gameState.setCurrentTurnPhraseText(message);
                     publish(message);
         		}
@@ -142,11 +141,12 @@ public class AiCheaterStrategy extends BasePlayerStrategy {
         		if(country.getPlayer() == gameState.getCurrentPlayer()) {
                     country.setSelected(true);
         			country.setArmy(country.getArmy() * 2);
-                    String message = gameState.getCurrentPlayer().getName() + " reinforce " + country.getName() + " by " + gameState.getCurrentPlayer().getArmies();
+                    String message = gameState.getCurrentPlayer().getName() + " reinforce " + country.getName() + " by double";
                     gameState.getCurrentPlayer().setArmies(0);
                     gameState.setCurrentTurnPhraseText(message);
                     publish(message);
         		}
+                pauseAndRefresh(gameState, PAUSE);
         	}
 
             pauseAndRefresh(gameState, PAUSE);
@@ -198,24 +198,26 @@ public class AiCheaterStrategy extends BasePlayerStrategy {
          */
         @Override
         protected Void doInBackground() {
-        	ArrayList<Country> countriesCaptured = new ArrayList<Country>();
-        	for (Country country : gameState.getCountries()) {
+            HashMap<Country, Integer> countriesCaptured = new HashMap<>();
+            for (Country country : gameState.getCountries()) {
         		if(country.getPlayer() == gameState.getCurrentPlayer()) {
         			List<Country> neighbours = country.getNeighbours();
         			for(Country neighbour : neighbours) {
-        				if(neighbour.getPlayer() != gameState.getCurrentPlayer() && countriesCaptured.contains(neighbour) == false)
-        					countriesCaptured.add(neighbour);
+        				if(neighbour.getPlayer() != gameState.getCurrentPlayer() && countriesCaptured.containsValue(neighbour) == false)
+        					countriesCaptured.put(neighbour, country.getArmy());
         			}
         		}
         	}
-        	
-        	for (Country country : countriesCaptured) {
+
+            for (Map.Entry<Country, Integer> pair : countriesCaptured.entrySet()) {
                 String message = "Captured.";
                 gameState.setCurrentTurnPhraseText(message);
                 publish(message);
-        		country.setSelected(true);
-        	    country.setPlayer(gameState.getCurrentPlayer());
-        	}
+                pair.getKey().setSelected(true);
+                pair.getKey().setPlayer(gameState.getCurrentPlayer());
+                pair.getKey().setArmy(pair.getValue());
+                pauseAndRefresh(gameState, PAUSE);
+            }
 
             pauseAndRefresh(gameState, PAUSE * 2);
             return null;
@@ -283,6 +285,7 @@ public class AiCheaterStrategy extends BasePlayerStrategy {
                             String message = gameState.getCurrentPlayer().getName() + " fortify " + country.getName();
                             gameState.setCurrentTurnPhraseText(message);
                             publish(message);
+                            pauseAndRefresh(gameState, PAUSE);
         				}
         			}
         		}

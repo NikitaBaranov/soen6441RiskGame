@@ -14,16 +14,16 @@ public class PlayerStrategyFactory {
     public static IPlayerStrategy getStrategy(PlayerStrategyEnum playerStrategyEnum) {
         switch (playerStrategyEnum) {
             case HUMAN_STRATEGY:
-                return new HumanPlayerStrategy();
+                return new HumanStrategy();
 
             case AI_AGGRESSIVE_STRATEGY:
-                return new AiAggressivePlayerStrategy();
+                return new AiAggressiveStrategy();
 
             case AI_BENEVOLENT_STRATEGY:
                 return new AiBenevolentStrategy();
 
             case AI_RANDOM_STRATEGY:
-                return new AiRandomPlayerStrategy();
+                return new AiRandomStrategy();
 
             case AI_CHEATER_STRATEGY:
                 return new AiCheaterStrategy();

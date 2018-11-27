@@ -15,10 +15,10 @@ import static game.strategies.GamePhaseStrategies.GamePhaseEnum.GAME_OVER;
  * Describes the behavoir of strategy ai.
  *
  * @author Dmitry Kryukov
- * @see BasePlayerStrategy
+ * @see BaseStrategy
  */
 
-public class StrategyTemplate extends BasePlayerStrategy {
+public class StrategyTemplate extends BaseStrategy {
     /**
      * Place Armies.
      *

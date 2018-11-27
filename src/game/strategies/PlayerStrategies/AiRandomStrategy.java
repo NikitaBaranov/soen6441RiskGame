@@ -6,7 +6,6 @@ import game.model.GameState;
 import game.strategies.GamePhaseStrategies.GamePhaseStrategyFactory;
 
 import javax.swing.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -20,9 +19,9 @@ import static game.utils.MapFunctionsUtil.resetToAndFrom;
  * Describes the behavoir of random ai.
  *
  * @author Dmitry Kryukov
- * @see BasePlayerStrategy
+ * @see BaseStrategy
  */
-public class AiRandomPlayerStrategy extends BasePlayerStrategy {
+public class AiRandomStrategy extends BaseStrategy {
     /**
      * Place Armies.
      *
@@ -96,7 +95,7 @@ public class AiRandomPlayerStrategy extends BasePlayerStrategy {
                 randomCountry.get(n).setSelected(true);
                 randomCountry.get(n).setArmy(randomCountry.get(n).getArmy() + 1);
                 gameState.getCurrentPlayer().setArmies(gameState.getCurrentPlayer().getArmies() - 1);
-                String message = gameState.getCurrentPlayer().getName() + " placed army to " + randomCountry.get(n).getName() + " total armies " + gameState.getCurrentPlayer().getArmies();
+                String message = gameState.getCurrentPlayer().getName() + " placed army to " + randomCountry.get(n).getName() + ". Armies to place: " + gameState.getCurrentPlayer().getArmies();
                 gameState.setCurrentTurnPhraseText(message);
                 publish(message);
             }
@@ -160,11 +159,13 @@ public class AiRandomPlayerStrategy extends BasePlayerStrategy {
 
             if (toReinforce != null) {
                 toReinforce.setSelected(true);
-                toReinforce.setArmy(toReinforce.getArmy() + gameState.getCurrentPlayer().getArmies());
+                // Reinforce a random number of available armies to the random country
+                toReinforce.setArmy(toReinforce.getArmy() + random.nextInt(gameState.getCurrentPlayer().getArmies()) + 1);
                 String message = gameState.getCurrentPlayer().getName() + " reinforce " + toReinforce.getName() + " by " + gameState.getCurrentPlayer().getArmies();
                 gameState.getCurrentPlayer().setArmies(0);
                 gameState.setCurrentTurnPhraseText(message);
                 publish(message);
+                pauseAndRefresh(gameState, PAUSE);
             }
 
             pauseAndRefresh(gameState, PAUSE);
@@ -216,24 +217,25 @@ public class AiRandomPlayerStrategy extends BasePlayerStrategy {
          */
         @Override
         protected Void doInBackground() {
-            boolean done = false;
+            List<Country> randomCountry = getRandomCountry(gameState, 2);
+            List<Country> randomEnemyCountry = getRandomEnemyCountry(gameState, 1);
             Random random = new Random();
-            while (!done) {
+            int attacks = random.nextInt(randomEnemyCountry.size()) + 1;
+            // Random number of attacks
+            for (int i = 1; i <= attacks; i++){
                 unHighlightCountries(gameState);
                 unSelectCountries(gameState);
                 resetToAndFrom(gameState);
-                done = true;
-                int maxArmies = 1;
-                for (Country country : gameState.getCountries()) {
-                    if (country.getPlayer() == gameState.getCurrentPlayer() && country.getArmy() > maxArmies) {
-                        maxArmies = country.getArmy();
-                        gameState.setCountryFrom(country);
-                    }
+                // Set random country from
+                int randomCountryFrom = random.nextInt(randomCountry.size());
+                if (gameState.getCountries().get(randomCountryFrom).getPlayer() == gameState.getCurrentPlayer()) {
+                    gameState.setCountryFrom(gameState.getCountries().get(randomCountryFrom));
                 }
+
+                // set country to
                 if (gameState.getCountryFrom() != null) {
                     for (Country country : gameState.getCountryFrom().getNeighbours()) {
                         if (country.getPlayer() != gameState.getCurrentPlayer()) {
-                            done = false;
                             gameState.setCountryTo(country);
                         }
                     }
@@ -248,18 +250,16 @@ public class AiRandomPlayerStrategy extends BasePlayerStrategy {
                     gameState.getCountryTo().setHighlighted(true);
                     pauseAndRefresh(gameState, PAUSE);
 
-//                    gameState.setNumberOfRedDicesSelected(Math.max(0, Math.min(gameState.getCountryFrom().getArmy() - 1, 3)));
-//                    gameState.setNumberOfWhiteDicesSelected(Math.max(0, Math.min(gameState.getCountryTo().getArmy(), 2)));
-
-                    gameState.setNumberOfRedDicesSelected(random.nextInt(Math.min(gameState.getCountryFrom().getArmy() - 1, 3)));
-                    gameState.setNumberOfWhiteDicesSelected(random.nextInt(Math.min(gameState.getCountryTo().getArmy(), 2)));
+                    gameState.setNumberOfRedDicesSelected(random.nextInt(Math.min(gameState.getCountryFrom().getArmy() - 1, 3)) + 1);
+                    gameState.setNumberOfWhiteDicesSelected(random.nextInt(Math.min(gameState.getCountryTo().getArmy(), 2)) + 1);
 
                     rollDiceAndProcessResults(gameState);
                     pauseAndRefresh(gameState, PAUSE);
 
                     if (gameState.getMinArmiesToMoveAfterWin() > 0) {
-                        gameState.getCountryTo().setArmy(gameState.getCountryFrom().getArmy() - 1);
-                        gameState.getCountryFrom().setArmy(1);
+                        int armiesToMove = random.nextInt(gameState.getCountryFrom().getArmy() - 1) + 1;
+                        gameState.getCountryTo().setArmy(armiesToMove);
+                        gameState.getCountryFrom().setArmy(gameState.getCountryFrom().getArmy() - armiesToMove);
 
                         pauseAndRefresh(gameState, PAUSE);
 
@@ -325,16 +325,18 @@ public class AiRandomPlayerStrategy extends BasePlayerStrategy {
          */
         @Override
         protected Void doInBackground() {
-            List<Country> countries = getRandomCountry(gameState, 2);
+            List<Country> randomCountry = getRandomCountry(gameState, 2);
             Random random = new Random();
-            Country fromFortify = countries.get(random.nextInt(countries.size()));
+            // Set random country from
+            Country fromFortify = randomCountry.get(random.nextInt(randomCountry.size()));
             Country toFortify = null;
-
+            // Set random country to
             if (fromFortify != null) {
                 fromFortify.select(false, -1);
-                for (Country country : gameState.getCountries()) {
+                for (Country country : fromFortify.getNeighbours()) {
                     if (country.isHighlighted()) {
                         toFortify = country;
+                        break;
                     }
                 }
             }
@@ -342,6 +344,7 @@ public class AiRandomPlayerStrategy extends BasePlayerStrategy {
             if (toFortify != null && fromFortify != null) {
                 unHighlightCountries(gameState);
                 toFortify.setHighlighted(true);
+                pauseAndRefresh(gameState, PAUSE);
                 int armyToFortify = fromFortify.getArmy() - 1;
                 toFortify.setArmy(toFortify.getArmy() + armyToFortify);
                 fromFortify.setArmy(1);

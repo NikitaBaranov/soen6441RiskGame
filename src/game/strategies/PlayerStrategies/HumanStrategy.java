@@ -19,9 +19,9 @@ import static game.utils.MapFunctionsUtil.unHighlightCountries;
  * Human player strategy. Describes the actions for human player.
  *
  * @author Dmitry Kryukov, Ksenia Popova
- * @see BasePlayerStrategy
+ * @see BaseStrategy
  */
-public class HumanPlayerStrategy extends BasePlayerStrategy {
+public class HumanStrategy extends BaseStrategy {
 
 
     @Override
@@ -29,7 +29,7 @@ public class HumanPlayerStrategy extends BasePlayerStrategy {
         gameState.getCurrentCountry().setSelected(true);
         gameState.getCurrentCountry().setArmy(gameState.getCurrentCountry().getArmy() + 1);
         gameState.getCurrentPlayer().setArmies(gameState.getCurrentPlayer().getArmies() - 1);
-        String message = gameState.getCurrentPlayer().getName() + " placed army to " + gameState.getCurrentCountry().getName() + " total armies " + gameState.getCurrentPlayer().getArmies();
+        String message = gameState.getCurrentPlayer().getName() + " placed army to " + gameState.getCurrentCountry().getName() + ". Armies to place: " + gameState.getCurrentPlayer().getArmies();
         gameState.setCurrentTurnPhraseText(message);
         System.out.println(message);
     }

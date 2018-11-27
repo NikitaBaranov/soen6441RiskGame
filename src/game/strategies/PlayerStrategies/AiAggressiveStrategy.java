@@ -22,9 +22,9 @@ import static game.utils.MapFunctionsUtil.unSelectCountries;
  * Describes the behavoir of aggressive ai.
  *
  * @author Dmitry Kryukov
- * @see BasePlayerStrategy
+ * @see BaseStrategy
  */
-public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
+public class AiAggressiveStrategy extends BaseStrategy {
     /**
      * Place Armies.
      *
@@ -99,7 +99,7 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
                 toPlaceArmy.setSelected(true);
                 toPlaceArmy.setArmy(toPlaceArmy.getArmy() + 1);
                 gameState.getCurrentPlayer().setArmies(gameState.getCurrentPlayer().getArmies() - 1);
-                String message = gameState.getCurrentPlayer().getName() + " placed army to " + toPlaceArmy.getName() + " total armies " + gameState.getCurrentPlayer().getArmies();
+                String message = gameState.getCurrentPlayer().getName() + " placed army to " + toPlaceArmy.getName() + ". Armies to place: " + gameState.getCurrentPlayer().getArmies();
                 gameState.setCurrentTurnPhraseText(message);
                 publish(message);
             }
@@ -186,6 +186,7 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
                 gameState.getCurrentPlayer().setArmies(0);
                 gameState.setCurrentTurnPhraseText(message);
                 publish(message);
+                pauseAndRefresh(gameState, PAUSE*2);
             }
 
             pauseAndRefresh(gameState, PAUSE);
@@ -370,6 +371,8 @@ public class AiAggressivePlayerStrategy extends BasePlayerStrategy {
                 String message = gameState.getCurrentPlayer().getName() + " fortify " + toFortify.getName() + " from " + fromFortify.getName() + " by " + armyToFortify;
                 gameState.setCurrentTurnPhraseText(message);
                 publish(message);
+                pauseAndRefresh(gameState, PAUSE);
+
             }
 
             pauseAndRefresh(gameState, PAUSE * 2);

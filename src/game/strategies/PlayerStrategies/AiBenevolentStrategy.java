@@ -6,17 +6,15 @@ import static game.strategies.GamePhaseStrategies.GamePhaseEnum.GAME_OVER;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.swing.SwingWorker;
 
 import game.Game;
 import game.model.Country;
 import game.model.GameState;
-import game.model.enums.CardsEnum;
 import game.strategies.GamePhaseStrategies.GamePhaseStrategyFactory;
 
-public class AiBenevolentStrategy extends BasePlayerStrategy {
+public class AiBenevolentStrategy extends BaseStrategy {
 	
     /**
      * Benevolent places armies on the weakest countries

@@ -171,4 +171,14 @@ public class MapFunctionsUtil {
         }
         return countryRandom;
     }
+
+    public static List<Country> getRandomEnemyCountry(GameState gameState, int minArmy) {
+        List<Country> countryRandom = new ArrayList<>();
+        for (Country country : gameState.getCountries()) {
+            if (country.getPlayer() != gameState.getCurrentPlayer() && country.getArmy() >= minArmy) {
+                countryRandom.add(country);
+            }
+        }
+        return countryRandom;
+    }
 }
