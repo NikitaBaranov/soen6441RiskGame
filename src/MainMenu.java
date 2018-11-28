@@ -2,10 +2,7 @@ import game.model.GameState;
 import game.utils.MapLoader;
 import game.utils.NotificationWindow;
 import game.utils.TournamentMenu;
-import mapeditor.Continent;
-import mapeditor.ILoadedMap;
-import mapeditor.IMapLoader;
-import mapeditor.Territory;
+import mapeditor.*;
 import mapeditor.gui.MapEditor;
 
 import javax.swing.*;
@@ -140,8 +137,8 @@ public class MainMenu extends JFrame {
                 EventQueue.invokeLater(() -> {
                     IMapLoader mapLoaderObj = new mapeditor.MapLoader("", 1);
                     loadedMapObj = mapLoaderObj.getLoadedMap();
-                    //Continent.setContinents(loadedMapObj.getContinents());
-                    //Territory.setTerritories(loadedMapObj.getTerritories());
+                    Continent.setContinents(new ArrayList<IContinent>());
+                    Territory.setTerritories(new ArrayList<ITerritory>());
                     MapEditor ex = new MapEditor("", loadedMapObj);
                     ex.setVisible(true);
                 });
