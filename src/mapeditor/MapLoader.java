@@ -110,7 +110,7 @@ public class MapLoader implements IMapLoader {
 			}
 
 		} catch (IOException e) {
-			System.out.println("File could not be loaded. Please check path");
+			//System.out.println("File could not be loaded. Please check path");
 		}
 	}
 	

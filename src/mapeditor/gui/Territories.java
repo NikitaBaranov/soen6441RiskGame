@@ -68,12 +68,9 @@ public class Territories extends javax.swing.JFrame {
     public void selectAdjacent(Integer pos){
         this.model2.setRowCount(0);
         ArrayList<ITerritory> terList = Territory.getTerritories();
-        System.out.println(pos);
-        System.out.println(terList.size());
         if(terList.size() > pos){
             ITerritory ter = terList.get(pos);
             ArrayList<String> adjacents = ter.getAdjacents();
-            System.out.println(adjacents);
             for(String str : adjacents){
                 this.model2.addRow(new Object[]{str});
             }

@@ -1,10 +1,11 @@
 package mapeditor.gui;
 
+import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Vector;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
+import javax.swing.*;
+
 import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -369,20 +370,29 @@ public class MapEditor extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         Vector newRow = new Vector();
+        IContinent cont;
+        try{
+            cont = new Continent(jTextField1.getText(), Integer.parseInt(jTextField2.getText()));
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(new Frame(), "Invalid value for this field");
+            return;
+        }
         newRow.add(jTextField1.getText());
         newRow.add(jTextField2.getText());
         this.model.addRow(newRow);
-        IContinent cont = new Continent(jTextField1.getText(), Integer.parseInt(jTextField2.getText()));
         loadedMapObj.addContinent(cont);
         this.updateContinents();
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
-        loadedMapObj.deleteContinent(Continent.getContinents().get(jTable1.getSelectedRow()));
-        this.model.removeRow(jTable1.getSelectedRow());
-        this.updateContinents();
+        try{
+            loadedMapObj.deleteContinent(Continent.getContinents().get(jTable1.getSelectedRow()));
+            this.model.removeRow(jTable1.getSelectedRow());
+            this.updateContinents();
+        }catch(Exception e){
+            return;
+        }
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -393,15 +403,19 @@ public class MapEditor extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
 
         preventionFlag = true;
-        Integer index = jTable2.getSelectedRow();
-        this.model1.removeRow(index);
-        ITerritory ter = Territory.getTerritories().get(index);
-        loadedMapObj.deleteTerritory(ter);
-        ArrayList<ITerritory> ters = Territory.getTerritories();
-        ters.remove(ter);
-        Territory.setTerritories(ters);
-        this.updateTerritories();
-        selectAdjacent(0);
+        try{
+            Integer index = jTable2.getSelectedRow();
+            this.model1.removeRow(index);
+            ITerritory ter = Territory.getTerritories().get(index);
+            loadedMapObj.deleteTerritory(ter);
+            ArrayList<ITerritory> ters = Territory.getTerritories();
+            ters.remove(ter);
+            Territory.setTerritories(ters);
+            this.updateTerritories();
+            selectAdjacent(0);
+        }catch(Exception e){
+
+        }
         preventionFlag = false;
 
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -413,7 +427,13 @@ public class MapEditor extends javax.swing.JFrame {
         newRow.add(jTextField4.getText());
         newRow.add(jTextField5.getText());
         newRow.add(jTextField6.getText());
-        ITerritory ter = new Territory(jTextField3.getText(), Integer.parseInt(jTextField4.getText()), Integer.parseInt(jTextField5.getText()), jTextField6.getText(), new ArrayList<String>());
+        ITerritory ter;
+        try{
+            ter = new Territory(jTextField3.getText(), Integer.parseInt(jTextField4.getText()), Integer.parseInt(jTextField5.getText()), jTextField6.getText(), new ArrayList<String>());
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(new Frame(), "Invalid value for this field");
+            return;
+        }
         loadedMapObj.addTerritory(ter);
         this.model1.addRow(newRow);
         this.updateTerritories();
@@ -485,12 +505,9 @@ public class MapEditor extends javax.swing.JFrame {
     public void selectAdjacent(Integer pos) {
         this.model2.setRowCount(0);
         ArrayList<ITerritory> terList = Territory.getTerritories();
-        System.out.println(pos);
-        System.out.println(terList.size());
         if (terList.size() > pos) {
             ITerritory ter = terList.get(pos);
             ArrayList<String> adjacents = ter.getAdjacents();
-            System.out.println(adjacents);
             for (String str : adjacents) {
                 this.model2.addRow(new Object[]{str});
             }
