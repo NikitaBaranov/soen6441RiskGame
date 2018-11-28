@@ -10,9 +10,9 @@ import org.junit.runners.Suite;
 //        mapeditor.TestMapEditor.class, // Done
 //        MainMenuTest.class, // Done
 //        LauncherTest.class, // Done
-//        game.GameTest.class, // TODO
+        game.GameTest.class, // TODO
 //        game.utils.WarningWindowTest.class, // Done
-        game.utils.MapLoaderTest.class, // TODO
+//        game.utils.MapLoaderTest.class, // Done
 //        game.model.PlayerTest.class // TODO
 })
 /**
