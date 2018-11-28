@@ -70,10 +70,10 @@ public class GameTest {
      */
     @Test
     public void startupPhasePlayer1Country1(){
-        gameState.setCurrentPlayer(players.get(0));
         gameState.setCurrentGamePhase(GamePhaseEnum.PLACING_ARMIES);
         Game.getInstance().setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(GamePhaseEnum.PLACING_ARMIES));
         Game.getInstance().getGamePhaseStrategy().init(gameState);
+        gameState.setCurrentPlayer(players.get(0));
 
         players.get(0).setArmies(5);
         countries.get(0).setArmy(1);
@@ -87,10 +87,10 @@ public class GameTest {
      */
     @Test
     public void startupPhasePlayer1Country2(){
-        gameState.setCurrentPlayer(players.get(0));
         gameState.setCurrentGamePhase(GamePhaseEnum.PLACING_ARMIES);
         Game.getInstance().setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(GamePhaseEnum.PLACING_ARMIES));
         Game.getInstance().getGamePhaseStrategy().init(gameState);
+        gameState.setCurrentPlayer(players.get(0));
 
         players.get(0).setArmies(5);
         countries.get(1).setArmy(1);
@@ -104,10 +104,10 @@ public class GameTest {
      */
     @Test
     public void startupPhasePlayer2Country1(){
-        gameState.setCurrentPlayer(players.get(1));
         gameState.setCurrentGamePhase(GamePhaseEnum.PLACING_ARMIES);
         Game.getInstance().setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(GamePhaseEnum.PLACING_ARMIES));
         Game.getInstance().getGamePhaseStrategy().init(gameState);
+        gameState.setCurrentPlayer(players.get(1));
 
         players.get(1).setArmies(5);
         countries.get(4).setArmy(1);
@@ -115,6 +115,25 @@ public class GameTest {
         game.makeAction(90, 90);
         assertEquals(2, countries.get(4).getArmy());
     }
+
+    /**
+     * Startup phase test. Check if possible to assign armies to country
+     */
+    @Test
+    public void startupPhasePlayer2Country2(){
+        gameState.setCurrentGamePhase(GamePhaseEnum.PLACING_ARMIES);
+        Game.getInstance().setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(GamePhaseEnum.PLACING_ARMIES));
+        Game.getInstance().getGamePhaseStrategy().init(gameState);
+        gameState.setCurrentPlayer(players.get(1));
+
+        players.get(1).setArmies(5);
+        countries.get(3).setArmy(2);
+        game.makeAction(0, 0);
+        game.makeAction(70, 70);
+        assertEquals(3, countries.get(3).getArmy());
+    }
+
+
 //    /**
 //     * Test for calculation of number of reinforcment armies
 //     */
