@@ -1,6 +1,10 @@
 package game.strategies.GamePhaseStrategies;
 
 import game.model.GameState;
+import game.model.Player;
+
+import java.util.LinkedList;
+import java.util.List;
 
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.GAME_OVER;
 
@@ -18,9 +22,21 @@ public class GameOverPhaseStrategy extends BasePhaseStrategy {
     @Override
     public void init(GameState gameState) {
         super.init(gameState);
-        // TODO doesn't work for Aggressive AI. It proceed to play even when the opponent doesn't have any country
         gameState.setCurrentGamePhase(GAME_OVER);
-        gameState.setCurrentTurnPhraseText("Game over. The " + gameState.getCurrentPlayer().getName() + " win.");
+        List<Player> players = new LinkedList<>();
+        for (Player player : gameState.getPlayers()) {
+            if (!player.isLost()) {
+                players.add(player);
+            }
+        }
+        String message;
+        if (players.size() == 1) {
+            message = "Game over. The " + players.get(0).getName() + " win.";
+        } else {
+            message = "Game over. The Draw.";
+        }
+        gameState.setCurrentTurnPhraseText(message);
+        System.out.println(message);
         gameState.setNextTurnButton(false);
         gameState.notifyObservers();
     }

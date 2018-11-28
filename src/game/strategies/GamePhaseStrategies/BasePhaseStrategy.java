@@ -32,11 +32,17 @@ public class BasePhaseStrategy implements IGamePhaseStrategy, Serializable {
                 return false;
             }
         }
+        for (Player playerToSetLost : gameState.getPlayers()) {
+            if (playerToSetLost != player) {
+                playerToSetLost.setLost(true);
+            }
+        }
         return true;
     }
 
     /**
      * Debug messages.
+     *
      * @param gameState
      */
     static void debugMessage(GameState gameState) {
@@ -51,6 +57,7 @@ public class BasePhaseStrategy implements IGamePhaseStrategy, Serializable {
 
     /**
      * Initialization of base phase strategy.
+     *
      * @param gameState
      */
     @Override
@@ -67,6 +74,7 @@ public class BasePhaseStrategy implements IGamePhaseStrategy, Serializable {
 
     /**
      * Map click for base strategy
+     *
      * @param gameState
      * @param x
      * @param y
@@ -79,6 +87,7 @@ public class BasePhaseStrategy implements IGamePhaseStrategy, Serializable {
 
     /**
      * Next turn button behavior
+     *
      * @param gameState
      */
     @Override
@@ -88,6 +97,7 @@ public class BasePhaseStrategy implements IGamePhaseStrategy, Serializable {
 
     /**
      * Exchange behavoir
+     *
      * @param gameState
      */
     @Override
@@ -97,6 +107,7 @@ public class BasePhaseStrategy implements IGamePhaseStrategy, Serializable {
 
     /**
      * Attack behavoir
+     *
      * @param gameState
      */
     @Override
@@ -106,6 +117,7 @@ public class BasePhaseStrategy implements IGamePhaseStrategy, Serializable {
 
     /**
      * cleaning
+     *
      * @param gameState
      */
     @Override

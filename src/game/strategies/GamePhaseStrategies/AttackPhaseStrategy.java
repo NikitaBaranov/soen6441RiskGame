@@ -87,7 +87,6 @@ public class AttackPhaseStrategy extends BasePhaseStrategy {
                 player.setLost(true);
             }
         }
-
         Game.getInstance().setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(FORTIFICATION));
         Game.getInstance().getGamePhaseStrategy().init(gameState);
     }

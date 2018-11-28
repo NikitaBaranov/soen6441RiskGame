@@ -6,7 +6,6 @@ import game.model.Country;
 import game.model.GameState;
 import game.model.Neighbour;
 import game.model.Player;
-import game.strategies.PlayerStrategies.PlayerStrategyFactory;
 import game.ui.Main;
 
 import java.awt.*;
@@ -50,8 +49,6 @@ public class MapLoader {
     public List<Continent> continents = new ArrayList<>();
     public String mapPath;
     public boolean invalidMap;
-
-    PlayerStrategyFactory playerStrategyFactory = new PlayerStrategyFactory();
 
     /**
      * Constructor of the class.
@@ -681,6 +678,7 @@ public class MapLoader {
         gameState.setPlayers(players);
         gameState.setContinents(continents);
         gameState.setMapFilePath(mapPath);
+        gameState.setMaxNumberOfTurns(turns);
 
         Game game = Game.getInstance();
         game.setGameState(gameState);

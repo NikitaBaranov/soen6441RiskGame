@@ -58,6 +58,9 @@ public class GameState implements IObservable, Serializable {
 
     private GamePhaseEnum currentGamePhase;
 
+    private int maxNumberOfTurns = -1;
+    private int currentTurnNumber = 1;
+
     /**
      * attach observer
      *
@@ -424,5 +427,21 @@ public class GameState implements IObservable, Serializable {
 
     public void setiPanelObservers(List<IPanelObserver> iPanelObservers) {
         this.iPanelObservers = iPanelObservers;
+    }
+
+    public int getMaxNumberOfTurns() {
+        return maxNumberOfTurns;
+    }
+
+    public void setMaxNumberOfTurns(int maxNumberOfTurns) {
+        this.maxNumberOfTurns = maxNumberOfTurns;
+    }
+
+    public int getCurrentTurnNumber() {
+        return currentTurnNumber;
+    }
+
+    public void setCurrentTurnNumber(int currentTurnNumber) {
+        this.currentTurnNumber = currentTurnNumber;
     }
 }

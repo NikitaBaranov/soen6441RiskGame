@@ -9,6 +9,7 @@ import game.model.Player;
 import java.util.List;
 
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.ATTACK;
+import static game.strategies.GamePhaseStrategies.GamePhaseEnum.GAME_OVER;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.REINFORCEMENT;
 import static game.utils.MapFunctionsUtil.highlightPayerCountries;
 import static game.utils.MapFunctionsUtil.selectCountry;
@@ -53,34 +54,45 @@ public class ReinforcementPhaseStrategy extends BasePhaseStrategy {
 
         gameState.setCurrentGamePhase(REINFORCEMENT);
 
+        System.out.println("\n----------------------------------------------------------------------------\n");
         // Change current player
         do {
-            gameState.setCurrentPlayer(gameState.getPlayers().get((gameState.getPlayers().indexOf(gameState.getCurrentPlayer()) + 1) % gameState.getPlayers().size()));
+            int nextPlayerNumber = (gameState.getPlayers().indexOf(gameState.getCurrentPlayer()) + 1) % gameState.getPlayers().size();
+            gameState.setCurrentPlayer(gameState.getPlayers().get(nextPlayerNumber));
+            if (nextPlayerNumber == 0) {
+                gameState.setCurrentTurnNumber(gameState.getCurrentTurnNumber() + 1);
+                System.out.println("Turn " + gameState.getCurrentTurnNumber());
+            }
         } while (gameState.getCurrentPlayer().isLost());
 
-        System.out.println("\n----------------------------------------------------------------------------\n");
-        System.out.println("Select next Player. Next Player is " + gameState.getCurrentPlayer().getName());
+        if (gameState.getMaxNumberOfTurns() != -1 && gameState.getCurrentTurnNumber() > gameState.getMaxNumberOfTurns()) {
+            Game.getInstance().setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(GAME_OVER));
+            Game.getInstance().getGamePhaseStrategy().init(gameState);
+        } else {
 
-        // Add base armies
-        gameState.getCurrentPlayer().setArmies(getReinforcementArmies(gameState.getCurrentPlayer(), gameState.getCountries()));
+            // Add base armies
+            gameState.getCurrentPlayer().setArmies(getReinforcementArmies(gameState.getCurrentPlayer(), gameState.getCountries()));
 
-        // Add continent Bonus
-        for (Continent continent : gameState.getContinents()) {
-            if (continent.isOwnByOnePlayer()) {
-                if (continent.getCountryList().get(0).getPlayer() == gameState.getCurrentPlayer()) {
-                    gameState.getCurrentPlayer().setArmies(gameState.getCurrentPlayer().getArmies() + continent.getBonus());
-                    System.out.println("Player " + gameState.getCurrentPlayer().getName() + " owns " + continent.getName() + " continent and  gets " + continent.getBonus() + " armies.");
+            // Add continent Bonus
+            for (Continent continent : gameState.getContinents()) {
+                if (continent.isOwnByOnePlayer()) {
+                    if (continent.getCountryList().get(0).getPlayer() == gameState.getCurrentPlayer()) {
+                        gameState.getCurrentPlayer().setArmies(gameState.getCurrentPlayer().getArmies() + continent.getBonus());
+                        System.out.println("Player " + gameState.getCurrentPlayer().getName() + " owns " + continent.getName() + " continent and  gets " + continent.getBonus() + " armies.");
+                    }
                 }
             }
-        }
-        gameState.setCurrentTurnPhraseText("Select a country to place your army. Armies to place  " + gameState.getCurrentPlayer().getArmies());
-        highlightPayerCountries(gameState.getCountries(), gameState.getCurrentPlayer());
-        gameState.notifyObservers();
 
-        debugMessage(gameState);
+            System.out.println("Select next Player. Next Player is " + gameState.getCurrentPlayer().getName());
+            gameState.setCurrentTurnPhraseText("Select a country to place your army. Armies to place  " + gameState.getCurrentPlayer().getArmies());
+            highlightPayerCountries(gameState.getCountries(), gameState.getCurrentPlayer());
+            gameState.notifyObservers();
 
-        if (gameState.getCurrentPlayer().isComputerPlayer()) {
-            gameState.getCurrentPlayer().reinforce(gameState);
+            debugMessage(gameState);
+
+            if (gameState.getCurrentPlayer().isComputerPlayer()) {
+                gameState.getCurrentPlayer().reinforce(gameState);
+            }
         }
     }
 
