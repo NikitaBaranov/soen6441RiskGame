@@ -6,8 +6,6 @@ import game.model.Country;
 import game.model.GameState;
 import game.model.Neighbour;
 import game.model.Player;
-import game.strategies.GamePhaseStrategies.GamePhaseStrategyFactory;
-import game.strategies.PlayerStrategies.PlayerStrategyEnum;
 import game.strategies.PlayerStrategies.PlayerStrategyFactory;
 import game.ui.Main;
 
@@ -26,6 +24,12 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Random;
 import java.util.Set;
+
+import static game.strategies.PlayerStrategies.PlayerStrategyEnum.AI_AGGRESSIVE_STRATEGY;
+import static game.strategies.PlayerStrategies.PlayerStrategyEnum.AI_BENEVOLENT_STRATEGY;
+import static game.strategies.PlayerStrategies.PlayerStrategyEnum.AI_CHEATER_STRATEGY;
+import static game.strategies.PlayerStrategies.PlayerStrategyEnum.AI_RANDOM_STRATEGY;
+import static game.strategies.PlayerStrategies.PlayerStrategyEnum.HUMAN_STRATEGY;
 
 /**
  * The map loader class. Responsible for loading and validation of the map.
@@ -90,7 +94,6 @@ public class MapLoader {
         Random colorRand = new Random();
 
 
-
         //Player[] playerList = new Player[numberOfPlayers];
         // TODO This var needs for testing mode when we test continent bonus
         // just highlighted it with to do to not forget what is going on
@@ -100,85 +103,85 @@ public class MapLoader {
         }
 
         // Players creation. The numberOfPlayers should be the same as size of playersModes.
-        if(numberOfPlayers == playersModes.size()){
-            for (String playermode: playersModes){
-                switch(playermode){
+        if (numberOfPlayers == playersModes.size()) {
+            for (String playermode : playersModes) {
+                switch (playermode) {
                     case "Human":
                         int humanCounter = 1;
-                        if(players.size() > 0){
-                            for (Player player: players){
+                        if (players.size() > 0) {
+                            for (Player player : players) {
                                 String existedName = player.getName();
-                                if (existedName.contains("Human")){
-                                    humanCounter+=1;
+                                if (existedName.contains("Human")) {
+                                    humanCounter += 1;
                                 }
                             }
-                            players.add(new Player("Human Player " + humanCounter, pColors.remove(0), playerStrategyFactory.getStrategy(PlayerStrategyEnum.HUMAN_STRATEGY), false));
+                            players.add(new Player("Human Player " + humanCounter, pColors.remove(0), HUMAN_STRATEGY, false));
                         } else {
-                            players.add(new Player("Human Player " + humanCounter, pColors.remove(0), playerStrategyFactory.getStrategy(PlayerStrategyEnum.HUMAN_STRATEGY), false));
+                            players.add(new Player("Human Player " + humanCounter, pColors.remove(0), HUMAN_STRATEGY, false));
                         }
                         break;
                     case "Aggressive":
                         int aggrCounter = 1;
                         // TODO Does this think will work correctly every time?
                         int aggrCol = colorRand.nextInt(pColors.size());
-                        if(players.size() > 0){
-                            for (Player player: players){
+                        if (players.size() > 0) {
+                            for (Player player : players) {
                                 String existedName = player.getName();
-                                if (existedName.contains("Aggressive")){
-                                    aggrCounter+=1;
+                                if (existedName.contains("Aggressive")) {
+                                    aggrCounter += 1;
                                 }
                             }
-                            players.add(new Player("Aggressive AI " + aggrCounter, pColors.remove(aggrCol), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_AGGRESSIVE_STRATEGY), true));
+                            players.add(new Player("Aggressive AI " + aggrCounter, pColors.remove(aggrCol), AI_AGGRESSIVE_STRATEGY, true));
                         } else {
-                            players.add(new Player("Aggressive AI " + aggrCounter, pColors.remove(aggrCol), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_AGGRESSIVE_STRATEGY), true));
+                            players.add(new Player("Aggressive AI " + aggrCounter, pColors.remove(aggrCol), AI_AGGRESSIVE_STRATEGY, true));
                         }
                         break;
                     case "Benevolent":
                         int benevCounter = 1;
                         // TODO Does this think will work correctly every time?
                         int benevCol = colorRand.nextInt(pColors.size());
-                        if(players.size() > 0){
-                            for (Player player: players){
+                        if (players.size() > 0) {
+                            for (Player player : players) {
                                 String existedName = player.getName();
-                                if (existedName.contains("Benevolent")){
-                                    benevCounter+=1;
+                                if (existedName.contains("Benevolent")) {
+                                    benevCounter += 1;
                                 }
                             }
-                            players.add(new Player("Benevolent AI " + benevCounter, pColors.remove(benevCol), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_BENEVOLENT_STRATEGY), true));
+                            players.add(new Player("Benevolent AI " + benevCounter, pColors.remove(benevCol), AI_BENEVOLENT_STRATEGY, true));
                         } else {
-                            players.add(new Player("Benevolent AI " + benevCounter, pColors.remove(benevCol), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_BENEVOLENT_STRATEGY), true));
+                            players.add(new Player("Benevolent AI " + benevCounter, pColors.remove(benevCol), AI_BENEVOLENT_STRATEGY, true));
                         }
                         break;
                     case "Random":
                         int randCounter = 1;
                         // TODO Does this think will work correctly every time?
                         int randCol = colorRand.nextInt(pColors.size());
-                        if(players.size() > 0){
-                            for (Player player: players){
+                        if (players.size() > 0) {
+                            for (Player player : players) {
                                 String existedName = player.getName();
-                                if (existedName.contains("Random")){
-                                    randCounter+=1;
+                                if (existedName.contains("Random")) {
+                                    randCounter += 1;
                                 }
                             }
-                            players.add(new Player("Random AI " + randCounter, pColors.remove(randCol), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_RANDOM_STRATEGY), true));
+                            players.add(new Player("Random AI " + randCounter, pColors.remove(randCol), AI_RANDOM_STRATEGY, true));
                         } else {
-                            players.add(new Player("Random AI " + randCounter, pColors.remove(randCol), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_RANDOM_STRATEGY), true));
+                            players.add(new Player("Random AI " + randCounter, pColors.remove(randCol), AI_RANDOM_STRATEGY, true));
                         }
                         break;
                     case "Cheater":
                         int cheatCounter = 1;
                         // TODO Does this think will work correctly every time?
                         int cheatCol = colorRand.nextInt(pColors.size());
-                        if(players.size() > 0){
-                            for (Player player: players){
+                        if (players.size() > 0) {
+                            for (Player player : players) {
                                 String existedName = player.getName();
-                                if (existedName.contains("Cheater")){
-                                    cheatCounter+=1;
+                                if (existedName.contains("Cheater")) {
+                                    cheatCounter += 1;
                                 }
                             }
-                            players.add(new Player("Cheater AI " + cheatCounter, pColors.remove(cheatCol), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_CHEATER_STRATEGY), true));
+                            players.add(new Player("Cheater AI " + cheatCounter, pColors.remove(cheatCol), AI_CHEATER_STRATEGY, true));
                         } else {
-                            players.add(new Player("Cheater AI " + cheatCounter, pColors.remove(cheatCol), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_CHEATER_STRATEGY), true));
+                            players.add(new Player("Cheater AI " + cheatCounter, pColors.remove(cheatCol), AI_CHEATER_STRATEGY, true));
                         }
                         break;
                 }
@@ -347,15 +350,15 @@ public class MapLoader {
                     if (!seenCountriesSubgraph.contains(current)) {
                         seenCountriesSubgraph.add(current);
 
-                        for(Country neighbour : current.getNeighbours()){
-                            if (countriesSubgraph.contains(neighbour)){
+                        for (Country neighbour : current.getNeighbours()) {
+                            if (countriesSubgraph.contains(neighbour)) {
                                 toExploreSubgraph.add(neighbour);
                             }
                         }
                     }
                 }
                 if (seenCountriesSubgraph.size() != countriesSubgraph.size()) {
-                    throw new InvalidObjectException("Map has disconnected continent: "+ continent.getName()+". (Subgraph is not connected)");
+                    throw new InvalidObjectException("Map has disconnected continent: " + continent.getName() + ". (Subgraph is not connected)");
                 }
             }
 
@@ -427,85 +430,85 @@ public class MapLoader {
         }
 
         // Players creation. The numberOfPlayers should be the same as size of playersModes.
-        if(numberOfPlayers == playersModes.size()){
-            for (String playermode: playersModes){
-                switch(playermode){
+        if (numberOfPlayers == playersModes.size()) {
+            for (String playermode : playersModes) {
+                switch (playermode) {
                     case "Human":
                         int humanCounter = 1;
-                        if(players.size() > 0){
-                            for (Player player: players){
+                        if (players.size() > 0) {
+                            for (Player player : players) {
                                 String existedName = player.getName();
-                                if (existedName.contains("Human")){
-                                    humanCounter+=1;
+                                if (existedName.contains("Human")) {
+                                    humanCounter += 1;
                                 }
                             }
-                            players.add(new Player("Human Player " + humanCounter, pColors.remove(0), playerStrategyFactory.getStrategy(PlayerStrategyEnum.HUMAN_STRATEGY), false));
+                            players.add(new Player("Human Player " + humanCounter, pColors.remove(0), HUMAN_STRATEGY, false));
                         } else {
-                            players.add(new Player("Human Player " + humanCounter, pColors.remove(0), playerStrategyFactory.getStrategy(PlayerStrategyEnum.HUMAN_STRATEGY), false));
+                            players.add(new Player("Human Player " + humanCounter, pColors.remove(0), HUMAN_STRATEGY, false));
                         }
                         break;
                     case "Aggressive":
                         int aggrCounter = 1;
                         // TODO Does this think will work correctly every time?
                         int aggrCol = colorRand.nextInt(pColors.size());
-                        if(players.size() > 0){
-                            for (Player player: players){
+                        if (players.size() > 0) {
+                            for (Player player : players) {
                                 String existedName = player.getName();
-                                if (existedName.contains("Aggressive")){
-                                    aggrCounter+=1;
+                                if (existedName.contains("Aggressive")) {
+                                    aggrCounter += 1;
                                 }
                             }
-                            players.add(new Player("Aggressive AI " + aggrCounter, pColors.remove(aggrCol), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_AGGRESSIVE_STRATEGY), true));
+                            players.add(new Player("Aggressive AI " + aggrCounter, pColors.remove(aggrCol), AI_AGGRESSIVE_STRATEGY, true));
                         } else {
-                            players.add(new Player("Aggressive AI " + aggrCounter, pColors.remove(aggrCol), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_AGGRESSIVE_STRATEGY), true));
+                            players.add(new Player("Aggressive AI " + aggrCounter, pColors.remove(aggrCol), AI_AGGRESSIVE_STRATEGY, true));
                         }
                         break;
                     case "Benevolent":
                         int benevCounter = 1;
                         // TODO Does this think will work correctly every time?
                         int benevCol = colorRand.nextInt(pColors.size());
-                        if(players.size() > 0){
-                            for (Player player: players){
+                        if (players.size() > 0) {
+                            for (Player player : players) {
                                 String existedName = player.getName();
-                                if (existedName.contains("Benevolent")){
-                                    benevCounter+=1;
+                                if (existedName.contains("Benevolent")) {
+                                    benevCounter += 1;
                                 }
                             }
-                            players.add(new Player("Benevolent AI " + benevCounter, pColors.remove(benevCol), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_BENEVOLENT_STRATEGY), true));
+                            players.add(new Player("Benevolent AI " + benevCounter, pColors.remove(benevCol), AI_BENEVOLENT_STRATEGY, true));
                         } else {
-                            players.add(new Player("Benevolent AI " + benevCounter, pColors.remove(benevCol), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_BENEVOLENT_STRATEGY), true));
+                            players.add(new Player("Benevolent AI " + benevCounter, pColors.remove(benevCol), AI_BENEVOLENT_STRATEGY, true));
                         }
                         break;
                     case "Random":
                         int randCounter = 1;
                         // TODO Does this think will work correctly every time?
                         int randCol = colorRand.nextInt(pColors.size());
-                        if(players.size() > 0){
-                            for (Player player: players){
+                        if (players.size() > 0) {
+                            for (Player player : players) {
                                 String existedName = player.getName();
-                                if (existedName.contains("Random")){
-                                    randCounter+=1;
+                                if (existedName.contains("Random")) {
+                                    randCounter += 1;
                                 }
                             }
-                            players.add(new Player("Random AI " + randCounter, pColors.remove(randCol), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_RANDOM_STRATEGY), true));
+                            players.add(new Player("Random AI " + randCounter, pColors.remove(randCol), AI_RANDOM_STRATEGY, true));
                         } else {
-                            players.add(new Player("Random AI " + randCounter, pColors.remove(randCol), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_RANDOM_STRATEGY), true));
+                            players.add(new Player("Random AI " + randCounter, pColors.remove(randCol), AI_RANDOM_STRATEGY, true));
                         }
                         break;
                     case "Cheater":
                         int cheatCounter = 1;
                         // TODO Does this think will work correctly every time?
                         int cheatCol = colorRand.nextInt(pColors.size());
-                        if(players.size() > 0){
-                            for (Player player: players){
+                        if (players.size() > 0) {
+                            for (Player player : players) {
                                 String existedName = player.getName();
-                                if (existedName.contains("Cheater")){
-                                    cheatCounter+=1;
+                                if (existedName.contains("Cheater")) {
+                                    cheatCounter += 1;
                                 }
                             }
-                            players.add(new Player("Cheater AI " + cheatCounter, pColors.remove(cheatCol), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_CHEATER_STRATEGY), true));
+                            players.add(new Player("Cheater AI " + cheatCounter, pColors.remove(cheatCol), AI_CHEATER_STRATEGY, true));
                         } else {
-                            players.add(new Player("Cheater AI " + cheatCounter, pColors.remove(cheatCol), playerStrategyFactory.getStrategy(PlayerStrategyEnum.AI_CHEATER_STRATEGY), true));
+                            players.add(new Player("Cheater AI " + cheatCounter, pColors.remove(cheatCol), AI_CHEATER_STRATEGY, true));
                         }
                         break;
                 }
@@ -652,15 +655,15 @@ public class MapLoader {
                     if (!seenCountriesSubgraph.contains(current)) {
                         seenCountriesSubgraph.add(current);
 
-                        for(Country neighbour : current.getNeighbours()){
-                            if (countriesSubgraph.contains(neighbour)){
+                        for (Country neighbour : current.getNeighbours()) {
+                            if (countriesSubgraph.contains(neighbour)) {
                                 toExploreSubgraph.add(neighbour);
                             }
                         }
                     }
                 }
                 if (seenCountriesSubgraph.size() != countriesSubgraph.size()) {
-                    throw new InvalidObjectException("Map has disconnected continent: "+ continent.getName()+". (Subgraph is not connected)");
+                    throw new InvalidObjectException("Map has disconnected continent: " + continent.getName() + ". (Subgraph is not connected)");
                 }
             }
 
@@ -690,9 +693,10 @@ public class MapLoader {
         gameState.setiPanelObservers(new LinkedList<>());
         Game game = Game.getInstance();
         game.setGameState(gameState);
+        for (Player player : gameState.getPlayers()) {
+            player.initStategy();
+        }
         game.setNotification(notificationWindow);
-        game.setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(gameState.getCurrentGamePhase()));
-        game.getGamePhaseStrategy().init(gameState);
         new Main(game);
     }
 }

@@ -63,7 +63,10 @@ public class Game {
      * Initialize the game
      */
     public void initialise() {
-        gamePhaseStrategy = GamePhaseStrategyFactory.getStrategy(PLACING_ARMIES);
+        if (gameState.getCurrentGamePhase() == null) {
+            gameState.setCurrentGamePhase(PLACING_ARMIES);
+        }
+        gamePhaseStrategy = GamePhaseStrategyFactory.getStrategy(gameState.getCurrentGamePhase());
         gamePhaseStrategy.init(gameState);
         gameState.notifyObservers();
     }

@@ -6,7 +6,6 @@ import game.model.GameState;
 import game.model.Player;
 
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.ATTACK;
-import static game.strategies.GamePhaseStrategies.GamePhaseEnum.PLACING_ARMIES;
 import static game.utils.MapFunctionsUtil.highlightPayerCountries;
 import static game.utils.MapFunctionsUtil.selectCountry;
 import static game.utils.MapFunctionsUtil.unHighlightCountries;
@@ -31,7 +30,7 @@ public class PlacingArmiesPhaseStrategy extends BasePhaseStrategy {
     public void init(GameState gameState) {
         super.init(gameState);
 
-        gameState.setCurrentGamePhase(PLACING_ARMIES);
+//        gameState.setCurrentGamePhase(PLACING_ARMIES);
         gameState.setCurrentPlayer(gameState.getPlayers().get(0));
         gameState.setNextTurnButton(false);
         Dice.resetDice(gameState.getRedDice(), gameState.getWhiteDice());

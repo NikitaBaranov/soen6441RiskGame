@@ -2,8 +2,6 @@ package game.model;
 
 import game.Game;
 import game.strategies.GamePhaseStrategies.GamePhaseEnum;
-import game.strategies.PlayerStrategies.PlayerStrategyEnum;
-import game.strategies.PlayerStrategies.PlayerStrategyFactory;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -18,6 +16,7 @@ import java.util.List;
 import static game.model.enums.CardsEnum.ARTILLERY;
 import static game.model.enums.CardsEnum.CAVALRY;
 import static game.model.enums.CardsEnum.INFANTRY;
+import static game.strategies.PlayerStrategies.PlayerStrategyEnum.HUMAN_STRATEGY;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -28,8 +27,6 @@ import static org.junit.Assert.assertTrue;
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class PlayerTest {
-    PlayerStrategyFactory playerStrategyFactory = new PlayerStrategyFactory();
-
     Game game = Game.getInstance();
     Player player1;
     Player player2;
@@ -45,9 +42,9 @@ public class PlayerTest {
      */
     @Before
     public void setUp() throws Exception {
-        Player player1 = new Player("test Player 1", Color.BLACK, playerStrategyFactory.getStrategy(PlayerStrategyEnum.HUMAN_STRATEGY), false);
+        Player player1 = new Player("test Player 1", Color.BLACK, HUMAN_STRATEGY, false);
         player1.setArmies(0);
-        Player player2 = new Player("test Player 2", Color.GREEN, playerStrategyFactory.getStrategy(PlayerStrategyEnum.HUMAN_STRATEGY), false);
+        Player player2 = new Player("test Player 2", Color.GREEN, HUMAN_STRATEGY, false);
         player2.setArmies(0);
         player2.setArmies(0);
         Continent continent = new Continent("Continent", 1);

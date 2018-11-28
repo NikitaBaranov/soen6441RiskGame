@@ -3,6 +3,8 @@ package game.model;
 
 import game.model.enums.CardsEnum;
 import game.strategies.PlayerStrategies.IPlayerStrategy;
+import game.strategies.PlayerStrategies.PlayerStrategyEnum;
+import game.strategies.PlayerStrategies.PlayerStrategyFactory;
 
 import java.awt.*;
 import java.io.Serializable;
@@ -24,7 +26,8 @@ public class Player implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private boolean computerPlayer;
-    IPlayerStrategy strategy;
+    private PlayerStrategyEnum playerStrategyEnum;
+    private transient IPlayerStrategy strategy;
     private String name;
     private Color color;
     private Map<CardsEnum, Integer> cardsEnumIntegerMap = new HashMap<>();
@@ -37,16 +40,21 @@ public class Player implements Serializable {
      * @param name  name of player
      * @param color color of player
      */
-    public Player(String name, Color color, IPlayerStrategy strategy, boolean computerPlayer) {
+    public Player(String name, Color color, PlayerStrategyEnum playerStrategyEnum, boolean computerPlayer) {
         this.name = name;
         this.color = color;
-        this.strategy = strategy;
+        this.playerStrategyEnum = playerStrategyEnum;
+        this.strategy = PlayerStrategyFactory.getStrategy(playerStrategyEnum);
         this.computerPlayer = computerPlayer;
 
         cardsEnumIntegerMap.put(INFANTRY, 0);
         cardsEnumIntegerMap.put(CAVALRY, 0);
         cardsEnumIntegerMap.put(ARTILLERY, 0);
         cardsEnumIntegerMap.put(WILDCARDS, 0);
+    }
+
+    public void initStategy() {
+        this.strategy = PlayerStrategyFactory.getStrategy(playerStrategyEnum);
     }
 
     public void placeArmies(GameState gameState) {
