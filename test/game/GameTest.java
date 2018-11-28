@@ -2,7 +2,9 @@ package game;
 
 import game.model.*;
 import game.strategies.GamePhaseStrategies.GamePhaseEnum;
+import game.strategies.GamePhaseStrategies.GamePhaseStrategyFactory;
 import game.ui.Main;
+import game.utils.NotificationWindow;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.Assert.*;
@@ -28,34 +30,47 @@ public class GameTest {
     public List<Continent> continents = new ArrayList<>();
     public String mapPath = "./src/maps/Triangles.map";
     Game game = Game.getInstance();
+    GameState gameState;
 
     @Before
     public void setUp(){
         players.add(new Player("Test Player 1", Color.BLUE, HUMAN_STRATEGY, false));
         players.add(new Player("Test Player 2", Color.BLACK, HUMAN_STRATEGY, false));
+        for(Player player : players){
+            player.initStategy();
+        }
         continents.add(new Continent("Continent 1", 1));
         continents.add(new Continent("Continent 2", 2));
+
         countries.add(new Country("A",10,10, 2, continents.get(0), players.get(0)));
         countries.add(new Country("B",30,30, 2, continents.get(0), players.get(0)));
         countries.add(new Country("C",50,50, 2, continents.get(1), players.get(1)));
         countries.add(new Country("D",70,70, 2, continents.get(1), players.get(1)));
 
-        GameState gameState = new GameState();
+        for(Country country : countries){
+            country.getContinent().getCountryList().add(country);
+        }
+
+        gameState = new GameState();
         gameState.setCountries(countries);
         gameState.setNeighbours(neighbours);
         gameState.setPlayers(players);
         gameState.setContinents(continents);
         gameState.setMapFilePath(mapPath);
 
+        game.setNotification(new NotificationWindow());
 
         game.setGameState(gameState);
+        game.initialise();
     }
 
     @Test
     public void test1(){
-        while (!(game.getGameState().getCurrentGamePhase() == GamePhaseEnum.REINFORCEMENT && game.getGameState().getCurrentPlayer() == players.get(0))) {
-            game.nextTurn();
-        }
+        gameState.setCurrentPlayer(players.get(0));
+        gameState.setCurrentGamePhase(GamePhaseEnum.REINFORCEMENT);
+        Game.getInstance().setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(GamePhaseEnum.REINFORCEMENT));
+        Game.getInstance().getGamePhaseStrategy().init(gameState);
+
         countries.get(0).setArmy(10);
         players.get(0).setArmies(5);
         game.makeAction(0, 0);
