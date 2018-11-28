@@ -352,12 +352,20 @@ public class TournamentMenu extends JFrame {
                     // TODO add map validation before creating the game.
 
                     try {
+                        System.out.println("map 1 start.");
                         String mapfile = mapFiles.get(0);
                         MapLoader loader1 = new MapLoader(players, mapfile, tournamentStrategies, games, turns, notificationWindow);
+                        GameWorker gameWorker = new GameWorker(loader1);
+                        gameWorker.execute();
+                        while (!gameWorker.isDone()) {
+                            // do nothing
+                        }
+                        System.out.println("map 1 done.");
                     } catch ( IndexOutOfBoundsException e ) {
                         System.out.println("no map 1");
                     }
                     try {
+                        System.out.println("map 2 start.");
                         String mapfile = mapFiles.get(1);
                         MapLoader loader2 = new MapLoader(players, mapfile, tournamentStrategies, games, turns, notificationWindow);
                     } catch ( IndexOutOfBoundsException e ) {
@@ -434,4 +442,49 @@ public class TournamentMenu extends JFrame {
         return path + "/default.map";
     }
 
+    public class GameWorker extends SwingWorker<Void, String> {
+
+        MapLoader mapLoader;
+
+        /**
+         * Constructor of the class
+         *
+         * @param gameState
+         */
+        public GameWorker(MapLoader mapLoader) {
+            this.mapLoader = mapLoader;
+        }
+
+        /**
+         * Do attack actions in the background.
+         *
+         * @return
+         */
+        @Override
+        protected Void doInBackground() {
+            String result = mapLoader.runGame();
+            publish("Publish Worker is done. Result is " + result);
+            return null;
+        }
+
+        /**
+         * Debug method
+         *
+         * @param chunks
+         */
+        @Override
+        protected void process(List<String> chunks) {
+            for (String c : chunks) {
+                System.out.println(c);
+            }
+        }
+
+        /**
+         * Automatic go to next turn when phase is done
+         */
+        @Override
+        protected void done() {
+            System.out.println("Worker is Done");
+        }
+    }
 }

@@ -16,6 +16,7 @@ import game.ui.view.RightStatusPanel;
 import game.ui.view.TopStatusPanel;
 import game.utils.NotificationWindow;
 
+import javax.swing.*;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.time.LocalDateTime;
@@ -46,6 +47,7 @@ public class Game {
     private GameState gameState;
     private IGamePhaseStrategy gamePhaseStrategy;
     private NotificationWindow notification;
+    private JFrame jFrame;
 
     /**
      * get instance method for Controller
@@ -62,7 +64,8 @@ public class Game {
     /**
      * Initialize the game
      */
-    public void initialise() {
+    public void initialise(JFrame jFrame) {
+        this.jFrame = jFrame;
         if (gameState.getCurrentGamePhase() == null) {
             gameState.setCurrentGamePhase(PLACING_ARMIES);
         }
@@ -169,5 +172,9 @@ public class Game {
             System.out.println("Error when saving to file. ");
             e.printStackTrace();
         }
+    }
+
+    public JFrame getjFrame() {
+        return jFrame;
     }
 }

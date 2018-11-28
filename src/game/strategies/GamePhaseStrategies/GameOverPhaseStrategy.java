@@ -1,8 +1,10 @@
 package game.strategies.GamePhaseStrategies;
 
+import game.Game;
 import game.model.GameState;
 import game.model.Player;
 
+import java.awt.event.WindowEvent;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -32,12 +34,16 @@ public class GameOverPhaseStrategy extends BasePhaseStrategy {
         String message;
         if (players.size() == 1) {
             message = "Game over. The " + players.get(0).getName() + " win.";
+            gameState.setResult(players.get(0).getName());
         } else {
             message = "Game over. The Draw.";
+            gameState.setResult("Draw.");
         }
         gameState.setCurrentTurnPhraseText(message);
         System.out.println(message);
         gameState.setNextTurnButton(false);
         gameState.notifyObservers();
+
+        Game.getInstance().getjFrame().dispatchEvent(new WindowEvent(Game.getInstance().getjFrame(), WindowEvent.WINDOW_CLOSING));
     }
 }
