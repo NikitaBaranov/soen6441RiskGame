@@ -159,6 +159,14 @@ public class MapFunctionsUtil {
                 playerNumberOfCountriesMap.put(country.getPlayer(), 1);
             }
         }
+
+        for (Player player : gameState.getPlayers()) {
+            if (!playerNumberOfCountriesMap.containsKey(player)) {
+                playerNumberOfCountriesMap.put(player, 0);
+            }
+            System.out.println("Player " + player.getName() + " has " + playerNumberOfCountriesMap.get(player));
+        }
+
         return playerNumberOfCountriesMap;
     }
 

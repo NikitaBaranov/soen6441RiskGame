@@ -83,7 +83,9 @@ public class AttackPhaseStrategy extends BasePhaseStrategy {
 
         Map<Player, Integer> playerToCountiesNumberMap = getPlayerToCountiesNumberMap(gameState);
         for (Player player : gameState.getPlayers()) {
+            System.out.println("test " + player.getName() + " " + playerToCountiesNumberMap.get(player));
             if (playerToCountiesNumberMap.get(player) == 0) {
+                System.out.println("PLayer is gone");
                 player.setLost(true);
             }
         }
