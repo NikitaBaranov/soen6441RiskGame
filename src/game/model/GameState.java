@@ -60,6 +60,8 @@ public class GameState implements IObservable, Serializable {
 
     private int maxNumberOfTurns = -1;
     private int currentTurnNumber = 1;
+    private String result;
+    private boolean turnament = false;
 
     /**
      * Attach observer
@@ -508,5 +510,21 @@ public class GameState implements IObservable, Serializable {
      */
     public void setCurrentTurnNumber(int currentTurnNumber) {
         this.currentTurnNumber = currentTurnNumber;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+
+    public boolean isTurnament() {
+        return turnament;
+    }
+
+    public void setTurnament(boolean turnament) {
+        this.turnament = turnament;
     }
 }

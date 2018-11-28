@@ -7,6 +7,7 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
 import java.util.Collections;
@@ -73,7 +74,7 @@ public class PlayerTest {
      */
     @Test
     public void reinforcementSelectedCorrectCountry() {
-        game.initialise();
+        game.initialise(new JFrame());
         while (!(game.getGameState().getCurrentGamePhase() == GamePhaseEnum.REINFORCEMENT && game.getGameState().getCurrentPlayer() == player1)) {
             game.nextTurn();
         }
@@ -89,7 +90,7 @@ public class PlayerTest {
      */
     @Test
     public void reinforcementNotSelectedIncorrectCountry() {
-        game.initialise();
+        game.initialise(new JFrame());
         while (!(game.getGameState().getCurrentGamePhase() == GamePhaseEnum.REINFORCEMENT && game.getGameState().getCurrentPlayer() == player1)) {
             game.nextTurn();
         }
@@ -103,7 +104,7 @@ public class PlayerTest {
      */
     @Test
     public void attackSelectedCorrectCountry() {
-        game.initialise();
+        game.initialise(new JFrame());
         country3.setArmy(10);
         while (game.getGameState().getCurrentGamePhase() != GamePhaseEnum.ATTACK) {
             game.nextTurn();
@@ -118,7 +119,7 @@ public class PlayerTest {
      */
     @Test
     public void attackNoSelectedPlayersCountries() {
-        game.initialise();
+        game.initialise(new JFrame());
         country3.setArmy(10);
         while (game.getGameState().getCurrentGamePhase() != GamePhaseEnum.ATTACK) {
             game.nextTurn();
@@ -136,7 +137,7 @@ public class PlayerTest {
      */
     @Test
     public void fortificationCorrectTransitionToNextPlayer() {
-        game.initialise();
+        game.initialise(new JFrame());
         while (game.getGameState().getCurrentGamePhase() != GamePhaseEnum.REINFORCEMENT) {
             game.nextTurn();
         }
@@ -148,7 +149,7 @@ public class PlayerTest {
      */
     @Test
     public void fortificationNoActionsWhenSelectedEnemiesCountry() {
-        game.initialise();
+        game.initialise(new JFrame());
         while (game.getGameState().getCurrentGamePhase() != GamePhaseEnum.REINFORCEMENT) {
             game.nextTurn();
         }

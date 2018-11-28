@@ -22,21 +22,45 @@ import java.awt.*;
  * @see TopStatusPanel
  * @see MapLoader
  */
-public class Main {
+public class Main extends Thread {
 
     private int width = 1300;
     private int height = 700;
+
+    private Game game;
+
+    public Main(Game game) {
+        this.game = game;
+    }
 
     /**
      * Constructor of the class. Runs the game
      * @param game instance of the game class
      */
-    public Main(Game game) {
-        SwingUtilities.invokeLater(new Runnable() {
+    public String runGame(Game game) {
+        Runnable runnable = new Runnable() {
             public void run() {
                 createAndShowGui(game);
             }
-        });
+        };
+
+        SwingUtilities.invokeLater(runnable);
+
+        try {
+            runnable.wait();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return game.getGameState().getResult();
+    }
+
+    @Override
+    public void run() {
+        createAndShowGui(game);
+    }
+
+    private void closeWindow() {
+        // shutdown the thread.
     }
 
     /**
@@ -47,7 +71,18 @@ public class Main {
         final JFrame frame = new JFrame("Risk");
         frame.setPreferredSize(new Dimension(width,height));
         //frame.setDefaultLookAndFeelDecorated(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        if (game.getGameState().isTurnament()) {
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+            frame.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                    closeWindow();
+                }
+            });
+        } else {
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        }
         frame.setResizable(false);
         // Top Status Game Info Bar
         TopStatusPanel topStatusPanel = new TopStatusPanel(width, 30);
@@ -89,7 +124,7 @@ public class Main {
 //        infoPanel.add(dicePanel);
         infoPanel.setBorder(new LineBorder(Color.BLACK, 1));
 
-        game.initialise();
+        game.initialise(frame);
 
         frame.add(topStatusPanel, BorderLayout.NORTH);
         frame.add(mapPanel, BorderLayout.WEST);

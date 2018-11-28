@@ -50,6 +50,8 @@ public class MapLoader {
     public String mapPath;
     public boolean invalidMap;
 
+    Game game;
+
     /**
      * Constructor of the class.
      * Loading and validation of the map.
@@ -188,8 +190,6 @@ public class MapLoader {
             new WarningWindow("Error. Number of players doesnt equal to players modes number");
         }
 
-        List<String> neighboursList = new ArrayList<String>();
-
         // Stub continents
         Map<String, Continent> continentsMap = new HashMap<>();
         // Additional reading of file for continents
@@ -219,6 +219,7 @@ public class MapLoader {
         }
 
         continents.addAll(continentsMap.values());
+        List<String> neighboursList = new ArrayList<String>();
 
         try {
             FileReader fileReader = new FileReader(filePath);
@@ -374,11 +375,11 @@ public class MapLoader {
         gameState.setContinents(continents);
         gameState.setMapFilePath(mapPath);
 
-        Game game = Game.getInstance();
+        game = Game.getInstance();
         game.setGameState(gameState);
         game.setNotification(notificationWindow);
 
-        new Main(game);
+        runGame();
     }
 
     /**
@@ -679,22 +680,32 @@ public class MapLoader {
         gameState.setContinents(continents);
         gameState.setMapFilePath(mapPath);
         gameState.setMaxNumberOfTurns(turns);
+        gameState.setTurnament(true);
 
-        Game game = Game.getInstance();
+        game = Game.getInstance();
         game.setGameState(gameState);
         game.setNotification(notificationWindow);
-
-        new Main(game);
     }
 
     public MapLoader(GameState gameState, NotificationWindow notificationWindow) {
         gameState.setiPanelObservers(new LinkedList<>());
-        Game game = Game.getInstance();
+        game = Game.getInstance();
         game.setGameState(gameState);
         for (Player player : gameState.getPlayers()) {
             player.initStategy();
         }
         game.setNotification(notificationWindow);
-        new Main(game);
+        runGame();
+    }
+
+    public String runGame() {
+        Main main = new Main(game);
+        main.run();
+        try {
+            main.wait();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return game.getGameState().getResult();
     }
 }
