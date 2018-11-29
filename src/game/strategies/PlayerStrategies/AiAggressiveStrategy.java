@@ -345,9 +345,6 @@ public class AiAggressiveStrategy extends BaseStrategy {
          */
         @Override
         protected Void doInBackground() {
-
-            unSelectCountries(gameState);
-            unHighlightCountries(gameState);
             Country fortifyFrom = getCountryWithMaxArmy(gameState, 1);
 
             Country fortifyTo = null;

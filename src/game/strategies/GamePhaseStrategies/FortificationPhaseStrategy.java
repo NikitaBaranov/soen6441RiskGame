@@ -29,19 +29,20 @@ public class FortificationPhaseStrategy extends BasePhaseStrategy {
         gameState.setJustLoad(false);
 
         gameState.setCurrentGamePhase(FORTIFICATION);
-        gameState.setCurrentTurnPhraseText("Select a country to move armies from. ");
-
-        System.out.println("Next Turn Button Clicked. Next Player is " + gameState.getCurrentGamePhase());
-
-        highlightPayerCountries(gameState.getCountries(), gameState.getCurrentPlayer());
 
         debugMessage(gameState);
 
         if (isCountyWithMoreThenOneArmy(gameState)) {
             if (gameState.getCurrentPlayer().isComputerPlayer()) {
                 gameState.getCurrentPlayer().fortify(gameState);
+            } else {
+                gameState.setCurrentTurnPhraseText("Select a country to move armies from. ");
+                System.out.println("Next Turn Button Clicked. Next Player is " + gameState.getCurrentGamePhase());
+
+                highlightPayerCountries(gameState.getCountries(), gameState.getCurrentPlayer());
             }
         } else {
+            gameState.setCurrentTurnPhraseText("No country to fortify from, next turn. ");
             nextTurnButton(gameState);
         }
     }
