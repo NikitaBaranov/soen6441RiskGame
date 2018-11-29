@@ -115,6 +115,24 @@ public class MapFunctionsUtil {
     }
 
     /**
+     * Method thet return the country with min armies
+     * @param gameState
+     * @param maxArmy
+     * @return Country country
+     */
+    public static Country getCountryWithMinArmy(GameState gameState, int maxArmy) {
+        Country countryWithMinArmy = null;
+        int minArmy = maxArmy;
+        for (Country country : gameState.getCountries()) {
+            if (country.getPlayer() == gameState.getCurrentPlayer() && country.getArmy() < minArmy) {
+                countryWithMinArmy = country;
+                minArmy = country.getArmy();
+            }
+        }
+        return countryWithMinArmy;
+    }
+
+    /**
      * Method that return country with max number of enemies neighvours.
      * @param gameState
      * @return Country country

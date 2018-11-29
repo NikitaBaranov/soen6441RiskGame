@@ -89,6 +89,9 @@ public class GameState implements IObservable, Serializable {
     /**
      * Notify observers
      */
+    // TODO Refactoring. Earlier there was a for iterator i.g. for(Observer observer : Observers)
+    // It worked during the game, but returned random fails during test running.
+    // So it was refactored and changed on common for loop
     @Override
     public void notifyObservers() {
         IPanelObserver[] iPanelObserversArray = iPanelObservers.toArray(new IPanelObserver[0]);
@@ -515,26 +518,50 @@ public class GameState implements IObservable, Serializable {
         this.currentTurnNumber = currentTurnNumber;
     }
 
+    /**
+     * Get result of tournament
+     * @return result
+     */
     public String getResult() {
         return result;
     }
 
+    /**
+     * Set result of the tournament game
+     * @param result
+     */
     public void setResult(String result) {
         this.result = result;
     }
 
+    /**
+     * Is the game in tournament mode?
+     * @return
+     */
     public boolean isTurnament() {
         return turnament;
     }
 
+    /**
+     * Set tournament
+     * @param turnament
+     */
     public void setTurnament(boolean turnament) {
         this.turnament = turnament;
     }
 
+    /**
+     * Was game just loaded?
+     * @return
+     */
     public boolean isJustLoad() {
         return justLoad;
     }
 
+    /**
+     * Set that the game was just loaded
+     * @param justLoad
+     */
     public void setJustLoad(boolean justLoad) {
         this.justLoad = justLoad;
     }

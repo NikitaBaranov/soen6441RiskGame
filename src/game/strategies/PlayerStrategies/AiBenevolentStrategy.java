@@ -2,9 +2,7 @@ package game.strategies.PlayerStrategies;
 
 import static game.strategies.GamePhaseStrategies.BasePhaseStrategy.isGameWonBy;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.GAME_OVER;
-import static game.utils.MapFunctionsUtil.countNeighbors;
-import static game.utils.MapFunctionsUtil.getCountryWithMaxArmy;
-import static game.utils.MapFunctionsUtil.getCountryWithMaxOpponentNeighbours;
+import static game.utils.MapFunctionsUtil.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -93,10 +91,10 @@ public class AiBenevolentStrategy extends BaseStrategy {
          */
         @Override
         protected Void doInBackground() {
-            Country toPlaceArmy = null;
-            if (toPlaceArmy == null) {
-                toPlaceArmy = getCountryWithMaxOpponentNeighbours(gameState);
-            }
+
+
+
+            Country toPlaceArmy = getCountryWithMinArmy(gameState, 100);
             if (toPlaceArmy != null) {
                 toPlaceArmy.setSelected(true);
                 toPlaceArmy.setArmy(toPlaceArmy.getArmy() + 1);
