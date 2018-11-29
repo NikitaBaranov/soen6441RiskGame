@@ -346,33 +346,35 @@ public class AiAggressiveStrategy extends BaseStrategy {
         @Override
         protected Void doInBackground() {
 
-            Country fromFortify = getCountryWithMaxArmy(gameState, 1);
+            unSelectCountries(gameState);
+            unHighlightCountries(gameState);
+            Country fortifyFrom = getCountryWithMaxArmy(gameState, 1);
 
-            Country toFortify = null;
-            if (fromFortify != null) {
-                fromFortify.select(false, -1);
+            Country fortifyTo = null;
+            if (fortifyFrom != null) {
+                fortifyFrom.select(false, -1);
                 int maxEnemyNeighbors = 0;
                 for (Country country : gameState.getCountries()) {
                     if (country.isHighlighted()) {
                         int enemyNeighbours = countNeighbors(country.getNeighbours(), gameState.getCurrentPlayer(), true);
                         if (enemyNeighbours > maxEnemyNeighbors) {
-                            toFortify = country;
+                            fortifyTo = country;
                             maxEnemyNeighbors = enemyNeighbours;
                         }
                     }
                 }
             }
-            if (toFortify != null && fromFortify != null) {
+            if (fortifyTo != null && fortifyFrom != null) {
                 unHighlightCountries(gameState);
-                toFortify.setHighlighted(true);
-                int armyToFortify = fromFortify.getArmy() - 1;
-                toFortify.setArmy(toFortify.getArmy() + armyToFortify);
-                fromFortify.setArmy(1);
-                String message = gameState.getCurrentPlayer().getName() + " fortify " + toFortify.getName() + " from " + fromFortify.getName() + " by " + armyToFortify;
+                fortifyTo.setHighlighted(true);
+                int armyToFortify = fortifyFrom.getArmy() - 1;
+                fortifyTo.setArmy(fortifyTo.getArmy() + armyToFortify);
+                fortifyFrom.setArmy(1);
+
+                String message = gameState.getCurrentPlayer().getName() + " fortify " + fortifyTo.getName() + " from " + fortifyFrom.getName() + " by " + armyToFortify;
                 gameState.setCurrentTurnPhraseText(message);
                 publish(message);
                 pauseAndRefresh(gameState, PAUSE);
-
             }
 
             pauseAndRefresh(gameState, PAUSE * 2);
