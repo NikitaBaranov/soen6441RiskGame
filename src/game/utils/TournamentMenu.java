@@ -499,7 +499,7 @@ public class TournamentMenu extends JFrame {
                 System.out.println(" Tournament Results \n");
                 System.out.printf(" %-20s", "Map");
                 for (int i = 0; i < results[0].length; i++) {
-                    System.out.printf(" %-20s", "Game " + i);
+                    System.out.printf(" %-20s", "Game " + (i + 1));
                 }
                 System.out.print("\n");
                 for (int i = 0; i < results.length; i++) {
