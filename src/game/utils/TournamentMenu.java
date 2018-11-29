@@ -1,5 +1,8 @@
 package game.utils;
 
+import game.Game;
+import game.ui.Main;
+
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -12,42 +15,40 @@ import java.util.List;
 
 /**
  * The tournament menu window.
+ *
  * @author Dmitry Kryukov
  */
 public class TournamentMenu extends JFrame {
 
     private static final long serialVersionUID = 1L;
-    private int width, height;
-    private NotificationWindow notificationWindow;
-
     // Required parameters for tournament mode
     public String mapFile1 = "";
     public String mapFile2 = "";
     public String mapFile3 = "";
     public String mapFile4 = "";
     public String mapFile5 = "";
-
     public JLabel mapLabel1 = new JLabel("Nothing");
     public JLabel mapLabel2 = new JLabel("Nothing");
     public JLabel mapLabel3 = new JLabel("Nothing");
     public JLabel mapLabel4 = new JLabel("Nothing");
     public JLabel mapLabel5 = new JLabel("Nothing");
-
-    public String[] PlayerStrategy1 = { "Nothing", "Aggressive", "Benevolent", "Random", "Cheater" };
-    public String[] PlayerStrategy2 = { "Nothing", "Aggressive", "Benevolent", "Random", "Cheater" };
-    public String[] PlayerStrategy3 = { "Nothing", "Aggressive", "Benevolent", "Random", "Cheater" };
-    public String[] PlayerStrategy4 = { "Nothing", "Aggressive", "Benevolent", "Random", "Cheater" };
-
+    public String[] PlayerStrategy1 = {"Nothing", "Aggressive", "Benevolent", "Random", "Cheater"};
+    public String[] PlayerStrategy2 = {"Nothing", "Aggressive", "Benevolent", "Random", "Cheater"};
+    public String[] PlayerStrategy3 = {"Nothing", "Aggressive", "Benevolent", "Random", "Cheater"};
+    public String[] PlayerStrategy4 = {"Nothing", "Aggressive", "Benevolent", "Random", "Cheater"};
     public JComboBox tournamentStrategy1 = new JComboBox(PlayerStrategy1);
     public JComboBox tournamentStrategy2 = new JComboBox(PlayerStrategy2);
     public JComboBox tournamentStrategy3 = new JComboBox(PlayerStrategy3);
     public JComboBox tournamentStrategy4 = new JComboBox(PlayerStrategy4);
-
-    public Integer[] tournamentGamesList = { 1,2,3,4,5 };
-    public Integer[] tournamentTurnsList = { 10,15,20,25,30,35,40,45,50 };
-
+    public Integer[] tournamentGamesList = {1, 2, 3, 4, 5};
+    public Integer[] tournamentTurnsList = {10, 15, 20, 25, 30, 35, 40, 45, 50};
     public JComboBox tournamentGames = new JComboBox(tournamentGamesList);
     public JComboBox tournamentTurns = new JComboBox(tournamentTurnsList);
+    private int width, height;
+    private NotificationWindow notificationWindow;
+
+    private int turnamentMapNumber = 0;
+    private int gameNumber = 0;
 
     /**
      * The constructor of the class.
@@ -86,6 +87,7 @@ public class TournamentMenu extends JFrame {
 
     /**
      * Method creates an panel on the window with chooser of the maps
+     *
      * @return mapChooser object to attach to the window
      */
     private JPanel mapChooser() {
@@ -147,36 +149,36 @@ public class TournamentMenu extends JFrame {
         map1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-              mapFile1 = mapFilePath();
-              mapLabel1.setText(mapFile1.split("/")[mapFile1.split("/").length-1]);
+                mapFile1 = mapFilePath();
+                mapLabel1.setText(mapFile1.split("/")[mapFile1.split("/").length - 1]);
             }
         });
         map2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 mapFile2 = mapFilePath();
-                mapLabel2.setText(mapFile2.split("/")[mapFile2.split("/").length-1]);
+                mapLabel2.setText(mapFile2.split("/")[mapFile2.split("/").length - 1]);
             }
         });
         map3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 mapFile3 = mapFilePath();
-                mapLabel3.setText(mapFile3.split("/")[mapFile3.split("/").length-1]);
+                mapLabel3.setText(mapFile3.split("/")[mapFile3.split("/").length - 1]);
             }
         });
         map4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 mapFile4 = mapFilePath();
-                mapLabel4.setText(mapFile4.split("/")[mapFile4.split("/").length-1]);
+                mapLabel4.setText(mapFile4.split("/")[mapFile4.split("/").length - 1]);
             }
         });
         map5.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 mapFile5 = mapFilePath();
-                mapLabel5.setText(mapFile5.split("/")[mapFile5.split("/").length-1]);
+                mapLabel5.setText(mapFile5.split("/")[mapFile5.split("/").length - 1]);
             }
         });
         return mapChooserButtons;
@@ -301,11 +303,21 @@ public class TournamentMenu extends JFrame {
             public void actionPerformed(ActionEvent arg0) {
                 // Pack map files.
                 List<String> mapFiles = new ArrayList<>();
-                if (!mapFile1.isEmpty()){ mapFiles.add(mapFile1); }
-                if (!mapFile2.isEmpty()){ mapFiles.add(mapFile2); }
-                if (!mapFile3.isEmpty()){ mapFiles.add(mapFile3); }
-                if (!mapFile4.isEmpty()){ mapFiles.add(mapFile4); }
-                if (!mapFile5.isEmpty()){ mapFiles.add(mapFile5); }
+                if (!mapFile1.isEmpty()) {
+                    mapFiles.add(mapFile1);
+                }
+                if (!mapFile2.isEmpty()) {
+                    mapFiles.add(mapFile2);
+                }
+                if (!mapFile3.isEmpty()) {
+                    mapFiles.add(mapFile3);
+                }
+                if (!mapFile4.isEmpty()) {
+                    mapFiles.add(mapFile4);
+                }
+                if (!mapFile5.isEmpty()) {
+                    mapFiles.add(mapFile5);
+                }
 
                 // Get settings
                 int games = (Integer) tournamentGames.getSelectedItem();
@@ -320,111 +332,74 @@ public class TournamentMenu extends JFrame {
 
                 int players = 0;
                 if (selectedStrategy1 != "Nothing") {
-                    players+=1;
+                    players += 1;
                     tournamentStrategies.add(selectedStrategy1);
                 }
                 if (selectedStrategy2 != "Nothing") {
-                    players+=1;
+                    players += 1;
                     tournamentStrategies.add(selectedStrategy2);
                 }
                 if (selectedStrategy3 != "Nothing") {
-                    players+=1;
+                    players += 1;
                     tournamentStrategies.add(selectedStrategy3);
                 }
                 if (selectedStrategy4 != "Nothing") {
-                    players+=1;
+                    players += 1;
                     tournamentStrategies.add(selectedStrategy4);
                 }
 
                 if (mapFiles.size() < 1) {
                     System.out.println("At least 1 map should be chosen.");
                     new WarningWindow("At least 1 map should be chosen.", false);
-                }
-                else if (players == 0 || players == 1){
+                } else if (players == 0 || players == 1) {
                     System.out.println("At least 2 strategies should be chosen.");
                     new WarningWindow("At least 2 strategies should be chosen.", false);
-                }
-                else {
+                } else {
+                    while (gameNumber < games) {
+                        runRound(mapFiles, players, tournamentStrategies, games, turns);
+                        gameNumber++;
+                    }
+
                     // TODO Create new loader with tournament settings.
                     // parameters: players, mapFiles, false, tournamentStrategies, games, turns
                     //MapLoader loader = new MapLoader(players, mapFiles, false, tournamentStrategies, games, turns);
                     // I think there is a need to create another maploader constructor and setup game in there.
                     // TODO add map validation before creating the game.
 
-                    try {
-                        System.out.println("map 1 start.");
-                        String mapfile = mapFiles.get(0);
-                        MapLoader loader1 = new MapLoader(players, mapfile, tournamentStrategies, games, turns, notificationWindow);
-                        GameWorker gameWorker = new GameWorker(loader1);
-                        gameWorker.execute();
-                        while (!gameWorker.isDone()) {
-                            // do nothing
-                        }
-                        System.out.println("map 1 done.");
-                    } catch ( IndexOutOfBoundsException e ) {
-                        System.out.println("no map 1");
-                    }
-                    try {
-                        System.out.println("map 2 start.");
-                        String mapfile = mapFiles.get(1);
-                        MapLoader loader2 = new MapLoader(players, mapfile, tournamentStrategies, games, turns, notificationWindow);
-                    } catch ( IndexOutOfBoundsException e ) {
-                        System.out.println("no map 2");
-                    }
-                    try {
-                        String mapfile = mapFiles.get(2);
-                        MapLoader loader3 = new MapLoader(players, mapfile, tournamentStrategies, games, turns, notificationWindow);
-                    } catch ( IndexOutOfBoundsException e ) {
-                        System.out.println("no map 3");
-                    }
-                    try {
-                        String mapfile = mapFiles.get(3);
-                        MapLoader loader4 = new MapLoader(players, mapfile, tournamentStrategies, games, turns, notificationWindow);
-                    } catch ( IndexOutOfBoundsException e ) {
-                        System.out.println("no map 4");
-                    }
-                    try {
-                        String mapfile = mapFiles.get(4);
-                        MapLoader loader5 = new MapLoader(players, mapfile, tournamentStrategies, games, turns, notificationWindow);
-                    } catch ( IndexOutOfBoundsException e ) {
-                        System.out.println("no map 5");
-                    }
                     TournamentMenu.this.setVisible(false);
                     // Debug. Show existed settings
-                    System.out.println("Number of maps: "+mapFiles.size());
-                    for (String map: mapFiles){
-                        System.out.println("Map: "+ map);
+                    System.out.println("Number of maps: " + mapFiles.size());
+                    for (String map : mapFiles) {
+                        System.out.println("Map: " + map);
                     }
-                    for (String strategy: tournamentStrategies){
-                        System.out.println("Strategy: "+ strategy);
+                    for (String strategy : tournamentStrategies) {
+                        System.out.println("Strategy: " + strategy);
                     }
-                    System.out.println("Number of games: "+games);
-                    System.out.println("Number of turns: "+turns);
+                    System.out.println("Number of games: " + games);
+                    System.out.println("Number of turns: " + turns);
                 }
             }
         });
+
         return startGameButtons;
     }
-    /**
-     * The exit functionality, triggered when the user press the close button
-     */
-    class ExitAction extends AbstractAction {
-        private static final long serialVersionUID = 1L;
-        ExitAction() {
-            putValue(NAME, "Close");
-        }
-        public void actionPerformed(ActionEvent e) {
-            // We can just close the window but also clean everything to be able start the program from scratch
-            // Like clean all models variables (Country, Continent, etc)
-            // dispose();
-            System.exit(0); // exit the program
+
+    private void runRound(List<String> mapFiles, int players, List<String> tournamentStrategies, int games, int turns) {
+        try {
+            System.out.println("map " + turnamentMapNumber + " start.");
+            String mapFile = mapFiles.get(turnamentMapNumber);
+            MapLoader loader = new MapLoader(players, mapFile, tournamentStrategies, turns, notificationWindow);
+            RoundWorker roundWorker = new RoundWorker(loader, mapFiles, players, tournamentStrategies, games, turns);
+            roundWorker.execute();
+            System.out.println("map " + turnamentMapNumber + " done.");
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("no map " + turnamentMapNumber);
         }
     }
 
     /**
      * The method which returns the filepath of the map
-     * @return filepath path to the map file
-     * or
+     *
      * @return default.map default map file
      */
     private String mapFilePath() {
@@ -442,17 +417,44 @@ public class TournamentMenu extends JFrame {
         return path + "/default.map";
     }
 
-    public class GameWorker extends SwingWorker<Void, String> {
+    /**
+     * The exit functionality, triggered when the user press the close button
+     */
+    class ExitAction extends AbstractAction {
+        private static final long serialVersionUID = 1L;
+
+        ExitAction() {
+            putValue(NAME, "Close");
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            // We can just close the window but also clean everything to be able start the program from scratch
+            // Like clean all models variables (Country, Continent, etc)
+            // dispose();
+            System.exit(0); // exit the program
+        }
+    }
+
+    public class RoundWorker extends SwingWorker<Void, String> {
 
         MapLoader mapLoader;
+        List<String> mapFiles;
+        int players;
+        List<String> tournamentStrategies;
+        int games;
+        int turns;
 
         /**
          * Constructor of the class
          *
-         * @param gameState
          */
-        public GameWorker(MapLoader mapLoader) {
+        public RoundWorker(MapLoader mapLoader, List<String> mapFiles, int players, List<String> tournamentStrategies, int games, int turns) {
             this.mapLoader = mapLoader;
+            this.mapFiles = mapFiles;
+            this.players = players;
+            this.tournamentStrategies = tournamentStrategies;
+            this.games = games;
+            this.turns = turns;
         }
 
         /**
@@ -462,8 +464,16 @@ public class TournamentMenu extends JFrame {
          */
         @Override
         protected Void doInBackground() {
-            String result = mapLoader.runGame();
-            publish("Publish Worker is done. Result is " + result);
+            Main main = new Main(Game.getInstance());
+            JFrame jFrame = main.createAndShowGui();
+            jFrame.addWindowListener((new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                    publish("Publish Worker is done. Result is " + Game.getInstance().getGameState().getResult());
+                    dispose();
+                    done();
+                }
+            }));
             return null;
         }
 
@@ -484,6 +494,72 @@ public class TournamentMenu extends JFrame {
          */
         @Override
         protected void done() {
+            turnamentMapNumber++;
+            runRound(mapFiles, players, tournamentStrategies, games, turns);
+            System.out.println("Worker is Done");
+        }
+    }
+
+    public class TournamentWorker extends SwingWorker<Void, String> {
+
+        MapLoader mapLoader;
+        List<String> mapFiles;
+        int players;
+        List<String> tournamentStrategies;
+        int games;
+        int turns;
+
+        /**
+         * Constructor of the class
+         */
+        public TournamentWorker(MapLoader mapLoader, List<String> mapFiles, int players, List<String> tournamentStrategies, int games, int turns) {
+            this.mapLoader = mapLoader;
+            this.mapFiles = mapFiles;
+            this.players = players;
+            this.tournamentStrategies = tournamentStrategies;
+            this.games = games;
+            this.turns = turns;
+        }
+
+        /**
+         * Do attack actions in the background.
+         *
+         * @return
+         */
+        @Override
+        protected Void doInBackground() {
+            Main main = new Main(Game.getInstance());
+            JFrame jFrame = main.createAndShowGui();
+            jFrame.addWindowListener((new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                    publish("Publish Worker is done. Result is " + Game.getInstance().getGameState().getResult());
+                    dispose();
+                    done();
+                }
+            }));
+            return null;
+        }
+
+        /**
+         * Debug method
+         *
+         * @param chunks
+         */
+        @Override
+        protected void process(List<String> chunks) {
+            for (String c : chunks) {
+                System.out.println(c);
+            }
+        }
+
+        /**
+         * Automatic go to next turn when phase is done
+         */
+        @Override
+        protected void done() {
+            turnamentMapNumber++;
+            runRound(mapFiles, players, tournamentStrategies, games, turns);
             System.out.println("Worker is Done");
         }
     }
