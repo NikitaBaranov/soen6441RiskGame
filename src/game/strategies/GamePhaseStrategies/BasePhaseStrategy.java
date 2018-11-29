@@ -22,6 +22,7 @@ public class BasePhaseStrategy implements IGamePhaseStrategy, Serializable {
 
     /**
      * Check if game was won by player
+     * Set the flag lost to opponent
      *
      * @param player
      * @return boolean
@@ -74,6 +75,7 @@ public class BasePhaseStrategy implements IGamePhaseStrategy, Serializable {
 
     /**
      * Map click for base strategy
+     * Method is not required here. Stub
      *
      * @param gameState
      * @param x
@@ -81,12 +83,12 @@ public class BasePhaseStrategy implements IGamePhaseStrategy, Serializable {
      */
     @Override
     public void mapClick(GameState gameState, int x, int y) {
-        // TODO What are these methods? will they implemented?
         System.out.println("The mapClick method is not implemented in " + this.getClass().getName() + " strategy.");
     }
 
     /**
      * Next turn button behavior
+     * Method is not required here. Stub
      *
      * @param gameState
      */
@@ -96,7 +98,8 @@ public class BasePhaseStrategy implements IGamePhaseStrategy, Serializable {
     }
 
     /**
-     * Exchange behavoir
+     * Exchange behavior
+     * Method is not required here. Stub
      *
      * @param gameState
      */
@@ -106,7 +109,8 @@ public class BasePhaseStrategy implements IGamePhaseStrategy, Serializable {
     }
 
     /**
-     * Attack behavoir
+     * Attack behavior
+     * Method is not required here. Stub
      *
      * @param gameState
      */
@@ -116,7 +120,8 @@ public class BasePhaseStrategy implements IGamePhaseStrategy, Serializable {
     }
 
     /**
-     * cleaning
+     * Cleanup behavior
+     * Method is not required here. Stub
      *
      * @param gameState
      */

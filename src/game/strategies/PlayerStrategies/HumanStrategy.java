@@ -105,7 +105,7 @@ public class HumanStrategy extends BaseStrategy {
                 }
             } else {
                 gameState.setCurrentTurnPhraseText("Select a Country to attack from.");
-
+                unHighlightCountries(gameState);
                 resetToAndFrom(gameState);
                 Dice.resetDice(gameState.getRedDice(), gameState.getWhiteDice());
             }

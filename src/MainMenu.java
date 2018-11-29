@@ -23,6 +23,10 @@ import java.util.List;
  * This class contains the main menu of the game
  * @author Dmitry Kryukov, Ksenia Popova, Rodolfo Miranda
  * @see MapLoader
+ * @see GameState
+ * @see TournamentMenu
+ * @see NotificationWindow
+ * @see MapEditor
  */
 
 public class MainMenu extends JFrame {
@@ -441,7 +445,7 @@ public class MainMenu extends JFrame {
 
     /**
      * Exit functionality
-     * Eventlistener that call exit function
+     * Event listener that call exit function
      */
     class ExitAction extends AbstractAction {
         private static final long serialVersionUID = 1L;

@@ -116,6 +116,7 @@ public class AttackPanel extends JPanel implements IPanelObserver {
 
     /**
      * Updater for observer
+     * Disables buttons, do cecks for wins.
      * @param iObservable
      */
     @Override
@@ -194,7 +195,7 @@ public class AttackPanel extends JPanel implements IPanelObserver {
     }
 
     /**
-     * Set all checkbuttons Disabled
+     * Set all check buttons Disabled
      */
     private void setAllDisabled() {
         Enumeration<AbstractButton> redEnumeration = redDiceGroup.getElements();

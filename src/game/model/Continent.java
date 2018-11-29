@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The continnt model. Describes the continents parameters.
+ * The continent model. Describes the continents parameters.
  * @author Dmitry Kryukov, Ksenia Popova
  */
 public class Continent implements Serializable {
@@ -89,7 +89,7 @@ public class Continent implements Serializable {
     /**
      * Is continent owned by player?
      * @param player
-     * @return
+     * @return boolean
      */
     public boolean isOwnByPlayer(Player player) {
         for (Country country : countryList) {

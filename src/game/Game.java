@@ -26,7 +26,7 @@ import static game.strategies.GamePhaseStrategies.GamePhaseEnum.PLACING_ARMIES;
 
 /**
  * The game file which control all the game flow.
- * i.e. Controller in the MVC arcthitecture model
+ * i.e. Controller in the MVC architecture model
  *
  * @author Dmitry kryukov, Ksenia Popova
  * @see DiceEnum
@@ -50,7 +50,7 @@ public class Game {
     private JFrame jFrame;
 
     /**
-     * get instance method for Controller
+     * Get instance method for Controller
      *
      * @return gameInstance
      */
@@ -62,7 +62,7 @@ public class Game {
     }
 
     /**
-     * Initialize the game
+     * Initialize the game. Start from the frist phase: Placing armies
      */
     public void initialise(JFrame jFrame) {
         this.jFrame = jFrame;
@@ -75,7 +75,8 @@ public class Game {
     }
 
     /**
-     * Method describes the main flow. I.E. actions with the game.
+     * Method describes action. When user do something on the map
+     * notify observers about that
      */
     public void makeAction(int x, int y) {
         gamePhaseStrategy.mapClick(gameState, x, y);
@@ -83,7 +84,7 @@ public class Game {
     }
 
     /**
-     * Next turn functionality
+     * Next turn. Notify observers when button is pressed
      */
     public void nextTurn() {
         gamePhaseStrategy.nextTurnButton(gameState);
@@ -91,7 +92,7 @@ public class Game {
     }
 
     /**
-     * Exchange methods for exchanging cards for player.
+     * Exchange.Notify observers when button is pressed
      */
     public void exchange() {
         gameState.getCurrentPlayer().exchange(gameState);
@@ -99,7 +100,7 @@ public class Game {
     }
 
     /**
-     * Attack
+     * Attack.Notify observers when button is pressed
      */
     public void attack() {
         gamePhaseStrategy.attackButton(gameState);
@@ -152,7 +153,7 @@ public class Game {
     }
 
     /**
-     * Set the norification
+     * Set the notification
      *
      * @param notification
      */
@@ -160,6 +161,10 @@ public class Game {
         this.notification = notification;
     }
 
+    /**
+     * Save game action.
+     * Save gamestate object with all states to the file.
+     */
     public void save() {
         try {
             String path = Thread.currentThread().getContextClassLoader().getResource("").getPath() + "saves/";
@@ -176,5 +181,21 @@ public class Game {
 
     public JFrame getjFrame() {
         return jFrame;
+    }
+
+    /**
+     * Save game for test purposes action.
+     * Save gamestate object with all states to the file.
+     */
+    public void saveForTest() {
+        try {
+            FileOutputStream myFileOutputStream = new FileOutputStream("./test/resources/SaveTest.risk");
+            ObjectOutputStream myObjectOutputStream = new ObjectOutputStream(myFileOutputStream);
+            myObjectOutputStream.writeObject(gameState);
+            myObjectOutputStream.close();
+        } catch (Exception e) {
+            System.out.println("Error when saving to file. ");
+            e.printStackTrace();
+        }
     }
 }

@@ -44,8 +44,9 @@ public class PlacingArmiesPhaseStrategy extends BasePhaseStrategy {
     }
 
     /**
-     * Behavoir of map click action.
-     * Seup requires game states, show status messages. Checks of different game rules conditions
+     * Behavior of map click action.
+     * Setup required game states, show status messages.
+     * Checks of different game rules conditions
      *
      * @param gameState
      * @param x
@@ -63,7 +64,7 @@ public class PlacingArmiesPhaseStrategy extends BasePhaseStrategy {
     }
 
     /**
-     * Next turn button behavoir. Force the game to next phase attack
+     * Next turn button behavior. Force the game to next phase attack
      *
      * @param gameState
      */
