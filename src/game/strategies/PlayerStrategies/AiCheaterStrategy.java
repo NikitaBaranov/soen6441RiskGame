@@ -203,8 +203,10 @@ public class AiCheaterStrategy extends BaseStrategy {
         		if(country.getPlayer() == gameState.getCurrentPlayer()) {
         			List<Country> neighbours = country.getNeighbours();
         			for(Country neighbour : neighbours) {
+                        System.out.println("Neigh: " + neighbour.getName());
         				if(neighbour.getPlayer() != gameState.getCurrentPlayer() && countriesCaptured.containsValue(neighbour) == false)
         					countriesCaptured.put(neighbour, country.getArmy());
+        				    System.out.println("Capt: " + neighbour.getName());
         			}
         		}
         	}

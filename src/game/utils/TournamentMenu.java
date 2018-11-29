@@ -384,6 +384,14 @@ public class TournamentMenu extends JFrame {
         return startGameButtons;
     }
 
+    /**
+     * Create game for tournament
+     * @param mapFiles
+     * @param players
+     * @param tournamentStrategies
+     * @param games
+     * @param turns
+     */
     private void runRound(List<String> mapFiles, int players, List<String> tournamentStrategies, int games, int turns) {
         try {
             System.out.println("map " + tournamentMapNumber + " start.");
@@ -435,6 +443,9 @@ public class TournamentMenu extends JFrame {
         }
     }
 
+    /**
+     * Play games Games on each map in round robin
+     */
     public class RoundWorker extends SwingWorker<Void, String> {
 
         MapLoader mapLoader;

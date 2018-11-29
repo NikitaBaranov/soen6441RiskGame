@@ -41,6 +41,7 @@ import static game.strategies.GamePhaseStrategies.GamePhaseEnum.PLACING_ARMIES;
  * @see RightStatusPanel
  * @see TopStatusPanel
  */
+// TODO Refactoring. The all states were moved to the model GameState and made it Observable.
 public class Game {
 
     private static Game gameInstance;
@@ -179,6 +180,10 @@ public class Game {
         }
     }
 
+    /**
+     * Get current JFrame
+     * @return
+     */
     public JFrame getjFrame() {
         return jFrame;
     }

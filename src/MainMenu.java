@@ -28,7 +28,7 @@ import java.util.List;
  * @see NotificationWindow
  * @see MapEditor
  */
-
+// TODO Refactoring. Changed the start game flow according new features such as strategies.
 public class MainMenu extends JFrame {
 
     private static final long serialVersionUID = 1L;
