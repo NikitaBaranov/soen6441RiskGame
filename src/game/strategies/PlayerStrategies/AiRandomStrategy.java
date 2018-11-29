@@ -224,7 +224,7 @@ public class AiRandomStrategy extends BaseStrategy {
             Random random = new Random();
             List<Country> attackFromList = new ArrayList<>();
             for (Country country : gameState.getCountries()){
-                if (country.getPlayer() == gameState.getCurrentPlayer() && countNeighbors(country.getNeighbours(), gameState.getCurrentPlayer(), true) > 0){
+                if (country.getPlayer() == gameState.getCurrentPlayer() && country.getArmy() > 1 && countNeighbors(country.getNeighbours(), gameState.getCurrentPlayer(), true) > 0){
                     attackFromList.add(country);
                 }
             }
@@ -275,7 +275,7 @@ public class AiRandomStrategy extends BaseStrategy {
 
                 attackFromList.clear();
                 for (Country country : gameState.getCountries()){
-                    if (country.getPlayer() == gameState.getCurrentPlayer() && countNeighbors(country.getNeighbours(), gameState.getCurrentPlayer(), true) > 0){
+                  if (country.getPlayer() == gameState.getCurrentPlayer() && country.getArmy() > 1 && countNeighbors(country.getNeighbours(), gameState.getCurrentPlayer(), true) > 0){
                         attackFromList.add(country);
                     }
                 }
