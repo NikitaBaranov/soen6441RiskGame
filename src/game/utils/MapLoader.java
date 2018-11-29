@@ -380,7 +380,7 @@ public class MapLoader {
         game.setNotification(notificationWindow);
 
         Main main = new Main(game);
-        main.createAndShowGui();
+        main.createAndShowGui(false);
     }
 
     /**
@@ -699,6 +699,6 @@ public class MapLoader {
         game.setNotification(notificationWindow);
 
         Main main = new Main(game);
-        main.createAndShowGui();
+        main.createAndShowGui(false);
     }
 }

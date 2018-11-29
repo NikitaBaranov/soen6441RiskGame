@@ -53,7 +53,7 @@ public class Main {
      * Method created the panels, windows and all gui, then runs the game.
      * //     * @param game instance of game controller
      */
-    public JFrame createAndShowGui() {
+    public JFrame createAndShowGui(boolean tournament) {
         final JFrame frame = new JFrame("Risk");
         frame.setPreferredSize(new Dimension(width, height));
         //frame.setDefaultLookAndFeelDecorated(true);
@@ -99,7 +99,11 @@ public class Main {
 //        infoPanel.add(dicePanel);
         infoPanel.setBorder(new LineBorder(Color.BLACK, 1));
 
-        game.initialise(frame);
+        if (tournament) {
+            game.initialise(frame);
+        } else {
+            game.initialise(null);
+        }
 
         frame.add(topStatusPanel, BorderLayout.NORTH);
         frame.add(mapPanel, BorderLayout.WEST);

@@ -464,7 +464,7 @@ public class TournamentMenu extends JFrame {
         @Override
         protected Void doInBackground() {
             Main main = new Main(Game.getInstance());
-            JFrame jFrame = main.createAndShowGui();
+            JFrame jFrame = main.createAndShowGui(true);
             jFrame.addWindowListener((new java.awt.event.WindowAdapter() {
                 @Override
                 public void windowClosing(java.awt.event.WindowEvent windowEvent) {
