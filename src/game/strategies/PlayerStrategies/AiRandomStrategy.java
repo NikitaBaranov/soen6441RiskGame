@@ -234,16 +234,20 @@ public class AiRandomStrategy extends BaseStrategy {
                 unSelectCountries(gameState);
                 resetToAndFrom(gameState);
 
-                gameState.setCountryFrom(attackFromList.get(random.nextInt(attackFromList.size())));
+                if(attackFromList.size() > 0) {
+                    gameState.setCountryFrom(attackFromList.get(random.nextInt(attackFromList.size())));
 
-                List<Country> attackToList = new ArrayList<>();
-                for (Country country : gameState.getCountryFrom().getNeighbours()){
-                    if (country.getPlayer() != gameState.getCurrentPlayer()){
-                        attackToList.add(country);
+                    List<Country> attackToList = new ArrayList<>();
+                    for (Country country : gameState.getCountryFrom().getNeighbours()) {
+                        if (country.getPlayer() != gameState.getCurrentPlayer()) {
+                            attackToList.add(country);
+                        }
+                    }
+
+                    if(attackToList.size() > 0) {
+                        gameState.setCountryTo(attackToList.get(random.nextInt(attackToList.size())));
                     }
                 }
-
-                gameState.setCountryTo(attackToList.get(random.nextInt(attackToList.size())));
 
                 if (gameState.getCountryFrom() != null && gameState.getCountryTo() != null) {
                     String message = gameState.getCurrentPlayer().getName() + " attacks from " + gameState.getCountryFrom().getName() + " to " + gameState.getCountryTo().getName();
