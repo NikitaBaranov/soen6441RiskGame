@@ -219,7 +219,8 @@ public class AiRandomStrategy extends BaseStrategy {
          */
         @Override
         protected Void doInBackground() {
-            float randomThreshold = 0.5f;
+            // TODO Luck parameter
+            float randomThreshold = 0.01f;
 
             Random random = new Random();
             List<Country> attackFromList = new ArrayList<>();

@@ -1,0 +1,12 @@
+[Map]
+author=Dmitry
+
+[Continents]
+Europe=3
+America=2
+
+[Territories]
+USA,50,50,America,Canada
+France,200,200,Europe,Canada,Germany
+Germany,300,300,Europe,France
+Canada,100,100,America,USA,France

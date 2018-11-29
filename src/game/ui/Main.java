@@ -118,7 +118,7 @@ public class Main {
 
         if (game.getGameState().isTurnament()) {
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
+            // no matter how many thread you have, it will block it till you finish with the previous
             Thread t = new Thread() {
                 public void run() {
                     synchronized (lock) {
@@ -139,6 +139,7 @@ public class Main {
                 public void windowClosing(WindowEvent arg0) {
                     synchronized (lock) {
                         frame.setVisible(false);
+                        // free thread when you finish with previous
                         lock.notify();
                     }
                 }
