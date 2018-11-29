@@ -53,33 +53,40 @@ public class ReinforcementPhaseStrategy extends BasePhaseStrategy {
 
         gameState.setCurrentGamePhase(REINFORCEMENT);
 
-        System.out.println("\n----------------------------------------------------------------------------\n");
-        // Change current player
-        do {
-            int nextPlayerNumber = (gameState.getPlayers().indexOf(gameState.getCurrentPlayer()) + 1) % gameState.getPlayers().size();
-            gameState.setCurrentPlayer(gameState.getPlayers().get(nextPlayerNumber));
-            if (nextPlayerNumber == 0) {
-                gameState.setCurrentTurnNumber(gameState.getCurrentTurnNumber() + 1);
-                System.out.println("Turn " + gameState.getCurrentTurnNumber());
-            }
-        } while (gameState.getCurrentPlayer().isLost());
+        if (!gameState.isJustLoad()) {
+            System.out.println("\n----------------------------------------------------------------------------\n");
+            // Change current player
+            do {
+                int nextPlayerNumber = (gameState.getPlayers().indexOf(gameState.getCurrentPlayer()) + 1) % gameState.getPlayers().size();
+                gameState.setCurrentPlayer(gameState.getPlayers().get(nextPlayerNumber));
+                if (nextPlayerNumber == 0) {
+                    gameState.setCurrentTurnNumber(gameState.getCurrentTurnNumber() + 1);
+                    System.out.println("Turn " + gameState.getCurrentTurnNumber());
+                }
+            } while (gameState.getCurrentPlayer().isLost());
+        }
 
         if (gameState.getMaxNumberOfTurns() != -1 && gameState.getCurrentTurnNumber() > gameState.getMaxNumberOfTurns()) {
             Game.getInstance().setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(GAME_OVER));
             Game.getInstance().getGamePhaseStrategy().init(gameState);
         } else {
 
-            // Add base armies
-            gameState.getCurrentPlayer().setArmies(getReinforcementArmies(gameState.getCurrentPlayer(), gameState.getCountries()));
+            if(!gameState.isJustLoad()) {
+                // Add base armies
+                gameState.getCurrentPlayer().setArmies(getReinforcementArmies(gameState.getCurrentPlayer(), gameState.getCountries()));
 
-            // Add continent Bonus
-            for (Continent continent : gameState.getContinents()) {
-                if (continent.isOwnByOnePlayer()) {
-                    if (continent.getCountryList().get(0).getPlayer() == gameState.getCurrentPlayer()) {
-                        gameState.getCurrentPlayer().setArmies(gameState.getCurrentPlayer().getArmies() + continent.getBonus());
-                        System.out.println("Player " + gameState.getCurrentPlayer().getName() + " owns " + continent.getName() + " continent and  gets " + continent.getBonus() + " armies.");
+                // Add continent Bonus
+                for (Continent continent : gameState.getContinents()) {
+                    if (continent.isOwnByOnePlayer()) {
+                        if (continent.getCountryList().get(0).getPlayer() == gameState.getCurrentPlayer()) {
+                            gameState.getCurrentPlayer().setArmies(gameState.getCurrentPlayer().getArmies() + continent.getBonus());
+                            System.out.println("Player " + gameState.getCurrentPlayer().getName() + " owns " + continent.getName() + " continent and  gets " + continent.getBonus()
+                                    + " armies.");
+                        }
                     }
                 }
+            } else {
+                gameState.setJustLoad(false);
             }
 
             System.out.println("Select next Player. Next Player is " + gameState.getCurrentPlayer().getName());

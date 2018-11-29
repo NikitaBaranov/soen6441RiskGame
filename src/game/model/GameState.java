@@ -63,6 +63,9 @@ public class GameState implements IObservable, Serializable {
     private String result;
     private boolean turnament = false;
 
+    // Save specific
+    transient private boolean justLoad = false;
+
     /**
      * Attach observer
      *
@@ -526,5 +529,13 @@ public class GameState implements IObservable, Serializable {
 
     public void setTurnament(boolean turnament) {
         this.turnament = turnament;
+    }
+
+    public boolean isJustLoad() {
+        return justLoad;
+    }
+
+    public void setJustLoad(boolean justLoad) {
+        this.justLoad = justLoad;
     }
 }
