@@ -1,24 +1,26 @@
 package game;
 
-import game.model.*;
+import game.model.Continent;
+import game.model.Country;
+import game.model.GameState;
+import game.model.Neighbour;
+import game.model.Player;
 import game.strategies.GamePhaseStrategies.GamePhaseEnum;
 import game.strategies.GamePhaseStrategies.GamePhaseStrategyFactory;
-import game.ui.Main;
 import game.utils.NotificationWindow;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.Assert.*;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 import java.awt.*;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import static game.strategies.PlayerStrategies.PlayerStrategyEnum.HUMAN_STRATEGY;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 /**
  * Tests for game class i.e. controller of the game.
@@ -111,7 +113,7 @@ public class GameTest {
 
         game.setNotification(new NotificationWindow());
         game.setGameState(gameState);
-        game.initialise();
+        game.initialise(null);
     }
     /**
      * Startup phase test. Check if possible to assign armies to country

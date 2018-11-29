@@ -11,9 +11,12 @@ import game.utils.MapLoader;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * The main window of the game. Graphics interface.
+ *
  * @author Dmitry Kryukov, Ksenia Popova
  * @see Game
  * @see DicePanel
@@ -22,7 +25,8 @@ import java.awt.*;
  * @see TopStatusPanel
  * @see MapLoader
  */
-public class Main extends Thread {
+public class Main {
+    private static Object lock = new Object();
 
     private int width = 1300;
     private int height = 700;
@@ -34,75 +38,46 @@ public class Main extends Thread {
     }
 
     /**
-     * Constructor of the class. Runs the game
-     * @param game instance of the game class
+     * Additional method to center window if needed
+     *
+     * @param frame object with window
      */
-    public String runGame(Game game) {
-        Runnable runnable = new Runnable() {
-            public void run() {
-                createAndShowGui(game);
-            }
-        };
-
-        SwingUtilities.invokeLater(runnable);
-
-        try {
-            runnable.wait();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return game.getGameState().getResult();
-    }
-
-    @Override
-    public void run() {
-        createAndShowGui(game);
-    }
-
-    private void closeWindow() {
-        // shutdown the thread.
+    public static void centreWindow(Window frame) {
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
+        int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
+        frame.setLocation(x, y);
     }
 
     /**
      * Method created the panels, windows and all gui, then runs the game.
-     * @param game instance of game controller
+     * //     * @param game instance of game controller
      */
-    private void createAndShowGui(Game game) {
+    public JFrame createAndShowGui(boolean tournament) {
         final JFrame frame = new JFrame("Risk");
-        frame.setPreferredSize(new Dimension(width,height));
+        frame.setPreferredSize(new Dimension(width, height));
         //frame.setDefaultLookAndFeelDecorated(true);
-        if (game.getGameState().isTurnament()) {
-            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-            frame.addWindowListener(new java.awt.event.WindowAdapter() {
-                @Override
-                public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                    closeWindow();
-                }
-            });
-        } else {
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        }
         frame.setResizable(false);
         // Top Status Game Info Bar
         TopStatusPanel topStatusPanel = new TopStatusPanel(width, 30);
-        topStatusPanel.setBackground(new Color(121,180,115));
+        topStatusPanel.setBackground(new Color(121, 180, 115));
 
         // Right Panel
         // Right Controls Panel
         JPanel infoPanel = new JPanel(new FlowLayout());
         infoPanel.setPreferredSize(new Dimension(350, height));
-        infoPanel.setBackground(new Color(65,102,138));
+        infoPanel.setBackground(new Color(65, 102, 138));
 
         // Right Info Panel
 //        JLabel attackLable = new JLabel("Attack:");
         // Player Panel
         RightStatusPanel rightStatusPanel = new RightStatusPanel(320, 300);
-        rightStatusPanel.setBackground(new Color(65,102,138));
+        rightStatusPanel.setBackground(new Color(65, 102, 138));
 
         // Attack Panel
         AttackPanel attackPanel = new AttackPanel(320, 340);
-        attackPanel.setBackground(new Color(65,102,138));
+        attackPanel.setBackground(new Color(65, 102, 138));
 
         // Dice Panel
 //        DicePanel dicePanel = new DicePanel(100, 170);
@@ -113,7 +88,7 @@ public class Main extends Thread {
         //TODO: Extract Logic and reshuffle top to bottom left to right.
         MapPanel mapPanel = new MapPanel(new Dimension(width - 350, height));
         //mapPanel.setBorder(new LineBorder(Color.BLACK, 4));
-        mapPanel.setBackground(new Color(119,178,140));
+        mapPanel.setBackground(new Color(119, 178, 140));
 //        game.mapPanel = mapPanel;
 
         // Adding panels
@@ -124,7 +99,11 @@ public class Main extends Thread {
 //        infoPanel.add(dicePanel);
         infoPanel.setBorder(new LineBorder(Color.BLACK, 1));
 
-        game.initialise(frame);
+        if (tournament) {
+            game.initialise(frame);
+        } else {
+            game.initialise(null);
+        }
 
         frame.add(topStatusPanel, BorderLayout.NORTH);
         frame.add(mapPanel, BorderLayout.WEST);
@@ -136,16 +115,45 @@ public class Main extends Thread {
         // I have two screens ... centreWindow opens a windows in the middle of them
         // centreWindow(frame);
         frame.setVisible(true);
-    }
 
-    /**
-     * Additional method to center window if needed
-     * @param frame object with window
-     */
-    public static void centreWindow(Window frame) {
-        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-        int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
-        int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
-        frame.setLocation(x, y);
+        if (game.getGameState().isTurnament()) {
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+            Thread t = new Thread() {
+                public void run() {
+                    synchronized (lock) {
+                        while (frame.isVisible())
+                            try {
+                                lock.wait();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                    }
+                }
+            };
+            t.start();
+
+            frame.addWindowListener(new WindowAdapter() {
+
+                @Override
+                public void windowClosing(WindowEvent arg0) {
+                    synchronized (lock) {
+                        frame.setVisible(false);
+                        lock.notify();
+                    }
+                }
+
+            });
+
+            try {
+                t.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        }
+        return frame;
     }
 }

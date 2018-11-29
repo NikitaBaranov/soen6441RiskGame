@@ -50,7 +50,7 @@ public class MapLoader {
     public String mapPath;
     public boolean invalidMap;
 
-    Game game;
+    Game game = Game.getInstance();
 
     /**
      * Constructor of the class.
@@ -379,7 +379,8 @@ public class MapLoader {
         game.setGameState(gameState);
         game.setNotification(notificationWindow);
 
-        runGame();
+        Main main = new Main(game);
+        main.createAndShowGui(false);
     }
 
     /**
@@ -390,7 +391,7 @@ public class MapLoader {
      * @param filePath        path to the map
      * @param playersModes    The modes for every player in the game. Choose strategies.
      */
-    public MapLoader(int numberOfPlayers, String filePath, List<String> playersModes, int games, int turns, NotificationWindow notificationWindow) {
+    public MapLoader(int numberOfPlayers, String filePath, List<String> playersModes, int turns, NotificationWindow notificationWindow) {
         mapPath = filePath;
         String line;
         // FIXME oh my god.
@@ -682,9 +683,10 @@ public class MapLoader {
         gameState.setMaxNumberOfTurns(turns);
         gameState.setTurnament(true);
 
-        game = Game.getInstance();
         game.setGameState(gameState);
         game.setNotification(notificationWindow);
+
+        //Tournament mode, do not need to create game window there.
     }
 
     public MapLoader(GameState gameState, NotificationWindow notificationWindow) {
@@ -695,17 +697,8 @@ public class MapLoader {
             player.initStategy();
         }
         game.setNotification(notificationWindow);
-        runGame();
-    }
 
-    public String runGame() {
         Main main = new Main(game);
-        main.run();
-        try {
-            main.wait();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return game.getGameState().getResult();
+        main.createAndShowGui(false);
     }
 }

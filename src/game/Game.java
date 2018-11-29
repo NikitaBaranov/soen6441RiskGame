@@ -198,4 +198,8 @@ public class Game {
             e.printStackTrace();
         }
     }
+
+    public JFrame getjFrame() {
+        return jFrame;
+    }
 }
