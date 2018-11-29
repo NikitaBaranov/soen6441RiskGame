@@ -33,6 +33,7 @@ public class AttackPhaseStrategy extends BasePhaseStrategy {
     @Override
     public void init(GameState gameState) {
         super.init(gameState);
+        gameState.setJustLoad(false);
         gameState.setMinArmiesToMoveAfterWin(0);
         gameState.setWinBattle(false);
         gameState.setGiveACard(false);

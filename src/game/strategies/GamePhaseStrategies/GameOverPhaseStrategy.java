@@ -24,6 +24,8 @@ public class GameOverPhaseStrategy extends BasePhaseStrategy {
     @Override
     public void init(GameState gameState) {
         super.init(gameState);
+        gameState.setJustLoad(false);
+
         gameState.setCurrentGamePhase(GAME_OVER);
         List<Player> players = new LinkedList<>();
         for (Player player : gameState.getPlayers()) {

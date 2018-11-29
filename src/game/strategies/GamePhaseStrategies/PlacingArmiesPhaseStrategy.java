@@ -29,6 +29,7 @@ public class PlacingArmiesPhaseStrategy extends BasePhaseStrategy {
     @Override
     public void init(GameState gameState) {
         super.init(gameState);
+        gameState.setJustLoad(false);
 
 //        gameState.setCurrentGamePhase(PLACING_ARMIES);
         gameState.setCurrentPlayer(gameState.getPlayers().get(0));

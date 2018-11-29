@@ -26,6 +26,7 @@ public class FortificationPhaseStrategy extends BasePhaseStrategy {
     @Override
     public void init(GameState gameState) {
         super.init(gameState);
+        gameState.setJustLoad(false);
 
         gameState.setCurrentGamePhase(FORTIFICATION);
         gameState.setCurrentTurnPhraseText("Select a country to move armies from. ");

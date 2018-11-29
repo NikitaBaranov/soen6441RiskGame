@@ -85,8 +85,6 @@ public class ReinforcementPhaseStrategy extends BasePhaseStrategy {
                         }
                     }
                 }
-            } else {
-                gameState.setJustLoad(false);
             }
 
             System.out.println("Select next Player. Next Player is " + gameState.getCurrentPlayer().getName());
@@ -99,6 +97,7 @@ public class ReinforcementPhaseStrategy extends BasePhaseStrategy {
             if (gameState.getCurrentPlayer().isComputerPlayer()) {
                 gameState.getCurrentPlayer().reinforce(gameState);
             }
+            gameState.setJustLoad(false);
         }
     }
 
