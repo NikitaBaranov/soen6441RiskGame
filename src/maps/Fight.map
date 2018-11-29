@@ -6,14 +6,14 @@ Pink=5
 Blue=5
 
 [Territories]
-Kirk,60,60,Pink,Spock,Scotty,McCoy,Uhura
+Kirk,60,60,Pink,Spock,Scotty,McCoy,Uhura,Sulu
 Spock,60,250,Pink,Kirk,Scotty,McCoy
-Uhura,400,350,Pink,Spock,Scotty,McCoy,Kirk,Chakotay
+Uhura,400,350,Pink,Spock,Scotty,McCoy,Kirk,Chakotay,Sulu
 Scotty,250,500,Pink,Kirk,Uhura,Spock,McCoy
-McCoy,500,600,Pink,Kirk,Spock,Uhura,Scotty
+McCoy,500,600,Pink,Kirk,Spock,Uhura,Scotty,Data
 
-Sulu,300,60,Blue,Chakotay,Chekov,Crusher
+Sulu,300,60,Blue,Chakotay,Chekov,Crusher,Uhura,Kirk
 Chekov,700,120,Blue,Sulu,Chakotay,Crusher
 Chakotay,600,350,Blue,Sulu,Chekov,Crusher,Data,Uhura
 Crusher,800,450,Blue,Sulu,Chekov,Chakotay,Data
-Data,800,600,Blue,Chakotay,Crusher
+Data,800,600,Blue,Chakotay,Crusher,McCoy
