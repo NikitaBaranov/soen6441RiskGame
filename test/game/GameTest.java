@@ -285,6 +285,87 @@ public class GameTest {
         assertEquals("D", gameState.getCountryTo().getName());
         assertEquals("Test Player 2", gameState.getCountryTo().getPlayer().getName()); // Check that deffender is player 2
     }
+    /**
+     * Attack phase: attack and win
+     */
+    @Test
+    public void attackAndWin() {
+        gameState.setCurrentPlayer(players.get(0));
+        countries.get(0).setArmy(1000);
+        countries.get(3).setArmy(3);
+        gameState.setCurrentGamePhase(GamePhaseEnum.ATTACK);
+        Game.getInstance().setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(GamePhaseEnum.ATTACK));
+        Game.getInstance().getGamePhaseStrategy().init(gameState);
+        game.makeAction(10, 10); // Select country A as from
+        game.makeAction(70, 70); // Move to D
+
+        System.out.println("Before army from:"+ gameState.getCountryFrom().getArmy());
+        System.out.println("Before army to:"+ gameState.getCountryTo().getArmy());
+        // Before attack country D own to player 2
+        assertEquals("Test Player 2",gameState.getCountryTo().getPlayer().getName());
+
+        while(!gameState.isWinBattle()){
+            gameState.setNumberOfRedDicesSelected(Math.max(0, Math.min(gameState.getCountryFrom().getArmy() - 1, 3)));
+            gameState.setNumberOfWhiteDicesSelected(Math.max(0, Math.min(gameState.getCountryTo().getArmy(), 2)));
+            game.attack();
+        }
+
+        if (gameState.isWinBattle()){
+            System.out.println("After army from:"+ gameState.getCountryFrom().getArmy());
+            System.out.println("After army to:"+ gameState.getCountryTo().getArmy());
+            // After winning attack country D own to player 1
+            assertEquals("Test Player 1",gameState.getCountryTo().getPlayer().getName());
+        }
+    }
+
+    /**
+     * Attack phase: attack, win and move armies
+     */
+    @Test
+    public void attackWinAndMove() {
+        gameState.setCurrentPlayer(players.get(0));
+        countries.get(0).setArmy(1000);
+        countries.get(3).setArmy(3);
+        gameState.setCurrentGamePhase(GamePhaseEnum.ATTACK);
+        Game.getInstance().setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(GamePhaseEnum.ATTACK));
+        Game.getInstance().getGamePhaseStrategy().init(gameState);
+        game.makeAction(10, 10); // Select country A as from
+        game.makeAction(70, 70); // Move to D
+
+        System.out.println("Before army from:"+ gameState.getCountryFrom().getArmy());
+        System.out.println("Before army to:"+ gameState.getCountryTo().getArmy());
+        // Before attack country D has 3 armies
+        assertEquals(3, gameState.getCountryTo().getArmy());
+
+        while(!gameState.isWinBattle()){
+            gameState.setNumberOfRedDicesSelected(Math.max(0, Math.min(gameState.getCountryFrom().getArmy() - 1, 3)));
+            gameState.setNumberOfWhiteDicesSelected(Math.max(0, Math.min(gameState.getCountryTo().getArmy(), 2)));
+            game.attack();
+        }
+
+        if (gameState.isWinBattle()){
+            System.out.println("After army from:"+ gameState.getCountryFrom().getArmy());
+            System.out.println("After army to:"+ gameState.getCountryTo().getArmy());
+            // Before attack country D has 0 armies
+            assertEquals(0, gameState.getCountryTo().getArmy());
+
+            // Move 10 armies to defeated country D
+            game.makeAction(70, 70);
+            game.makeAction(70, 70);
+            game.makeAction(70, 70);
+            game.makeAction(70, 70);
+            game.makeAction(70, 70);
+            game.makeAction(70, 70);
+            game.makeAction(70, 70);
+            game.makeAction(70, 70);
+            game.makeAction(70, 70);
+            game.makeAction(70, 70);
+            System.out.println("After army from:"+ gameState.getCountryFrom().getArmy());
+            System.out.println("After army to:"+ gameState.getCountryTo().getArmy());
+
+            assertEquals(10, gameState.getCountryTo().getArmy());
+        }
+    }
 
     /**
      * Fortification phase: Check that player 1 able to move countries to another country
