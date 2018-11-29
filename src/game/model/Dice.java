@@ -34,7 +34,8 @@ public class Dice {
     }
 
     /**
-     * Stub for the dice feature
+     * Roll dice random.
+     * Magic happens here
      */
     public static void rollDice(int redDiceNumber, int whiteDiceNumber, DiceEnum[] redDice, DiceEnum[] whiteDice) {
         Random r = new Random();
@@ -58,7 +59,7 @@ public class Dice {
     }
 
     /**
-     * Reset dice
+     * Reset dice to empty
      * @param redDice
      * @param whiteDice
      */

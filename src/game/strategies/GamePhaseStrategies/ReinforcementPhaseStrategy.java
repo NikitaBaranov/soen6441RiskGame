@@ -15,12 +15,11 @@ import static game.utils.MapFunctionsUtil.highlightPayerCountries;
 import static game.utils.MapFunctionsUtil.selectCountry;
 
 /**
- * Reinforcement phase strategy. Describes the reinforcement features.
+ * Reinforcement phase strategy. Describes the reinforcement action.
  *
  * @author Dmitry Kryukov, Ksenia Popova
  * @see BasePhaseStrategy
  */
-// TODO реинфорсмент. выводит неправильное количество оставшихся армий, доходит до нуля и позволяет тыкнуть на страну когда всего 0 армий доступно для размещения.
 public class ReinforcementPhaseStrategy extends BasePhaseStrategy {
 
     /**
@@ -97,7 +96,8 @@ public class ReinforcementPhaseStrategy extends BasePhaseStrategy {
     }
 
     /**
-     * Map click action behavoir.
+     * Map click action behavior.
+     * Go to next phase
      * @param gameState
      * @param x
      * @param y
@@ -114,7 +114,7 @@ public class ReinforcementPhaseStrategy extends BasePhaseStrategy {
     }
 
     /**
-     * Next turn button action behavoir. Set requiresd game states.
+     * Next turn button action behavior. Set required game states.
      * Force next phase attack.
      * Doesn't allow to go to next turn if user has more than 5 cards to excnahge
      * @param gameState
@@ -135,7 +135,7 @@ public class ReinforcementPhaseStrategy extends BasePhaseStrategy {
     }
 
     /**
-     * Exchange button behavoir. Call the required game state function for exchange.
+     * Exchange button behavior. Call the required game state function for exchange.
      * @param gameState
      */
     @Override

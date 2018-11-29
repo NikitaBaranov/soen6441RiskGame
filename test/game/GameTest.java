@@ -12,9 +12,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+import java.util.*;
 import java.util.List;
 
 import static game.strategies.PlayerStrategies.PlayerStrategyEnum.HUMAN_STRATEGY;
@@ -113,7 +113,6 @@ public class GameTest {
         game.setGameState(gameState);
         game.initialise();
     }
-
     /**
      * Startup phase test. Check if possible to assign armies to country
      */
@@ -188,13 +187,13 @@ public class GameTest {
      */
     @Test
     public void reinforcementCountPlayer1() {
-        gameState.setCurrentPlayer(players.get(0));
         gameState.setCurrentGamePhase(GamePhaseEnum.REINFORCEMENT);
         Game.getInstance().setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(GamePhaseEnum.REINFORCEMENT));
         Game.getInstance().getGamePhaseStrategy().init(gameState);
-
-        // By default it should assign 5 armies to reinforce to the user
-        assertEquals(5, players.get(0).getArmies());
+        gameState.setCurrentPlayer(players.get(0));
+        gameState.getCurrentPlayer().setArmies(getReinforcementArmies(gameState.getCurrentPlayer(), gameState.getCountries()));
+        // 3 by default + 1 for each country
+        assertEquals(6, gameState.getCurrentPlayer().getArmies());
     }
 
     /**
@@ -202,13 +201,13 @@ public class GameTest {
      */
     @Test
     public void reinforcementCountPlayer2() {
-        gameState.setCurrentPlayer(players.get(1));
         gameState.setCurrentGamePhase(GamePhaseEnum.REINFORCEMENT);
         Game.getInstance().setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(GamePhaseEnum.REINFORCEMENT));
         Game.getInstance().getGamePhaseStrategy().init(gameState);
-
-        // By default it should assign 5 armies to reinforce to the user
-        assertEquals(5, players.get(1).getArmies());
+        gameState.setCurrentPlayer(players.get(1));
+        gameState.getCurrentPlayer().setArmies(getReinforcementArmies(gameState.getCurrentPlayer(), gameState.getCountries()));
+        // 3 by default + 1 for each country
+        assertEquals(5, gameState.getCurrentPlayer().getArmies());
     }
 
     /**
@@ -216,12 +215,12 @@ public class GameTest {
      */
     @Test
     public void reinforcementCountAssignManual() {
-        gameState.setCurrentPlayer(players.get(0));
         gameState.setCurrentGamePhase(GamePhaseEnum.REINFORCEMENT);
         Game.getInstance().setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(GamePhaseEnum.REINFORCEMENT));
         Game.getInstance().getGamePhaseStrategy().init(gameState);
+        gameState.setCurrentPlayer(players.get(0));
         players.get(0).setArmies(30);
-        assertEquals(30, players.get(0).getArmies());
+        assertEquals(30, gameState.getCurrentPlayer().getArmies());
     }
 
     /**
@@ -364,5 +363,75 @@ public class GameTest {
         Game.getInstance().getGamePhaseStrategy().init(gameState);
 
         assertEquals("Game Over!", gameState.getCurrentGamePhase().getName());
+    }
+
+    /**
+     * Save the game : Test correct saving and loading the game
+     */
+    @Test
+    public void SaveAndLoadGame() {
+        // Before save states:
+        // Phase - reinforcement
+        // Current player - Test Player 2
+        // Country A = 2 armies
+        // Country D = 10 armies
+        gameState.setCurrentGamePhase(GamePhaseEnum.REINFORCEMENT);
+        Game.getInstance().setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(GamePhaseEnum.REINFORCEMENT));
+        Game.getInstance().getGamePhaseStrategy().init(gameState);
+        gameState.setCurrentPlayer(players.get(1));
+        countries.get(0).setArmy(2);
+        countries.get(3).setArmy(10);
+
+        game.saveForTest();
+
+        try {
+            FileInputStream myFileInputStream = new FileInputStream("./test/resources/SaveTest.risk");
+
+            ObjectInputStream myObjectInputStream = new ObjectInputStream(myFileInputStream);
+            GameState newGameState = (GameState) myObjectInputStream.readObject();
+            myObjectInputStream.close();
+            gameState.setiPanelObservers(new LinkedList<>());
+
+            Game loadedGame = Game.getInstance();
+            loadedGame.setGameState(newGameState);
+            for (Player player : newGameState.getPlayers()) {
+                player.initStategy();
+            }
+            // After loading save states:
+            // Phase - reinforcement
+            // Current player - Test Player 2
+            // Country A = 2 armies
+            // Country D = 10 armies
+            System.out.println("phase: "+ newGameState.getCurrentGamePhase().getName());
+            System.out.println("player: "+ newGameState.getCurrentPlayer().getName());
+            System.out.println("A: "+newGameState.getCountries().get(0).getArmy());
+            System.out.println("D: "+newGameState.getCountries().get(3).getArmy());
+
+            assertEquals("Reinforce your positions.", newGameState.getCurrentGamePhase().getName());
+            assertEquals("Test Player 2", newGameState.getCurrentPlayer().getName());
+            assertEquals(2, newGameState.getCountries().get(0).getArmy());
+            assertEquals(10, newGameState.getCountries().get(3).getArmy());
+        } catch (Exception e){
+            System.out.println("Error when loading from file.");
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Additional method to calculate armies for reinforcement.
+     * The copy of the private original one
+     * @param player
+     * @param countries
+     * @return int armies
+     */
+    public int getReinforcementArmies(Player player, List<Country> countries) {
+        int countriesOwnedByPlayer = 0;
+        for (Country country : countries) {
+            if (country.getPlayer() == player) {
+                countriesOwnedByPlayer++;
+            }
+        }
+        if ((player.getArmies() + countriesOwnedByPlayer / 3) < 3) return 3;
+        else return player.getArmies() + countriesOwnedByPlayer / 3;
     }
 }

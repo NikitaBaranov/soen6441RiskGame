@@ -2,7 +2,6 @@ package game.model.enums;
 
 /**
  * Store cards.
- * Stub for future development
  *
  * @author Dmitry Kryukov
  */
@@ -11,7 +10,6 @@ public enum CardsEnum {
     CAVALRY("Cavalry"),
     ARTILLERY("Artillery"),
     WILDCARDS("Wildcards");
-//    BONUS("Bonus");
 
     private String name;
 

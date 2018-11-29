@@ -19,7 +19,7 @@ import static game.utils.MapFunctionsUtil.isMoreAttacks;
 import static game.utils.MapFunctionsUtil.selectCountry;
 
 /**
- * Attack phase strategy class. Describes the attack phase, prepare game for attacing.
+ * Attack phase strategy class. Describes the attack phase, prepare game for attacking.
  * @author Dmitry Kryukov, Ksenia popova
  * @see BasePhaseStrategy
  */
@@ -94,7 +94,7 @@ public class AttackPhaseStrategy extends BasePhaseStrategy {
     }
 
     /**
-     *Attack button force required game states and check if game is over.
+     * Attack button force required game states and check if game is over.
      * @param gameState
      */
     @Override

@@ -17,7 +17,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
- * The status panel class. Descrive the properties of the right panel.
+ * The status panel class. Describe the properties of the right panel.
  * Displaying the player needed information. Such as bonus cards
  * Displaying the buttons to echange cards or go to next turn
  *

@@ -11,7 +11,7 @@ import static game.utils.MapFunctionsUtil.selectCountry;
 
 /**
  * Fortification phase strategy class.
- * Required to prepare game for fortification phase and setup game state before that.
+ * Required to prepare game for fortification phase and setup game states before that.
  *
  * @author Dmitry Kryukov, Ksenia Popova
  * @see BasePhaseStrategy

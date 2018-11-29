@@ -8,13 +8,13 @@ import java.util.*;
 
 /**
  * Utils methods.
- * methods that required by strategies.
+ * The common methods that required by strategies.
  *
  * @author Dmitry Kryukov
  */
 public class MapFunctionsUtil {
     /**
-     * Reset highlights
+     * Reset countries from and to
      */
     public static void resetToAndFrom(GameState gameState) {
         if (gameState.getCountryFrom() != null) {
@@ -29,7 +29,7 @@ public class MapFunctionsUtil {
     }
 
     /**
-     * Method that unhighlight the players countries
+     * Method that unHighlight the players countries
      */
     public static void unHighlightCountries(GameState gameState) {
         for (Country c : gameState.getCountries()) {
@@ -38,7 +38,7 @@ public class MapFunctionsUtil {
     }
 
     /**
-     * Method that unhighlight the players countries
+     * Method that unSelect the players countries
      */
     public static void unSelectCountries(GameState gameState) {
         for (Country c : gameState.getCountries()) {
@@ -58,12 +58,12 @@ public class MapFunctionsUtil {
     }
 
     /**
-     * Select country action.
+     * Method for selecting countries.
      *
      * @param gameState
      * @param x
      * @param y
-     * @return
+     * @return boolean
      */
     public static boolean selectCountry(GameState gameState, int x, int y) {
         gameState.setCurrentCountry(null);
@@ -81,7 +81,7 @@ public class MapFunctionsUtil {
     /**
      * Check if player can attack anybody or go to next turn
      *
-     * @return
+     * @return boolean
      */
     public static boolean isMoreAttacks(GameState gameState) {
         for (Country country : gameState.getCountries()) {
@@ -96,6 +96,12 @@ public class MapFunctionsUtil {
         return false;
     }
 
+    /**
+     * Method thet return the country with max armies
+     * @param gameState
+     * @param minArmy
+     * @return Country country
+     */
     public static Country getCountryWithMaxArmy(GameState gameState, int minArmy) {
         Country countryWithMaxArmy = null;
         int maxArmies = minArmy;
@@ -108,6 +114,11 @@ public class MapFunctionsUtil {
         return countryWithMaxArmy;
     }
 
+    /**
+     * Method that return country with max number of enemies neighvours.
+     * @param gameState
+     * @return Country country
+     */
     public static Country getCountryWithMaxOpponentNeighbours(GameState gameState) {
         Country countryWithMaxNeighbours = null;
         int maxEnemyNeighbors = 0;
@@ -123,6 +134,11 @@ public class MapFunctionsUtil {
         return countryWithMaxNeighbours;
     }
 
+    /**
+     * Checking that country has more than 1 army
+     * @param gameState
+     * @return boolean
+     */
     public static boolean isCountyWithMoreThenOneArmy(GameState gameState) {
         for (Country country : gameState.getCountries()) {
             if (country.getPlayer() == gameState.getCurrentPlayer() && country.getArmy() > 1) {
@@ -132,6 +148,13 @@ public class MapFunctionsUtil {
         return false;
     }
 
+    /**
+     * Calculate number of neighbours.
+     * @param neighbors
+     * @param player
+     * @param enemy
+     * @return int count
+     */
     public static int countNeighbors(List<Country> neighbors, Player player, boolean enemy) {
         int count = 0;
         if (enemy) {
@@ -150,6 +173,11 @@ public class MapFunctionsUtil {
         return count;
     }
 
+    /**
+     * Get map with Player and current number of its countries
+     * @param gameState
+     * @return HashMap <Player, countries>
+     */
     public static Map<Player, Integer> getPlayerToCountiesNumberMap(GameState gameState) {
         Map<Player, Integer> playerNumberOfCountriesMap = new HashMap<>();
         for (Country country : gameState.getCountries()) {
@@ -170,6 +198,12 @@ public class MapFunctionsUtil {
         return playerNumberOfCountriesMap;
     }
 
+    /**
+     * Get random country
+     * @param gameState
+     * @param minArmy
+     * @return Country country
+     */
     public static List<Country> getRandomCountry(GameState gameState, int minArmy) {
         List<Country> countryRandom = new ArrayList<>();
         for (Country country : gameState.getCountries()) {
@@ -180,6 +214,12 @@ public class MapFunctionsUtil {
         return countryRandom;
     }
 
+    /**
+     * Get random enemy country
+     * @param gameState
+     * @param minArmy
+     * @return Country country
+     */
     public static List<Country> getRandomEnemyCountry(GameState gameState, int minArmy) {
         List<Country> countryRandom = new ArrayList<>();
         for (Country country : gameState.getCountries()) {

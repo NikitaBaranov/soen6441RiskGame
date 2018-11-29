@@ -1,8 +1,7 @@
 package game.model.enums;
 
 /**
- * Class for storing the dices.
- * Stub for future development
+ * Class for storing the dices. (images)
  *
  * @author Dmitry Kryukov
  */

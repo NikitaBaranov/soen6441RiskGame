@@ -1,7 +1,7 @@
 package game.strategies.GamePhaseStrategies;
 
 /**
- * Class for storing the phases that used in game.
+ * Class for storing the phases that used in the game.
  *
  * @author Dmitry Kryukov
  */
@@ -36,7 +36,7 @@ public enum GamePhaseEnum {
     }
 
     /**
-     * setter for the name. Set the name
+     * Setter for the name. Set the name
      *
      * @param name name of phase
      */

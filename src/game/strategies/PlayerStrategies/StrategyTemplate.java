@@ -11,8 +11,8 @@ import static game.strategies.GamePhaseStrategies.BasePhaseStrategy.isGameWonBy;
 import static game.strategies.GamePhaseStrategies.GamePhaseEnum.GAME_OVER;
 
 /**
- * AI  player strategy.
- * Describes the behavoir of strategy ai.
+ * AI player strategy.
+ * Describes the behavior of strategy for ai.
  *
  * @author Dmitry Kryukov
  * @see BaseStrategy
@@ -251,7 +251,7 @@ public class StrategyTemplate extends BaseStrategy {
         }
 
         /**
-         * Do the foctification actions in the background
+         * Do the fortification actions in the background
          *
          * @return
          */

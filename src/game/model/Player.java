@@ -53,10 +53,17 @@ public class Player implements Serializable {
         cardsEnumIntegerMap.put(WILDCARDS, 0);
     }
 
+    /**
+     * Initialization of strategy for player
+     */
     public void initStategy() {
         this.strategy = PlayerStrategyFactory.getStrategy(playerStrategyEnum);
     }
 
+    /**
+     * Place armies. First phase
+     * @param gameState
+     */
     public void placeArmies(GameState gameState) {
         strategy.placeArmies(gameState);
     }
@@ -161,14 +168,26 @@ public class Player implements Serializable {
         this.armies = armies;
     }
 
+    /**
+     * Check if player is AI or human
+     * @return boolean
+     */
     public boolean isComputerPlayer() {
         return computerPlayer;
     }
 
+    /**
+     * Flag for looser. Required for game over.
+     * @return boolean
+     */
     public boolean isLost() {
         return lost;
     }
 
+    /**
+     * Set looser. Required for the game over
+     * @param lost
+     */
     public void setLost(boolean lost) {
         this.lost = lost;
     }

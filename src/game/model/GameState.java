@@ -62,7 +62,7 @@ public class GameState implements IObservable, Serializable {
     private int currentTurnNumber = 1;
 
     /**
-     * attach observer
+     * Attach observer
      *
      * @param iPanelObserver
      */
@@ -137,6 +137,10 @@ public class GameState implements IObservable, Serializable {
         return currentGamePhase;
     }
 
+    /**
+     * Set current game phase
+     * @param currentGamePhase
+     */
     public void setCurrentGamePhase(GamePhaseEnum currentGamePhase) {
         this.currentGamePhase = currentGamePhase;
     }
@@ -150,6 +154,10 @@ public class GameState implements IObservable, Serializable {
         return currentPlayer;
     }
 
+    /**
+     * Set current player
+     * @param currentPlayer
+     */
     public void setCurrentPlayer(Player currentPlayer) {
         this.currentPlayer = currentPlayer;
     }
@@ -200,6 +208,10 @@ public class GameState implements IObservable, Serializable {
         return redDice;
     }
 
+    /**
+     * Set red dice
+     * @param redDice
+     */
     public void setRedDice(DiceEnum[] redDice) {
         this.redDice = redDice;
     }
@@ -213,6 +225,10 @@ public class GameState implements IObservable, Serializable {
         return whiteDice;
     }
 
+    /**
+     * Set white dice
+     * @param whiteDice
+     */
     public void setWhiteDice(DiceEnum[] whiteDice) {
         this.whiteDice = whiteDice;
     }
@@ -226,12 +242,16 @@ public class GameState implements IObservable, Serializable {
         return nextTurnButton;
     }
 
+    /**
+     * Set next turn button
+     * @param nextTurnButton
+     */
     public void setNextTurnButton(boolean nextTurnButton) {
         this.nextTurnButton = nextTurnButton;
     }
 
     /**
-     * get country from
+     * Get country from
      *
      * @return countryFrom
      */
@@ -356,6 +376,10 @@ public class GameState implements IObservable, Serializable {
         this.armiesToCardExchange = armiesToCardExchange;
     }
 
+    /**
+     * Get players list
+     * @return players
+     */
     public List<Player> getPlayers() {
         return players;
     }
@@ -369,6 +393,10 @@ public class GameState implements IObservable, Serializable {
         this.players = players;
     }
 
+    /**
+     * Get continents
+     * @return continents
+     */
     public List<Continent> getContinents() {
         return continents;
     }
@@ -382,10 +410,19 @@ public class GameState implements IObservable, Serializable {
         this.continents = continents;
     }
 
+    /**
+     * Get armies to exchange increase.
+     * Return the number of additional armies that user received for exchanged cards.
+     * @return armies to exchange increase
+     */
     public int getARMIES_TO_EXCHANGE_INCREASE() {
         return ARMIES_TO_EXCHANGE_INCREASE;
     }
 
+    /**
+     * Boolean flag that give ot not give card to user after win
+     * @return boolean
+     */
     public boolean isGiveACard() {
         return giveACard;
     }
@@ -417,30 +454,58 @@ public class GameState implements IObservable, Serializable {
         this.selectedCardsToExchange = selectedCardsToExchange;
     }
 
+    /**
+     * Get path to map
+     * @return String map
+     */
     public String getMapFilePath() {
         return mapFilePath;
     }
 
+    /**
+     * Set path to map
+     * @param mapFilePath
+     */
     public void setMapFilePath(String mapFilePath) {
         this.mapFilePath = mapFilePath;
     }
 
+    /**
+     * Set interface for observers
+     * @param iPanelObservers
+     */
     public void setiPanelObservers(List<IPanelObserver> iPanelObservers) {
         this.iPanelObservers = iPanelObservers;
     }
 
+    /**
+     * Get max number of turns allowed for the game session
+     * @return
+     */
     public int getMaxNumberOfTurns() {
         return maxNumberOfTurns;
     }
 
+    /**
+     * Set max number of turns allowed for the game session
+     * @param maxNumberOfTurns
+     */
     public void setMaxNumberOfTurns(int maxNumberOfTurns) {
         this.maxNumberOfTurns = maxNumberOfTurns;
     }
 
+    /**
+     * Get current turn number
+     * @return
+     */
     public int getCurrentTurnNumber() {
         return currentTurnNumber;
     }
 
+    /**
+     * Set current turn number
+     * @param currentTurnNumber
+     */
     public void setCurrentTurnNumber(int currentTurnNumber) {
         this.currentTurnNumber = currentTurnNumber;
     }

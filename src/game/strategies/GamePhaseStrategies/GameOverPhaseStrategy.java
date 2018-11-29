@@ -11,7 +11,7 @@ import static game.strategies.GamePhaseStrategies.GamePhaseEnum.GAME_OVER;
 /**
  * Game over phase strategy. Describes the game over actions.
  *
- * @author Dmitry Kryukov
+ * @author Dmitry Kryukov, Ksenia Popova
  * @see BasePhaseStrategy
  */
 public class GameOverPhaseStrategy extends BasePhaseStrategy {

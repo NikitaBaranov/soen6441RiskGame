@@ -62,7 +62,7 @@ public class WarningWindow extends JFrame {
     }
 
     /**
-     * Method creates an panel on the window woth message and close button
+     * Method creates an panel on the window with message and close button
      * @return messagePanel object to attach to the window
      */
     private JPanel printMessage() {
@@ -87,7 +87,8 @@ public class WarningWindow extends JFrame {
     }
 
     /**
-     * Method creates an panel on the window woth message and close button
+     * Method creates an panel on the window with message and close button
+     * which doesn't close the whole game
      * @return messagePanel object to attach to the window
      */
     private JPanel printMessageWithoutClosing() {
