@@ -19,7 +19,7 @@ import mapeditor.Territory;
 import mapeditor.Verification;
 
 /**
- *
+ * This class provides the map editor interface.
  * @author Rodolfo Miranda
  */
 public class MapEditor extends javax.swing.JFrame {
@@ -34,6 +34,12 @@ public class MapEditor extends javax.swing.JFrame {
     public String pathSelected;
     static String author = "";
 
+
+    /**
+     * Map Editor constructor.
+     * @param pathSelectedCons path to save the file.
+     * @param loadedMapObjCons object that contains continents and territories.
+     */
     public MapEditor(String pathSelectedCons, ILoadedMap loadedMapObjCons) {
 
         pathSelected = pathSelectedCons;
@@ -57,7 +63,6 @@ public class MapEditor extends javax.swing.JFrame {
 
         jTable2.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent event) {
-                // do some actions here, for example
                 // print first column value from selected row
                 if (!preventionFlag) {
                     selectAdjacent(jTable2.getSelectedRow());
@@ -84,8 +89,10 @@ public class MapEditor extends javax.swing.JFrame {
 
     }
 
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    /**
+     * All the components included in the GUI.
+     *
+     */
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
@@ -365,8 +372,12 @@ public class MapEditor extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }
 
+    /**
+     * Method to perform the Button1 click, add new Continent.
+     * * @param java.awt.event.ActionEvent evt. The event when the button is clicked.
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         Vector newRow = new Vector();
@@ -383,8 +394,12 @@ public class MapEditor extends javax.swing.JFrame {
         loadedMapObj.addContinent(cont);
         this.updateContinents();
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }
 
+    /**
+     * Method to perform the Button2 click, add remove Continent.
+     * * @param java.awt.event.ActionEvent evt. The event when the button is clicked.
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try{
             loadedMapObj.deleteContinent(Continent.getContinents().get(jTable1.getSelectedRow()));
@@ -394,12 +409,17 @@ public class MapEditor extends javax.swing.JFrame {
             return;
         }
 
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }
+
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
 
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }
 
+    /**
+     * Method to perform the Button4 click, remove Territory.
+     * * @param java.awt.event.ActionEvent evt. The event when the button is clicked.
+     */
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
 
         preventionFlag = true;
@@ -418,8 +438,12 @@ public class MapEditor extends javax.swing.JFrame {
         }
         preventionFlag = false;
 
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }
 
+    /**
+     * Method to perform the Button3 click, add Territory.
+     * * @param java.awt.event.ActionEvent evt. The event when the button is clicked.
+     */
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
         Vector newRow = new Vector();
@@ -439,8 +463,12 @@ public class MapEditor extends javax.swing.JFrame {
         this.updateTerritories();
 
 
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }
 
+    /**
+     * Method to perform the Button5 click, add Territory Adjacents.
+     * * @param java.awt.event.ActionEvent evt. The event when the button is clicked.
+     */
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
 
         Vector newRow = new Vector();
@@ -448,18 +476,26 @@ public class MapEditor extends javax.swing.JFrame {
         this.model2.addRow(newRow);
         this.updateTerritories();
 
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }
 
+    /**
+     * Method to perform the Button6 click, add Author.
+     * * @param java.awt.event.ActionEvent evt. The event when the button is clicked.
+     */
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
 
         setAuthor(jTextField8.getText());
 
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }
 
     private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField8ActionPerformed
+    }
 
+    /**
+     * Method to perform the Button7 click, Verify And Save.
+     * * @param java.awt.event.ActionEvent evt. The event when the button is clicked.
+     */
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
 
         Verification verificationObj = new Verification();
@@ -498,10 +534,18 @@ public class MapEditor extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton7ActionPerformed
 
+    /**
+     * Method to set the author.
+     * * @param authorParameter. Receive the author name.
+     */
     public void setAuthor(String authorParameter) {
         author = authorParameter;
     }
 
+    /**
+     * Method that perform the adjacents inclusion
+     * * @param Integer Pos. Receive the position in the table.
+     */
     public void selectAdjacent(Integer pos) {
         this.model2.setRowCount(0);
         ArrayList<ITerritory> terList = Territory.getTerritories();
@@ -514,6 +558,9 @@ public class MapEditor extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Method to perform the Add continents operation.
+     */
     private void updateContinents() {
         ArrayList<IContinent> continents = new ArrayList<IContinent>();
         for (int count = 0; count < model.getRowCount(); count++) {
@@ -522,6 +569,9 @@ public class MapEditor extends javax.swing.JFrame {
         Continent.setContinents(continents);
     }
 
+    /**
+     * Method to perform the Add continents operation.
+     */
     private void updateTerritories() {
         ArrayList<ITerritory> territories = new ArrayList<ITerritory>();
         for (int count = 0; count < model1.getRowCount(); count++) {
