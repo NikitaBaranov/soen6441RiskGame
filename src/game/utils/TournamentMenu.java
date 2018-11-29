@@ -13,6 +13,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.System.exit;
+
 /**
  * The tournament menu window.
  *
@@ -44,11 +46,11 @@ public class TournamentMenu extends JFrame {
     public Integer[] tournamentTurnsList = {10, 15, 20, 25, 30, 35, 40, 45, 50};
     public JComboBox tournamentGames = new JComboBox(tournamentGamesList);
     public JComboBox tournamentTurns = new JComboBox(tournamentTurnsList);
+    String[][] results;
     private int width, height;
     private NotificationWindow notificationWindow;
-
-    private int turnamentMapNumber = 0;
-    private int gameNumber = 0;
+    private int tournamentMapNumber = 0;
+    private int tournamentGameNumber = 0;
 
     /**
      * The constructor of the class.
@@ -355,10 +357,8 @@ public class TournamentMenu extends JFrame {
                     System.out.println("At least 2 strategies should be chosen.");
                     new WarningWindow("At least 2 strategies should be chosen.", false);
                 } else {
-                    while (gameNumber < games) {
-                        runRound(mapFiles, players, tournamentStrategies, games, turns);
-                        gameNumber++;
-                    }
+                    results = new String[mapFiles.size()][games];
+                    runRound(mapFiles, players, tournamentStrategies, games, turns);
 
                     // TODO Create new loader with tournament settings.
                     // parameters: players, mapFiles, false, tournamentStrategies, games, turns
@@ -386,14 +386,14 @@ public class TournamentMenu extends JFrame {
 
     private void runRound(List<String> mapFiles, int players, List<String> tournamentStrategies, int games, int turns) {
         try {
-            System.out.println("map " + turnamentMapNumber + " start.");
-            String mapFile = mapFiles.get(turnamentMapNumber);
+            System.out.println("map " + tournamentMapNumber + " start.");
+            String mapFile = mapFiles.get(tournamentMapNumber);
             MapLoader loader = new MapLoader(players, mapFile, tournamentStrategies, turns, notificationWindow);
             RoundWorker roundWorker = new RoundWorker(loader, mapFiles, players, tournamentStrategies, games, turns);
             roundWorker.execute();
-            System.out.println("map " + turnamentMapNumber + " done.");
+            System.out.println("map " + tournamentMapNumber + " done.");
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("no map " + turnamentMapNumber);
+            System.out.println("no map " + tournamentMapNumber);
         }
     }
 
@@ -431,7 +431,7 @@ public class TournamentMenu extends JFrame {
             // We can just close the window but also clean everything to be able start the program from scratch
             // Like clean all models variables (Country, Continent, etc)
             // dispose();
-            System.exit(0); // exit the program
+            exit(0); // exit the program
         }
     }
 
@@ -446,7 +446,6 @@ public class TournamentMenu extends JFrame {
 
         /**
          * Constructor of the class
-         *
          */
         public RoundWorker(MapLoader mapLoader, List<String> mapFiles, int players, List<String> tournamentStrategies, int games, int turns) {
             this.mapLoader = mapLoader;
@@ -494,73 +493,38 @@ public class TournamentMenu extends JFrame {
          */
         @Override
         protected void done() {
-            turnamentMapNumber++;
-            runRound(mapFiles, players, tournamentStrategies, games, turns);
-            System.out.println("Worker is Done");
-        }
-    }
-
-    public class TournamentWorker extends SwingWorker<Void, String> {
-
-        MapLoader mapLoader;
-        List<String> mapFiles;
-        int players;
-        List<String> tournamentStrategies;
-        int games;
-        int turns;
-
-        /**
-         * Constructor of the class
-         */
-        public TournamentWorker(MapLoader mapLoader, List<String> mapFiles, int players, List<String> tournamentStrategies, int games, int turns) {
-            this.mapLoader = mapLoader;
-            this.mapFiles = mapFiles;
-            this.players = players;
-            this.tournamentStrategies = tournamentStrategies;
-            this.games = games;
-            this.turns = turns;
-        }
-
-        /**
-         * Do attack actions in the background.
-         *
-         * @return
-         */
-        @Override
-        protected Void doInBackground() {
-            Main main = new Main(Game.getInstance());
-            JFrame jFrame = main.createAndShowGui();
-            jFrame.addWindowListener((new java.awt.event.WindowAdapter() {
-                @Override
-                public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                    publish("Publish Worker is done. Result is " + Game.getInstance().getGameState().getResult());
-                    dispose();
-                    done();
+            results[tournamentMapNumber][tournamentGameNumber] = Game.getInstance().getGameState().getResult();
+            if (tournamentMapNumber == (mapFiles.size() - 1) && tournamentGameNumber == (games - 1)) {
+                System.out.println("\n --------------------------------------- \n");
+                System.out.println(" Tournament Results \n");
+                System.out.printf(" %-20s", "Map");
+                for (int i = 0; i < results[0].length; i++) {
+                    System.out.printf(" %-20s", "Game " + i);
                 }
-            }));
-            return null;
-        }
-
-        /**
-         * Debug method
-         *
-         * @param chunks
-         */
-        @Override
-        protected void process(List<String> chunks) {
-            for (String c : chunks) {
-                System.out.println(c);
+                System.out.print("\n");
+                for (int i = 0; i < results.length; i++) {
+                    System.out.printf(" %-20s", mapFiles.get(i).substring(mapFiles.get(i).lastIndexOf("/") + 1));
+                    for (int j = 0; j < results[0].length; j++) {
+                        System.out.printf(" %-20s", results[i][j]);
+                    }
+                    System.out.print("\n");
+                }
+                exit(0);
             }
-        }
-
-        /**
-         * Automatic go to next turn when phase is done
-         */
-        @Override
-        protected void done() {
-            turnamentMapNumber++;
-            runRound(mapFiles, players, tournamentStrategies, games, turns);
-            System.out.println("Worker is Done");
+            boolean nextRun = false;
+            if (tournamentMapNumber < mapFiles.size() - 1) {
+                nextRun = true;
+            } else {
+                if (tournamentGameNumber < games - 1) {
+                    tournamentGameNumber++;
+                    tournamentMapNumber = -1;
+                    nextRun = true;
+                }
+            }
+            if (nextRun) {
+                tournamentMapNumber++;
+                runRound(mapFiles, players, tournamentStrategies, games, turns);
+            }
         }
     }
 }
