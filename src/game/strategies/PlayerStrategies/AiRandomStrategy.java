@@ -5,6 +5,8 @@ import game.model.Country;
 import game.model.GameState;
 import game.strategies.GamePhaseStrategies.GamePhaseStrategyFactory;
 
+import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import javax.swing.*;
 import java.util.List;
 import java.util.Random;
@@ -217,29 +219,31 @@ public class AiRandomStrategy extends BaseStrategy {
          */
         @Override
         protected Void doInBackground() {
-            List<Country> randomCountry = getRandomCountry(gameState, 2);
-            List<Country> randomEnemyCountry = getRandomEnemyCountry(gameState, 1);
+            float randomThreshold = 0.5f;
+
             Random random = new Random();
-            int attacks = random.nextInt(randomEnemyCountry.size()) + 1;
-            // Random number of attacks
-            for (int i = 1; i <= attacks; i++){
+            List<Country> attackFromList = new ArrayList<>();
+            for (Country country : gameState.getCountries()){
+                if (country.getPlayer() == gameState.getCurrentPlayer() && countNeighbors(country.getNeighbours(), gameState.getCurrentPlayer(), true) > 0){
+                    attackFromList.add(country);
+                }
+            }
+
+            while (!attackFromList.isEmpty() && random.nextFloat() > randomThreshold){
                 unHighlightCountries(gameState);
                 unSelectCountries(gameState);
                 resetToAndFrom(gameState);
-                // Set random country from
-                int randomCountryFrom = random.nextInt(randomCountry.size());
-                if (gameState.getCountries().get(randomCountryFrom).getPlayer() == gameState.getCurrentPlayer()) {
-                    gameState.setCountryFrom(gameState.getCountries().get(randomCountryFrom));
-                }
 
-                // set country to
-                if (gameState.getCountryFrom() != null) {
-                    for (Country country : gameState.getCountryFrom().getNeighbours()) {
-                        if (country.getPlayer() != gameState.getCurrentPlayer()) {
-                            gameState.setCountryTo(country);
-                        }
+                gameState.setCountryFrom(attackFromList.get(random.nextInt(attackFromList.size())));
+
+                List<Country> attackToList = new ArrayList<>();
+                for (Country country : gameState.getCountryFrom().getNeighbours()){
+                    if (country.getPlayer() != gameState.getCurrentPlayer()){
+                        attackToList.add(country);
                     }
                 }
+
+                gameState.setCountryTo(attackToList.get(random.nextInt(attackToList.size())));
 
                 if (gameState.getCountryFrom() != null && gameState.getCountryTo() != null) {
                     String message = gameState.getCurrentPlayer().getName() + " attacks from " + gameState.getCountryFrom().getName() + " to " + gameState.getCountryTo().getName();
@@ -268,6 +272,15 @@ public class AiRandomStrategy extends BaseStrategy {
                         gameState.getCountryTo().setHighlighted(false);
                     }
                 }
+
+                attackFromList.clear();
+                for (Country country : gameState.getCountries()){
+                    if (country.getPlayer() == gameState.getCurrentPlayer() && countNeighbors(country.getNeighbours(), gameState.getCurrentPlayer(), true) > 0){
+                        attackFromList.add(country);
+                    }
+                }
+
+
                 pauseAndRefresh(gameState, PAUSE * 2);
             }
             return null;
