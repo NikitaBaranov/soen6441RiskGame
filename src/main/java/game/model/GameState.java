@@ -91,9 +91,6 @@ public class GameState implements IObservable, Serializable {
     /**
      * Notify observers
      */
-    // TODO Refactoring. Earlier there was a for iterator i.g. for(Observer observer : Observers)
-    // It worked during the game, but returned random fails during test running.
-    // So it was refactored and changed on common for loop
     @Override
     public void notifyObservers() {
         IPanelObserver[] iPanelObserversArray = iPanelObservers.toArray(new IPanelObserver[0]);

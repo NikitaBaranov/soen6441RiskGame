@@ -47,7 +47,6 @@ public class HumanStrategy extends BaseStrategy {
         }
         if (gameState.getCurrentPlayer().getArmies() == 0) {
             unHighlightCountries(gameState);
-            // TODO automatic go to next turn if no more armies to place
             // check if this line if fine and in the correct place.
             Game.getInstance().getGamePhaseStrategy().nextTurnButton(gameState);
         }
@@ -63,8 +62,6 @@ public class HumanStrategy extends BaseStrategy {
     @Override
     public void beforeAndAfterAttack(GameState gameState) {
         if (gameState.isWinBattle()) {
-            //TODO: If at the end of your attacking turn you've conquered at least one territory, then you have earned a Risk card. You cannot earn more than one Risk card for this.
-            //TODO: If you manage to wipe out an opponent by destroying his or her last army, you gain possession of all the Risk cards he or she may have had in their hands.
 
             if (gameState.getMinArmiesToMoveAfterWin() > 0) {
                 if (gameState.getCurrentCountry() == gameState.getCountryTo()) {
@@ -121,7 +118,6 @@ public class HumanStrategy extends BaseStrategy {
         if (gameState.getCountryFrom() != null && gameState.getCountryFrom().getArmy() >= 2 && gameState.getCountryTo() != null) {
             rollDiceAndProcessResults(gameState);
             if (isGameWonBy(gameState, gameState.getCurrentPlayer())) {
-                // TODO Add message that attacker win battle
                 Game.getInstance().setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(GAME_OVER));
                 Game.getInstance().getGamePhaseStrategy().init(gameState);
             }
@@ -157,7 +153,6 @@ public class HumanStrategy extends BaseStrategy {
             gameState.setCurrentTurnPhraseText("Move army from " + gameState.getCountryFrom().getName() + " to " + gameState.getCountryTo().getName());
         }
         if (gameState.getCountryFrom().getArmy() == 1) {
-            // TODO automatic go to next turn if user can not move anything to another country
             // check is this line if in correct place and works fine
             Game.getInstance().getGamePhaseStrategy().nextTurnButton(gameState);
         }

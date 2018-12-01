@@ -212,7 +212,6 @@ public class AiCheaterStrategy extends BaseStrategy {
     @Override
     protected void done() {
       if (isGameWonBy(gameState, gameState.getCurrentPlayer())) {
-        // TODO Add message that attacker win battle
         Game.getInstance().setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(GAME_OVER));
         Game.getInstance().getGamePhaseStrategy().init(gameState);
       } else {

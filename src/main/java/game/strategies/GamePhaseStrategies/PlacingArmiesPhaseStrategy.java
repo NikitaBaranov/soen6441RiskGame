@@ -19,7 +19,6 @@ import static game.utils.MapFunctionsUtil.unSelectCountries;
  * @author Dmitry Kryukov, Ksenia Popova
  * @see BasePhaseStrategy
  */
-// TODO place armies выводит неправильное количество оставшихся армий, доходит до 0 и позволяет поставить последнюю армию.
 public class PlacingArmiesPhaseStrategy extends BasePhaseStrategy {
     /**
      * Initialization of the startup phase. Setup required game states and vars.
@@ -85,8 +84,6 @@ public class PlacingArmiesPhaseStrategy extends BasePhaseStrategy {
             Game.getInstance().setGamePhaseStrategy(GamePhaseStrategyFactory.getStrategy(ATTACK));
             Game.getInstance().getGamePhaseStrategy().init(gameState);
             gameState.notifyObservers();
-            // TODO Check if its done correctly. Automatic go to next turn when placing armies is over
-            // I'm not sure that it works well. Just be sure that I added this line in the correct place
         } else {
             Player nextPlayer = gameState.getPlayers().get((gameState.getPlayers().indexOf(gameState.getCurrentPlayer()) + 1) % gameState.getPlayers().size());
             gameState.setCurrentPlayer(nextPlayer);

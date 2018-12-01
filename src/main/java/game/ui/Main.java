@@ -85,7 +85,6 @@ public class Main {
 
         // Left Panel
         // Map Panel Map
-        //TODO: Extract Logic and reshuffle top to bottom left to right.
         MapPanel mapPanel = new MapPanel(new Dimension(width - 350, height));
         //mapPanel.setBorder(new LineBorder(Color.BLACK, 4));
         mapPanel.setBackground(new Color(119, 178, 140));

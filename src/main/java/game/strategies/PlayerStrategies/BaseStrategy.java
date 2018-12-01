@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
  */
 public class BaseStrategy implements IPlayerStrategy, Serializable {
     private static final long serialVersionUID = 1L;
-    // TODO Pause var
     public final int PAUSE = 3000;
     /**
      * Method describes the behavior of the game during rolling the dices. i.e. attacking phase.
@@ -28,8 +27,6 @@ public class BaseStrategy implements IPlayerStrategy, Serializable {
      */
     static void rollDiceAndProcessResults(GameState gameState) {
         Dice.rollDice(gameState.getNumberOfRedDicesSelected(), gameState.getNumberOfWhiteDicesSelected(), gameState.getRedDice(), gameState.getWhiteDice());
-        // TODO add additional message to show which user whom attack with number of dices
-        // check it this line if fine
         gameState.setCurrentTurnPhraseText(gameState.getCurrentPlayer().getName() + " attack " + gameState.getCountryTo().getPlayer().getName() + " with " + gameState.getNumberOfRedDicesSelected() + " dices.");
         for (int i = 0; i < Math.min(gameState.getNumberOfRedDicesSelected(), gameState.getNumberOfWhiteDicesSelected()); i++) {
             if (gameState.getRedDice()[i].getNumber() > gameState.getWhiteDice()[i].getNumber()) {
@@ -40,8 +37,6 @@ public class BaseStrategy implements IPlayerStrategy, Serializable {
         }
         if (gameState.getCountryTo().getArmy() == 0) {
             gameState.setWinBattle(true);
-            // TODO Add message that attacker win battle
-            // check if this line if fine
             gameState.setCurrentTurnPhraseText(gameState.getCurrentPlayer().getName() + " won the battle! Move at least " + gameState.getNumberOfRedDicesSelected() + " armies to the defeated country.");
             gameState.getCountryTo().setPlayer(gameState.getCurrentPlayer());
             gameState.setMinArmiesToMoveAfterWin(gameState.getNumberOfRedDicesSelected());
