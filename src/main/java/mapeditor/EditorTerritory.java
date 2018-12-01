@@ -174,6 +174,7 @@ public class EditorTerritory implements IEditorTerritory {
 		{
 			adjacencies.add(tokens[i]);
 		}
+//		adjacencies.addAll(Arrays.asList(tokens)); // test it
 
 		ITerritory territory = new Territory(territoryName, X, Y, continentName, adjacencies);
 		this.loadedMapObj.addTerritory(territory);
