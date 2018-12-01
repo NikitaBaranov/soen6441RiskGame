@@ -360,11 +360,9 @@ public class TournamentMenu extends JFrame {
                     results = new String[mapFiles.size()][games];
                     runRound(mapFiles, players, tournamentStrategies, games, turns);
 
-                    // TODO Create new loader with tournament settings.
                     // parameters: players, mapFiles, false, tournamentStrategies, games, turns
                     //MapLoader loader = new MapLoader(players, mapFiles, false, tournamentStrategies, games, turns);
                     // I think there is a need to create another maploader constructor and setup game in there.
-                    // TODO add map validation before creating the game.
 
                     TournamentMenu.this.setVisible(false);
                     // Debug. Show existed settings

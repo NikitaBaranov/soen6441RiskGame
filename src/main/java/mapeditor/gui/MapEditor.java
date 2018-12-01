@@ -489,7 +489,6 @@ public class MapEditor extends javax.swing.JFrame {
     }
 
     private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
-        // TODO add your handling code here:
     }
 
     /**

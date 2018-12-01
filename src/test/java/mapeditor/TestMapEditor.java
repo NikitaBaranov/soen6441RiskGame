@@ -94,10 +94,8 @@ public class TestMapEditor {
 	        file.delete();
 			loadedMapObj.saveMapToFile(path + mapName);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -169,10 +167,8 @@ public class TestMapEditor {
 	        file.delete();
 	        loadedMapObjCorrect.saveMapToFile(path + mapNameCorrect);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -229,10 +225,8 @@ public class TestMapEditor {
 	        file.delete();
 			loadedMapObj.saveMapToFile(path + mapName);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		File file = new File(path + mapName);
@@ -335,10 +329,8 @@ public class TestMapEditor {
 	        file.delete();
 			loadedMapObj.saveMapToFile(path + mapName);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		mapLoaderObj = new MapLoader(path + mapName, 1);

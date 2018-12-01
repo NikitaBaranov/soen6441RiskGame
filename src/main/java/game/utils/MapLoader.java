@@ -66,7 +66,6 @@ public class MapLoader {
         boolean testMode = mode;
         mapPath = filePath;
         String line;
-        // FIXME oh my god.
         invalidMap = false;
         String line2;
         Color[] playerColor = new Color[8];
@@ -94,7 +93,7 @@ public class MapLoader {
 
 
         //Player[] playerList = new Player[numberOfPlayers];
-        // TODO This var needs for testing mode when we test continent bonus
+        // This var needs for testing mode when we test continent bonus
         // just highlighted it with to do to not forget what is going on
         int[] countriesPerPlayer = new int[numberOfPlayers];
         for (int i = 0; i < numberOfPlayers; i++) {
@@ -121,7 +120,6 @@ public class MapLoader {
                         break;
                     case "Aggressive":
                         int aggrCounter = 1;
-                        // TODO Does this think will work correctly every time?
                         int aggrCol = colorRand.nextInt(pColors.size());
                         if (players.size() > 0) {
                             for (Player player : players) {
@@ -137,7 +135,6 @@ public class MapLoader {
                         break;
                     case "Benevolent":
                         int benevCounter = 1;
-                        // TODO Does this think will work correctly every time?
                         int benevCol = colorRand.nextInt(pColors.size());
                         if (players.size() > 0) {
                             for (Player player : players) {
@@ -153,7 +150,6 @@ public class MapLoader {
                         break;
                     case "Random":
                         int randCounter = 1;
-                        // TODO Does this think will work correctly every time?
                         int randCol = colorRand.nextInt(pColors.size());
                         if (players.size() > 0) {
                             for (Player player : players) {
@@ -169,7 +165,6 @@ public class MapLoader {
                         break;
                     case "Cheater":
                         int cheatCounter = 1;
-                        // TODO Does this think will work correctly every time?
                         int cheatCol = colorRand.nextInt(pColors.size());
                         if (players.size() > 0) {
                             for (Player player : players) {
@@ -268,7 +263,7 @@ public class MapLoader {
         for (int i = 0; i < countries.size(); i++) {
             int newPlayer = rand.nextInt(numberOfPlayers);
 
-            // TODO The feature for testing purposes. Needs to run game with specific rules to test continent bonus feature.
+            //  The feature for testing purposes. Needs to run game with specific rules to test continent bonus feature.
             // Just highlighed it with TO DO to not forget what is going on
             // It assign to 2 players the whole continents every time
             // Check test mode
@@ -335,7 +330,6 @@ public class MapLoader {
                 throw new InvalidObjectException("Map has disconnected component. (Graph is not connected)");
             }
 
-            // TODO Check that this validation works well and written without mistakes
             // Validate that subgraphs are connected
             for (Continent continent : continents) {
                 Queue<Country> toExploreSubgraph = new LinkedList<>();
@@ -394,7 +388,6 @@ public class MapLoader {
     public MapLoader(int numberOfPlayers, String filePath, List<String> playersModes, int turns, NotificationWindow notificationWindow) {
         mapPath = filePath;
         String line;
-        // FIXME oh my god.
         invalidMap = false;
         String line2;
         // games - number of games for each map
@@ -448,7 +441,6 @@ public class MapLoader {
                         break;
                     case "Aggressive":
                         int aggrCounter = 1;
-                        // TODO Does this think will work correctly every time?
                         int aggrCol = colorRand.nextInt(pColors.size());
                         if (players.size() > 0) {
                             for (Player player : players) {
@@ -464,7 +456,6 @@ public class MapLoader {
                         break;
                     case "Benevolent":
                         int benevCounter = 1;
-                        // TODO Does this think will work correctly every time?
                         int benevCol = colorRand.nextInt(pColors.size());
                         if (players.size() > 0) {
                             for (Player player : players) {
@@ -480,7 +471,6 @@ public class MapLoader {
                         break;
                     case "Random":
                         int randCounter = 1;
-                        // TODO Does this think will work correctly every time?
                         int randCol = colorRand.nextInt(pColors.size());
                         if (players.size() > 0) {
                             for (Player player : players) {
@@ -496,7 +486,6 @@ public class MapLoader {
                         break;
                     case "Cheater":
                         int cheatCounter = 1;
-                        // TODO Does this think will work correctly every time?
                         int cheatCol = colorRand.nextInt(pColors.size());
                         if (players.size() > 0) {
                             for (Player player : players) {
@@ -641,7 +630,6 @@ public class MapLoader {
                 throw new InvalidObjectException("Map has disconnected component. (Graph is not connected)");
             }
 
-            // TODO Check that this validation works well and written without mistakes
             // Validate that subgraphs are connected
             for (Continent continent : continents) {
                 Queue<Country> toExploreSubgraph = new LinkedList<>();

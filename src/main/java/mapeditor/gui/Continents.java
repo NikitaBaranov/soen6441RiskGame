@@ -184,7 +184,6 @@ public class Continents extends javax.swing.JFrame {
      * @param java.awt.event.ActionEvent evt (The event).
      */
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
         loadedMapObj.deleteContinent(Continent.getContinents().get(jTable1.getSelectedRow()));
         this.model.removeRow(jTable1.getSelectedRow());
         this.updateContinents();
@@ -196,7 +195,6 @@ public class Continents extends javax.swing.JFrame {
      * @param java.awt.event.ActionEvent evt (The event).
      */
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
     }
 
     /**

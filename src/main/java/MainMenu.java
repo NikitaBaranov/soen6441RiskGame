@@ -28,7 +28,6 @@ import java.util.List;
  * @see NotificationWindow
  * @see MapEditor
  */
-// TODO Refactoring. Changed the start game flow according new features such as strategies.
 public class MainMenu extends JFrame {
 
     private static final long serialVersionUID = 1L;
@@ -107,7 +106,6 @@ public class MainMenu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 System.out.println("DEBUG: Load game\n ------------------------ \n");
-                // TODO load the game from file
                 String savedGame = savedGamefilePath();
                 try {
                     FileInputStream myFileInputStream = new FileInputStream(savedGame);

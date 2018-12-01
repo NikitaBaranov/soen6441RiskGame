@@ -258,7 +258,6 @@ public class Territories extends javax.swing.JFrame {
      * @param java.awt.event.ActionEvent evt (The event).
      */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
         preventionFlag = true;
         Integer index = jTable1.getSelectedRow();
         this.model.removeRow(index);
@@ -279,7 +278,6 @@ public class Territories extends javax.swing.JFrame {
      * @param java.awt.event.ActionEvent evt (The event).
      */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
         Vector newRow = new Vector();
         newRow.add(jTextField1.getText());
         newRow.add(jTextField2.getText());
@@ -297,7 +295,6 @@ public class Territories extends javax.swing.JFrame {
      * @param java.awt.event.ActionEvent evt (The event).
      */
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
         Vector newRow = new Vector();
         newRow.add(jTextPane1.getText());
         this.model2.addRow(newRow);
@@ -305,7 +302,6 @@ public class Territories extends javax.swing.JFrame {
     }
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
         preventionFlag = true;
         Integer index = jTable2.getSelectedRow();
         Integer indexContinent = jTable1.getSelectedRow();
