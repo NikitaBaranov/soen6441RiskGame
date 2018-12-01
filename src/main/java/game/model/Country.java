@@ -1,6 +1,7 @@
 package game.model;
 
 import game.Game;
+import lombok.Data;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
@@ -13,6 +14,7 @@ import java.util.List;
  *
  * @author Dmitry Kryukov, Ksenia Popova
  */
+@Data
 public class Country implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -49,106 +51,6 @@ public class Country implements Serializable {
         this.y = y;
         this.radius = radius;
     }
-
-    /**
-     * Get name of country
-     *
-     * @return name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Get army number for country
-     *
-     * @return army
-     */
-    public int getArmy() {
-        return army;
-    }
-
-    /**
-     * Set the number of armies to country
-     *
-     * @param army Armies to country
-     */
-    public void setArmy(int army) {
-        this.army = army;
-    }
-
-    /**
-     * Get the x coodrinate
-     *
-     * @return x
-     */
-    public int getX() {
-        return x;
-    }
-
-    /**
-     * Set the x coordinate
-     *
-     * @param x horizontal coordinate
-     */
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    /**
-     * Get the y coordinate
-     *
-     * @return y
-     */
-    public int getY() {
-        return y;
-    }
-
-    /**
-     * Set the y coordinate
-     *
-     * @param y vertical coordinate
-     */
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    /**
-     * Get the connections for country
-     *
-     * @return neighbours
-     */
-    public List<Country> getNeighbours() {
-        return neighbours;
-    }
-
-    /**
-     * Get the assigned player for country
-     *
-     * @return player
-     */
-    public Player getPlayer() {
-        return player;
-    }
-
-    /**
-     * Set the player for country
-     *
-     * @param player Player object
-     */
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
-    /**
-     * Set the country selected state
-     *
-     * @param selected Is country selected
-     */
-    public void setSelected(boolean selected) {
-        isSelected = selected;
-    }
-
 
     /**
      * Selection of enemies
@@ -216,24 +118,6 @@ public class Country implements Serializable {
     }
 
     /**
-     * Check if country is highlighted
-     *
-     * @return boolean
-     */
-    public boolean isHighlighted() {
-        return isHighlighted;
-    }
-
-    /**
-     * Set highlight
-     *
-     * @param highlighted Is highlighted
-     */
-    public void setHighlighted(boolean highlighted) {
-        isHighlighted = highlighted;
-    }
-
-    /**
      * Check if the country in border
      *
      * @param x coordinate
@@ -242,24 +126,6 @@ public class Country implements Serializable {
      */
     public boolean isInBorder(int x, int y) {
         return Math.sqrt(Math.pow(x - this.x, 2) + Math.pow(y - this.y, 2)) < radius;
-    }
-
-    /**
-     * Get the continent for country
-     *
-     * @return continent
-     */
-    public Continent getContinent() {
-        return continent;
-    }
-
-    /**
-     * Set the continent for country
-     *
-     * @param continent Continent to country
-     */
-    public void setContinent(Continent continent) {
-        this.continent = continent;
     }
 
     /**

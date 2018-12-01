@@ -5,6 +5,7 @@ import game.model.enums.CardsEnum;
 import game.strategies.PlayerStrategies.IPlayerStrategy;
 import game.strategies.PlayerStrategies.PlayerStrategyEnum;
 import game.strategies.PlayerStrategies.PlayerStrategyFactory;
+import lombok.Data;
 
 import java.awt.*;
 import java.io.Serializable;
@@ -22,6 +23,7 @@ import static game.model.enums.CardsEnum.WILDCARDS;
  * @author Dmitry Kryukov, Ksenia Popova
  * @see CardsEnum
  */
+@Data
 public class Player implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -103,92 +105,5 @@ public class Player implements Serializable {
      */
     public void exchange(GameState gameState) {
         strategy.exchange(gameState);
-    }
-
-    /**
-     * Get the name of player
-     *
-     * @return name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Set the player's name
-     *
-     * @param name name of the player
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * Getter for bonus cards for player
-     *
-     * @return cardsEnumIntegerMap
-     */
-    public Map<CardsEnum, Integer> getCardsEnumIntegerMap() {
-        return cardsEnumIntegerMap;
-    }
-
-    /**
-     * Get the player color
-     *
-     * @return color
-     */
-    public Color getColor() {
-        return color;
-    }
-
-    /**
-     * Set the player color
-     *
-     * @param color Color of the player
-     */
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
-    /**
-     * Get the armies of player
-     *
-     * @return armies
-     */
-    public int getArmies() {
-        return armies;
-    }
-
-    /**
-     * Set the armies for player
-     *
-     * @param armies Armies of the player
-     */
-    public void setArmies(int armies) {
-        this.armies = armies;
-    }
-
-    /**
-     * Check if player is AI or human
-     * @return boolean
-     */
-    public boolean isComputerPlayer() {
-        return computerPlayer;
-    }
-
-    /**
-     * Flag for looser. Required for game over.
-     * @return boolean
-     */
-    public boolean isLost() {
-        return lost;
-    }
-
-    /**
-     * Set looser. Required for the game over
-     * @param lost
-     */
-    public void setLost(boolean lost) {
-        this.lost = lost;
     }
 }

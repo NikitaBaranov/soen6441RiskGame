@@ -26,7 +26,7 @@ public class MapLoaderTest {
         List<String> playersModes = new ArrayList<>();
         playersModes.add("Human");
         playersModes.add("Human");
-        String mapFile1 = "./src/maps/invContinentNoTerr.map"; // no territories
+        String mapFile1 = "./src/main/java/assets/maps/invContinentNoTerr.map"; // no territories
         MapLoader loader = new MapLoader(players, mapFile1, false, playersModes, new NotificationWindow());
         assertTrue(loader != null);
     }
@@ -40,7 +40,7 @@ public class MapLoaderTest {
         List<String> playersModes = new ArrayList<>();
         playersModes.add("Human");
         playersModes.add("Human");
-        String mapFile1 = "./src/maps/invContinentNoTerr.map"; // no territories
+        String mapFile1 = "./src/main/java/assets/maps/invContinentNoTerr.map"; // no territories
         MapLoader loader1 = new MapLoader(players, mapFile1, false, playersModes, new NotificationWindow());
         assertTrue(loader1.invalidMap);
     }
@@ -54,7 +54,7 @@ public class MapLoaderTest {
         List<String> playersModes = new ArrayList<>();
         playersModes.add("Human");
         playersModes.add("Human");
-        String mapFile2 = "./src/maps/invContinentOneTerr.map"; // one territory
+        String mapFile2 = "./src/main/java/assets/maps/invContinentOneTerr.map"; // one territory
         MapLoader loader2 = new MapLoader(players, mapFile2, false, playersModes, new NotificationWindow());
         assertTrue(loader2.invalidMap);
     }
@@ -68,7 +68,7 @@ public class MapLoaderTest {
         List<String> playersModes = new ArrayList<>();
         playersModes.add("Human");
         playersModes.add("Human");
-        String mapFile3 = "./src/maps/invNoConnectionTwoCont.map"; // Disconnected continents
+        String mapFile3 = "./src/main/java/assets/maps/invNoConnectionTwoCont.map"; // Disconnected continents
         MapLoader loader3 = new MapLoader(players, mapFile3, false, playersModes, new NotificationWindow());
         assertTrue(loader3.invalidMap);
     }
@@ -83,7 +83,7 @@ public class MapLoaderTest {
         List<String> playersModes = new ArrayList<>();
         playersModes.add("Human");
         playersModes.add("Human");
-        String mapFile5 = "./src/maps/UnconnectedContinent.map"; // Disconnected continents
+        String mapFile5 = "./src/main/java/assets/maps/UnconnectedContinent.map"; // Disconnected continents
         MapLoader loader5 = new MapLoader(players, mapFile5, false, playersModes, new NotificationWindow());
         assertTrue(loader5.invalidMap);
     }
@@ -97,7 +97,7 @@ public class MapLoaderTest {
         List<String> playersModes = new ArrayList<>();
         playersModes.add("Human");
         playersModes.add("Human");
-        String mapFile5 = "./src/maps/TwinVolcano.map"; // Disconnected continents
+        String mapFile5 = "./src/main/java/assets/maps/TwinVolcano.map"; // Disconnected continents
         MapLoader loader5 = new MapLoader(players, mapFile5, false, playersModes, new NotificationWindow());
         assertTrue(loader5.invalidMap);
     }
@@ -111,7 +111,7 @@ public class MapLoaderTest {
         List<String> playersModes = new ArrayList<>();
         playersModes.add("Human");
         playersModes.add("Human");
-        String mapFile6 = "./src/maps/oneDirection.map";
+        String mapFile6 = "./src/main/java/assets/maps/oneDirection.map";
         MapLoader loader6 = new MapLoader(players, mapFile6, false, playersModes, new NotificationWindow());
         assertFalse(loader6.invalidMap);
     }
@@ -125,7 +125,7 @@ public class MapLoaderTest {
         List<String> playersModes = new ArrayList<>();
         playersModes.add("Human");
         playersModes.add("Human");
-        String mapFile6 = "./src/maps/3D Cliff.map";
+        String mapFile6 = "./src/main/java/assets/maps/3D Cliff.map";
         MapLoader loader6 = new MapLoader(players, mapFile6, false, playersModes, new NotificationWindow());
         assertFalse(loader6.invalidMap);
     }
@@ -139,7 +139,7 @@ public class MapLoaderTest {
         List<String> playersModes = new ArrayList<>();
         playersModes.add("Human");
         playersModes.add("Human");
-        String mapFile6 = "./src/maps/World.map";
+        String mapFile6 = "./src/main/java/assets/maps/World.map";
         MapLoader loader6 = new MapLoader(players, mapFile6, false, playersModes, new NotificationWindow());
         assertFalse(loader6.invalidMap);
     }

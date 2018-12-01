@@ -1,5 +1,7 @@
 package game.model;
 
+import lombok.Data;
+
 import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -9,6 +11,7 @@ import java.util.List;
  * The continent model. Describes the continents parameters.
  * @author Dmitry Kryukov, Ksenia Popova
  */
+@Data
 public class Continent implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -31,46 +34,6 @@ public class Continent implements Serializable {
     public Continent(String name, int bonus) {
         this.name = name;
         this.bonus = bonus;
-    }
-
-    /**
-     * Getter for the name
-     * @return name of the continent
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Setter for the name
-     * @param name of the continent
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * Country list for the continent
-     * @return countryLust of countries on continent
-     */
-    public List<Country> getCountryList() {
-        return countryList;
-    }
-
-    /**
-     * Method return the bonus for continent
-     * @return bonus
-     */
-    public int getBonus() {
-        return bonus;
-    }
-
-    /**
-     * Method that descrive the color for continent
-     * @return color
-     */
-    public Color getColor() {
-        return color;
     }
 
     /**

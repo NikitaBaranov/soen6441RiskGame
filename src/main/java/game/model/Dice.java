@@ -1,6 +1,7 @@
 package game.model;
 
 import game.model.enums.DiceEnum;
+import lombok.Data;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -12,6 +13,7 @@ import java.util.Random;
  * The dice model. Describes the dice parameters
  * @author Dmitry Kryukov, Ksenia Popova
  */
+@Data
 public class Dice {
 
     private static final String imageSourceDir = "src/game/resources/dice/";

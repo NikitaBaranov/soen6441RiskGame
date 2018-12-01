@@ -1,5 +1,7 @@
 package game.model;
 
+import lombok.Data;
+
 import java.awt.*;
 import java.io.Serializable;
 
@@ -7,6 +9,7 @@ import java.io.Serializable;
  * The neighbour model. Describes the neighbours parameters.
  * @author Dmitry Kryukov, Ksenia Popova
  */
+@Data
 public class Neighbour implements Serializable {
     private static final long serialVersionUID = 1L;
 

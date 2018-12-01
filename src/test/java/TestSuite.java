@@ -13,7 +13,7 @@ import org.junit.runners.Suite;
         LauncherTest.class,
         game.utils.WarningWindowTest.class,
         game.utils.MapLoaderTest.class,
-//        game.model.PlayerTest.class
+        game.model.PlayerTest.class
 })
 /**
  * Test suite empty class. According to the official doc of jUnit

@@ -32,7 +32,7 @@ public class GameTest {
     public List<Neighbour> neighbours = new ArrayList<>();
     public List<Player> players = new ArrayList<>();
     public List<Continent> continents = new ArrayList<>();
-    public String mapPath = "./src/maps/Triangles.map";
+    public String mapPath = "./src/main/java/assets/maps/Triangles.map";
     Game game = Game.getInstance();
     GameState gameState;
 
@@ -468,7 +468,7 @@ public class GameTest {
         game.saveForTest();
 
         try {
-            FileInputStream myFileInputStream = new FileInputStream("./test/resources/SaveTest.risk");
+            FileInputStream myFileInputStream = new FileInputStream("./src/test/java/assets/SaveTest.risk");
 
             ObjectInputStream myObjectInputStream = new ObjectInputStream(myFileInputStream);
             GameState newGameState = (GameState) myObjectInputStream.readObject();

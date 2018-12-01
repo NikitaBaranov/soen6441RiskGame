@@ -15,6 +15,7 @@ import game.ui.view.MapPanel;
 import game.ui.view.RightStatusPanel;
 import game.ui.view.TopStatusPanel;
 import game.utils.NotificationWindow;
+import lombok.Data;
 
 import javax.swing.*;
 import java.io.FileOutputStream;
@@ -41,7 +42,7 @@ import static game.strategies.GamePhaseStrategies.GamePhaseEnum.PLACING_ARMIES;
  * @see RightStatusPanel
  * @see TopStatusPanel
  */
-// TODO Refactoring. The all states were moved to the model GameState and made it Observable.
+@Data
 public class Game {
 
     private static Game gameInstance;
@@ -109,66 +110,13 @@ public class Game {
     }
 
     /**
-     * Getter for the game state. Needs to get the game state from the controller
-     *
-     * @return gameState
-     */
-    public GameState getGameState() {
-        return gameState;
-    }
-
-    /**
-     * Setter for the game state. Needs to set the game state to the controller
-     *
-     * @param gameState
-     */
-    public void setGameState(GameState gameState) {
-        this.gameState = gameState;
-    }
-
-    /**
-     * Getter for strategy of the game.
-     *
-     * @return gamePhaseStrategy
-     */
-    public IGamePhaseStrategy getGamePhaseStrategy() {
-        return gamePhaseStrategy;
-    }
-
-    /**
-     * Setter for strategy of the game
-     *
-     * @param gamePhaseStrategy
-     */
-    public void setGamePhaseStrategy(IGamePhaseStrategy gamePhaseStrategy) {
-        this.gamePhaseStrategy = gamePhaseStrategy;
-    }
-
-    /**
-     * Allows to get notification object everywhere in the game
-     *
-     * @return
-     */
-    public NotificationWindow getNotification() {
-        return notification;
-    }
-
-    /**
-     * Set the notification
-     *
-     * @param notification
-     */
-    public void setNotification(NotificationWindow notification) {
-        this.notification = notification;
-    }
-
-    /**
      * Save game action.
      * Save gamestate object with all states to the file.
      */
     public void save() {
         try {
             String path = Thread.currentThread().getContextClassLoader().getResource("").getPath() + "saves/";
+            System.out.println("Path for save: "+path);
             DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
             FileOutputStream myFileOutputStream = new FileOutputStream(path + "save" + dateTimeFormatter.format(LocalDateTime.now()) + ".risk");
             ObjectOutputStream myObjectOutputStream = new ObjectOutputStream(myFileOutputStream);
@@ -181,20 +129,12 @@ public class Game {
     }
 
     /**
-     * Get current JFrame
-     * @return
-     */
-    public JFrame getjFrame() {
-        return jFrame;
-    }
-
-    /**
      * Save game for test purposes action.
      * Save gamestate object with all states to the file.
      */
     public void saveForTest() {
         try {
-            FileOutputStream myFileOutputStream = new FileOutputStream("./test/resources/SaveTest.risk");
+            FileOutputStream myFileOutputStream = new FileOutputStream("./src/test/java/assets/SaveTest.risk");
             ObjectOutputStream myObjectOutputStream = new ObjectOutputStream(myFileOutputStream);
             myObjectOutputStream.writeObject(gameState);
             myObjectOutputStream.close();
