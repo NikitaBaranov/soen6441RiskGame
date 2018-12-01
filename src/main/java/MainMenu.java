@@ -4,6 +4,8 @@ import game.utils.NotificationWindow;
 import game.utils.TournamentMenu;
 import mapeditor.*;
 import mapeditor.gui.MapEditor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -29,6 +31,7 @@ import java.util.List;
  * @see MapEditor
  */
 public class MainMenu extends JFrame {
+    private static final Logger log = LogManager.getLogger(MainMenu.class);
 
     private static final long serialVersionUID = 1L;
     private int width, height;
@@ -90,7 +93,7 @@ public class MainMenu extends JFrame {
         continentBonus.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                System.out.println ("DEBUG: Testing continent bonus with 4 players\n ------------------------ \n");
+                log.debug("DEBUG: Testing continent bonus with 4 players\n ------------------------ \n");
                 List<String> playersModes = new ArrayList<>();
                 int players = 4;
                 playersModes.add("Human");
@@ -105,7 +108,7 @@ public class MainMenu extends JFrame {
         loadGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                System.out.println("DEBUG: Load game\n ------------------------ \n");
+                log.debug("DEBUG: Load game\n ------------------------ \n");
                 String savedGame = savedGamefilePath();
                 try {
                     FileInputStream myFileInputStream = new FileInputStream(savedGame);
@@ -114,7 +117,7 @@ public class MainMenu extends JFrame {
                     myObjectInputStream.close();
                     new MapLoader(gameState, notificationWindow);
                 } catch (Exception e) {
-                    System.out.println("Error when loading from file.");
+                    log.error("Error when loading from file.");
                     e.printStackTrace();
                 }
             }
@@ -193,10 +196,8 @@ public class MainMenu extends JFrame {
         JPanel buttonPanel = new JPanel();
         JPanel startButtons = new JPanel();
 
-
         TitledBorder title = BorderFactory.createTitledBorder("Quick access");
         buttonPanel.setBorder(title);
-
 
         buttonPanel.setPreferredSize(new Dimension(600, 50));
         buttonPanel.setLayout(new GridBagLayout());
@@ -215,7 +216,7 @@ public class MainMenu extends JFrame {
         player2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                System.out.println ("DEBUG: Chosen 2 players\n ------------------------ \n");
+                log.debug("DEBUG: Chosen 2 players\n ------------------------ \n");
                 List<String> playersModes = new ArrayList<>();
                 int players = 2;
                 playersModes.add("Human");
@@ -228,7 +229,7 @@ public class MainMenu extends JFrame {
         player3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                System.out.println ("DEBUG: Chosen 3 players\n ------------------------ \n");
+                log.debug("DEBUG: Chosen 3 players\n ------------------------ \n");
                 List<String> playersModes = new ArrayList<>();
                 int players = 3;
                 playersModes.add("Human");
@@ -243,7 +244,7 @@ public class MainMenu extends JFrame {
         player4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                System.out.println ("DEBUG: Chosen 4 players\n ------------------------ \n");
+                log.debug("DEBUG: Chosen 4 players\n ------------------------ \n");
                 List<String> playersModes = new ArrayList<>();
                 int players = 4;
                 playersModes.add("Human");
@@ -326,7 +327,7 @@ public class MainMenu extends JFrame {
         startAIGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                System.out.println("DEBUG: start Ai game\n ------------------------ \n");
+                log.debug("DEBUG: start Ai game\n ------------------------ \n");
                 List<String> playersModes = new ArrayList<>();
                 String selectedPlayerMode1 = (String) PlayerModeList1.getSelectedItem();
                 String selectedPlayerMode2 = (String) PlayerModeList2.getSelectedItem();
@@ -350,7 +351,7 @@ public class MainMenu extends JFrame {
                     playersModes.add(selectedPlayerMode4);
                 }
                 if (players == 0 || players == 1){
-                    System.out.println("You can't play alone or without any players at all.");
+                    log.error("You can't play alone or without any players at all.");
                 } else {
                     String filePath = filePath();
                     MainMenu.this.setVisible(false);
@@ -389,7 +390,7 @@ public class MainMenu extends JFrame {
         tournament.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                System.out.println("DEBUG: Chosen tournament\n ------------------------ \n");
+                log.debug("DEBUG: Chosen tournament\n ------------------------ \n");
                 MainMenu.this.setVisible(false);
                 new TournamentMenu(notificationWindow);
             }
@@ -416,7 +417,7 @@ public class MainMenu extends JFrame {
             File selectedFile = fileChooser.getSelectedFile();
             return selectedFile.getAbsolutePath();
         }
-        System.out.println("DEBUG: Start the new game!\n---------------------------------------\n");
+        log.debug("DEBUG: Start the new game!\n---------------------------------------\n");
         return "Start the new game";
     }
 
@@ -427,7 +428,7 @@ public class MainMenu extends JFrame {
      */
     private String filePath() {
         String path = Thread.currentThread().getContextClassLoader().getResource("").getPath() + "maps";
-        System.out.println(path);
+        log.debug(path);
         JFileChooser fileChooser = new JFileChooser(new File(path));
         FileNameExtensionFilter filter = new FileNameExtensionFilter("MAP FILES", "map", "maps");
         fileChooser.setFileFilter(filter);
@@ -438,7 +439,7 @@ public class MainMenu extends JFrame {
             File selectedFile = fileChooser.getSelectedFile();
             return selectedFile.getAbsolutePath();
         }
-        System.out.println("DEBUG: Using the default map!\n---------------------------------------\n");
+        log.debug("DEBUG: Using the default map!\n---------------------------------------\n");
         return path + "/default.map";
     }
 

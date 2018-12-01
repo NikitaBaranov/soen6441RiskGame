@@ -1,4 +1,5 @@
 import game.utils.Config;
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 /**
  * The launcher of the game.
@@ -6,7 +7,7 @@ import org.apache.logging.log4j.Logger;
  * @author Dmitry Kryukov
  */
 public class Launcher {
-    final static Logger log = Logger.getLogger(Launcher.class);
+    private static final Logger log = LogManager.getLogger(Launcher.class);
 
     /**
      * Constructor of the class. Creates an instance of MainMenu object
@@ -19,7 +20,7 @@ public class Launcher {
         Config conf = new Config();
         log.debug(conf.prop.getProperty("ai.luck"));
         log.debug(conf.prop.getProperty("ai.pause"));
-        System.out.println("DEBUG: Launcher is started\n-------------------------\n");
+        log.debug("DEBUG: Launcher is started\n-------------------------\n");
         new MainMenu(title, width, height);
     }
 
