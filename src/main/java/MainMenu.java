@@ -427,6 +427,7 @@ public class MainMenu extends JFrame {
      */
     private String filePath() {
         String path = Thread.currentThread().getContextClassLoader().getResource("").getPath() + "maps";
+        System.out.println(path);
         JFileChooser fileChooser = new JFileChooser(new File(path));
         FileNameExtensionFilter filter = new FileNameExtensionFilter("MAP FILES", "map", "maps");
         fileChooser.setFileFilter(filter);

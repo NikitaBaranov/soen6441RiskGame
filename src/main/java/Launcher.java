@@ -1,3 +1,4 @@
+import game.utils.Config;
 /**
  * The launcher of the game.
  * @see MainMenu
@@ -13,6 +14,10 @@ public class Launcher {
      * @param height of the menu
      */
     public Launcher(String title, int width, int height){
+        Config conf = new Config();
+        System.out.println(conf.prop.getProperty("ai.luck"));
+        System.out.println(conf.prop.getProperty("ai.pause"));
+
         System.out.println("DEBUG: Launcher is started\n-------------------------\n");
         MainMenu window = new MainMenu(title, width, height);
     }

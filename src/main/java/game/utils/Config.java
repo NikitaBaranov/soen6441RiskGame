@@ -7,9 +7,9 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class Config {
+    public Properties prop = new Properties();
 
     public Config(){
-        Properties prop = new Properties();
         InputStream input = null;
         String filename = "config.properties";
         input = Game.class.getClassLoader().getResourceAsStream(filename);
@@ -26,8 +26,8 @@ public class Config {
         }
 
         //get the property value and print it out
-        System.out.println(prop.getProperty("random_luck"));
-        System.out.println(prop.getProperty("pause_for_ai"));
+//        System.out.println(prop.getProperty("random_luck"));
+//        System.out.println(prop.getProperty("pause_for_ai"));
     }
 
 }
