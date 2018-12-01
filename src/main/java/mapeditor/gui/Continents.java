@@ -44,7 +44,7 @@ public class Continents extends javax.swing.JFrame {
     /**
      * This method Constructor add components to the Frame.
      *
-     * @param ILoadedMap loadedMapObjCons object with the map information .
+     * @param loadedMapObjCons object with the map information .
      */
     public Continents(ILoadedMap loadedMapObjCons) {
         loadedMapObj = loadedMapObjCons;
@@ -181,7 +181,7 @@ public class Continents extends javax.swing.JFrame {
     /**
      * This method to perform the action of the button delete.
      *
-     * @param java.awt.event.ActionEvent evt (The event).
+     * @param evt (The event).
      */
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
         loadedMapObj.deleteContinent(Continent.getContinents().get(jTable1.getSelectedRow()));
@@ -192,7 +192,7 @@ public class Continents extends javax.swing.JFrame {
     /**
      * This method to perform the action of the button delete.
      *
-     * @param java.awt.event.ActionEvent evt (The event).
+     * @param evt (The event).
      */
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {
     }
@@ -200,7 +200,7 @@ public class Continents extends javax.swing.JFrame {
     /**
      * This method to perform the action of the button add continent.
      *
-     * @param ILoadedMap loadedMapObjCons object with the map information .
+     * @param evt with the map information .
      */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
         Vector newRow = new Vector();

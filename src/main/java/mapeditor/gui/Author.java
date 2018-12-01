@@ -70,7 +70,7 @@ public class Author extends javax.swing.JFrame {
     /**
      * This method to perform the action of the button click.
      *
-     * @param java.awt.event.ActionEvent evt (The event).
+     * @param evt (The event).
      */
     private void jConfirmButtonActionPerformed(java.awt.event.ActionEvent evt) {
         CreateMapMenu.setAuthor(jAuthorField.getText());

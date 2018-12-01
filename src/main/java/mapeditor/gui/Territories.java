@@ -63,7 +63,7 @@ public class Territories extends javax.swing.JFrame {
     /**
      * This method to refresh the JTable with the territories adjacents.
      *
-     * @param Interger pos position select in the JTable for territories.
+     * @param pos position select in the JTable for territories.
      */
     public void selectAdjacent(Integer pos){
         this.model2.setRowCount(0);
@@ -255,7 +255,7 @@ public class Territories extends javax.swing.JFrame {
     /**
      * This method to perform the button remove.
      *
-     * @param java.awt.event.ActionEvent evt (The event).
+     * @param evt (The event).
      */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
         preventionFlag = true;
@@ -275,7 +275,7 @@ public class Territories extends javax.swing.JFrame {
     /**
      * This method to perform the button add territory.
      *
-     * @param java.awt.event.ActionEvent evt (The event).
+     * @param evt (The event).
      */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
         Vector newRow = new Vector();
@@ -292,7 +292,7 @@ public class Territories extends javax.swing.JFrame {
     /**
      * This method to refresh the JTable with the territories adjacents.
      *
-     * @param java.awt.event.ActionEvent evt (The event).
+     * @param evt (The event).
      */
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
         Vector newRow = new Vector();

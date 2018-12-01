@@ -52,8 +52,8 @@ public class CreateMapMenu extends JFrame {
     /**
      * This method Constructor add components to the Frame.
      *
-     * @param String pathSelectedCons the path to save the file.
-     * @param ILoadedMap loadedMapObjCons map objects with continent and territories information
+     * @param pathSelectedCons the path to save the file.
+     * @param loadedMapObjCons map objects with continent and territories information
      */
     public CreateMapMenu(String pathSelectedCons, ILoadedMap loadedMapObjCons) {
         pathSelected = pathSelectedCons;
@@ -197,7 +197,7 @@ public class CreateMapMenu extends JFrame {
     /**
      * This method organize the components in the frame
      *
-     * @param JComponent... arg (list of components in the frame).
+     * @param arg (list of components in the frame).
      */
     private void createLayout(JComponent... arg) {
 

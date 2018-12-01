@@ -1,6 +1,7 @@
 package mapeditor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -173,7 +174,7 @@ public class EditorTerritory implements IEditorTerritory {
 		{
 			adjacencies.add(tokens[i]);
 		}
-		
+
 		ITerritory territory = new Territory(territoryName, X, Y, continentName, adjacencies);
 		this.loadedMapObj.addTerritory(territory);
 		
