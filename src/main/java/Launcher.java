@@ -20,7 +20,7 @@ public class Launcher {
         Config conf = new Config();
         log.debug(conf.prop.getProperty("ai.luck"));
         log.debug(conf.prop.getProperty("ai.pause"));
-        log.debug("DEBUG: Launcher is started\n-------------------------\n");
+        log.debug("DEBUG: Launcher is started");
         new MainMenu(title, width, height);
     }
 

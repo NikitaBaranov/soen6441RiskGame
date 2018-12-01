@@ -93,7 +93,7 @@ public class MainMenu extends JFrame {
         continentBonus.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                log.debug("DEBUG: Testing continent bonus with 4 players\n ------------------------ \n");
+                log.debug("DEBUG: Testing continent bonus with 4 players");
                 List<String> playersModes = new ArrayList<>();
                 int players = 4;
                 playersModes.add("Human");
@@ -108,7 +108,7 @@ public class MainMenu extends JFrame {
         loadGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                log.debug("DEBUG: Load game\n ------------------------ \n");
+                log.debug("DEBUG: Load game");
                 String savedGame = savedGamefilePath();
                 try {
                     FileInputStream myFileInputStream = new FileInputStream(savedGame);
@@ -216,7 +216,7 @@ public class MainMenu extends JFrame {
         player2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                log.debug("DEBUG: Chosen 2 players\n ------------------------ \n");
+                log.debug("DEBUG: Chosen 2 players");
                 List<String> playersModes = new ArrayList<>();
                 int players = 2;
                 playersModes.add("Human");
@@ -229,7 +229,7 @@ public class MainMenu extends JFrame {
         player3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                log.debug("DEBUG: Chosen 3 players\n ------------------------ \n");
+                log.debug("DEBUG: Chosen 3 players");
                 List<String> playersModes = new ArrayList<>();
                 int players = 3;
                 playersModes.add("Human");
@@ -244,7 +244,7 @@ public class MainMenu extends JFrame {
         player4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                log.debug("DEBUG: Chosen 4 players\n ------------------------ \n");
+                log.debug("DEBUG: Chosen 4 players");
                 List<String> playersModes = new ArrayList<>();
                 int players = 4;
                 playersModes.add("Human");
@@ -327,7 +327,7 @@ public class MainMenu extends JFrame {
         startAIGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                log.debug("DEBUG: start Ai game\n ------------------------ \n");
+                log.debug("DEBUG: start Ai game");
                 List<String> playersModes = new ArrayList<>();
                 String selectedPlayerMode1 = (String) PlayerModeList1.getSelectedItem();
                 String selectedPlayerMode2 = (String) PlayerModeList2.getSelectedItem();
@@ -390,7 +390,7 @@ public class MainMenu extends JFrame {
         tournament.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                log.debug("DEBUG: Chosen tournament\n ------------------------ \n");
+                log.debug("DEBUG: Chosen tournament");
                 MainMenu.this.setVisible(false);
                 new TournamentMenu(notificationWindow);
             }
@@ -417,7 +417,7 @@ public class MainMenu extends JFrame {
             File selectedFile = fileChooser.getSelectedFile();
             return selectedFile.getAbsolutePath();
         }
-        log.debug("DEBUG: Start the new game!\n---------------------------------------\n");
+        log.debug("DEBUG: Start the new game!");
         return "Start the new game";
     }
 
@@ -439,7 +439,7 @@ public class MainMenu extends JFrame {
             File selectedFile = fileChooser.getSelectedFile();
             return selectedFile.getAbsolutePath();
         }
-        log.debug("DEBUG: Using the default map!\n---------------------------------------\n");
+        log.debug("DEBUG: Using the default map!");
         return path + "/default.map";
     }
 
