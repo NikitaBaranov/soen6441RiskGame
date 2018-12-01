@@ -473,7 +473,7 @@ public class GameTest {
             ObjectInputStream myObjectInputStream = new ObjectInputStream(myFileInputStream);
             GameState newGameState = (GameState) myObjectInputStream.readObject();
             myObjectInputStream.close();
-            gameState.setiPanelObservers(new LinkedList<>());
+            gameState.setIPanelObservers(new LinkedList<>());
 
             Game loadedGame = Game.getInstance();
             loadedGame.setGameState(newGameState);

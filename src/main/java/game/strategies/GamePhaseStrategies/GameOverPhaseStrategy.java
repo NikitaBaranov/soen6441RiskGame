@@ -46,8 +46,8 @@ public class GameOverPhaseStrategy extends BasePhaseStrategy {
         gameState.setNextTurnButton(false);
         gameState.notifyObservers();
 
-        if (Game.getInstance().getjFrame() != null) {
-            Game.getInstance().getjFrame().dispatchEvent(new WindowEvent(Game.getInstance().getjFrame(), WindowEvent.WINDOW_CLOSING));
+        if (Game.getInstance().getJFrame() != null) {
+            Game.getInstance().getJFrame().dispatchEvent(new WindowEvent(Game.getInstance().getJFrame(), WindowEvent.WINDOW_CLOSING));
         }
     }
 }

@@ -678,7 +678,7 @@ public class MapLoader {
     }
 
     public MapLoader(GameState gameState, NotificationWindow notificationWindow) {
-        gameState.setiPanelObservers(new LinkedList<>());
+        gameState.setIPanelObservers(new LinkedList<>());
         gameState.setJustLoad(true);
 
         game = Game.getInstance();
