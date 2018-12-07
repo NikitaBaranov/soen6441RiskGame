@@ -26,8 +26,8 @@ import static org.junit.Assert.assertTrue;
  * Test for model Player
  * @author Ksenia Popova, Dmitry Kryukov
  */
-//@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-//public class PlayerTest {
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+public class PlayerTest {
 //    Game game = Game.getInstance();
 //    Player player1;
 //    Player player2;
@@ -189,4 +189,4 @@ import static org.junit.Assert.assertTrue;
 ////
 ////        assertEquals(5, player1.getArmies());
 //    }
-//}
+}
