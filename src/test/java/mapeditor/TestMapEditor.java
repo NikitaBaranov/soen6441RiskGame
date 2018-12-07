@@ -34,7 +34,7 @@ public class TestMapEditor {
 	 */
 	@BeforeClass
 	public static void startup() {
-		path = "./src/test/java/assets/";
+		path = "./src/test/resources/";
 		mapName = "testMap.map";
 	}
 	

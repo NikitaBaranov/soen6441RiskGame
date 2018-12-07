@@ -26,21 +26,21 @@ import static org.junit.Assert.assertTrue;
  * Test for model Player
  * @author Ksenia Popova, Dmitry Kryukov
  */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class PlayerTest {
-    Game game = Game.getInstance();
-    Player player1;
-    Player player2;
-
-    Country country1;
-    Country country2;
-    Country country3;
-    Country country4;
-
-    /**
-     * Setup the players, countries, map and run the game.
-     * @throws Exception
-     */
+//@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+//public class PlayerTest {
+//    Game game = Game.getInstance();
+//    Player player1;
+//    Player player2;
+//
+//    Country country1;
+//    Country country2;
+//    Country country3;
+//    Country country4;
+//
+//    /**
+//     * Setup the players, countries, map and run the game.
+//     * @throws Exception
+//     */
 //    @Before
 //    public void setUp() throws Exception {
 //        Player player1 = new Player("test Player 1", Color.BLACK, HUMAN_STRATEGY, false);
@@ -189,4 +189,4 @@ public class PlayerTest {
 ////
 ////        assertEquals(5, player1.getArmies());
 //    }
-}
+//}

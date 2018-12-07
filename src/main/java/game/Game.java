@@ -16,6 +16,8 @@ import game.ui.view.RightStatusPanel;
 import game.ui.view.TopStatusPanel;
 import game.utils.NotificationWindow;
 import lombok.Data;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.swing.*;
 import java.io.FileOutputStream;
@@ -44,7 +46,7 @@ import static game.strategies.GamePhaseStrategies.GamePhaseEnum.PLACING_ARMIES;
  */
 @Data
 public class Game {
-
+    private static final Logger log = LogManager.getLogger(Game.class);
     private static Game gameInstance;
     private GameState gameState;
     private IGamePhaseStrategy gamePhaseStrategy;
@@ -115,15 +117,15 @@ public class Game {
      */
     public void save() {
         try {
-            String path = Thread.currentThread().getContextClassLoader().getResource("").getPath() + "saves/";
-            System.out.println("Path for save: "+path);
+            String path = this.getClass().getResource("/saves").getPath();
+            log.debug("Path for save: "+path);
             DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss");
             FileOutputStream myFileOutputStream = new FileOutputStream(path + "save" + dateTimeFormatter.format(LocalDateTime.now()) + ".risk");
             ObjectOutputStream myObjectOutputStream = new ObjectOutputStream(myFileOutputStream);
             myObjectOutputStream.writeObject(gameState);
             myObjectOutputStream.close();
         } catch (Exception e) {
-            System.out.println("Error when saving to file. ");
+            log.error("Error when saving to file. ");
             e.printStackTrace();
         }
     }
@@ -134,12 +136,12 @@ public class Game {
      */
     public void saveForTest() {
         try {
-            FileOutputStream myFileOutputStream = new FileOutputStream("./src/test/java/assets/SaveTest.risk");
+            FileOutputStream myFileOutputStream = new FileOutputStream("./src/test/resources/SaveTest.risk");
             ObjectOutputStream myObjectOutputStream = new ObjectOutputStream(myFileOutputStream);
             myObjectOutputStream.writeObject(gameState);
             myObjectOutputStream.close();
         } catch (Exception e) {
-            System.out.println("Error when saving to file. ");
+            log.error("Error when saving to file. ");
             e.printStackTrace();
         }
     }

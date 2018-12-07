@@ -16,7 +16,8 @@ import java.util.Random;
 @Data
 public class Dice {
 
-    private static final String imageSourceDir = "src/game/resources/dice/";
+    // TODO fix getting the resources from static context
+    private static final String imageSourceDir = Dice.class.getClassLoader().getResource("/dice").getPath();
     public static final String RED_FILE_PREFIX = imageSourceDir + "red_";
     public static final String WHITE_FILE_PREFIX = imageSourceDir + "white_";
 

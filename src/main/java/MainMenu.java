@@ -404,7 +404,7 @@ public class MainMenu extends JFrame {
      * @return start the new game
      */
     private String savedGamefilePath() {
-        String path = Thread.currentThread().getContextClassLoader().getResource("").getPath() + "saves";
+        String path = this.getClass().getResource("/saves").getPath();
 //        JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
         JFileChooser fileChooser = new JFileChooser(new File(path));
 
@@ -427,7 +427,7 @@ public class MainMenu extends JFrame {
      * @return default.map default map file
      */
     private String filePath() {
-        String path = Thread.currentThread().getContextClassLoader().getResource("").getPath() + "maps";
+        String path = this.getClass().getResource("/maps").getPath();
         log.debug(path);
         JFileChooser fileChooser = new JFileChooser(new File(path));
         FileNameExtensionFilter filter = new FileNameExtensionFilter("MAP FILES", "map", "maps");
